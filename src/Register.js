@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const API_HOST = "http://localhost/todolistBackend/public";
+
 function Register() {
     const [formData, setFormData] = useState({
         name: "",
@@ -28,7 +30,7 @@ function Register() {
 
         try {
             const response = await fetch(
-                "http://localhost/todolistBackend/public/api/register",
+                `${API_HOST}/api/register`,
                 {
                 method: "POST",
                 headers: {

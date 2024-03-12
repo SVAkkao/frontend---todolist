@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table';
 // import Overlay from 'react-bootstrap/Overlay';
 import { useLocation } from "react-router-dom";
 
+const API_HOST = "http://localhost/todolistBackend/public";
 
 function CommentList({ comments }) {
     return comments.length > 0 ? (<ul>
@@ -16,7 +17,6 @@ function CommentList({ comments }) {
 }
 
 function Fetch() {
-    const host = "http://localhost/todolistBackend/public";
     const location = useLocation();
     const { email } = location.state;
     const [data, setData] = useState([])
@@ -30,7 +30,7 @@ function Fetch() {
             console.log('from WEBAPI');
             let formData = new FormData();
             formData.append('email',  email );
-            fetch(`${host}/api/showlist`, {
+            fetch(`${API_HOST}/api/showlist`, {
                 method: 'post',
                 body: formData
             })
@@ -58,7 +58,7 @@ function Fetch() {
             console.log('from WEBAPI');
             let formData = new FormData();
             formData.append('email',  email );
-            fetch(`${host}/api/showlist`, {
+            fetch(`${API_HOST}/api/showlist`, {
                 method: 'post',
                 body: formData
             })
@@ -76,7 +76,7 @@ function Fetch() {
 
     const [comments, setComments] = useState([]);
     const getComments = (id) => {
-        const api = `${host}/api/comment/${id}`;
+        const api = `${API_HOST}/api/comment/${id}`;
         fetch(api, { method: 'get', })
             .then(response => response.json())
             .then(response => {
