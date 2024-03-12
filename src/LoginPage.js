@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const API_HOST = "http://localhost/todolistBackend/public";
+const API_HOST = process.env.REACT_APP_API_URL;
 
 function Login() {
     const [credentials, setCredentials] = useState({

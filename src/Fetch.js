@@ -8,7 +8,7 @@ import Table from 'react-bootstrap/Table';
 // import Overlay from 'react-bootstrap/Overlay';
 import { useLocation } from "react-router-dom";
 
-const API_HOST = "http://localhost/todolistBackend/public";
+const API_HOST = process.env.REACT_APP_API_URL;
 
 function CommentList({ comments }) {
     return comments.length > 0 ? (<ul>
@@ -32,13 +32,16 @@ function Fetch() {
             formData.append('email',  email );
             fetch(`${API_HOST}/api/showlist`, {
                 method: 'post',
-                body: formData
+                body: formData,
+                headers: {
+                    "Accept": "application/json"
+                }
             })
                 .then(response => response.text())
                 .then(text => {
                     localStorage.setItem("querydata", text);
                     let jsonObj = JSON.parse(text);
-                    setData(jsonObj)
+                    setData(jsonObj);
                 })
                 .catch(error => console.error('Error:', error));
         }
@@ -77,7 +80,10 @@ function Fetch() {
     const [comments, setComments] = useState([]);
     const getComments = (id) => {
         const api = `${API_HOST}/api/comment/${id}`;
-        fetch(api, { method: 'get', })
+        const headers = {
+            "Accept": "application/json"
+        };
+        fetch(api, { method: 'get', headers })
             .then(response => response.json())
             .then(response => {
                 setComments(response.result);
