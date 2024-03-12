@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+// import React, { useEffect, useRef, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
 import Fetch from './Fetch';
 import Register from "./Register.js";
 import HomePage from "./HomePage.js";
