@@ -3,49 +3,46 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function Login() {
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
-  const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value,
+    const [credentials, setCredentials] = useState({
+        email: "",
+        password: "",
     });
-  };
+    const navigate = useNavigate();
+    const handleChange = (e) => {
+        setCredentials({
+        ...credentials,
+        [e.target.name]: e.target.value,
+        });
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+        const response = await fetch(
+            "http://localhost/todolistBackend/public/api/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify(credentials),
+            }
+        );
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        "http://localhost/todolistBackend/public/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(credentials),
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-      );
+        const data = await response.json();
+        console.log("Success:", data);
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log("Success:", data);
-
-      // 登錄成功後的處理，例如保存 token，導航到另一頁等
-      // 保存 token 到 localStorage 或 sessionStorage
-      localStorage.setItem("userToken", data.token);
-      // 根據需要導航，例如導航到首頁
-      navigate("/Fetch", { state: { email: data.user.email } });
-    } catch (error) {
-      console.error("Failed to login:", error);
-    }
+        // 登錄成功後的處理，例如保存 token，導航到另一頁等
+        // 保存 token 到 localStorage 或 sessionStorage
+        localStorage.setItem("userToken", data.token);
+        // 根據需要導航，例如導航到首頁
+            navigate("/Fetch", { state: { email: data.user.email } });
+        } catch (error) {
+            console.error("Failed to login:", error);
+        }
   };
 
   return (
