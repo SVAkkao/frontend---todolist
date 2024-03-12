@@ -9,17 +9,19 @@ import Table from 'react-bootstrap/Table';
 import { useLocation } from "react-router-dom";
 
 
-function Fetch() {
+function CommentList({ comments }) {
+    return comments.length > 0 ? (<ul>
+        { comments.map( item => <li>{ item.comment }</li> ) }
+    </ul>) : <span />;
+}
 
+function Fetch() {
+    const host = "http://localhost/todolistBackend/public";
     const location = useLocation();
     const { email } = location.state;
-
     const [data, setData] = useState([])
-
-
     const handleButtonClick = () => {
         let querydata = localStorage.getItem("querydata");
-
         if (querydata != null) {
             console.log('from localstorage');
             let jsonObj = JSON.parse(querydata);
@@ -28,9 +30,7 @@ function Fetch() {
             console.log('from WEBAPI');
             let formData = new FormData();
             formData.append('email',  email );
-
-
-            fetch('http://localhost/todolistBackend/public/api/showlist', {
+            fetch(`${host}/api/showlist`, {
                 method: 'post',
                 body: formData
             })
@@ -46,10 +46,7 @@ function Fetch() {
 
     const [show, setShow] = useState('invisible');
     const [data1, setData1] = useState([])
-
-
     const handleButtonClick1 = () => {
-
         let querydata1 = localStorage.getItem("querydata1");
         setShow('visible')
         if (querydata1 != null) {
@@ -61,9 +58,7 @@ function Fetch() {
             console.log('from WEBAPI');
             let formData = new FormData();
             formData.append('email',  email );
-
-
-            fetch('http://localhost/todolistBackend/public/api/showlist', {
+            fetch(`${host}/api/showlist`, {
                 method: 'post',
                 body: formData
             })
@@ -79,27 +74,16 @@ function Fetch() {
         }
     };
 
-    // const emailRef = React.createRef();
-
-    // http://localhost/todolistBackend/public/api/comment/4
-
     const [comments, setComments] = useState([]);
-    const commentListComp = comments.length > 0 ? (<ul>
-        { comments.map( item => <li>{ item.comment }</li> ) }
-    </ul>) : <span />;
-
     const getComments = (id) => {
-        const api = 'http://localhost/todolistBackend/public/api/comment/' + id;
+        const api = `${host}/api/comment/${id}`;
         fetch(api, { method: 'get', })
-                .then(response => response.json())
-                .then(response => {
-                    setComments(response.result);
-                })
-                .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(response => {
+                setComments(response.result);
+            })
+            .catch(error => console.error('Error:', error));
     };
-
-
-
     return (
         <div className='m-2'>
             {/* <Form.Label className='m-2'>email</Form.Label>
@@ -110,7 +94,6 @@ function Fetch() {
                 placeholder="輸入email"
                 ref={emailRef} id="email"
             /> */}
-
             <Button className='m-2' onClick={handleButtonClick}>顯示所有行程</Button><br />
             <Table className='m-2' striped bordered hover>
                 <thead>
@@ -155,9 +138,8 @@ function Fetch() {
                     }
                 </tbody>
             </Table>
-
             <p className='m-2'>Comments</p>
-            {commentListComp}
+            {<CommentList comments={comments} />}
         </div >
     )
 }
