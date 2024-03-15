@@ -5,6 +5,7 @@ import Fetch from './Fetch';
 import Register from "./Register.js";
 import HomePage from "./HomePage.js";
 import Login from "./LoginPage.js";
+import TestRoute from "./TestRoute/index.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
   { path: "/register", element: <Register /> },
   { path: "/login", element: <Login /> },
   { path: "/Fetch", element: <Fetch /> },
+  { path: "/testing", element: <TestRoute /> },
 ]);
 
 
