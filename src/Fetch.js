@@ -7,12 +7,13 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 // import Overlay from 'react-bootstrap/Overlay';
 import { useLocation } from "react-router-dom";
+import LogoutBar from "./LogoutBar";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
 function CommentList({ comments }) {
     return comments.length > 0 ? (<ul>
-        { comments.map( item => <li>{ item.comment }</li> ) }
+        {comments.map(item => <li>{item.comment}</li>)}
     </ul>) : <span />;
 }
 
@@ -29,7 +30,7 @@ function Fetch() {
         } else {
             console.log('from WEBAPI');
             let formData = new FormData();
-            formData.append('email',  email );
+            formData.append('email', email);
             fetch(`${API_HOST}/api/showlist`, {
                 method: 'post',
                 body: formData,
@@ -60,7 +61,7 @@ function Fetch() {
         } else {
             console.log('from WEBAPI');
             let formData = new FormData();
-            formData.append('email',  email );
+            formData.append('email', email);
             fetch(`${API_HOST}/api/showlist`, {
                 method: 'post',
                 body: formData
@@ -100,6 +101,7 @@ function Fetch() {
                 placeholder="輸入email"
                 ref={emailRef} id="email"
             /> */}
+            <LogoutBar></LogoutBar>
             <Button className='m-2' onClick={handleButtonClick}>顯示所有行程</Button><br />
             <Table className='m-2' striped bordered hover>
                 <thead>
