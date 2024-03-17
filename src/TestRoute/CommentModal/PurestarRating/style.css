@@ -29,7 +29,7 @@ h1 {
 .the-rating>label:before {
     margin: 5px;
     font-size: 1.25em;
-    font-family: "Font Awesome 6 Free";
+    font-family: "FontAwesome";
     display: inline-block;
     content: "\f005";
 }
