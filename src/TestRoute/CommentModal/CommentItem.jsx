@@ -1,10 +1,13 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import Image from "react-bootstrap/Image";
 import OprationPanel from "./OprationPanel";
+// FontAwesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
 
 /**
  * How many stars should we have?
- * @param {String} r 
+ * @param {String} r Rate input
  * @returns 
  */
 const generate_rate = (r = "0") => {
@@ -16,10 +19,10 @@ const generate_rate = (r = "0") => {
     // Array
     const result = [];
     for (let i = 0; i < full_star_num; i++) {
-        result.push("fa-solid fa-star");
+        result.push(faStar);
     }
     for (let j = 0; j < half_star_num; j++) {
-        result.push("fa-solid fa-star-half");
+        result.push(faStarHalf);
     }
     // Empty stars
     /*
@@ -42,7 +45,7 @@ export default function CommentItem({ item }) {
         </div>
         <div className="item-panel">
             <span>
-                { stars.map( (c, i) => <i key={i} className={c} /> ) }
+                { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
             </span>
         </div>
     </ListGroup.Item>;

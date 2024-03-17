@@ -4,7 +4,6 @@ import Modal from "react-bootstrap/Modal";
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 // Local
-// import PurestarRating from "./PurestarRating/index";
 import { list_modules } from "./utils";
 // import { useTranslation } from 'react-i18next';
 import "./style.css";

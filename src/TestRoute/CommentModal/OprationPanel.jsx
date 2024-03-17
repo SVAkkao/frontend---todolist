@@ -5,7 +5,7 @@ import CommentForm from "./CommentForm";
 import { modal_modules, modal_mode_modules } from "./utils";
 // import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCoffee, faTrash, faPen } from "@fortawesome/free-solid-svg-icons"
+import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons"
 
 export default function OprationPanel() {
     // const { t } = useTranslation();
@@ -21,9 +21,6 @@ export default function OprationPanel() {
     };
     // HTML
     return <div className="item-panel">
-        {/* <i className="click-icon fa-solid fa-trash" onClick={open_removing}></i>
-        <i className="click-icon fa-solid fa-pen" onClick={open_editing}></i> */}
-        
         <FontAwesomeIcon icon={faTrash} className="click-icon" onClick={open_removing} />
         <FontAwesomeIcon icon={faPen} className="click-icon" onClick={open_editing} />
         <div className="modals">
