@@ -5,11 +5,9 @@ import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 // Local
 import { list_modules } from "./utils";
-// import { useTranslation } from 'react-i18next';
 import "./style.css";
 
 export default function CommentModal({ iid, show, handleClose }) {
-    // const { t } = useTranslation();
     const { the_list, ajax_list } = list_modules("/api/test.json");
     const action = (b) => {
         console.log(b);
@@ -18,7 +16,7 @@ export default function CommentModal({ iid, show, handleClose }) {
     };
     return (<Modal id="comment-modal" size="lg" data-iid={iid} show={show} onShow={ajax_list} onHide={handleClose} centered>
         <Modal.Header closeButton>
-            <Modal.Title>{("todo-comments")}</Modal.Title>
+            <Modal.Title>評論</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             {/*  */}

@@ -1,4 +1,6 @@
 import "./style.css";
+// import "./fontawesome.min.css";
+// import "https://use.fontawesome.com/releases/v5.2.0/js/all.js";
 // import { useTranslation } from "react-i18next";
 
 /**
@@ -9,7 +11,7 @@ function PurestarRating({ onrate, rateControlId }) {
     return (<div style={{ overflowY: "auto" }} data-cid={rateControlId}>
         <div>
             {/* <label>{useTranslation().t("comment-form-rate")}</label> */}
-            <label htmlFor="">comment-form-rate</label>
+            <label htmlFor="">評分</label>
         </div>
         <fieldset className="the-rating" onChange={onrate}>
             <input type="radio" id="form-rating-star5" name="rating" value="10" />

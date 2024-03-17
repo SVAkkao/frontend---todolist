@@ -16,14 +16,14 @@ export default function CommentForm({ iid, submitAction, rateControlId }) {
     return (<Form onSubmit={action}>
         <input type="hidden" name="id" value={iid} />
         <Form.Group className="mb-3" controlId="formBasicComment">
-            <Form.Label>{("comment-form-comment")}</Form.Label>
-            <Form.Control type="text" placeholder={("comment-form-comment-placeholder")} />
+            <Form.Label>評論</Form.Label>
+            <Form.Control type="text" placeholder="輸入評論..." />
         </Form.Group>
         <div className="mb-3 rating">
             <PurestarRating onrate={onrate} rateControlId={rateControlId} />
         </div>
         <div className="mb-3 panel">
-            <Button variant="primary" type="submit">{("submit-action")}</Button>
+            <Button variant="primary" type="submit">提交</Button>
         </div>
     </Form>);
 }
