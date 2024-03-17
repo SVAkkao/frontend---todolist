@@ -1,0 +1,66 @@
+/* @import url(../../../assets/fontawesome/css/fontawesome.min.css); */
+
+/* fieldset,
+label {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 20px;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 10px;
+} */
+
+/****** Style Star Rating Widget *****/
+
+.the-rating {
+    border: none;
+    float: left;
+}
+
+.the-rating>input {
+    display: none;
+}
+
+.the-rating>label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: "Font Awesome 6 Free";
+    display: inline-block;
+    content: "\f005";
+}
+
+.the-rating>.half:before {
+    content: "\f089";
+    position: absolute;
+}
+
+.the-rating>label {
+    color: #ddd;
+    float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.the-rating>input:checked~label,
+/* show gold star when clicked */
+.the-rating:not(:checked)>label:hover,
+/* hover current star */
+.the-rating:not(:checked)>label:hover~label {
+    color: #FFD700;
+}
+
+/* hover previous stars in list */
+
+.the-rating>input:checked+label:hover,
+/* hover current star when changing rating */
+.the-rating>input:checked~label:hover,
+.the-rating>label:hover~input:checked~label,
+/* lighten current selection */
+.the-rating>input:checked~label:hover~label {
+    color: #FFED85;
+}

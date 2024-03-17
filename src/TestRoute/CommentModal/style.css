@@ -1,0 +1,32 @@
+.click-icon {
+    cursor: pointer;
+}
+
+.the-list-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.comment-panel {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.comment-panel .item-panel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.comment-panel .item-panel:last-child {
+    margin-left: auto;
+}
+
+.comment-panel p {
+    margin-bottom: 0;
+}
+
+strong.allcaps {
+    text-transform: uppercase;
+}
