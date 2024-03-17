@@ -6,12 +6,13 @@ import Register from "./Register.js";
 import HomePage from "./HomePage.js";
 import Login from "./LoginPage.js";
 import TestRoute from "./TestRoute/index.jsx";
+import NoAuthRoute from "./NoAuthRoute.js"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   { path: "/", element: <HomePage /> },
-  { path: "/register", element: <Register /> },
-  { path: "/login", element: <Login /> },
+  { path: "/register", element: <NoAuthRoute><Register /></NoAuthRoute> },
+  { path: "/login", element: <NoAuthRoute><Login /></NoAuthRoute> },
   { path: "/Fetch", element: <Fetch /> },
   { path: "/testing", element: <TestRoute /> },
 ]);
