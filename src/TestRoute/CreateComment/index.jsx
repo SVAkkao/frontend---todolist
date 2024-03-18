@@ -71,7 +71,7 @@ export default function CreateComment() {
             </select>
             <input type="text" name="comment" placeholder="comment" />
             <input type="number" name="rate" placeholder="rate" max={10} min={1} />
-            <input type="submit" value="Get user" />
+            <input type="submit" value="Sent comment" />
         </form>
     </div>);
 }
