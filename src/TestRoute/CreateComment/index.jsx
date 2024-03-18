@@ -36,7 +36,7 @@ export default function CreateComment() {
             method: "POST",
             body: new FormData(e.target),
             headers: {
-                "Authorization": token,
+                "Authorization": `Bearer ${token}`,
                 "Accept": "application/json"
             }
         }).then( s => s.json() );
