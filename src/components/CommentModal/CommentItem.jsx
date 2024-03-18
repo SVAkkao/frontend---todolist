@@ -28,7 +28,7 @@ const generate_rate = (r = "0") => {
     /*
     const empty_star_num = (10 / 2) - full_star_num - half_star_num;
     for (let j = 0; j < empty_star_num; j++) {
-        result.push("fa-regular fa-star");
+        result.push(faStar); // How to git an empty star, anyway?
     }
     */
     return result;

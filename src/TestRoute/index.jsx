@@ -1,10 +1,14 @@
+// FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCoffee } from "@fortawesome/free-solid-svg-icons"
+// Local components
 import TheModal from "./Modal";
 import RatingItem from "./RatingItem";
-import { modal_modules } from "./CommentModal/utils";
+// CommentModal
+import CommentModal from "../components/CommentModal/index";
+import { modal_modules } from "../components/CommentModal/utils";
+// react-bootstrap
 import Button from "react-bootstrap/Button";
-import CommentModal from "./CommentModal";
 
 function TestRoute() {
     const { show, show_modal, close_modal } = modal_modules();

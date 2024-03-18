@@ -1,12 +1,13 @@
+// react-bootstrap
 import Modal from "react-bootstrap/Modal";
-import CommentForm from "./CommentForm";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+// Fontawesome
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 // Local
+import CommentForm from "./CommentForm";
 import { modal_modules, modal_mode_modules } from "./utils";
-// import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons"
 
 function DeleteConfirmModal({ hideModal, iid }) {
     const close = () => {
@@ -23,7 +24,6 @@ function DeleteConfirmModal({ hideModal, iid }) {
 }
 
 export default function OprationPanel() {
-    // const { t } = useTranslation();
     const { show, close_modal, show_modal } = modal_modules();
     const modalmode = modal_mode_modules();
     const open_removing = () => {
@@ -41,7 +41,7 @@ export default function OprationPanel() {
         <div className="modals">
             <Modal id="edit-form-modal" size="xs" centered show={show} onHide={close_modal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{("edit-form")}</Modal.Title>
+                    <Modal.Title>編輯</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal iid="123" hideModal={close_modal} /> : <div></div>}
