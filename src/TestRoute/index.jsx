@@ -1,21 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCoffee } from "@fortawesome/free-solid-svg-icons"
-import TheModal from "./Modal";
-import RatingItem from "./RatingItem";
+import ComponentEntry from "./ComponentEntry";
+import AttractionAndProject from "./AttractionAndProject";
+import CreateComment from "./CreateComment";
 
 function TestRoute() {
-    // const RatingItem = newFunction();
     return <div id="test-route" className="m-2">
         <h1>Developer's console</h1>
-        <p>
-            <cite>Hello Dolly</cite>:
-            <FontAwesomeIcon icon={faCoffee} />
-        </p>
-        <RatingItem />
-        <RatingItem />
-        <RatingItem />
-        <TheModal />
-    </div>
+        <ComponentEntry />
+        <hr />
+        <AttractionAndProject />
+        <CreateComment />
+    </div>;
 }
 
 export default TestRoute;
