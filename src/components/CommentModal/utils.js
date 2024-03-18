@@ -21,7 +21,7 @@ export const list_modules = (apipath) => {
         set_the_list([]);
         const ajax = fetch(apipath).then( r => r.json() );
         ajax.then( (res) => {
-            set_the_list([...res]);
+            set_the_list([...res.result]);
         });
     };
     return { the_list, set_the_list, ajax_list };

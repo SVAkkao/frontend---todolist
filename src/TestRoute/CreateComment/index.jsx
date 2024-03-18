@@ -1,5 +1,28 @@
 import { useState, useEffect } from "react";
 
+function PidSelector() {
+    const [projects, set_projects] = useState([]);
+    const get_projects = () => {
+        const ajax = fetch(`${process.env.REACT_APP_API_URL}/api/project`, {
+            method: "GET",
+        }).then( s => s.json() );
+        ajax.then( (response) => {
+            set_projects(response.result);
+        });
+    };
+    useEffect(() => {
+        let mounted = true;
+        console.log(mounted);
+        if( mounted ) {
+            get_projects();
+        }
+        return () => mounted = false;
+    }, []);
+    return <select name="pid">
+        {projects.map(its => <option key={its.pid} value={its.pid}>{its.pname} at {its.aid}</option>)}
+    </select>;
+}
+
 export default function CreateComment() {
     // User token
     const [token, set_token] = useState("");
@@ -17,15 +40,6 @@ export default function CreateComment() {
         });
     };
     // Project
-    const [projects, set_projects] = useState([]);
-    const get_projects = () => {
-        const ajax = fetch(`${process.env.REACT_APP_API_URL}/api/project`, {
-            method: "GET",
-        }).then( s => s.json() );
-        ajax.then( (response) => {
-            set_projects(response.result);
-        });
-    };
     // Sent comment
     const sent_comment = (e) => {
         e.preventDefault();
@@ -49,14 +63,6 @@ export default function CreateComment() {
             }
         });
     };
-    useEffect(() => {
-        let mounted = true;
-        console.log(mounted);
-        if( mounted ) {
-            get_projects();
-        }
-        return () => mounted = false;
-    }, []);
     return (<div>
         <p>Get User</p>
         <form onSubmit={get_user}>
@@ -67,9 +73,7 @@ export default function CreateComment() {
         </form>
         <hr />
         <form onSubmit={sent_comment}>
-            <select name="pid">
-                { projects.map( its => <option key={its.pid} value={its.pid}>{its.pname} at {its.aid}</option> ) }
-            </select>
+            <PidSelector />
             <input type="text" name="comment" placeholder="comment" />
             <input type="number" name="rate" placeholder="rate" max={10} min={1} />
             <input type="submit" value="Sent comment" />
