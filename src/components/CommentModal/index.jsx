@@ -14,7 +14,7 @@ export default function CommentModal({ show, handleClose, pid }) {
         const ajax_api = `${process.env.REACT_APP_API_URL}/api/comment`;
         const token = localStorage.getItem("userToken");
         const ajax = fetch( ajax_api, {
-            method: form_dom.method,
+            method: form_dom.dataset.method,
             body: new FormData(form_dom),
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -36,7 +36,8 @@ export default function CommentModal({ show, handleClose, pid }) {
         <Modal.Body>
             <p className="as">{ the_list.length < 1 ? "NO DATA" : "" }</p>
             <ListGroup>
-                {the_list.map( (item) => <CommentItem key={item.cid} item={item} /> )}
+                {/* onEdit, onDelete */}
+                {the_list.map( (item) => <CommentItem key={item.cid} item={item} onEdit={ajax_list} onDelete={ajax_list} /> )}
             </ListGroup>
             <hr />
             <div>

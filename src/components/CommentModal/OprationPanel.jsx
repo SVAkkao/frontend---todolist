@@ -64,9 +64,10 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
             result.append("rate", form_dom.rate.value);
             return result;
         }
+        console.log(form_dom.method);
         const ajax = fetch( ajax_api, {
-            method: form_dom.method,
-            body: get_request_params(),
+            method: form_dom.dataset.method,
+            body: get_request_params(form_dom),
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Accept": "application/json"
@@ -92,7 +93,7 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
                 </Modal.Header>
                 <Modal.Body>
                     {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal hideModal={close_removing} /> : <div></div>}
-                    {modalmode.mode === modalmode.EDITING ? <CommentForm pid={pid} submitAction={close_editing} preloadDatas={preloadDatas} /> : <div></div>}
+                    {modalmode.mode === modalmode.EDITING ? <CommentForm pid={pid} submitAction={close_editing} preloadDatas={preloadDatas} method="PATCH" /> : <div></div>}
                 </Modal.Body>
             </Modal>
         </div>

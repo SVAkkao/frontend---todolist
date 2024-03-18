@@ -21,7 +21,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://localhost/---todolist-backend/public/api/login",
+        "http://127.0.0.1:8000/api/login",
         {
           method: "POST",
           headers: {
