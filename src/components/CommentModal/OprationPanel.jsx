@@ -58,18 +58,15 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
     const close_editing = (form_dom) => {
         const ajax_api = `${process.env.REACT_APP_API_URL}/api/comment/${cid}`;
         const token = localStorage.getItem("userToken");
-        function get_request_params(form_dom) {
-            const result = new FormData();
-            result.append("comment", form_dom.comment.value);
-            result.append("rate", form_dom.rate.value);
-            return result;
-        }
-        console.log(form_dom.method);
         const ajax = fetch( ajax_api, {
             method: form_dom.dataset.method,
-            body: get_request_params(form_dom),
+            body: JSON.stringify({
+                "comment": form_dom.comment.value,
+                "rate": form_dom.rate.value,
+            }),
             headers: {
                 "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
                 "Accept": "application/json"
             }
         }).then( r => r.json() );
@@ -93,7 +90,7 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
                 </Modal.Header>
                 <Modal.Body>
                     {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal hideModal={close_removing} /> : <div></div>}
-                    {modalmode.mode === modalmode.EDITING ? <CommentForm pid={pid} submitAction={close_editing} preloadDatas={preloadDatas} method="PATCH" /> : <div></div>}
+                    {modalmode.mode === modalmode.EDITING ? <CommentForm pid={pid} submitAction={close_editing} preloadDatas={preloadDatas} method="PUT" /> : <div></div>}
                 </Modal.Body>
             </Modal>
         </div>
