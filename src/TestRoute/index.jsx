@@ -8,7 +8,6 @@ import CommentModal from "./CommentModal";
 
 function TestRoute() {
     const { show, show_modal, close_modal } = modal_modules();
-    // const RatingItem = newFunction();
     return <div id="test-route" className="m-2">
         <h1>Developer's console</h1>
         <p>
@@ -19,8 +18,6 @@ function TestRoute() {
         <div className="modal">
             <CommentModal show={show} handleClose={close_modal} iid="1" />
         </div>
-        <RatingItem />
-        <RatingItem />
         <RatingItem />
         <TheModal />
     </div>
