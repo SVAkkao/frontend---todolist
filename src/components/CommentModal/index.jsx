@@ -8,24 +8,26 @@ import { list_modules } from "./utils";
 import "./style.css";
 
 export default function CommentModal({ show, handleClose, pid }) {
-    const { the_list, ajax_list } = list_modules("/api/test.json");
-    const action = (b) => {
-        console.log(b);
+    const requesting_api = `${process.env.REACT_APP_API_URL}/api/project-comment/${pid}`;
+    const { the_list, ajax_list } = list_modules(requesting_api);
+    const submit_action = (form_dom) => {
+        const formdata = new FormData(form_dom);
+        console.log(formdata);
         // AJAX
-        ajax_list();
+        // ajax_list();
     };
     return (<Modal id="comment-modal" size="lg" show={show} onShow={ajax_list} onHide={handleClose} data-pid={pid} centered>
         <Modal.Header closeButton>
             <Modal.Title>評論</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            {/*  */}
+            <p className="as">{ the_list.length < 1 ? "NO DATA" : "" }</p>
             <ListGroup>
-                {the_list.map( (item) => <CommentItem key={item.id} item={item} /> )}
+                {the_list.map( (item) => <CommentItem key={item.cid} item={item} /> )}
             </ListGroup>
             <hr />
             <div>
-                <CommentForm submitAction={action} />
+                <CommentForm submitAction={submit_action} pid={pid} />
             </div>
         </Modal.Body>
     </Modal>);
