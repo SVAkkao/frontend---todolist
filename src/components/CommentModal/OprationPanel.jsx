@@ -8,6 +8,7 @@ import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
 // Local
 import CommentForm from "./CommentForm";
 import { modal_modules, modal_mode_modules } from "./utils";
+import { change_comment_api, delete_comment_api } from "./api";
 
 function DeleteConfirmModal({ hideModal, iid }) {
     const close = () => {
@@ -32,15 +33,7 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
         show_modal();
     };
     const close_removing = () => {
-        const ajax_api = `${process.env.REACT_APP_API_URL}/api/comment/${cid}`;
-        const token = localStorage.getItem("userToken");
-        const ajax = fetch( ajax_api, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Accept": "application/json"
-            }
-        }).then( r => r.json() );
+        const ajax = delete_comment_api(cid);
         ajax.then( (response) => {
             console.log(response);
             onDelete();
@@ -56,20 +49,7 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
         show_modal();
     };
     const close_editing = (form_dom) => {
-        const ajax_api = `${process.env.REACT_APP_API_URL}/api/comment/${cid}`;
-        const token = localStorage.getItem("userToken");
-        const ajax = fetch( ajax_api, {
-            method: form_dom.dataset.method,
-            body: JSON.stringify({
-                "comment": form_dom.comment.value,
-                "rate": form_dom.rate.value,
-            }),
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            }
-        }).then( r => r.json() );
+        const ajax = change_comment_api(form_dom, cid);
         ajax.then( (response) => {
             console.log(response);
             onEdit();
@@ -95,4 +75,6 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
             </Modal>
         </div>
     </div>;
+
+    
 }
