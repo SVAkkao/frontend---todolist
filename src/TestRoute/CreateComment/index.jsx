@@ -31,6 +31,7 @@ export default function CreateComment() {
         e.preventDefault();
         if( !token ) {
             alert("Please login");
+            return false;
         }
         const ajax = fetch(`${process.env.REACT_APP_API_URL}/api/comment`, {
             method: "POST",
