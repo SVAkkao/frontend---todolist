@@ -11,10 +11,23 @@ export default function CommentModal({ show, handleClose, pid }) {
     const requesting_api = `${process.env.REACT_APP_API_URL}/api/project-comment/${pid}`;
     const { the_list, ajax_list } = list_modules(requesting_api);
     const submit_action = (form_dom) => {
-        const formdata = new FormData(form_dom);
-        console.log(formdata);
-        // AJAX
-        // ajax_list();
+        const ajax_api = `${process.env.REACT_APP_API_URL}/api/comment`;
+        const token = localStorage.getItem("userToken");
+        const ajax = fetch( ajax_api, {
+            method: form_dom.method,
+            body: new FormData(form_dom),
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json"
+            }
+        }).then( r => r.json() );
+        ajax.then( (response) => {
+            console.log(response);
+            ajax_list();
+        }).catch( (response) => {
+            console.error(response);
+            alert(response.message);
+        });
     };
     return (<Modal id="comment-modal" size="lg" show={show} onShow={ajax_list} onHide={handleClose} data-pid={pid} centered>
         <Modal.Header closeButton>
@@ -27,7 +40,7 @@ export default function CommentModal({ show, handleClose, pid }) {
             </ListGroup>
             <hr />
             <div>
-                <CommentForm submitAction={submit_action} pid={pid} />
+                <CommentForm submitAction={submit_action} pid={pid} method="POST" />
             </div>
         </Modal.Body>
     </Modal>);
