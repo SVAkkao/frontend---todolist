@@ -1,12 +1,19 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import PurestarRating from "./PurestarRating/index";
+import { useState } from "react";
 
-export default function CommentForm({ pid, submitAction, method }) {
+export default function CommentForm({ pid, submitAction, method, preloadDatas }) {
     const action = (b) => {
         b.preventDefault();
         submitAction(b.target);
     }
+    // preloadDatas
+    useState(() => {
+        if( preloadDatas ) {
+            console.log(preloadDatas);
+        }
+    }, []);
     return (<Form onSubmit={action} method={method}>
         <input type="hidden" name="pid" value={pid} />
         <Form.Group className="mb-3" controlId="formBasicComment">

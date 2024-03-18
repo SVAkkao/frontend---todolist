@@ -23,7 +23,7 @@ function DeleteConfirmModal({ hideModal, iid }) {
     </div>);
 }
 
-export default function OprationPanel() {
+export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas }) {
     const { show, close_modal, show_modal } = modal_modules();
     const modalmode = modal_mode_modules();
     // Removing actions
@@ -32,15 +32,54 @@ export default function OprationPanel() {
         show_modal();
     };
     const close_removing = () => {
-        close_modal();
+        const ajax_api = `${process.env.REACT_APP_API_URL}/api/comment/${cid}`;
+        const token = localStorage.getItem("userToken");
+        const ajax = fetch( ajax_api, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json"
+            }
+        }).then( r => r.json() );
+        ajax.then( (response) => {
+            console.log(response);
+            onDelete();
+            close_modal();
+        }).catch( (response) => {
+            console.error(response);
+            alert(response.message);
+        });
     };
     // Editing actions
     const open_editing = () => {
         modalmode.set_mode(modalmode.EDITING);
         show_modal();
     };
-    const close_editing = () => {
-        close_modal();
+    const close_editing = (form_dom) => {
+        const ajax_api = `${process.env.REACT_APP_API_URL}/api/comment/${cid}`;
+        const token = localStorage.getItem("userToken");
+        function get_request_params(form_dom) {
+            const result = new FormData();
+            result.append("comment", form_dom.comment.value);
+            result.append("rate", form_dom.rate.value);
+            return result;
+        }
+        const ajax = fetch( ajax_api, {
+            method: form_dom.method,
+            body: get_request_params(),
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json"
+            }
+        }).then( r => r.json() );
+        ajax.then( (response) => {
+            console.log(response);
+            onEdit();
+            close_modal();
+        }).catch( (response) => {
+            console.error(response);
+            alert(response.message);
+        });
     };
     // HTML
     return <div className="item-panel">
@@ -52,8 +91,8 @@ export default function OprationPanel() {
                     <Modal.Title>編輯</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal iid="123" hideModal={close_removing} /> : <div></div>}
-                    {modalmode.mode === modalmode.EDITING ? <CommentForm iid="123" submitAction={close_editing} /> : <div></div>}
+                    {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal hideModal={close_removing} /> : <div></div>}
+                    {modalmode.mode === modalmode.EDITING ? <CommentForm pid={pid} submitAction={close_editing} preloadDatas={preloadDatas} /> : <div></div>}
                 </Modal.Body>
             </Modal>
         </div>

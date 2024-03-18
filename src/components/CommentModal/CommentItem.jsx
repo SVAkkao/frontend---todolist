@@ -36,15 +36,16 @@ const generate_rate = (r = "0") => {
     return result;
 };
 
-const DEFAULT_ITEM = { "id": "", "avatar": "", "rate": "", "comment": "", "date": "", "pid": "", "uid": "" };
+const DEFAULT_ITEM = { "cid": "", "avatar": "", "rate": "", "comment": "", "date": "", "pid": "", "uid": "" };
 
-export default function CommentItem({ item = DEFAULT_ITEM }) {
+export default function CommentItem({ item = DEFAULT_ITEM, onDelete }) {
     const imgsize = 48; 
     const stars = generate_rate(item.rate);
     const alt = `User ${item.uid}`;
     const src = item.photo || "avatar-template.svg";
     return <ListGroup.Item className="comment-panel">
-        <OprationPanel />
+        {/* onEdit={onEdit} */}
+        <OprationPanel cid={item.cid} onDelete={onDelete} preloadDatas={item} />
         <div className="item-panel">
             <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
             <p>{ item.comment }</p>
