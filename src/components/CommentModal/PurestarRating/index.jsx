@@ -1,17 +1,13 @@
 import "./style.css";
-// import "./fontawesome.min.css";
-// import "https://use.fontawesome.com/releases/v5.2.0/js/all.js";
-// import { useTranslation } from "react-i18next";
 
 /**
  * @see <https://codepen.io/jamesbarnett/pen/najzYK>
  * @returns number
  */
-function PurestarRating({ onrate, rateControlId }) {
-    return (<div style={{ overflowY: "auto" }} data-cid={rateControlId}>
+function PurestarRating({ onrate }) {
+    return (<div style={{ overflowY: "auto" }}>
         <div>
-            {/* <label>{useTranslation().t("comment-form-rate")}</label> */}
-            <label htmlFor="">評分</label>
+            <p>評分</p>
         </div>
         <fieldset className="the-rating" onChange={onrate}>
             <input type="radio" id="form-rating-star5" name="rating" value="10" />

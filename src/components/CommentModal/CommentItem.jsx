@@ -1,9 +1,11 @@
-import ListGroup from "react-bootstrap/ListGroup";
+// react-bootstrap
 import Image from "react-bootstrap/Image";
-import OprationPanel from "./OprationPanel";
+import ListGroup from "react-bootstrap/ListGroup";
 // FontAwesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
+// Local
+import OprationPanel from "./OprationPanel";
 
 /**
  * How many stars should we have?
@@ -34,7 +36,9 @@ const generate_rate = (r = "0") => {
     return result;
 };
 
-export default function CommentItem({ item }) {
+const DEFAULT_ITEM = { "id": "", "avatar": "", "rate": "", "comment": "", "date": "", "pid": "", "uid": "" };
+
+export default function CommentItem({ item = DEFAULT_ITEM }) {
     const imgsize = 48; 
     const stars = generate_rate(item.rate);
     return <ListGroup.Item className="comment-panel">

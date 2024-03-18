@@ -17,8 +17,8 @@ function DeleteConfirmModal({ hideModal, iid }) {
     return (<div>
         <p>您確定要刪除嗎？<strong className="allcaps">此操作無法撤銷</strong>！</p>
         <ButtonGroup aria-label="Basic example">
-            <Button onClick={close} variant="danger">{("delete-form")}</Button>
-            <Button onClick={close} variant="secondary">{("cancel-action")}</Button>
+            <Button onClick={close} variant="danger">刪除</Button>
+            <Button onClick={close} variant="secondary">取消</Button>
         </ButtonGroup>
     </div>);
 }
@@ -26,13 +26,21 @@ function DeleteConfirmModal({ hideModal, iid }) {
 export default function OprationPanel() {
     const { show, close_modal, show_modal } = modal_modules();
     const modalmode = modal_mode_modules();
+    // Removing actions
     const open_removing = () => {
         modalmode.set_mode(modalmode.REMOVING);
         show_modal();
     };
+    const close_removing = () => {
+        close_modal();
+    };
+    // Editing actions
     const open_editing = () => {
         modalmode.set_mode(modalmode.EDITING);
         show_modal();
+    };
+    const close_editing = () => {
+        close_modal();
     };
     // HTML
     return <div className="item-panel">
@@ -44,8 +52,8 @@ export default function OprationPanel() {
                     <Modal.Title>編輯</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal iid="123" hideModal={close_modal} /> : <div></div>}
-                    {modalmode.mode === modalmode.EDITING ? <CommentForm iid="123" submitAction={close_modal} /> : <div></div>}
+                    {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal iid="123" hideModal={close_removing} /> : <div></div>}
+                    {modalmode.mode === modalmode.EDITING ? <CommentForm iid="123" submitAction={close_editing} /> : <div></div>}
                 </Modal.Body>
             </Modal>
         </div>

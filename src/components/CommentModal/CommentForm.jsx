@@ -1,10 +1,8 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import PurestarRating from "./PurestarRating/index";
-// import { useTranslation } from "react-i18next";
 
-export default function CommentForm({ iid, submitAction, rateControlId }) {
-    // const { t } = useTranslation();
+export default function CommentForm({ iid, submitAction }) {
     const onrate = (ev) => {
         const rate = Number(ev.target.value);
         console.log(rate);
@@ -20,7 +18,7 @@ export default function CommentForm({ iid, submitAction, rateControlId }) {
             <Form.Control type="text" placeholder="輸入評論..." />
         </Form.Group>
         <div className="mb-3 rating">
-            <PurestarRating onrate={onrate} rateControlId={rateControlId} />
+            <PurestarRating onrate={onrate} />
         </div>
         <div className="mb-3 panel">
             <Button variant="primary" type="submit">提交</Button>
