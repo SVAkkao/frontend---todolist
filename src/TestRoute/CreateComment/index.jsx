@@ -12,7 +12,6 @@ function PidSelector() {
     };
     useEffect(() => {
         let mounted = true;
-        console.log(mounted);
         if( mounted ) {
             get_projects();
         }
