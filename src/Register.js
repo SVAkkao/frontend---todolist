@@ -66,9 +66,14 @@ function Register() {
       >
         <div className="container-fluid">
           <img src="logo.svg" style={{ height: "80px" }}></img>
-          <div className="navbar-brand text-dark" style={{ fontSize: "32px" }}>
-            清單樂旅
-          </div>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <div
+              className="navbar-brand text-dark"
+              style={{ fontSize: "32px" }}
+            >
+              清單樂旅
+            </div>
+          </Link>
           <spam className="ms-auto"></spam>
         </div>
       </nav>
@@ -163,7 +168,8 @@ function Register() {
             </form>
             <br></br>
             <div>
-              <Link to="/login"> 會員登入 </Link>|<Link> 忘記密碼 </Link>
+              <Link to="/login"> 會員登入 </Link>|
+              <Link to="/forgotpassword"> 忘記密碼 </Link>
             </div>
           </div>
         </div>

@@ -9,8 +9,10 @@ import TestRoute from "./TestRoute/index.jsx";
 import NoAuthRoute from "./NoAuthRoute.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LogoutBar from "./LogoutBar.js";
+import ForgotPassword from "./ForgotPassword.js";
 
 const router = createBrowserRouter([
+  //會員系統
   { path: "/", element: <HomePage /> },
   {
     path: "/register",
@@ -28,9 +30,21 @@ const router = createBrowserRouter([
       </NoAuthRoute>
     ),
   },
-  { path: "/Fetch", element: <Fetch /> },
-  { path: "/testing", element: <TestRoute /> },
   { path: "/logout", element: <LogoutBar /> },
+  {
+    path: "/forgotpassword",
+    element: (
+      <NoAuthRoute>
+        <ForgotPassword />
+      </NoAuthRoute>
+    ),
+  },
+
+  //TO-DO-LIST
+  { path: "/Fetch", element: <Fetch /> },
+
+  //評價系統
+  { path: "/testing", element: <TestRoute /> },
 ]);
 
 function App() {

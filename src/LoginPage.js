@@ -54,9 +54,14 @@ function Login() {
       >
         <div className="container-fluid">
           <img src="logo.svg" style={{ height: "80px" }}></img>
-          <div className="navbar-brand text-dark" style={{ fontSize: "32px" }}>
-            清單樂旅
-          </div>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <div
+              className="navbar-brand text-dark"
+              style={{ fontSize: "32px" }}
+            >
+              清單樂旅
+            </div>
+          </Link>
           <spam className="ms-auto"></spam>
         </div>
       </nav>
@@ -121,7 +126,8 @@ function Login() {
               </form>
               <br></br>
               <div>
-                <Link to="/register"> 註冊會員 </Link>|<Link> 忘記密碼 </Link>
+                <Link to="/register"> 註冊會員 </Link>|
+                <Link to="/forgotpassword"> 忘記密碼 </Link>
               </div>
             </div>
           </div>
