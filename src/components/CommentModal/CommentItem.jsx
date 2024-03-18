@@ -41,10 +41,12 @@ const DEFAULT_ITEM = { "id": "", "avatar": "", "rate": "", "comment": "", "date"
 export default function CommentItem({ item = DEFAULT_ITEM }) {
     const imgsize = 48; 
     const stars = generate_rate(item.rate);
+    const alt = `User ${item.uid}`;
+    const src = item.photo || "avatar-template.svg";
     return <ListGroup.Item className="comment-panel">
         <OprationPanel />
         <div className="item-panel">
-            <Image width={imgsize} height={imgsize} src={item.avatar} roundedCircle />
+            <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
             <p>{ item.comment }</p>
         </div>
         <div className="item-panel">

@@ -1,6 +1,9 @@
 .click-icon {
     cursor: pointer;
 }
+.hide-icon {
+    visibility: hidden;
+}
 
 .the-list-item {
     display: flex;
