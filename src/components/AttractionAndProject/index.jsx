@@ -12,15 +12,15 @@ export default function AttractionAndProject() {
         alert( ajax.message );
     };
     return <div>
-        <TheModal />
         <Form onSubmit={attractions_action} style={{ maxWidth: "460px" }}>
             <Form.Group className="mb-3" controlId="formBasicComment">
                 <Form.Label>景點</Form.Label>
                 <Form.Control type="text" placeholder="輸入景點" name="aname" required />
             </Form.Group>
             <div className="mb-3 panel">
-                <Button variant="primary" type="submit">提交景點</Button>
+                <Button type="submit">提交景點</Button>
             </div>
         </Form>
+        <TheModal />
     </div>
 }
