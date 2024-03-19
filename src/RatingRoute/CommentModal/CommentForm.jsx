@@ -13,11 +13,11 @@ export default function CommentForm({ pid, submitAction, method, preloadDatas })
 
     const cover_preloaded_data = (preloadDatas) => {
         if (!preloadDatas || !formref.current) {
-            console.log(formref.current);
+            // console.log(formref.current);
             return;
         }
         if (preloadDatas.comment) {
-            console.log(preloadDatas.comment);
+            // console.log(preloadDatas.comment);
             set_preloaded_comment(preloadDatas.comment);
         }
         if (preloadDatas.rate) {
