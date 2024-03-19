@@ -64,7 +64,10 @@ function Fetch() {
             formData.append('email', email);
             fetch(`${API_HOST}/api/showlist`, {
                 method: 'post',
-                body: formData
+                body: formData,
+                headers: {
+                    "Accept": "application/json"
+                }
             })
                 .then(response => response.text())
                 .then(text => {
