@@ -1,8 +1,5 @@
 import CommentModal from "./CommentModal";
 import { modal_modules } from "./CommentModal/utils";
-// Other components
-import CreateComment from "../components/CreateComment";
-import AttractionAndProject from "../components/AttractionAndProject";
 // react-bootstrap
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
@@ -60,11 +57,6 @@ function RatingRoute() {
     return <div id="rating-route" className="m-2">
         <h1>評價系統</h1>
         <ComponentEntry />
-        <div className="m-2" hidden>
-            <AttractionAndProject />
-            <hr />
-            <CreateComment />
-        </div>
     </div>;
 }
 

@@ -72,7 +72,7 @@ export default function CreateComment() {
         </form>
         <hr />
         <form onSubmit={sent_comment}>
-            {/* <PidSelector /> */}
+            <PidSelector />
             <input type="text" name="comment" placeholder="comment" />
             <input type="number" name="rate" placeholder="rate" max={10} min={1} />
             <input type="submit" value="Sent comment" />
