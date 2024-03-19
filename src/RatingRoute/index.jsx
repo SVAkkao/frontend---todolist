@@ -1,8 +1,8 @@
-import { modal_modules } from "../components/CommentModal/utils";
-import CommentModal from "../components/CommentModal";
+import CommentModal from "./CommentModal";
+import { modal_modules } from "./CommentModal/utils";
 // Other components
-import AttractionAndProject from "../components/AttractionAndProject";
 import CreateComment from "../components/CreateComment";
+import AttractionAndProject from "../components/AttractionAndProject";
 // react-bootstrap
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
