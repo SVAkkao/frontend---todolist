@@ -51,3 +51,18 @@ export function delete_comment_api(cid) {
     }).then(r => r.json());
     return ajax;
 }
+
+export async function get_user_comments_api() {
+    const token = localStorage.getItem("userToken");
+    const r = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/user-comment`,
+        {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Accept": "application/json"
+            }
+        }
+    );
+    return await r.json();
+}
