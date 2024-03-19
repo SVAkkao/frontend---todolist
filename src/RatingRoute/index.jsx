@@ -3,6 +3,7 @@ import { modal_modules } from "./CommentModal/utils";
 // react-bootstrap
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
+import { get_user_comments_api } from "./CommentModal/api";
 
 async function get_project_api() {
     const r = await fetch(
@@ -53,10 +54,22 @@ function ComponentEntry() {
     </div>;
 }
 
+function UserComments() {
+    const [list, set_list] = useState([]);
+    useEffect(() => {
+        get_user_comments_api().then( ({ result }) => set_list(result) );
+    }, []);
+    return <div className="user-comment">
+        <h2>用戶發表的意見</h2>
+        {JSON.stringify(list)}
+    </div>;
+}
+
 function RatingRoute() {
     return <div id="rating-route" className="m-2">
         <h1>評價系統</h1>
         <ComponentEntry />
+        <UserComments />
     </div>;
 }
 
