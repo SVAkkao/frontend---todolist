@@ -1,5 +1,4 @@
 // import React, { useEffect, useRef, useState } from 'react'
-import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 // Routes
 import Fetch from "./Fetch";
@@ -50,6 +49,7 @@ const router = createBrowserRouter([
 
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
+  { path: "/ratingroute", element: <Navigate to="/ratings" /> },
   { path: "/RatingRoute", element: <Navigate to="/ratings" /> },
 ]);
 
