@@ -1,11 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import axios from "axios"; // 引入axios
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import axios from "axios"; // 引入 axios
+// CSS, icon
+import {
+  // 會員中心的圖示
+  MdAccountCircle,
+  // 下拉的圖示
+  MdExpandMore,
+} from "react-icons/md";
+import {
+  // 登出的圖示
+  FaSignOutAlt,
+  // 評論與評價的圖示
+  FaCommentAlt,
+} from "react-icons/fa";
 import "./DropdownMenu.css";
-import { MdAccountCircle } from "react-icons/md"; // 會員中心的圖示
-import { FaSignOutAlt } from "react-icons/fa"; // 登出的圖示
-import { MdExpandMore } from "react-icons/md"; //下拉的圖示
+
+const API_HOST = process.env.REACT_APP_API_URL;
 
 function LogoutBar() {
   const navigate = useNavigate();
@@ -17,7 +28,7 @@ function LogoutBar() {
       const token = localStorage.getItem("userToken"); // 从localStorage获取token
       try {
         const response = await axios.get(
-          "http://localhost/---todolist-backend/public/api/user",
+          `${API_HOST}/api/user`,
           {
             // 确保地址与你的Laravel后端服务地址匹配
             headers: {
@@ -39,7 +50,7 @@ function LogoutBar() {
       const token = localStorage.getItem("userToken");
       // 在请求头中添加token
       const response = await axios.post(
-        "http://localhost/---todolist-backend/public/api/logout",
+        `${API_HOST}/api/logout`,
         {},
         {
           headers: {
@@ -82,6 +93,10 @@ function LogoutBar() {
                 <Link to="/membercentre" className="nav-link">
                   <MdAccountCircle style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>會員中心</span>
+                </Link>
+                <Link to="/ratings" className="nav-link">
+                  <FaCommentAlt style={{ marginRight: "8px" }} />
+                  <span style={{ fontSize: "18px" }}>評論與評價</span>
                 </Link>
                 <Link onClick={handleLogout} className="nav-link">
                   <FaSignOutAlt style={{ marginRight: "8px" }} />
