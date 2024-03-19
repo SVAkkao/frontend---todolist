@@ -15,7 +15,7 @@ export function create_comment_api(form_dom) {
         body: new FormData(form_dom),
         headers: {
             "Authorization": `Bearer ${token}`,
-            "Accept": "application/json"
+            "Accept": "application/json",
         }
     }).then(r => r.json());
     return ajax;
@@ -32,8 +32,8 @@ export function change_comment_api(form_dom, cid) {
         }),
         headers: {
             "Authorization": `Bearer ${token}`,
+            "Accept": "application/json",
             "Content-Type": "application/json",
-            "Accept": "application/json"
         }
     }).then(r => r.json());
     return ajax;
@@ -46,7 +46,7 @@ export function delete_comment_api(cid) {
         method: "DELETE",
         headers: {
             "Authorization": `Bearer ${token}`,
-            "Accept": "application/json"
+            "Accept": "application/json",
         }
     }).then(r => r.json());
     return ajax;

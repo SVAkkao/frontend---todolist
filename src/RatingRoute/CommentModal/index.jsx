@@ -12,8 +12,7 @@ export default function CommentModal({ show, handleClose, pid }) {
     const requesting_api = `${process.env.REACT_APP_API_URL}/api/project-comment/${pid}`;
     const { the_list, ajax_list } = list_modules(requesting_api);
     const submit_action = (form_dom) => {
-        const ajax = create_comment_api(form_dom);
-        ajax.then( (response) => {
+        create_comment_api(form_dom).then( (response) => {
             console.log(response);
             ajax_list();
         }).catch( (response) => {

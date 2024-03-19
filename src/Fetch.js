@@ -71,6 +71,9 @@ function Fetch() {
       fetch(`${API_HOST}/api/showlist`, {
         method: "post",
         body: formData,
+        headers: {
+          Accept: "application/json",
+        },
       })
         .then((response) => response.text())
         .then((text) => {

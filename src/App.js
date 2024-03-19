@@ -1,11 +1,12 @@
 // import React, { useEffect, useRef, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
-// import Table from 'react-bootstrap/Table';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+// Routes
 import Fetch from "./Fetch";
 import Register from "./MemberSystem/Register.js";
 import HomePage from "./MemberSystem/HomePage.js";
 import Login from "./MemberSystem/LoginPage.js";
-import TestRoute from "./TestRoute/index.jsx";
+import RatingRoute from "./RatingRoute";
 import NoAuthRoute from "./MemberSystem/NoAuthRoute.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LogoutBar from "./MemberSystem/LogoutBar.js";
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
   { path: "/Fetch", element: <Fetch /> },
 
   //評價系統
-  { path: "/testing", element: <TestRoute /> },
+  { path: "/ratings", element: <RatingRoute /> },
 ]);
 
 function App() {
