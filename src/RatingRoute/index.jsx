@@ -33,7 +33,6 @@ function PidSelector({ change_action }) {
     return <ul>
         {/* { "pid": 1, "aid": 3, "pname": "金融中心遺址" } */}
         { projects.map( its => <li key={its.pid} className="m-2">
-            {/* href="javascript:void(0)" */}
             <Button
                 data-pid={its.pid} data-aid={its.aid} variant="secondary"
                 onClick={() => change_action(its.pid)}
