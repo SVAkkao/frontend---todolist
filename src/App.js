@@ -2,14 +2,15 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 // import Table from 'react-bootstrap/Table';
 import Fetch from "./Fetch";
-import Register from "./Register.js";
-import HomePage from "./HomePage.js";
-import Login from "./LoginPage.js";
+import Register from "./MemberSystem/Register.js";
+import HomePage from "./MemberSystem/HomePage.js";
+import Login from "./MemberSystem/LoginPage.js";
 import TestRoute from "./TestRoute/index.jsx";
-import NoAuthRoute from "./NoAuthRoute.js";
+import NoAuthRoute from "./MemberSystem/NoAuthRoute.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import LogoutBar from "./LogoutBar.js";
-import ForgotPassword from "./ForgotPassword.js";
+import LogoutBar from "./MemberSystem/LogoutBar.js";
+import ForgotPassword from "./MemberSystem/ForgotPassword.js";
+import MemberCentre from "./MemberSystem/MemberCentre.js";
 
 const router = createBrowserRouter([
   //會員系統
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
         <ForgotPassword />
       </NoAuthRoute>
     ),
+  },
+  {
+    path: "/membercentre",
+    element: <MemberCentre />,
   },
 
   //TO-DO-LIST
