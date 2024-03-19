@@ -1,27 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import "./MemberCentre.css";
+
+const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 function ChangeAvatar() {
   const [avatar, setAvatar] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(
     "https://via.placeholder.com/150"
-  ); // 使用占位图作为默认头像
+  );
 
   const handleChange = (event) => {
     const file = event.target.files[0];
     if (file && file.type.substr(0, 5) === "image") {
       setAvatar(file);
-      setPreviewUrl(URL.createObjectURL(file)); // 创建并更新预览URL
+      setPreviewUrl(URL.createObjectURL(file));
     } else {
       setAvatar(null);
     }
   };
 
+  useEffect(() => {
+    // 模拟从后端获取用户头像URL的异步操作
+    const fetchUserAvatarUrl = async () => {
+      // 从后端获取用户头像URL的逻辑
+      // 假设这里我们直接返回一个示例URL，实际中你可能需要发起HTTP请求
+      return "http://localhost/---todolist-backend/storage/app/public/avatars/IolOnEkMC8r6VOwLerMhpDYccRxk3qLyaxt7aU1y.jpg";
+    };
+
+    fetchUserAvatarUrl().then((url) => {
+      setPreviewUrl(url || "https://via.placeholder.com/150");
+    });
+  }, []); // 空依赖数组意味着这个effect只在组件首次渲染时执行
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // 这里处理头像上传逻辑，可能需要将图片发送到服务器
+
     console.log(avatar);
-    // 清理创建的URL对象
+
     URL.revokeObjectURL(previewUrl);
   };
 
