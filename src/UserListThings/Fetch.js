@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 // import Overlay from 'react-bootstrap/Overlay';
 import { useLocation } from "react-router-dom";
-import LogoutBar from "./MemberSystem/LogoutBar";
+import LogoutBar from "../MemberSystem/LogoutBar";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
