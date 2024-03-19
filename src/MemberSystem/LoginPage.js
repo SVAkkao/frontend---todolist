@@ -35,7 +35,7 @@ function Login() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log("Success:", data);
+      console.log("Success");
       // 登錄成功後的處理，例如保存 token，導航到另一頁等
       // 保存 token 到 localStorage 或 sessionStorage
       localStorage.setItem("userToken", data.token);
@@ -62,7 +62,7 @@ function Login() {
               清單樂旅
             </div>
           </Link>
-          <spam className="ms-auto"></spam>
+          <span className="ms-auto"></span>
         </div>
       </nav>
       <div

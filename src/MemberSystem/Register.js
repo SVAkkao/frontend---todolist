@@ -30,27 +30,30 @@ function Register() {
     }
 
     try {
-      const response = await fetch(`${API_HOST}/api/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.name,
-          email: formData.email,
-          password: formData.password,
-          // confirmPassword 不需要發送到後端，除非後端明確要求
-        }),
-      });
+      const response = await fetch(
+        "http://localhost/---todolist-backend/public/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.name,
+            email: formData.email,
+            password: formData.password,
+            // confirmPassword 不需要發送到後端，除非後端明確要求
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Something went wrong");
       }
 
       const data = await response.json();
-      console.log(data);
-      alert(data.message); // 或者根據你的需求做一些狀態更新
+      console.log("success");
+      localStorage.setItem("userToken", data.token);
       navigate("/Fetch", { state: { email: data.user.email } });
     } catch (error) {
       console.error("Error:", error);
@@ -74,7 +77,7 @@ function Register() {
               清單樂旅
             </div>
           </Link>
-          <spam className="ms-auto"></spam>
+          <span className="ms-auto"></span>
         </div>
       </nav>
       <div
