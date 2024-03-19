@@ -1,6 +1,6 @@
 // import React, { useEffect, useRef, useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 // Routes
 import Fetch from "./Fetch";
 import Register from "./MemberSystem/Register.js";
@@ -50,6 +50,7 @@ const router = createBrowserRouter([
 
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
+  { path: "/RatingRoute", element: <Navigate to="/ratings" /> },
 ]);
 
 function App() {
