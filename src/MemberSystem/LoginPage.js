@@ -20,17 +20,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        API_HOST + "/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(credentials),
-        }
-      );
+      const response = await fetch(API_HOST + "/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -40,9 +37,10 @@ function Login() {
       // 保存 token 到 localStorage 或 sessionStorage
       localStorage.setItem("userToken", data.token);
       // 根據需要導航，例如導航到首頁
-      navigate("/Fetch", { state: { email: data.user.email } });
+      navigate("/list", { state: { email: data.user.email } });
     } catch (error) {
       console.error("Failed to login:", error);
+      alert("帳號或密碼錯誤");
     }
   };
 
@@ -50,7 +48,7 @@ function Login() {
     <>
       <nav
         className="navbar navbar-expand-lg"
-        style={{ backgroundColor: "#AAD9BB", height: "110px" }}
+        style={{ backgroundColor: "#AAD9BB", height: "100px" }}
       >
         <div className="container-fluid">
           <img src="logo.svg" style={{ height: "80px" }}></img>
@@ -126,8 +124,7 @@ function Login() {
               </form>
               <br></br>
               <div>
-                <Link to="/register"> 註冊會員 </Link>|
-                <Link to="/forgotpassword"> 忘記密碼 </Link>
+                <Link to="/register"> 還沒有帳號？註冊會員 </Link>
               </div>
             </div>
           </div>

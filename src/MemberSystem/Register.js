@@ -62,10 +62,9 @@ function Register() {
   };
   return (
     <>
-      {" "}
       <nav
         className="navbar navbar-expand-lg"
-        style={{ backgroundColor: "#AAD9BB", height: "110px" }}
+        style={{ backgroundColor: "#AAD9BB", height: "100px" }}
       >
         <div className="container-fluid">
           <img src="logo.svg" style={{ height: "80px" }}></img>
@@ -171,8 +170,7 @@ function Register() {
             </form>
             <br></br>
             <div>
-              <Link to="/login"> 會員登入 </Link>|
-              <Link to="/forgotpassword"> 忘記密碼 </Link>
+              <Link to="/login"> 已有帳號？會員登入 </Link>
             </div>
           </div>
         </div>
