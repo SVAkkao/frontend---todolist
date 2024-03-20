@@ -31,7 +31,7 @@ function PidSelector({ change_action }) {
     }, []);
     // DOM render
     return <section className="pid-selectors">
-        { projects.map( its => <Button
+        { projects.map( its => <Button key={its.pid}
             variant="secondary" className="m-2"
             data-pid={its.pid} data-aid={its.aid}
             onClick={() => change_action(its.pid)}
