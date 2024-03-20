@@ -1,0 +1,31 @@
+a{
+    text-decoration: none;
+    cursor: pointer;
+}
+.color1 {
+    color: #80BCBD;
+}
+.color2 {
+    color: #AAD9BB;
+}
+.color3 {
+    color: #D5F0C1;
+}
+.color4 {
+    color: #F9F7C9;
+}
+.supportColor{
+    color: #939393;
+}
+.bg-color1 {
+    background-color: #80BCBD;
+}
+.bg-color2 {
+    background-color: #AAD9BB;
+}
+.bg-color3 {
+    background-color: #D5F0C1;
+}
+.bg-color4 {
+    background-color: #F9F7C9;
+}
