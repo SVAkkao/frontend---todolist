@@ -9,7 +9,7 @@ import { create_comment_api } from "./api";
 import "./style.css";
 
 export default function CommentModal({ show, handleClose, pid }) {
-    const requesting_api = `${process.env.REACT_APP_API_URL}/api/project-comment/${pid}`;
+    const requesting_api = `${process.env.REACT_APP_API_URL}/api/project/${pid}/comments`;
     const { the_list, ajax_list } = list_modules(requesting_api);
     const submit_action = (form_dom) => {
         create_comment_api(form_dom).then( (response) => {
