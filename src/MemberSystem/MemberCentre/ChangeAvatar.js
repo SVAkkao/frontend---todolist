@@ -42,7 +42,52 @@ function ChangeAvatar() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(avatar);
+    // 獲取input type=file的DOM節點
+    const fileInput = document.querySelector('input[type="file"]');
+    const file = fileInput.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      const token = localStorage.getItem("userToken");
+
+      if (token) {
+        fetch("http://localhost/---todolist-backend/public/api/update-avatar", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+          body: formData,
+        })
+          .then((response) =>
+            //{
+            //   if (!response.ok) {
+            //     throw new Error(
+            //       `Server responded with a status of ${response.status}`
+            //     );
+            //   }
+
+            //   const contentType = response.headers.get("content-type");
+            //   if (contentType && contentType.indexOf("application/json") !== -1) {
+            //     return response.json();
+            //   } else {
+            //     throw new Error("Received non-JSON response from server.");
+            //   }
+            // })
+            response.json()
+          )
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      } else {
+        console.log("Token not found");
+      }
+    }
 
     URL.revokeObjectURL(previewUrl);
   };
@@ -64,11 +109,6 @@ function ChangeAvatar() {
           src={previewUrl}
           style={{ width: "100%", height: "100%", objectFit: "contain" }}
         />
-        {/* <img
-          src={previewUrl}
-          alt="Avatar preview"
-          style={{ width: "100%", height: "100%", objectFit: "contain" }}
-        /> */}
       </div>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleFileChange} />
