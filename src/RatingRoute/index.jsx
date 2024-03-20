@@ -1,11 +1,11 @@
+// react-bootstrap
+import { Container, Button, ListGroup, Row, Col } from "react-bootstrap";
 import CommentModal from "./CommentModal";
 import { modal_modules } from "./CommentModal/utils";
-// react-bootstrap
-import Button from "react-bootstrap/Button";
+import CommentItem from "./CommentModal/CommentItem";
+import LogoutBar from "../MemberSystem/LogoutBar";
 import { useState, useEffect } from "react";
 import { get_user_comments_api } from "./CommentModal/api";
-import ListGroup from "react-bootstrap/ListGroup";
-import CommentItem from "./CommentModal/CommentItem";
 
 async function get_project_api() {
     const r = await fetch(
@@ -41,15 +41,16 @@ function PidSelector({ change_action }) {
     </ul>
 }
 
-function ComponentEntry() {
+function ProjectComponents() {
     const [pid, set_pid] = useState(1);
     const { show, show_modal, close_modal } = modal_modules();
-    return <div className="comp-enty">
+    return <div className="project-comment">
+        <h2>各景點活動的意見</h2>
         <PidSelector change_action={set_pid} />
-        <p>
-            <Button variant="primary" size="sm" onClick={show_modal}>Comment</Button>
-            <span>PID: {pid}</span>
-        </p>
+        <p>PID: {pid}</p>
+        <div>
+            <Button variant="primary" size="sm" onClick={show_modal}>Read comment</Button>
+        </div>
         <div className="modal">
             <CommentModal show={show} handleClose={close_modal} pid={pid} />
         </div>
@@ -79,10 +80,19 @@ function UserComments() {
 }
 
 function RatingRoute() {
-    return <div id="rating-route" className="m-2">
-        <h1>評價系統</h1>
-        <ComponentEntry />
-        <UserComments />
+    return <div id="rating-route">
+        <LogoutBar></LogoutBar>
+        <Container fluid className="vh-100">
+            <h1 className="text-center mb-3">評價系統</h1>
+            <Row className="h-100">
+                <Col sm={6}>
+                    <ProjectComponents />
+                </Col>
+                <Col sm={6}>
+                    <UserComments />
+                </Col>
+            </Row>
+        </Container>
     </div>;
 }
 
