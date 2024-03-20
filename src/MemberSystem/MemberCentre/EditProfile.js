@@ -1,9 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function EditProfile() {
   const [name, setName] = useState("");
   const [cellphone, setCellphone] = useState("");
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const token = localStorage.getItem("userToken"); // 从localStorage中获取token
+
+      if (!token) {
+        alert("No token found. Please login first.");
+        return;
+      }
+
+      try {
+        // 假设这是获取用户信息的API URL
+        const response = await axios.get(
+          "http://localhost/---todolist-backend/public/api/user",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 200 && response.data) {
+          setName(response.data.name); // 设置用户当前的name到状态
+          setCellphone(response.data.cellphone); // 设置用户当前的cellphone到状态
+        }
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        alert("Error fetching user info. See console for details.");
+      }
+    };
+
+    fetchUserInfo();
+  }, []); // 空数组意味着这个effect只在组件加载时运行一次
 
   const handleNameChange = (e) => {
     setName(e.target.value);
