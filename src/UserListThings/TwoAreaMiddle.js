@@ -15,7 +15,7 @@ function TwoAreaMiddle() {
                     <Form.Control type="date" />
                 </Col>
                 <Col className='text-center' sm={1}>
-                    <a><img src='/UserListSource/to.png' style={{ width: "24px", height: '24px', paddingBottom: '0' }}></img></a>
+                    <img src='/UserListSource/to.png' style={{ width: "24px", height: '24px', paddingBottom: '0' }}></img>
                 </Col>
                 <Col className='text-center' sm={4}>
                     <Form.Control type="date" />
