@@ -1,14 +1,50 @@
 import React, { useState } from "react";
-// import "./MemberCentre.css";
+import axios from "axios";
 
 function EditProfile() {
-  const [nickname, setNickname] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [cellphone, setCellphone] = useState("");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // 在这里处理表单提交逻辑，比如更新数据库
-    console.log(nickname, phone);
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleCellphoneChange = (e) => {
+    setCellphone(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("userToken"); // 从localStorage中获取token
+
+    if (!token) {
+      alert("No token found. Please login first.");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        "http://localhost/---todolist-backend/public/api/update",
+        {
+          name,
+          cellphone,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("User info updated successfully!");
+      } else {
+        alert("Failed to update user info.");
+      }
+    } catch (error) {
+      console.error("Error updating user info:", error);
+      alert("Error updating user info. See console for details.");
+    }
   };
 
   return (
@@ -19,11 +55,7 @@ function EditProfile() {
           <label>
             暱稱：
             <br></br>
-            <input
-              type="text"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-            />
+            <input type="text" value={name} onChange={handleNameChange} />
           </label>
         </div>
         <div className="form-group">
@@ -32,8 +64,8 @@ function EditProfile() {
             <br></br>
             <input
               type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={cellphone}
+              onChange={handleCellphoneChange}
             />
           </label>
         </div>
