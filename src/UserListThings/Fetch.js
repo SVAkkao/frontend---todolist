@@ -10,96 +10,65 @@ import { useLocation } from "react-router-dom";
 import LogoutBar from "../MemberSystem/LogoutBar";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-
-function CommentList({ comments }) {
-  return comments.length > 0 ? (
-    <ul>
-      {comments.map((item) => (
-        <li>{item.comment}</li>
-      ))}
-    </ul>
-  ) : (
-    <span />
-  );
-}
+// `${API_HOST}/api/
 
 function Fetch() {
   const location = useLocation();
-  const { email } = location.state;
+  const { id } = location.state;
   const [data, setData] = useState([]);
+
+
   const handleButtonClick = () => {
-    let querydata = localStorage.getItem("querydata");
-    if (querydata != null) {
-      console.log("from localstorage");
-      let jsonObj = JSON.parse(querydata);
-      setData(jsonObj);
-    } else {
-      console.log("from WEBAPI");
-      let formData = new FormData();
-      formData.append("email", email);
-      fetch(`${API_HOST}/api/showlist`, {
-        method: "post",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
-      })
-        .then((response) => response.text())
-        .then((text) => {
-          localStorage.setItem("querydata", text);
-          let jsonObj = JSON.parse(text);
-          setData(jsonObj);
-        })
-        .catch((error) => console.error("Error:", error));
-    }
-  };
+    
+  }
+  // const [show, setShow] = useState("invisible");
+  // const [data1, setData1] = useState([]);
+  // const handleButtonClick1 = () => {
+  //   let querydata1 = localStorage.getItem("querydata1");
+  //   setShow("visible");
+  //   if (querydata1 != null) {
+  //     console.log("from localstorage");
+  //     let jsonObj = JSON.parse(querydata1);
+  //     setData1(jsonObj);
+  //     getComments(jsonObj[0].id);
+  //   } else {
+  //     console.log("from WEBAPI");
+  //     let formData = new FormData();
+  //     formData.append("email", email);
+  //     fetch(`${API_HOST}/api/showlist`, {
+  //       method: "post",
+  //       body: formData,
+  //       headers: {
+  //         Accept: "application/json",
+  //       },
+  //     })
+  //       .then((response) => response.text())
+  //       .then((text) => {
+  //         localStorage.setItem("querydata1", text);
+  //         let jsonObj = JSON.parse(text);
+  //         setData1(jsonObj);
+  //         console.log(jsonObj);
+  //         getComments(jsonObj[0].id);
+  //       })
+  //       .catch((error) => console.error("Error:", error));
+  //   }
+  // };
 
-  const [show, setShow] = useState("invisible");
-  const [data1, setData1] = useState([]);
-  const handleButtonClick1 = () => {
-    let querydata1 = localStorage.getItem("querydata1");
-    setShow("visible");
-    if (querydata1 != null) {
-      console.log("from localstorage");
-      let jsonObj = JSON.parse(querydata1);
-      setData1(jsonObj);
-      getComments(jsonObj[0].id);
-    } else {
-      console.log("from WEBAPI");
-      let formData = new FormData();
-      formData.append("email", email);
-      fetch(`${API_HOST}/api/showlist`, {
-        method: "post",
-        body: formData,
-        headers: {
-          Accept: "application/json",
-        },
-      })
-        .then((response) => response.text())
-        .then((text) => {
-          localStorage.setItem("querydata1", text);
-          let jsonObj = JSON.parse(text);
-          setData1(jsonObj);
-          console.log(jsonObj);
-          getComments(jsonObj[0].id);
-        })
-        .catch((error) => console.error("Error:", error));
-    }
-  };
+  // const [comments, setComments] = useState([]);
+  // const getComments = (id) => {
+  //   const api = `${API_HOST}/api/comment/${id}`;
+  //   const headers = {
+  //     Accept: "application/json",
+  //   };
+  //   fetch(api, { method: "get", headers })
+  //     .then((response) => response.json())
+  //     .then((response) => {
+  //       setComments(response.result);
+  //     })
+  //     .catch((error) => console.error("Error:", error));
+  // };
 
-  const [comments, setComments] = useState([]);
-  const getComments = (id) => {
-    const api = `${API_HOST}/api/comment/${id}`;
-    const headers = {
-      Accept: "application/json",
-    };
-    fetch(api, { method: "get", headers })
-      .then((response) => response.json())
-      .then((response) => {
-        setComments(response.result);
-      })
-      .catch((error) => console.error("Error:", error));
-  };
+
   return (
     <>
       <LogoutBar></LogoutBar>
@@ -137,11 +106,11 @@ function Fetch() {
             })}
           </tbody>
         </Table>
-        <Button className="m-2" onClick={handleButtonClick1}>
+        {/* <Button className="m-2" onClick={handleButtonClick1}>
           顯示
-        </Button>
+        </Button> */}
         <br />
-        <Table className={show} striped bordered hover>
+        {/* <Table className={show} striped bordered hover>
           <thead>
             <tr>
               <th id="userName">name</th>
@@ -160,9 +129,9 @@ function Fetch() {
               );
             })}
           </tbody>
-        </Table>
-        <p className="m-2">Comments</p>
-        {<CommentList comments={comments} />}
+        </Table> */}
+        {/* <p className="m-2">Comments</p> */}
+        {/* {<CommentList comments={comments} />} */}
       </div>
     </>
   );

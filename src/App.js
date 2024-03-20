@@ -47,6 +47,7 @@ const router = createBrowserRouter([
 
   //TO-DO-LIST
   { path: "/Fetch", element: <Test /> },
+  { path: "/FetchTest", element: <Fetch /> },
 
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
