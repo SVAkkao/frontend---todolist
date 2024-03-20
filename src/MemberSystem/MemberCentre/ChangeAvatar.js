@@ -112,7 +112,7 @@ function ChangeAvatar() {
         />
       </div>
       <form onSubmit={handleSubmit}>
-        <label>上傳檔案：限jpg、jpeg、png、gif</label>
+        <label>上傳檔案：限jpg、jpeg、png、gif、svg</label>
         <input type="file" onChange={handleFileChange} />
         <br></br>
         <br></br>
