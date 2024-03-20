@@ -30,21 +30,19 @@ function PidSelector({ change_action }) {
         return () => mounted = false;
     }, []);
     // DOM render
-    return <ul style={{ listStyle: "none" }}>
-        {/* { "pid": 1, "aid": 3, "pname": "金融中心遺址" } */}
-        { projects.map( its => <li key={its.pid} className="m-2">
-            <Button
-                data-pid={its.pid} data-aid={its.aid} variant="secondary"
-                onClick={() => change_action(its.pid)}
-            >{ its.pname }</Button>
-        </li> ) }
-    </ul>
+    return <section className="pid-selectors">
+        { projects.map( its => <Button
+            variant="secondary" className="m-2"
+            data-pid={its.pid} data-aid={its.aid}
+            onClick={() => change_action(its.pid)}
+        >{ its.pname }</Button> ) }
+    </section>
 }
 
 function ProjectComponents() {
     const [pid, set_pid] = useState(1);
     const { show, show_modal, close_modal } = modal_modules();
-    return <div className="project-comment">
+    return <article className="project-comment">
         <h2>各景點活動的意見</h2>
         <PidSelector change_action={set_pid} />
         <p>PID: {pid}</p>
@@ -54,7 +52,7 @@ function ProjectComponents() {
         <div className="modal">
             <CommentModal show={show} handleClose={close_modal} pid={pid} />
         </div>
-    </div>;
+    </article>;
 }
 
 function UserComments() {
@@ -71,12 +69,12 @@ function UserComments() {
     useEffect(() => {
         request_list();
     }, []);
-    return <div className="user-comment">
+    return <article className="user-comment">
         <h2>用戶發表的意見</h2>
         <ListGroup>
             {list.map( (item) => <CommentItem key={item.cid} item={item} onEdit={edit_action} onDelete={delete_action} /> )}
         </ListGroup>
-    </div>;
+    </article>;
 }
 
 function RatingRoute() {
