@@ -8,6 +8,7 @@ function ChangeAvatar() {
   const [previewUrl, setPreviewUrl] = useState(
     "https://via.placeholder.com/150"
   );
+  const [users, setUsers] = useState([]);
 
   const handleChange = (event) => {
     const file = event.target.files[0];
@@ -20,17 +21,25 @@ function ChangeAvatar() {
   };
 
   useEffect(() => {
-    // 模拟从后端获取用户头像URL的异步操作
-    const fetchUserAvatarUrl = async () => {
-      // 从后端获取用户头像URL的逻辑
-      // 假设这里我们直接返回一个示例URL，实际中你可能需要发起HTTP请求
-      return "http://localhost/---todolist-backend/storage/app/public/avatars/IolOnEkMC8r6VOwLerMhpDYccRxk3qLyaxt7aU1y.jpg";
-    };
+    const token = localStorage.getItem("userToken");
 
-    fetchUserAvatarUrl().then((url) => {
-      setPreviewUrl(url || "https://via.placeholder.com/150");
-    });
-  }, []); // 空依赖数组意味着这个effect只在组件首次渲染时执行
+    if (token) {
+      fetch("http://localhost/---todolist-backend/public/api/user", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`, // 使用Bearer token進行認證
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setUsers(data.users); // 假設API響應中包含一個名為users的數組
+        })
+        .catch((error) => console.error("Fetching data error: ", error));
+    } else {
+      console.log("Token not found");
+    }
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -54,10 +63,15 @@ function ChangeAvatar() {
         }}
       >
         <img
+          src={`${API_IMAGE}${users.photo}`}
+          alt={`User ${users.id}`}
+          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        />
+        {/* <img
           src={previewUrl}
           alt="Avatar preview"
           style={{ width: "100%", height: "100%", objectFit: "contain" }}
-        />
+        /> */}
       </div>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleChange} />
