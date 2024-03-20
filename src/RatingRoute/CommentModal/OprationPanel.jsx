@@ -32,6 +32,20 @@ function ChangelogList({ cid, closeChangelog }) {
             set_changelogs(response.result);
         });
     }, [cid]);
+    function TableRows({ changelogs }) {
+        if( changelogs.length < 1 ) {
+            return  <tr>
+                <td colSpan={3} className="text-center">No changes</td>
+            </tr>
+        }
+        return changelogs.map((its) => <tr key={its.id}>
+            <td>
+                <time dateTime={its.created_at}>{its.created_at}</time>
+            </td>
+            <td>{its.before}</td>
+            <td>{its.after}</td>
+        </tr>);
+    }
     return <div className="changelog-list">
         <Table striped bordered hover>
             <thead>
@@ -42,13 +56,7 @@ function ChangelogList({ cid, closeChangelog }) {
                 </tr>
             </thead>
             <tbody>
-                { changelogs.map( (its) => <tr key={its.id}>
-                    <td>
-                        <time dateTime={its.created_at}>{its.created_at}</time>
-                    </td>
-                    <td>{its.before}</td>
-                    <td>{its.after}</td>
-                </tr>) }
+                <TableRows changelogs={changelogs} />
             </tbody>
         </Table>
     </div>;
