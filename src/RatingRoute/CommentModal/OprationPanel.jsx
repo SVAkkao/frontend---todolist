@@ -60,6 +60,14 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
         });
     };
     // HTML
+    function DeleteForm({ modalmode, closeRemoving }) {
+        const can_remove = modalmode.mode === modalmode.REMOVING;
+        return can_remove ? <DeleteConfirmModal hideModal={closeRemoving} /> : <div></div>;
+    }
+    function EditForm({ modalmode, pid, closeEditing, preloadDatas }) {
+        const can_edit = modalmode.mode === modalmode.EDITING;
+        return can_edit ? <CommentForm pid={pid} submitAction={closeEditing} preloadDatas={preloadDatas} method="PUT" /> : <div></div>;
+    }
     return <div className="item-panel">
         <FontAwesomeIcon icon={faTrash} className="click-icon" onClick={open_removing} />
         <FontAwesomeIcon icon={faPen} className="click-icon" onClick={open_editing} />
@@ -69,12 +77,10 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
                     <Modal.Title>編輯</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {modalmode.mode === modalmode.REMOVING ? <DeleteConfirmModal hideModal={close_removing} /> : <div></div>}
-                    {modalmode.mode === modalmode.EDITING ? <CommentForm pid={pid} submitAction={close_editing} preloadDatas={preloadDatas} method="PUT" /> : <div></div>}
+                    <DeleteForm modalmode={modalmode} closeRemoving={close_removing} />
+                    <EditForm modalmode={modalmode} pid={pid} preloadDatas={preloadDatas} closeEditing={close_editing} />
                 </Modal.Body>
             </Modal>
         </div>
     </div>;
-
-    
 }
