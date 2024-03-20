@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+const API_HOST = process.env.REACT_APP_API_URL;
+
 function EditProfile() {
   const [name, setName] = useState("");
   const [cellphone, setCellphone] = useState("");
@@ -17,7 +19,7 @@ function EditProfile() {
       try {
         // 假设这是获取用户信息的API URL
         const response = await axios.get(
-          "http://localhost/---todolist-backend/public/api/user",
+          `${API_HOST}/api/user`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -57,7 +59,7 @@ function EditProfile() {
 
     try {
       const response = await axios.put(
-        "http://localhost/---todolist-backend/public/api/update",
+        `${API_HOST}/api/update`,
         {
           name,
           cellphone,

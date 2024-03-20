@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import "./MemberCentre.css";
 
+const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 function ChangeAvatar() {
@@ -12,7 +13,7 @@ function ChangeAvatar() {
     const token = localStorage.getItem("userToken");
 
     if (token) {
-      fetch("http://localhost/---todolist-backend/public/api/user", {
+      fetch(`${API_HOST}/api/user`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`, // 使用Bearer token進行認證
@@ -53,7 +54,7 @@ function ChangeAvatar() {
       const token = localStorage.getItem("userToken");
 
       if (token) {
-        fetch("http://localhost/---todolist-backend/public/api/update-avatar", {
+        fetch(`${API_HOST}/api/update-avatar`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
