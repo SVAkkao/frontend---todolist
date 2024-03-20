@@ -30,7 +30,7 @@ function PidSelector({ change_action }) {
         return () => mounted = false;
     }, []);
     // DOM render
-    return <ul>
+    return <ul style={{ listStyle: "none" }}>
         {/* { "pid": 1, "aid": 3, "pname": "金融中心遺址" } */}
         { projects.map( its => <li key={its.pid} className="m-2">
             <Button
@@ -44,11 +44,11 @@ function PidSelector({ change_action }) {
 function ComponentEntry() {
     const [pid, set_pid] = useState(1);
     const { show, show_modal, close_modal } = modal_modules();
-    return <div className="asd">
+    return <div className="comp-enty">
         <PidSelector change_action={set_pid} />
         <p>
             <Button variant="primary" size="sm" onClick={show_modal}>Comment</Button>
-            PID: {pid}
+            <span>PID: {pid}</span>
         </p>
         <div className="modal">
             <CommentModal show={show} handleClose={close_modal} pid={pid} />
