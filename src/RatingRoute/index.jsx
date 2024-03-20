@@ -4,6 +4,8 @@ import { modal_modules } from "./CommentModal/utils";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
 import { get_user_comments_api } from "./CommentModal/api";
+import ListGroup from "react-bootstrap/ListGroup";
+import CommentItem from "./CommentModal/CommentItem";
 
 async function get_project_api() {
     const r = await fetch(
@@ -56,12 +58,23 @@ function ComponentEntry() {
 
 function UserComments() {
     const [list, set_list] = useState([]);
-    useEffect(() => {
+    const edit_action = (e) => {
+        request_list();
+    };
+    const delete_action = (e) => {
+        request_list();
+    };
+    const request_list = () => {
         get_user_comments_api().then( ({ result }) => set_list(result) );
+    };
+    useEffect(() => {
+        request_list();
     }, []);
     return <div className="user-comment">
         <h2>用戶發表的意見</h2>
-        {JSON.stringify(list)}
+        <ListGroup>
+            {list.map( (item) => <CommentItem key={item.cid} item={item} onEdit={edit_action} onDelete={delete_action} /> )}
+        </ListGroup>
     </div>;
 }
 
