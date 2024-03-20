@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 // Fontawesome
-import { FaTrashCan, FaPen } from "react-icons/fa6";
+import { FaTrashCan, FaPen, FaClockRotateLeft } from "react-icons/fa6";
 // Local
 import CommentForm from "./CommentForm";
 import { modal_modules, modal_mode_modules } from "./utils";
@@ -21,6 +21,12 @@ function DeleteConfirmModal({ hideModal, iid }) {
             <Button onClick={close} variant="secondary">取消</Button>
         </ButtonGroup>
     </div>);
+}
+
+function ChangelogList({ cid, closeChangelog }) {
+    return <div className="changelog-list">
+        <p>{ cid }</p>
+    </div>;
 }
 
 export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas }) {
@@ -58,6 +64,14 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
             alert(response.message);
         });
     };
+    // Changelog actions
+    const open_changelog = () => {
+        modalmode.set_mode(modalmode.CHANGELOG);
+        show_modal();
+    };
+    const close_changelog = () => {
+        close_modal();
+    };
     // HTML
     function DeleteForm({ modalmode, closeRemoving }) {
         const can_remove = modalmode.mode === modalmode.REMOVING;
@@ -67,9 +81,14 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
         const can_edit = modalmode.mode === modalmode.EDITING;
         return can_edit ? <CommentForm pid={pid} submitAction={closeEditing} preloadDatas={preloadDatas} method="PUT" /> : <div></div>;
     }
+    function ChangelogForm({ modalmode, cid, closeChangelog }) {
+        const can_log = modalmode.mode === modalmode.CHANGELOG;
+        return can_log ? <ChangelogList cid={cid} closeChangelog={closeChangelog} /> : <div></div>;
+    }
     return <div className="item-panel">
         <FaTrashCan className="click-icon" onClick={open_removing} />
         <FaPen className="click-icon" onClick={open_editing} />
+        <FaClockRotateLeft className="click-icon" onClick={open_changelog} />
         <div className="modals">
             <Modal id="edit-form-modal" size="xs" centered show={show} onHide={close_modal}>
                 <Modal.Header closeButton>
@@ -78,6 +97,7 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
                 <Modal.Body>
                     <DeleteForm modalmode={modalmode} closeRemoving={close_removing} />
                     <EditForm modalmode={modalmode} pid={pid} preloadDatas={preloadDatas} closeEditing={close_editing} />
+                    <ChangelogForm modalmode={modalmode} cid={cid} closeChangelog={close_changelog} />
                 </Modal.Body>
             </Modal>
         </div>

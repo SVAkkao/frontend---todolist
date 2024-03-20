@@ -12,7 +12,13 @@ export const modal_mode_modules = () => {
     const [mode, set_mode] = useState("");
     const REMOVING = "removing";
     const EDITING = "editing";
-    return { mode, set_mode, REMOVING, EDITING };
+    const CHANGELOG = "changelog";
+    return {
+        // The state itdelf
+        mode, set_mode,
+        // State modes
+        REMOVING, EDITING, CHANGELOG
+    };
 };
 
 export const list_modules = (apipath) => {
