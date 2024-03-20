@@ -13,7 +13,7 @@ function EditProfile() {
 
   return (
     <div className="form-group">
-      <h4>修改會員資料</h4>
+      <h3>修改會員資料</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>

@@ -7,6 +7,7 @@ import {
   MdAccountCircle,
   // 下拉的圖示
   MdExpandMore,
+  MdHome,
 } from "react-icons/md";
 import {
   // 登出的圖示
@@ -143,7 +144,10 @@ function LogoutBar() {
                     </span>
                   )}
                 </div>
-
+                <Link to="/list" className="nav-link">
+                  <MdHome style={{ marginRight: "8px" }} />
+                  <span style={{ fontSize: "18px" }}>首頁</span>
+                </Link>
                 <Link to="/membercentre" className="nav-link">
                   <MdAccountCircle style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>會員中心</span>

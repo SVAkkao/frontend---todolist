@@ -13,11 +13,11 @@ function ChangePassword() {
 
   return (
     <div className="form-group">
-      <h4>修改密碼</h4>
+      <h3>修改密碼</h3>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>
-            當前密碼
+            當前密碼：
             <br></br>
             <input
               type="password"
@@ -28,7 +28,7 @@ function ChangePassword() {
         </div>
         <div className="form-group">
           <label>
-            新密碼
+            新密碼：
             <br></br>
             <input
               type="password"
@@ -39,7 +39,7 @@ function ChangePassword() {
         </div>
         <div className="form-group">
           <label>
-            確認密碼
+            確認密碼：
             <br></br>
             <input
               type="password"
