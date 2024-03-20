@@ -6,7 +6,7 @@ const NoAuthRoute = ({ children }) => {
 
   // 如果用戶已登入，重定向到主頁
   if (isLoggedIn) {
-    return <Navigate to="/Fetch" replace />;
+    return <Navigate to="/list" replace />;
   }
   // 否則，渲染子元件
   return children;

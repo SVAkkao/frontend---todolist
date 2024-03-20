@@ -10,7 +10,7 @@ function ForgotPassword() {
     <>
       <nav
         className="navbar navbar-expand-lg"
-        style={{ backgroundColor: "#AAD9BB", height: "110px" }}
+        style={{ backgroundColor: "#AAD9BB", height: "100px" }}
       >
         <div className="container-fluid">
           <img src="logo.svg" style={{ height: "80px" }}></img>

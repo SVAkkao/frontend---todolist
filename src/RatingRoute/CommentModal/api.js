@@ -66,3 +66,16 @@ export async function get_user_comments_api() {
     );
     return await r.json();
 }
+
+export async function get_comment_changelog_api(cid) {
+    const r = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/comment/${cid}/changelog`,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/json"
+            }
+        }
+    );
+    return await r.json();
+}
