@@ -3,8 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 // Fontawesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import { FaTrashCan, FaPen } from "react-icons/fa6";
 // Local
 import CommentForm from "./CommentForm";
 import { modal_modules, modal_mode_modules } from "./utils";
@@ -69,8 +68,8 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
         return can_edit ? <CommentForm pid={pid} submitAction={closeEditing} preloadDatas={preloadDatas} method="PUT" /> : <div></div>;
     }
     return <div className="item-panel">
-        <FontAwesomeIcon icon={faTrash} className="click-icon" onClick={open_removing} />
-        <FontAwesomeIcon icon={faPen} className="click-icon" onClick={open_editing} />
+        <FaTrashCan className="click-icon" onClick={open_removing} />
+        <FaPen className="click-icon" onClick={open_editing} />
         <div className="modals">
             <Modal id="edit-form-modal" size="xs" centered show={show} onHide={close_modal}>
                 <Modal.Header closeButton>
