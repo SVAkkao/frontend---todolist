@@ -22,15 +22,27 @@ const TravelApp = () => {
                 <p style={{ fontSize: "32px" }}> userName</p>
               </Col>
             </Row>
-            <Row className='m-4' style={{ fontSize: "32px" }}>
+            <Row className='m-5' style={{ fontSize: "32px" }}>
               <Col>未完成</Col>
               <Col>已完成</Col>
             </Row>
-            <Row className='m-4'>
+            <Row className='m-5'>
               <Col>
-                <Card>
-                  <Card.Body>
-                    <Card.Text>
+                <Card className='mt-4'>
+                  <Card.Body style={{backgroundColor:'#AAD9BB', textAlign: 'center' }}>
+                    <Card.Text style={{ fontSize: "32px"}}>
+                      我的壯遊之旅
+                    </Card.Text>
+                  </Card.Body>
+                  <Card.Img variant="bottom" src="https://images.pexels.com/photos/17573850/pexels-photo-17573850.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" style={{ border: 'grey', width: '100%', height: '300px' }} />
+                </Card>
+              </Col>
+            </Row>
+            <Row className='m-5'>
+              <Col>
+                <Card className='mt-4'>
+                  <Card.Body style={{backgroundColor:'#AAD9BB', textAlign: 'center' }}>
+                    <Card.Text style={{ fontSize: "32px"}}>
                       我的壯遊之旅
                     </Card.Text>
                   </Card.Body>
@@ -41,8 +53,8 @@ const TravelApp = () => {
           </Col>
           <Col sm={6} style={{ backgroundColor: '#F9F7C9' }}>2 of 2</Col>
           <Col sm={3}>3 of 2</Col>
-        </Row >
-      </Container >
+        </Row>
+      </Container>
     </>
   );
 };
