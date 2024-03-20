@@ -1,6 +1,6 @@
 // Fetch.js
 // import React, { useEffect, useRef, useState } from 'react'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 // import Form from 'react-bootstrap/Form';
@@ -12,126 +12,106 @@ import LogoutBar from "../MemberSystem/LogoutBar";
 const API_HOST = process.env.REACT_APP_API_URL;
 // `${API_HOST}/api/
 
+
+
+
+
 function Fetch() {
-  const location = useLocation();
-  const { id } = location.state;
-  const [data, setData] = useState([]);
+
+  const [data1, setData1] = useState({});
+  const [data2, setData2] = useState([]);
+
+  const token = localStorage.getItem('userToken');
+  const headers = new Headers({
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  useEffect(() => {
+
+    fetch(API_HOST + '/api/user', {
+      method: 'GET',
+      headers: headers
+    })
+      .then(response => response.json())
+      .then(data => {
+        const userId = data.id;
+        // 繼續使用userId來發送下一個HTTP請求
+        const body = JSON.stringify({
+          id: userId
+        });
+
+        fetch(API_HOST + '/api/POST/userrelatedids', {
+          method: 'POST',
+          headers: headers,
+          body: body
+        })
+          .then(response => response.json())
+          .then(data => {
+            
+            setData1(data)
+
+            const tlid = data.tlid
+            const jid = data.jid
+            const jpid = data.jpid
+
+            fetch(API_HOST + '/api/POST/selectlist', {
+              method: 'POST',
+              headers: headers,
+              body: data.tlid[0]
+            })
+            .then(response => response.json())
+            .then(data => {
+              setData2(data)
+            })
+            .catch(error => console.error(error));
 
 
-  const handleButtonClick = () => {
-    
-  }
-  // const [show, setShow] = useState("invisible");
-  // const [data1, setData1] = useState([]);
-  // const handleButtonClick1 = () => {
-  //   let querydata1 = localStorage.getItem("querydata1");
-  //   setShow("visible");
-  //   if (querydata1 != null) {
-  //     console.log("from localstorage");
-  //     let jsonObj = JSON.parse(querydata1);
-  //     setData1(jsonObj);
-  //     getComments(jsonObj[0].id);
-  //   } else {
-  //     console.log("from WEBAPI");
-  //     let formData = new FormData();
-  //     formData.append("email", email);
-  //     fetch(`${API_HOST}/api/showlist`, {
-  //       method: "post",
-  //       body: formData,
-  //       headers: {
-  //         Accept: "application/json",
-  //       },
-  //     })
-  //       .then((response) => response.text())
-  //       .then((text) => {
-  //         localStorage.setItem("querydata1", text);
-  //         let jsonObj = JSON.parse(text);
-  //         setData1(jsonObj);
-  //         console.log(jsonObj);
-  //         getComments(jsonObj[0].id);
-  //       })
-  //       .catch((error) => console.error("Error:", error));
-  //   }
-  // };
+          })
+          .catch(error => console.error(error));
 
-  // const [comments, setComments] = useState([]);
-  // const getComments = (id) => {
-  //   const api = `${API_HOST}/api/comment/${id}`;
-  //   const headers = {
-  //     Accept: "application/json",
-  //   };
-  //   fetch(api, { method: "get", headers })
-  //     .then((response) => response.json())
-  //     .then((response) => {
-  //       setComments(response.result);
-  //     })
-  //     .catch((error) => console.error("Error:", error));
-  // };
+      })
+      .catch(error => console.error(error));
 
+  }, []);
 
+  useEffect(() => {
+    console.log(data1)
+    // 在這裡處理返回的資料
+  }, [data1]); // 添加data1為依賴項，以在data1更新時執行此回調函數
+
+  useEffect(() => {
+    console.log(data2)
+    // 在這裡處理返回的資料
+  }, [data2]); 
   return (
     <>
       <LogoutBar></LogoutBar>
       <div className="m-2">
-        {/* <Form.Label className='m-2'>email</Form.Label>
-            <Form.Control
-                className='m-2'
-                required
-                type="text"
-                placeholder="輸入email"
-                ref={emailRef} id="email"
-            /> */}
 
-        <Button className="m-2" onClick={handleButtonClick}>
-          顯示所有行程
+        <Button className="m-2" >
+          新增資料
         </Button>
         <br />
         <Table className="m-2" striped bordered hover>
           <thead>
             <tr>
-              <th id="userName">name</th>
-              <th id="userEmail">email</th>
-              <th id="userId">title</th>
+              <th>各ID名</th>
+              <th>id 號碼</th>
+              <th>{JSON.stringify(data2)}</th>
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.email}</td>
-                  <td>{item.title}</td>
+            {Object.entries(data1).map(([key, value]) => (
+              <React.Fragment key={key}>
+                <tr>
+                  <td>{key}</td>
+                  <td>{value.join(', ')}</td>
                 </tr>
-              );
-            })}
+              </React.Fragment>
+            ))}
           </tbody>
         </Table>
-        {/* <Button className="m-2" onClick={handleButtonClick1}>
-          顯示
-        </Button> */}
-        <br />
-        {/* <Table className={show} striped bordered hover>
-          <thead>
-            <tr>
-              <th id="userName">name</th>
-              <th id="userBudget">budget</th>
-              <th id="userId">title</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data1.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.cost}</td>
-                  <td>{item.title}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table> */}
-        {/* <p className="m-2">Comments</p> */}
-        {/* {<CommentList comments={comments} />} */}
       </div>
     </>
   );

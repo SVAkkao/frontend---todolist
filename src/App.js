@@ -1,7 +1,6 @@
 // import React, { useEffect, useRef, useState } from 'react'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 // Routes
-import Fetch from "./UserListThings/Fetch.js";
 import Register from "./MemberSystem/Register.js";
 import HomePage from "./MemberSystem/HomePage.js";
 import Login from "./MemberSystem/LoginPage.js";
@@ -10,7 +9,9 @@ import NoAuthRoute from "./MemberSystem/NoAuthRoute.js";
 import LogoutBar from "./MemberSystem/LogoutBar.js";
 import ForgotPassword from "./MemberSystem/ForgotPassword.js";
 import MemberCentre from "./MemberSystem/MemberCentre.js";
-import Test from "./UserListThings/Test.js";
+import List from "./UserListThings/List.js";
+import Fetch from "./UserListThings/Fetch.js";
+
 
 const router = createBrowserRouter([
   //會員系統
@@ -46,8 +47,8 @@ const router = createBrowserRouter([
   },
 
   //TO-DO-LIST
-  { path: "/Fetch", element: <Test /> },
-  { path: "/FetchTest", element: <Fetch /> },
+  { path: "/list", element: <List /> },
+  { path: "/fetch", element: <Fetch /> },
 
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
