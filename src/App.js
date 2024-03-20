@@ -10,6 +10,8 @@ import LogoutBar from "./MemberSystem/LogoutBar.js";
 import ForgotPassword from "./MemberSystem/ForgotPassword.js";
 import MemberCentre from "./MemberSystem/MemberCentre.js";
 import List from "./UserListThings/List.js";
+import Fetch from "./UserListThings/Fetch.js";
+
 
 const router = createBrowserRouter([
   //會員系統
@@ -46,6 +48,7 @@ const router = createBrowserRouter([
 
   //TO-DO-LIST
   { path: "/list", element: <List /> },
+  { path: "/fetch", element: <Fetch /> },
 
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
