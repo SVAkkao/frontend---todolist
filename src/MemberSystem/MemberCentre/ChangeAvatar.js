@@ -107,10 +107,11 @@ function ChangeAvatar() {
       >
         <img
           src={previewUrl}
-          style={{ width: "100%", height: "100%", objectFit: "contain" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </div>
       <form onSubmit={handleSubmit}>
+        <p>上傳檔案：限jpg、jpeg、png、gif</p>
         <input type="file" onChange={handleFileChange} />
         <br></br>
         <br></br>
