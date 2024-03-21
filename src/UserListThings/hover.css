@@ -1,0 +1,47 @@
+.bookTitle {
+    visibility: hidden;
+}
+
+.book:hover + .bookTitle {
+    visibility: visible;
+}
+
+.aboardTitle {
+    visibility: hidden;
+}
+
+.aboard:hover+.aboardTitle {
+    visibility: visible;
+}
+
+.campingTitle {
+    visibility: hidden;
+}
+
+.camping:hover+.campingTitle {
+    visibility: visible;
+}
+
+.hikingTitle {
+    visibility: hidden;
+}
+
+.hiking:hover+.hikingTitle {
+    visibility: visible;
+}
+
+.shipTitle {
+    visibility: hidden;
+}
+
+.ship:hover+.shipTitle {
+    visibility: visible;
+}
+
+.historyTitle {
+    visibility: hidden;
+}
+
+.history:hover+.historyTitle {
+    visibility: visible;
+}

@@ -44,10 +44,6 @@ function TwoAreaMiddle() {
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-
-
-
-
         </>
     )
 }
