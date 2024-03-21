@@ -90,9 +90,7 @@ const ContributionsPanel = ({ contributions, comments, filter }) => {
 const UserIntroduction = () => {
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
-  /**
-   * 获取当前登录用户信息
-   */
+
   const fetchUser = async () => {
     try {
       const response = await getUserApi();
@@ -105,6 +103,7 @@ const UserIntroduction = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   return (
     <CardContent>
       <br />
