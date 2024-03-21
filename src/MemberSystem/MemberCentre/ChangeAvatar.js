@@ -81,6 +81,7 @@ function ChangeAvatar() {
           )
           .then((data) => {
             console.log("Success:", data);
+            alert("上傳成功！");
           })
           .catch((error) => {
             console.error("Error:", error);

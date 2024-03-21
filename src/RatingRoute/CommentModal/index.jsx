@@ -2,7 +2,7 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import Modal from "react-bootstrap/Modal";
 import CommentForm from "./CommentForm";
-import CommentItem from "./CommentItem";
+import CommentItem from "./CommentItem/index";
 // Local
 import { list_modules } from "./utils";
 import { create_comment_api } from "./api";
