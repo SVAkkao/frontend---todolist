@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import LogoutBar from "./LogoutBar";
+import LogoutBar from "../LogoutBar";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -14,16 +14,13 @@ import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import "./Attribution.css";
-import { FaStar, FaTrophy, FaMedal } from "react-icons/fa";
+import { FaMedal } from "react-icons/fa";
 import { MdGrade } from "react-icons/md";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 const userData = {
-  avatar: "/path/to/avatar.jpg", // 替换成用户头像的路径
-  // nickname: "旅行者",
-  // avatar: "/path/to/avatar.jpg", // 替换成用户头像的路径
   points: 1200,
   level: "LV.3‧探險家",
   contributions: [
@@ -155,7 +152,8 @@ const AchievementsPage = () => {
     <div style={{ backgroundColor: "#fffeef" }}>
       <LogoutBar />
       <br />
-      <Card sx={{ maxWidth: 900, minHeight: "87vh", m: "auto" }}>
+      <br />
+      <Card sx={{ maxWidth: "50%", minHeight: "84vh", m: "auto" }}>
         <UserIntroduction />
         <div className="button-row">
           {/* Repeat the button element for each button you need */}
