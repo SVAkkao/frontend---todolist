@@ -31,6 +31,15 @@ const userData = {
   ],
 };
 
+function getUserApi() {
+  const token = localStorage.getItem("userToken");
+  return axios.get(`${API_HOST}/api/user`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
 const ContributionIcon = ({ type }) => {
   if (type === "to-do-list") {
     return <ListAltIcon />;
@@ -44,16 +53,14 @@ const AchievementsPage = () => {
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
   const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
+  function getUserPhoto(userPhoto) {
+    return userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg";
+  }
   useEffect(() => {
     // 函数用于获取当前登录用户信息
     const fetchUser = async () => {
-      const token = localStorage.getItem("userToken");
       try {
-        const response = await axios.get(`${API_HOST}/api/user`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await getUserApi();
         setUserName(response.data.name);
         setUserPhoto(response.data.photo);
       } catch (error) {
@@ -74,9 +81,7 @@ const AchievementsPage = () => {
             style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
           >
             <Avatar
-              src={
-                userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"
-              }
+              src={getUserPhoto(userPhoto)}
               style={{ width: 100, height: 100, marginRight: 10 }}
             />
             <Typography variant="h3" sx={{ ml: 2 }}>
