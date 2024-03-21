@@ -160,6 +160,11 @@ function remove_modules(modalmode, show_modal, close_modal, cid, onDelete) {
     return { RemoveForm, open_removing, close_removing };
 }
 
+/**
+ * Used by the 各景點活動的意見 modal
+ * @param {*} param
+ * @returns 
+ */
 export function ModalOprationPanel({ pid, cid, onDelete, onEdit, preloadDatas }) {
     const { show, close_modal, show_modal } = modal_modules();
     const modalmode = modal_mode_modules();
@@ -197,6 +202,11 @@ export function ModalOprationPanel({ pid, cid, onDelete, onEdit, preloadDatas })
     </div>;
 }
 
+/**
+ * Used by the 用戶發表的意見 list
+ * @param {*} param
+ * @returns 
+ */
 export function UserOprationPanel({ pid, cid, onDelete, onEdit, preloadDatas }) {
     const { show, close_modal, show_modal } = modal_modules();
     const modalmode = modal_mode_modules();

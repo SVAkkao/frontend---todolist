@@ -39,6 +39,11 @@ const generate_rate = (r = "0") => {
 
 const DEFAULT_ITEM = { "cid": "", "avatar": "", "rate": "", "comment": "", "date": "", "pid": "", "uid": "" };
 
+/**
+ * Used by the 各景點活動的意見 modal
+ * @param {*} param
+ * @returns 
+ */
 export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 48; 
     const stars = generate_rate(item.rate);
@@ -60,6 +65,11 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     </ListGroup.Item>;
 }
 
+/**
+ * Used by the 用戶發表的意見 list
+ * @param {*} param
+ * @returns 
+ */
 export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 64; 
     const stars = generate_rate(item.rate);
