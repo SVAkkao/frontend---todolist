@@ -1,11 +1,17 @@
 import React from 'react'
-import {Row, Col} from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import Mylist from './Mylist';
 
 
-function RightSide() {
+function RightSide({ data }) {
+
+    if (!data) {
+        return null;
+    }
+
     return (
+
         <>
             <Row style={{ alignItems: 'center' }}>
                 <Col>
@@ -15,12 +21,13 @@ function RightSide() {
                     <p className='text2'> userName</p>
                 </Col>
             </Row>
-            <Row className='m-5 text2' style={{justifyContent: 'space-between' }}>
+            <Row className='m-5 text2' style={{ justifyContent: 'space-between' }}>
                 <Col><a className='supportColor'>未完成</a></Col>
                 <Col><a className='supportColor'>已完成</a></Col>
             </Row>
-            <Mylist />
-            <Mylist />
+            {data.map((item, index) => (
+                <Mylist key={index} data={item} />
+            ))}
             <Row>
                 <Col className="text-center"><img className='mb-5' style={{ width: "48px", height: '48px' }} src="/UserListSource/add.png" alt="Icon" /></Col>
             </Row>
