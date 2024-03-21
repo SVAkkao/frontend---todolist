@@ -6,9 +6,9 @@ import Table from "react-bootstrap/Table";
 // Fontawesome
 import { FaTrashCan, FaPen, FaClockRotateLeft } from "react-icons/fa6";
 // Local
-import CommentForm from "./CommentForm";
-import { modal_modules, modal_mode_modules } from "./utils";
-import { change_comment_api, delete_comment_api, get_comment_changelog_api } from "./api";
+import CommentForm from "../CommentForm";
+import { modal_modules, modal_mode_modules } from "../utils";
+import { change_comment_api, delete_comment_api, get_comment_changelog_api } from "../api";
 import { useEffect, useState } from "react";
 
 function DeleteConfirmModal({ hideModal, iid }) {

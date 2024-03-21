@@ -89,10 +89,6 @@ function TwoAreaMiddle({ selectedTlid }) {
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-
-
-
-
         </>
     )
 }

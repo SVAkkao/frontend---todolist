@@ -13,8 +13,9 @@ import NoAuthRoute from "./MemberSystem/NoAuthRoute.js";
 import LogoutBar from "./MemberSystem/LogoutBar.js";
 import ForgotPassword from "./MemberSystem/ForgotPassword.js";
 import MemberCentre from "./MemberSystem/MemberCentre.js";
-import AchievementsPage from "./MemberSystem/Attribution.js";
+import AchievementsPage from "./MemberSystem/AchievementSystem/Attribution.js";
 import List from "./UserListThings/List.js";
+import Alist from "./UserListThings/Alist.js";
 import Fetch from "./UserListThings/Fetch.js";
 
 const router = createBrowserRouter([
@@ -56,6 +57,7 @@ const router = createBrowserRouter([
 
   //TO-DO-LIST
   { path: "/list", element: <List /> },
+  { path: "/alist", element: <Alist /> },
   { path: "/fetch", element: <Fetch /> },
 
   //評價系統
