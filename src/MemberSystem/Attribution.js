@@ -61,7 +61,7 @@ const ContributionIcon = ({ type }) => {
   return null;
 };
 const ContributionsPanel = ({ contributions, comments, filter }) => {
-  if( filter === "comment" ) {
+  if (filter === "comment") {
     return comments.map((comment, index, array) => (
       <React.Fragment key={comment.cid}>
         <ListItem>
@@ -108,29 +108,30 @@ const UserIntroduction = () => {
   useEffect(() => {
     fetchUser();
   }, []);
-  return <CardContent>
-    <br />
-    <div
-      style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
-    >
-      <Avatar
-        src={userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"}
-        style={{ width: 100, height: 100, marginRight: 10 }} />
-      <Typography variant="h3" sx={{ ml: 2 }}>
-        {userName}
-      </Typography>
-    </div>
-    <br />
-    <h5>
-      <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
-      積分：{userData.points}
-    </h5>
-    <h5>
-      <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-      等級：{userData.level}
-    </h5>
-  </CardContent>;
-}
+  return (
+    <CardContent>
+      <br />
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+        <Avatar
+          src={userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"}
+          style={{ width: 100, height: 100, marginRight: 10 }}
+        />
+        <Typography variant="h3" sx={{ ml: 2 }}>
+          {userName}
+        </Typography>
+      </div>
+      <br />
+      <h5>
+        <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
+        積分：{userData.points}
+      </h5>
+      <h5>
+        <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
+        等級：{userData.level}
+      </h5>
+    </CardContent>
+  );
+};
 
 const AchievementsPage = () => {
   const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
@@ -138,7 +139,7 @@ const AchievementsPage = () => {
   /**
    * Get the user's comments and add it into the list.
    */
-  const fetchUserComment = async() => {
+  const fetchUserComment = async () => {
     try {
       const response = await getUserCommentApi();
       setUserComments(response.data.result);
@@ -158,10 +159,18 @@ const AchievementsPage = () => {
         <UserIntroduction />
         <div className="button-row">
           {/* Repeat the button element for each button you need */}
-          <button className="custom-button" onClick={() => setFilter('all')}>全部</button>
-          <button className="custom-button" onClick={() => setFilter('list')}>清單</button>
-          <button className="custom-button" onClick={() => setFilter('photo')}>相片</button>
-          <button className="custom-button" onClick={() => setFilter('comment')}>評論</button>
+          <button className="custom-button" onClick={() => setFilter("list")}>
+            清單
+          </button>
+          <button className="custom-button" onClick={() => setFilter("photo")}>
+            相片
+          </button>
+          <button
+            className="custom-button"
+            onClick={() => setFilter("comment")}
+          >
+            評論
+          </button>
         </div>
         <List style={{ padding: 20 }}>
           <ContributionsPanel
