@@ -1,0 +1,20 @@
+.button-row {
+  display: flex; /* Align buttons in a row */
+  justify-content: space-around; /* Equal spacing around the buttons */
+}
+
+.custom-button {
+  width: 25%;
+  padding: 10px 20px; /* Adjust the padding as needed */
+  background-color: rgb(255, 255, 255); /* Background color */
+  border: none;
+  font-size: 16px; /* Adjust the font size as needed */
+  cursor: pointer; /* Mouse cursor on hover */
+  box-shadow: 0px 3px 3px rgba(212, 212, 212, 0.2);
+}
+
+.custom-button:hover {
+  background-color: #f0f0f0; /* Lighter background on hover */
+}
+
+/* Apply additional styles if necessary to match your image exactly */
