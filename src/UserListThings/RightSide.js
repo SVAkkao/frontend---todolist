@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import Mylist from './Mylist';
 
 
 function RightSide({ data }) {
+
+    const [selectedTlid, setSelectedTlid] = useState(null);
+
+    const handleButtonClick = (tlid) => {
+        setSelectedTlid(tlid);
+    };
 
     if (!data) {
         return null;
@@ -26,7 +32,7 @@ function RightSide({ data }) {
                 <Col><a className='supportColor'>已完成</a></Col>
             </Row>
             {data.map((item, index) => (
-                <Mylist key={index} data={item} />
+                <Mylist key={index} data={item} onButtonClick={handleButtonClick}/>
             ))}
             <Row>
                 <Col className="text-center"><img className='mb-5' style={{ width: "48px", height: '48px' }} src="/UserListSource/add.png" alt="Icon" /></Col>

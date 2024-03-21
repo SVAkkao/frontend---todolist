@@ -4,10 +4,11 @@ import Journey from './Journey'
 import './color.css'
 import { Row, Col, Form} from 'react-bootstrap';
 
-function TwoAreaMiddle() {
+function TwoAreaMiddle({ selectedTlid }) {
+    console.log(selectedTlid)
     return (
         <>
-            <Row className='m-4'><Col className='text-center'><p className='text1'>list's title</p></Col></Row>
+            <Row className='m-4'><Col className='text-center'><p className='text1'>{selectedTlid}</p></Col></Row>
             <Row className='m-4'><Col className='text-center'><p className='text2'>總金額: xx元</p></Col></Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>

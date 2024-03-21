@@ -1,7 +1,7 @@
 import React from 'react'
-import {Row, Col, Card} from 'react-bootstrap';
+import {Row, Col, Card, Button} from 'react-bootstrap';
 
-function Mylist({data}) {
+function Mylist({data, onButtonClick}) {
 
     const startDate = new Date(data.start_date).toLocaleDateString();
     const endDate = new Date(data.end_date).toLocaleDateString();
@@ -13,8 +13,11 @@ function Mylist({data}) {
             <Card.Body style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}>
                 <div style={{ flex: '1', textAlign: 'center' }}>
                     <Card.Text className='text3'>
-                    {data.title}
+                    {data.tlid}{data.title}
                     </Card.Text>
+                </div>
+                <div>
+                            <Button variant="light" onClick={() => onButtonClick(data.tlid)}>選擇</Button>
                 </div>
                 <div>
                     <img style={{ width: "20px", height: '20px', paddingBottom: '0' }} src="/UserListSource/delete.png" alt="Icon" />

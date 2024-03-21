@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogoutBar from '../MemberSystem/LogoutBar';
 import { Container, Row, Col} from 'react-bootstrap';
 import RightSide from './RightSide';
@@ -9,7 +9,10 @@ import Fetch from './Fetch';
 
 
 
+
 const List = () => {
+  const [selectedTlid, setSelectedTlid] = useState(null);
+
   return (
     <>
       <LogoutBar></LogoutBar>
@@ -17,11 +20,11 @@ const List = () => {
         <Row className='h-100'>
           <Col sm={3}>
           <Fetch>
-              {(data) => <RightSide data={data} />}
+              {(data) => <RightSide data={data}  onSelect={setSelectedTlid}/>}
             </Fetch>
           </Col>
           <Col sm={6} className='bg-color4'>
-            <TwoAreaMiddle></TwoAreaMiddle>
+            <TwoAreaMiddle selectedTlid={selectedTlid}></TwoAreaMiddle>
           </Col>
           <Col sm={3}>
             <LeftSide></LeftSide>
