@@ -38,6 +38,7 @@ function LeftSide({ data, onSelect }) {
     fetchUser();
   }, []);
 
+  
   if (onSelect && typeof onSelect === "function" && selectedTlid !== null) {
     onSelect(selectedTlid);
     //   console.log(onSelect);

@@ -9,8 +9,9 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 function TwoAreaMiddle({ selectedTlid }) {
 
+
+    //tlid內容
     const [areaData1, setAreaData1] = useState([]);
-    const [budget, setBudget] = useState([]);
 
     const startDate = new Date(areaData1.start_date).toLocaleDateString('en-CA');
     const endDate = new Date(areaData1.end_date).toLocaleDateString('en-CA');
@@ -30,7 +31,6 @@ function TwoAreaMiddle({ selectedTlid }) {
           .catch(error => console.error(error));
         }, [selectedTlid]);
 
-
         useEffect(() => {
             fetch(API_HOST + '/api/POST/selectlist', {
                 method: 'POST',
@@ -49,8 +49,32 @@ function TwoAreaMiddle({ selectedTlid }) {
         useEffect(() => {  
             console.log(areaData1)
         }, [selectedTlid]);
+//
+//JourneyData
+    const [JourneyData, setJourneyData] = useState([]);
 
-    console.log(selectedTlid)
+useEffect(() => {
+        fetch(API_HOST + '/api/POST/selectjourney', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({ tlid: selectedTlid })
+          })
+          .then(response => response.json())
+          .then(data => {
+            setJourneyData(data)
+          })
+          .catch(error => console.error(error));
+        }, [selectedTlid]);
+
+        useEffect(() => {  
+            console.log(JourneyData)
+        }, [JourneyData]);
+        //
+
+
+
     return (
         <>
             <Row className='m-4'><Col className='text-center'><p className='text1'>{areaData1.title}</p></Col></Row>
@@ -70,8 +94,10 @@ function TwoAreaMiddle({ selectedTlid }) {
                     <a><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }}></img></a>
                 </Col>
                 <Col sm={1}></Col>
-
-                <Journey />
+                {JourneyData.map((item, index) => (
+        <Journey key={index} data={item}/>
+      ))}
+                
                 <JourneyProject />
             </Row>
             <Row className='m-4'>
