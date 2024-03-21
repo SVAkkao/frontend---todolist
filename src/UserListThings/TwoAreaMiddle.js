@@ -12,8 +12,8 @@ function TwoAreaMiddle({ selectedTlid }) {
     const [areaData1, setAreaData1] = useState([]);
     const [budget, setBudget] = useState([]);
 
-    const startDate = new Date(areaData1.start_date).toLocaleDateString();
-    const endDate = new Date(areaData1.end_date).toLocaleDateString();
+    const startDate = new Date(areaData1.start_date).toLocaleDateString('en-CA');
+    const endDate = new Date(areaData1.end_date).toLocaleDateString('en-CA');
 
     useEffect(() => {
         fetch(API_HOST + '/api/POST/selectlist', {
@@ -58,13 +58,13 @@ function TwoAreaMiddle({ selectedTlid }) {
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={4}>
-                    <Form.Control type="date" defaultvalue={startDate}/>
+                    <Form.Control type="date"  value={startDate}/>
                 </Col>
                 <Col className='text-center' sm={1}>
                     <img src='/UserListSource/to.png' style={{ width: "24px", height: '24px', paddingBottom: '0' }}></img>
                 </Col>
                 <Col className='text-center' sm={4}>
-                    <Form.Control type="date" defaultvalue={endDate}/>
+                    <Form.Control type="date"  value={startDate}/>
                 </Col>
                 <Col className='text-center' sm={1}>
                     <a><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }}></img></a>
