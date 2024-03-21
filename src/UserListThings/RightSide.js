@@ -4,10 +4,10 @@ import Image from 'react-bootstrap/Image';
 import Mylist from './Mylist';
 
 
-function RightSide({ data }) {
+function RightSide({ data, onButtonClick }) {
 
     const [selectedTlid, setSelectedTlid] = useState(null);
-
+    console.log(selectedTlid)
     const handleButtonClick = (tlid) => {
         setSelectedTlid(tlid);
     };

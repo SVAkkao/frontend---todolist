@@ -12,6 +12,7 @@ import Fetch from './Fetch';
 
 const List = () => {
   const [selectedTlid, setSelectedTlid] = useState(null);
+  console.log(selectedTlid)
 
   return (
     <>
@@ -20,7 +21,7 @@ const List = () => {
         <Row className='h-100'>
           <Col sm={3}>
           <Fetch>
-              {(data) => <RightSide data={data}  onSelect={setSelectedTlid}/>}
+              {(data) => <RightSide data={data}  onButtonClick={setSelectedTlid}/>}
             </Fetch>
           </Col>
           <Col sm={6} className='bg-color4'>
