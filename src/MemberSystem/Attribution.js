@@ -11,9 +11,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import { blue } from "@mui/material/colors";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import "./Attribution.css";
@@ -25,7 +22,7 @@ const userData = {
   nickname: "旅行者",
   avatar: "/path/to/avatar.jpg", // 替换成用户头像的路径
   points: 1200,
-  level: "探索家",
+  level: "探險家",
   contributions: [
     { type: "to-do-list", content: "访问故宫" },
     { type: "comment", content: "这里的风景真是太美了！" },
@@ -75,14 +72,19 @@ const AchievementsPage = () => {
           <div
             style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
           >
-            <Avatar src={`${API_IMAGE}${userPhoto}`} />
-            <Typography variant="h5" sx={{ ml: 2 }}>
+            <Avatar
+              src={
+                userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"
+              }
+              style={{ width: 100, height: 100, marginRight: 10 }}
+            />
+            <Typography variant="h3" sx={{ ml: 2 }}>
               {userName}
             </Typography>
           </div>
           <br></br>
-          <Typography variant="subtitle1">積分：{userData.points}</Typography>
-          <Typography variant="subtitle1">等級：{userData.level}</Typography>
+          <h5>積分：{userData.points}</h5>
+          <h5>等級：{userData.level}</h5>
         </CardContent>
         <div className="button-row">
           <button className="custom-button">全部</button>

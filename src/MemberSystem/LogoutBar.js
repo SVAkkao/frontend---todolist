@@ -117,7 +117,11 @@ function LogoutBar() {
                   }}
                 >
                   <img
-                    src={`${API_IMAGE}${userPhoto}`}
+                    src={
+                      userPhoto
+                        ? `${API_IMAGE}${userPhoto}`
+                        : "avatar-template.svg"
+                    }
                     alt="User avatar"
                     style={{
                       width: "100%",
@@ -145,7 +149,11 @@ function LogoutBar() {
                     }}
                   >
                     <img
-                      src={`${API_IMAGE}${userPhoto}`}
+                      src={
+                        userPhoto
+                          ? `${API_IMAGE}${userPhoto}`
+                          : "avatar-template.svg"
+                      }
                       alt="User avatar"
                       style={{
                         width: "100%",
