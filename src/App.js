@@ -1,5 +1,9 @@
 // import React, { useEffect, useRef, useState } from 'react'
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 // Routes
 import Register from "./MemberSystem/Register.js";
 import HomePage from "./MemberSystem/HomePage.js";
@@ -9,9 +13,9 @@ import NoAuthRoute from "./MemberSystem/NoAuthRoute.js";
 import LogoutBar from "./MemberSystem/LogoutBar.js";
 import ForgotPassword from "./MemberSystem/ForgotPassword.js";
 import MemberCentre from "./MemberSystem/MemberCentre.js";
+import AchievementsPage from "./MemberSystem/Attribution.js";
 import List from "./UserListThings/List.js";
 import Fetch from "./UserListThings/Fetch.js";
-
 
 const router = createBrowserRouter([
   //會員系統
@@ -44,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/membercentre",
     element: <MemberCentre />,
+  },
+  {
+    path: "/attribution",
+    element: <AchievementsPage />,
   },
 
   //TO-DO-LIST
