@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Pic from './Pic';
 import { Row, Col, Form } from 'react-bootstrap';
 import './color.css';
+import TextareaAutosize from 'react-textarea-autosize';
 
 function LeftSide() {
+    const [think, setThink] = useState('');
+    const [memo, setMemo] = useState('');
+
+    const handleThinkChange = (event) => {
+        setThink(event.target.value);
+    };
+    const handleMemoChange = (event) => {
+        setMemo(event.target.value);
+    };
+
+
     return (
         <>
             <Row className='m-4'>
@@ -17,6 +30,9 @@ function LeftSide() {
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
+                <Col sm={10}><Form.Label className='text-left '>出發時間</Form.Label></Col>
+                <Col sm={1}></Col>
+                <Col sm={1}></Col>
                 <Col className='text-center' sm={5}>
                     <Form.Control type="date" />
                 </Col>
@@ -28,9 +44,9 @@ function LeftSide() {
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
                 <Col sm={10}>
-                    <Row className='text-right m-4'>
+                    <Row className='text-right'>
                         <Col sm={5} className="d-flex align-items-center">
-                            <Form.Label className='text-left m-1'>感想</Form.Label>
+                            <Form.Label className='text-left'>感想</Form.Label>
                         </Col>
                         <Col sm={7} className="d-flex justify-content-end">
                             <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
@@ -39,33 +55,35 @@ function LeftSide() {
                             <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
                             <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
                         </Col>
-                        <Col>
-                            <Form.Control type="text" placeholder='抒發感想' />
+                    </Row>
+                    <Row>
+                        <Col sm={12}>
+                            <TextareaAutosize
+                                value={think}
+                                onChange={handleThinkChange}
+                                placeholder="抒發感想"
+                                className='rounded'
+                                style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
+                            />
                         </Col>
                     </Row>
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-            <Row>
-                <Col className='text-center align-items-center justify-content-center' sm={10}>
-                    <Form.Label>感想</Form.Label>
-                    <Form.Control type="text" placeholder='抒發感想' />
-                </Col>
-                <Col sm={1}></Col>
-            </Row>
+            <Pic></Pic>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
-                <Col className='text-center' sm={10}>
-                    <Form.Label>圖片</Form.Label>
-                    <Form.Control type="file" placeholder='上傳圖片' />
-                </Col>
+                <Col sm={10}><Form.Label className='text-left '>備註</Form.Label></Col>
                 <Col sm={1}></Col>
-            </Row>
-            <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={10}>
-                    <Form.Label>備註</Form.Label>
-                    <Form.Control type="date" placeholder='新增備註' />
+                    <TextareaAutosize
+                        value={memo}
+                        onChange={handleMemoChange}
+                        placeholder="新增備註"
+                        className='rounded'
+                        style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
+                    />
                 </Col>
                 <Col sm={1}></Col>
             </Row>
