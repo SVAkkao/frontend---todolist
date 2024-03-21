@@ -6,8 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
 // Local
-import OprationPanel from "./OprationPanel";
-import UserOprationPanel from "../UsersCommentItem/OprationPanel";
+import { ModalOprationPanel, UserOprationPanel } from "./OprationPanel";
 
 /**
  * How many stars should we have?
@@ -46,8 +45,9 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const alt = `User ${item.uid}`;
     const src = item.photo || "avatar-template.svg";
     return <ListGroup.Item className="comment-panel">
-        {/*  */}
-        <OprationPanel cid={item.cid} onEdit={onEdit} onDelete={onDelete} preloadDatas={item} />
+        <ModalOprationPanel
+            cid={item.cid} onEdit={onEdit} onDelete={onDelete} preloadDatas={item}
+        />
         <div className="item-panel">
             <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
             <p>{ item.comment }</p>
