@@ -42,13 +42,15 @@ function PidSelector({ change_action }) {
 function ProjectComponents() {
     const [pid, set_pid] = useState(1);
     const { show, show_modal, close_modal } = modal_modules();
+    const change_pid = (id) => {
+        set_pid(id);
+        show_modal();
+    };
     return <article className="project-comment">
         <h2>各景點活動的意見</h2>
-        <PidSelector change_action={set_pid} />
+        <p>點選項目以顯示意見</p>
+        <PidSelector change_action={change_pid} />
         <p>PID: {pid}</p>
-        <div>
-            <Button variant="primary" size="sm" onClick={show_modal}>Read comment</Button>
-        </div>
         <div className="modal">
             <CommentModal show={show} handleClose={close_modal} pid={pid} />
         </div>
