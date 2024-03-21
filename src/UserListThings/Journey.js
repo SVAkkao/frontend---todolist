@@ -1,7 +1,38 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import './color.css'
 import { Row, Col, Form } from 'react-bootstrap';
-function Journey() {
+
+const API_HOST = process.env.REACT_APP_API_URL;
+
+
+function Journey(data) {
+    
+    //拿aname
+    const [attraction, setAttraction] = useState([]);
+
+    useEffect(() => {
+        
+        fetch(API_HOST + '/api/POST/searchattraction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({ aid: data.aid })
+          })
+          .then(response => response.json())
+          .then(data => {
+            setAttraction(data)
+          })
+          .catch(error => console.error(error));
+        }, [data]);
+
+        useEffect(() => {  
+            console.log(data.aid);
+            console.log(attraction)
+        }, [attraction]);
+        //
+
+
     return (
         <Row className='mt-4'>
             <Col sm={1}></Col>
@@ -12,7 +43,7 @@ function Journey() {
                             <Form>
                                 <Form.Check
                                     type='checkbox'
-                                    label={<div style={{ textAlign: 'center' }}>飛牛牧場</div>}
+                                    label={<div style={{ textAlign: 'center' }}>{attraction.aname}</div>}
                                     className='text2'
                                 />
                             </Form>
