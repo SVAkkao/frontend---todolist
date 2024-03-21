@@ -121,8 +121,14 @@ const UserIntroduction = () => {
       </Typography>
     </div>
     <br />
-    <h5>積分：{userData.points}</h5>
-    <h5>等級：{userData.level}</h5>
+    <h5>
+      <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
+      積分：{userData.points}
+    </h5>
+    <h5>
+      <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
+      等級：{userData.level}
+    </h5>
   </CardContent>;
 }
 
@@ -141,7 +147,6 @@ const AchievementsPage = () => {
     }
   };
   useEffect(() => {
-    fetchUser();
     fetchUserComment();
   }, []);
 
@@ -149,24 +154,8 @@ const AchievementsPage = () => {
     <div style={{ backgroundColor: "#fffeef" }}>
       <LogoutBar />
       <br />
-      <Card sx={{ maxWidth: 800, minHeight: "90vh", m: "auto" }}>
-        <CardContent>
-          <br />
-          <div
-            style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
-          >
-            <Avatar
-              src={getUserPhoto(userPhoto)}
-              style={{ width: 100, height: 100, marginRight: 10 }}
-            />
-            <Typography variant="h3" sx={{ ml: 2 }}>
-              {userName}
-            </Typography>
-          </div>
-          <br />
-          <h5>積分：{userData.points}</h5>
-          <h5>等級：{userData.level}</h5>
-        </CardContent>
+      <Card sx={{ maxWidth: 900, minHeight: "87vh", m: "auto" }}>
+        <UserIntroduction />
         <div className="button-row">
           {/* Repeat the button element for each button you need */}
           <button className="custom-button" onClick={() => setFilter('all')}>全部</button>
