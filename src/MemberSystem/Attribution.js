@@ -14,15 +14,16 @@ import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import "./Attribution.css";
+import { FaStar, FaTrophy, FaMedal } from "react-icons/fa";
+import { MdGrade } from "react-icons/md";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 const userData = {
-  nickname: "旅行者",
   avatar: "/path/to/avatar.jpg", // 替换成用户头像的路径
   points: 1200,
-  level: "探險家",
+  level: "LV.3‧探險家",
   contributions: [
     { type: "to-do-list", content: "访问故宫" },
     { type: "comment", content: "这里的风景真是太美了！" },
@@ -56,7 +57,7 @@ const AchievementsPage = () => {
         setUserName(response.data.name);
         setUserPhoto(response.data.photo);
       } catch (error) {
-        console.error("获取用户信息失败:", error);
+        console.error("獲取用戶訊息失敗:", error);
       }
     };
     fetchUser();
@@ -66,8 +67,8 @@ const AchievementsPage = () => {
     <div style={{ backgroundColor: "#fffeef" }}>
       <LogoutBar></LogoutBar>
       <br></br>
-      <Card sx={{ maxWidth: 800, minHeight: "90vh", m: "auto" }}>
-        <CardContent>
+      <Card sx={{ maxWidth: 900, minHeight: "87vh", m: "auto" }}>
+        <CardContent style={{ padding: 20 }}>
           <br></br>
           <div
             style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
@@ -83,8 +84,14 @@ const AchievementsPage = () => {
             </Typography>
           </div>
           <br></br>
-          <h5>積分：{userData.points}</h5>
-          <h5>等級：{userData.level}</h5>
+          <h5>
+            <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
+            積分：{userData.points}
+          </h5>
+          <h5>
+            <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
+            等級：{userData.level}
+          </h5>
         </CardContent>
         <div className="button-row">
           <button className="custom-button">全部</button>
@@ -93,7 +100,7 @@ const AchievementsPage = () => {
           <button className="custom-button">相片</button>
           <button className="custom-button">評論</button>
         </div>
-        <List>
+        <List style={{ padding: 20 }}>
           {userData.contributions.map((contribution, index) => (
             <React.Fragment key={index}>
               <ListItem>
