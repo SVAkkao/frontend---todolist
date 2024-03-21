@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 // import Overlay from 'react-bootstrap/Overlay';
 import { useLocation } from "react-router-dom";
-import RightSide from "./RightSide";
+import LeftSide from "./LeftSide";
 
 
 const API_HOST = process.env.REACT_APP_API_URL;
@@ -14,11 +14,21 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 
 
-function Fetch() {
+function Fetch({onSelect2}) {
 
   const [data1, setData1] = useState({});
   const [data2, setData2] = useState([]);
-  const [testdata, setTestData] = useState([]);
+  // const [testdata, setTestData] = useState([]);
+  const [listdata, FetchsetListData] = useState(null);
+
+  if (onSelect2 && typeof onSelect2 === 'function') {
+  onSelect2(listdata)
+  // console.log("listdata")
+}
+  const onSelect1 = (tlid)=>{
+    FetchsetListData(tlid)
+    // console.log(listdata)
+  }
 
   const token = localStorage.getItem('userToken');
   const headers = new Headers({
@@ -57,7 +67,7 @@ function Fetch() {
             const selectlistBodies = data.tlid.map(tlid => ({ tlid }));
 
             // const selectlistBody = JSON.stringify({tlid: tlid[0] })
-            setTestData(selectlistBodies)
+            // setTestData(selectlistBodies)
             Promise.all(selectlistBodies.map(selectlistBody =>
               fetch(API_HOST + '/api/POST/selectlist', {
                 method: 'POST',
@@ -82,18 +92,18 @@ function Fetch() {
 
   }, []);
 
-  useEffect(() => {
-    console.log(testdata)
+  // useEffect(() => {
+    // console.log(testdata)
     // 在這裡處理返回的資料
-  }, [testdata]); // 添加data1為依賴項，以在data1更新時執行此回調函數
+  // }, [testdata]); // 添加data1為依賴項，以在data1更新時執行此回調函數
 
-  useEffect(() => {
-    console.log(data2)
+  // useEffect(() => {
+    // console.log(data2)
     // 在這裡處理返回的資料
-  }, [data2]); 
+  // }, [data2]); 
 
   
-  return <RightSide data={data2} />;
+  return <LeftSide data={data2} onSelect={onSelect1} />;
 }
 
 export default Fetch;

@@ -11,8 +11,13 @@ import Fetch from './Fetch';
 
 
 const List = () => {
-  const [selectedTlid, setSelectedTlid] = useState(null);
-  console.log(selectedTlid)
+
+  const [listSelectedTlid, listSetSelectedTlid] = useState(null);
+  const giveTlid =  (tlid) => {
+    listSetSelectedTlid(tlid);
+    // console.log(listSelectedTlid)
+};
+// console.log(listSelectedTlid)
 
   return (
     <>
@@ -20,15 +25,15 @@ const List = () => {
       <Container fluid className='vh-100' >
         <Row className='h-100'>
           <Col sm={3}>
-          <Fetch>
-              {(data) => <RightSide data={data}  onButtonClick={setSelectedTlid}/>}
+          <Fetch onSelect2={giveTlid}>
+              {/* {(data,onSelect) => <LeftSide data={data} onSelect={onSelect}/>} */}
             </Fetch>
           </Col>
           <Col sm={6} className='bg-color4'>
-            <TwoAreaMiddle selectedTlid={selectedTlid}></TwoAreaMiddle>
+            <TwoAreaMiddle selectedTlid ={listSelectedTlid}></TwoAreaMiddle>
           </Col>
           <Col sm={3}>
-            <LeftSide></LeftSide>
+            <RightSide></RightSide>
           </Col>
         </Row>
       </Container>

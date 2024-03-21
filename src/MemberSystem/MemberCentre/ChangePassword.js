@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+const API_HOST = process.env.REACT_APP_API_URL;
+
 function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -34,7 +36,7 @@ function ChangePassword() {
 
     try {
       const response = await axios.put(
-        "http://localhost/---todolist-backend/public/api/updatePassword",
+        `${API_HOST}/api/updatePassword`,
         {
           current_password: currentPassword,
           new_password: newPassword,

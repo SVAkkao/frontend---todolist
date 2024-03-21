@@ -1,14 +1,58 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import JourneyProject from './JourneyProject'
 import Journey from './Journey'
 import './color.css'
 import { Row, Col, Form} from 'react-bootstrap';
 
+const API_HOST = process.env.REACT_APP_API_URL;
+
+
 function TwoAreaMiddle({ selectedTlid }) {
+
+    const [areaData1, setAreaData1] = useState([]);
+    const [budget, setBudget] = useState([]);
+
+
+
+    useEffect(() => {
+        fetch(API_HOST + '/api/POST/selectlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({ tlid: selectedTlid })
+          })
+          .then(response => response.json())
+          .then(data => {
+            setAreaData1(data)
+          })
+          .catch(error => console.error(error));
+        }, [selectedTlid]);
+
+
+        useEffect(() => {
+            fetch(API_HOST + '/api/POST/selectlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                  },
+                body: JSON.stringify({ tlid: selectedTlid })
+              })
+              .then(response => response.json())
+              .then(data => {
+                setAreaData1(data)
+              })
+              .catch(error => console.error(error));
+            }, [selectedTlid]);
+
+        useEffect(() => {  
+            console.log(areaData1)
+        }, [selectedTlid]);
+
     console.log(selectedTlid)
     return (
         <>
-            <Row className='m-4'><Col className='text-center'><p className='text1'>{selectedTlid}</p></Col></Row>
+            <Row className='m-4'><Col className='text-center'><p className='text1'>{areaData1.title}</p></Col></Row>
             <Row className='m-4'><Col className='text-center'><p className='text2'>總金額: xx元</p></Col></Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>

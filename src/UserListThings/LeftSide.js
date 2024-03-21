@@ -1,91 +1,51 @@
-import React, { useState } from 'react';
-import Pic from './Pic';
-import { Row, Col, Form } from 'react-bootstrap';
-import './color.css';
-import TextareaAutosize from 'react-textarea-autosize';
+import React,{useState, useEffect} from 'react'
+import { Row, Col } from 'react-bootstrap';
+import Image from 'react-bootstrap/Image';
+import Mylist from './Mylist';
 
-function LeftSide() {
-    const [think, setThink] = useState('');
-    const [memo, setMemo] = useState('');
 
-    const handleThinkChange = (event) => {
-        setThink(event.target.value);
-    };
-    const handleMemoChange = (event) => {
-        setMemo(event.target.value);
-    };
+function LeftSide({ data,onSelect}) {
 
+
+    const [selectedTlid, setSelectedTlid] = useState(null);
+    
+    
+        if (onSelect && typeof onSelect === 'function' && selectedTlid !== null) {
+          onSelect(selectedTlid);
+        //   console.log(onSelect);
+        //   console.log("到底");
+        }
+    
+
+
+    const handleButtonClick = (tlid) => {
+      setSelectedTlid(tlid);
+  };
+
+    if (!data) {
+        return null;
+    }
 
     return (
+        
         <>
-            <Row className='m-4'>
-                <Col className='text-center'><p className='text1'>Journey's title</p></Col>
+            <Row style={{ alignItems: 'center' }}>
+                <Col>
+                    <Image className='m-4' src='https://images.pexels.com/photos/20147042/pexels-photo-20147042.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' roundedCircle style={{ border: 'grey', width: '150px', height: '150px' }}></Image>
+                </Col>
+                <Col>
+                    <p className='text2'> userName</p>
+                </Col>
             </Row>
+            <Row className='m-5 text2' style={{ justifyContent: 'space-between' }}>
+                <Col><a className='supportColor'>未完成</a></Col>
+                <Col><a className='supportColor'>已完成</a></Col>
+            </Row>
+            {data.map((item, index) => (
+                <Mylist key={index} data={item} onButtonClick={handleButtonClick} />
+            ))}
             <Row>
-                <Col sm={8}></Col>
-                <Col className='text-right' sm={4}>
-                    <a>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
-                </Col>
-                <Col sm={1}></Col>
-            </Row>
-            <Row className='m-4' style={{ alignItems: 'center' }}>
-                <Col sm={1}></Col>
-                <Col sm={10}><Form.Label className='text-left '>出發時間</Form.Label></Col>
-                <Col sm={1}></Col>
-                <Col sm={1}></Col>
-                <Col className='text-center' sm={5}>
-                    <Form.Control type="date" />
-                </Col>
-                <Col className='text-center' sm={5}>
-                    <Form.Control type="time" />
-                </Col>
-                <Col sm={1}></Col>
-            </Row>
-            <Row className='m-4' style={{ alignItems: 'center' }}>
-                <Col sm={1}></Col>
-                <Col sm={10}>
-                    <Row className='text-right'>
-                        <Col sm={5} className="d-flex align-items-center">
-                            <Form.Label className='text-left'>感想</Form.Label>
-                        </Col>
-                        <Col sm={7} className="d-flex justify-content-end">
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={12}>
-                            <TextareaAutosize
-                                value={think}
-                                onChange={handleThinkChange}
-                                placeholder="抒發感想"
-                                className='rounded'
-                                style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
-                            />
-                        </Col>
-                    </Row>
-                </Col>
-                <Col sm={1}></Col>
-            </Row>
-            <Pic></Pic>
-            <Row className='m-4' style={{ alignItems: 'center' }}>
-                <Col sm={1}></Col>
-                <Col sm={10}><Form.Label className='text-left '>備註</Form.Label></Col>
-                <Col sm={1}></Col>
-                <Col sm={1}></Col>
-                <Col className='text-center' sm={10}>
-                    <TextareaAutosize
-                        value={memo}
-                        onChange={handleMemoChange}
-                        placeholder="新增備註"
-                        className='rounded'
-                        style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
-                    />
-                </Col>
-                <Col sm={1}></Col>
+                <Col className="text-center"><img className='mb-5' style={{ width: "48px", height: '48px' }} src="/UserListSource/add.png" alt="Icon" /></Col>
             </Row>
         </>
     )

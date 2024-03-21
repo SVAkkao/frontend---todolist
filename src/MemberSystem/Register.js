@@ -31,7 +31,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        "http://localhost/---todolist-backend/public/api/register",
+        `${API_HOST}/api/register`,
         {
           method: "POST",
           headers: {
