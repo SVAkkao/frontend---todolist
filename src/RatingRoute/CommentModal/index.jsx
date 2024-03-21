@@ -2,7 +2,7 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import Modal from "react-bootstrap/Modal";
 import CommentForm from "./CommentForm";
-import CommentItem from "./CommentItem/index";
+import { ModalCommentItem } from "./CommentItem/index";
 // Local
 import { list_modules } from "./utils";
 import { create_comment_api } from "./api";
@@ -32,7 +32,7 @@ export default function CommentModal({ show, handleClose, pid }) {
         <Modal.Body>
             <p className="as">{ the_list.length < 1 ? "NO DATA" : "" }</p>
             <ListGroup>
-                {the_list.map( (item) => <CommentItem key={item.cid} item={item} onEdit={ajax_list} onDelete={ajax_list} /> )}
+                {the_list.map( (item) => <ModalCommentItem key={item.cid} item={item} onEdit={ajax_list} onDelete={ajax_list} /> )}
             </ListGroup>
             <hr />
             <div>
