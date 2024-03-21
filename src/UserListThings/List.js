@@ -5,6 +5,7 @@ import RightSide from './RightSide';
 import LeftSide from './LeftSide';
 import './color.css';
 import TwoAreaMiddle from './TwoAreaMiddle';
+import Fetch from './Fetch';
 
 
 
@@ -15,7 +16,9 @@ const List = () => {
       <Container fluid className='vh-100' >
         <Row className='h-100'>
           <Col sm={3}>
-            <RightSide></RightSide>
+          <Fetch>
+              {(data) => <RightSide data={data} />}
+            </Fetch>
           </Col>
           <Col sm={6} className='bg-color4'>
             <TwoAreaMiddle></TwoAreaMiddle>

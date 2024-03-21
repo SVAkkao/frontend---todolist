@@ -1,7 +1,11 @@
 import React from 'react'
 import {Row, Col, Card} from 'react-bootstrap';
 
-function Mylist() {
+function Mylist({data}) {
+
+    const startDate = new Date(data.start_date).toLocaleDateString();
+    const endDate = new Date(data.end_date).toLocaleDateString();
+
   return (
     <Row className='m-5'>
     <Col>
@@ -9,7 +13,7 @@ function Mylist() {
             <Card.Body style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}>
                 <div style={{ flex: '1', textAlign: 'center' }}>
                     <Card.Text className='text3'>
-                        title
+                    {data.title}
                     </Card.Text>
                 </div>
                 <div>
@@ -20,9 +24,9 @@ function Mylist() {
         </Card>
     </Col>
     <Row className='mt-3' style={{ alignItems: 'center' }}>
-        <Col><p className='text4'>yyyy/mm/dd</p></Col>
+        <Col><p className='text4'>{startDate}</p></Col>
         <Col><img style={{ width: "24px", height: '24px', marginBottom: '12px', paddingBottom: '0' }} src="/UserListSource/to.png" alt="Icon" /></Col>
-        <Col><p className='text4'>yyyy/mm/dd</p></Col>
+        <Col><p className='text4'>{endDate}</p></Col>
     </Row>
 </Row>
   )
