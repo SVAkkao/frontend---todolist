@@ -27,6 +27,9 @@ function LogoutBar() {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const toggleDropdown = () => setShowDropdown(!showDropdown);
 
   useEffect(() => {
     // 函数用于获取当前登录用户信息
@@ -100,7 +103,11 @@ function LogoutBar() {
           </Link>
           <div className="navbar-nav ms-auto dropdown">
             <div>
-              <div style={{ display: "flex" }}>
+              <div
+                id="user"
+                onClick={toggleDropdown}
+                style={{ display: "flex", cursor: "pointer" }}
+              >
                 <span style={{ fontSize: "24px", padding: "10px" }}>
                   歡迎回來！
                 </span>
@@ -108,7 +115,7 @@ function LogoutBar() {
                   className="avatar-preview"
                   style={{
                     borderRadius: "50%",
-                    margin: "0px 10px",
+                    marginRight: "10px",
                     width: "50px",
                     height: "50px",
                     overflow: "hidden",
@@ -132,9 +139,13 @@ function LogoutBar() {
                     }}
                   />
                 </div>
+                <MdExpandMore style={{ marginTop: "20px" }} />
               </div>
 
-              <div className="dropdown-content">
+              <div
+                className="dropdown-content"
+                style={{ display: showDropdown ? "block" : "none" }}
+              >
                 <div className="user-card">
                   <div
                     className="avatar-preview"
