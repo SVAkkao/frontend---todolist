@@ -60,8 +60,23 @@ const ContributionIcon = ({ type }) => {
   }
   return null;
 };
-const ContributionsPanel = ({ contributions, filter }) => {
-  return contributions.map((contribution, index) => (
+const ContributionsPanel = ({ contributions, comments, filter }) => {
+  if( filter === "comment" ) {
+    return comments.map((comment, index, array) => (
+      <React.Fragment key={comment.cid}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+              <ContributionIcon type="comment" />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={comment.comment} />
+        </ListItem>
+        {index < array.length - 1 && <Divider />}
+      </React.Fragment>
+    ));
+  }
+  return contributions.map((contribution, index, array) => (
     <React.Fragment key={index}>
       <ListItem>
         <ListItemAvatar>
@@ -71,19 +86,13 @@ const ContributionsPanel = ({ contributions, filter }) => {
         </ListItemAvatar>
         <ListItemText primary={contribution.content} />
       </ListItem>
-      {index < userData.contributions.length - 1 && <Divider />}
+      {index < array.length - 1 && <Divider />}
     </React.Fragment>
   ));
 };
-
-const AchievementsPage = () => {
+const UserIntroduction = () => {
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
-  const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
-  const [userComments, setUserComments] = useState([]);
-  function getUserPhoto(userPhoto) {
-    return userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg";
-  }
   /**
    * 获取当前登录用户信息
    */
@@ -96,6 +105,30 @@ const AchievementsPage = () => {
       console.error("取得用戶訊息失敗：", error);
     }
   };
+  useEffect(() => {
+    fetchUser();
+  }, []);
+  return <CardContent>
+    <br />
+    <div
+      style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
+    >
+      <Avatar
+        src={userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"}
+        style={{ width: 100, height: 100, marginRight: 10 }} />
+      <Typography variant="h3" sx={{ ml: 2 }}>
+        {userName}
+      </Typography>
+    </div>
+    <br />
+    <h5>積分：{userData.points}</h5>
+    <h5>等級：{userData.level}</h5>
+  </CardContent>;
+}
+
+const AchievementsPage = () => {
+  const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
+  const [userComments, setUserComments] = useState([]);
   /**
    * Get the user's comments and add it into the list.
    */
@@ -108,16 +141,6 @@ const AchievementsPage = () => {
     }
   };
   useEffect(() => {
-    // 函数用于获取当前登录用户信息
-    const fetchUser = async () => {
-      try {
-        const response = await getUserApi();
-        setUserName(response.data.name);
-        setUserPhoto(response.data.photo);
-      } catch (error) {
-        console.error("獲取用戶訊息失敗:", error);
-      }
-    };
     fetchUser();
     fetchUserComment();
   }, []);
@@ -141,14 +164,8 @@ const AchievementsPage = () => {
             </Typography>
           </div>
           <br />
-          <h5>
-            <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
-            積分：{userData.points}
-          </h5>
-          <h5>
-            <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-            等級：{userData.level}
-          </h5>
+          <h5>積分：{userData.points}</h5>
+          <h5>等級：{userData.level}</h5>
         </CardContent>
         <div className="button-row">
           {/* Repeat the button element for each button you need */}
@@ -161,6 +178,7 @@ const AchievementsPage = () => {
           <ContributionsPanel
             filter={filter}
             contributions={userData.contributions}
+            comments={userComments}
           />
         </List>
       </Card>
