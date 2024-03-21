@@ -22,6 +22,8 @@ const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 const userData = {
   avatar: "/path/to/avatar.jpg", // 替换成用户头像的路径
+  // nickname: "旅行者",
+  // avatar: "/path/to/avatar.jpg", // 替换成用户头像的路径
   points: 1200,
   level: "LV.3‧探險家",
   contributions: [
@@ -31,15 +33,25 @@ const userData = {
   ],
 };
 
-function getUserApi() {
+// API calls
+const getUserApi = () => {
   const token = localStorage.getItem("userToken");
   return axios.get(`${API_HOST}/api/user`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-}
+};
+const getUserCommentApi = () => {
+  const token = localStorage.getItem("userToken");
+  return axios.get(`${API_HOST}/api/user-comment`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
+// Components
 const ContributionIcon = ({ type }) => {
   if (type === "to-do-list") {
     return <ListAltIcon />;
@@ -48,14 +60,53 @@ const ContributionIcon = ({ type }) => {
   }
   return null;
 };
+const ContributionsPanel = ({ contributions, filter }) => {
+  return contributions.map((contribution, index) => (
+    <React.Fragment key={index}>
+      <ListItem>
+        <ListItemAvatar>
+          <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+            <ContributionIcon type={contribution.type} />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={contribution.content} />
+      </ListItem>
+      {index < userData.contributions.length - 1 && <Divider />}
+    </React.Fragment>
+  ));
+};
 
 const AchievementsPage = () => {
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
   const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
+  const [userComments, setUserComments] = useState([]);
   function getUserPhoto(userPhoto) {
     return userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg";
   }
+  /**
+   * 获取当前登录用户信息
+   */
+  const fetchUser = async () => {
+    try {
+      const response = await getUserApi();
+      setUserName(response.data.name);
+      setUserPhoto(response.data.photo);
+    } catch (error) {
+      console.error("取得用戶訊息失敗：", error);
+    }
+  };
+  /**
+   * Get the user's comments and add it into the list.
+   */
+  const fetchUserComment = async() => {
+    try {
+      const response = await getUserCommentApi();
+      setUserComments(response.data.result);
+    } catch (error) {
+      console.error("取得留言失敗：", error);
+    }
+  };
   useEffect(() => {
     // 函数用于获取当前登录用户信息
     const fetchUser = async () => {
@@ -68,15 +119,16 @@ const AchievementsPage = () => {
       }
     };
     fetchUser();
+    fetchUserComment();
   }, []);
 
   return (
     <div style={{ backgroundColor: "#fffeef" }}>
-      <LogoutBar></LogoutBar>
-      <br></br>
-      <Card sx={{ maxWidth: 900, minHeight: "87vh", m: "auto" }}>
-        <CardContent style={{ padding: 20 }}>
-          <br></br>
+      <LogoutBar />
+      <br />
+      <Card sx={{ maxWidth: 800, minHeight: "90vh", m: "auto" }}>
+        <CardContent>
+          <br />
           <div
             style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
           >
@@ -88,7 +140,7 @@ const AchievementsPage = () => {
               {userName}
             </Typography>
           </div>
-          <br></br>
+          <br />
           <h5>
             <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
             積分：{userData.points}
@@ -99,26 +151,17 @@ const AchievementsPage = () => {
           </h5>
         </CardContent>
         <div className="button-row">
-          <button className="custom-button">全部</button>
           {/* Repeat the button element for each button you need */}
-          <button className="custom-button">清單</button>
-          <button className="custom-button">相片</button>
-          <button className="custom-button">評論</button>
+          <button className="custom-button" onClick={() => setFilter('all')}>全部</button>
+          <button className="custom-button" onClick={() => setFilter('list')}>清單</button>
+          <button className="custom-button" onClick={() => setFilter('photo')}>相片</button>
+          <button className="custom-button" onClick={() => setFilter('comment')}>評論</button>
         </div>
         <List style={{ padding: 20 }}>
-          {userData.contributions.map((contribution, index) => (
-            <React.Fragment key={index}>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                    <ContributionIcon type={contribution.type} />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={contribution.content} />
-              </ListItem>
-              {index < userData.contributions.length - 1 && <Divider />}
-            </React.Fragment>
-          ))}
+          <ContributionsPanel
+            filter={filter}
+            contributions={userData.contributions}
+          />
         </List>
       </Card>
     </div>
