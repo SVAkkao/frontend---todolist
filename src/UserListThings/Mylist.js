@@ -13,7 +13,7 @@ function Mylist({data, onButtonClick}) {
             <Card.Body style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}>
                 <div style={{ flex: '1', textAlign: 'center' }}>
                     <Card.Text className='text3'>
-                    {data.tlid}{data.title}
+                    {data.title}
                     </Card.Text>
                 </div>
                 <div>
