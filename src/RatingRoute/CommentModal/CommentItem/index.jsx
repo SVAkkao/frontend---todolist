@@ -103,9 +103,7 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                 </div>
             </Card.Title>
             <Card.Text>
-                <article>
-                    <p>{ item.comment }</p>
-                </article>
+                <span>{ item.comment }</span>
             </Card.Text>
         </Card.Body>
     </Card>;

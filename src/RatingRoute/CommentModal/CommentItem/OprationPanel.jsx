@@ -14,16 +14,12 @@ import { change_comment_api, delete_comment_api, get_comment_changelog_api } fro
 import { useEffect, useState } from "react";
 
 // Components
-const DeleteConfirmModal = ({ hideModal, iid }) => {
-    const close = () => {
-        console.log(iid);
-        hideModal();
-    };
+const DeleteConfirmModal = ({ confirmAndHide, cancelAndHide, iid }) => {
     return (<div>
         <p>您確定要刪除嗎？<strong className="allcaps">此操作無法撤銷</strong>！</p>
         <ButtonGroup aria-label="Basic example">
-            <Button onClick={close} variant="danger">刪除</Button>
-            <Button onClick={close} variant="secondary">取消</Button>
+            <Button onClick={confirmAndHide} variant="danger">刪除</Button>
+            <Button onClick={cancelAndHide} variant="secondary">取消</Button>
         </ButtonGroup>
     </div>);
 };
@@ -138,15 +134,22 @@ function edit_modules(modalmode, show_modal, close_modal, cid, onEdit) {
  * @returns 
  */
 function remove_modules(modalmode, show_modal, close_modal, cid, onDelete) {
-    const RemoveForm = ({ modalmode, closeRemoving }) => {
+    const RemoveForm = ({ modalmode, cancelAndHide, confirmAndHide }) => {
         const can_remove = modalmode.mode === modalmode.REMOVING;
-        return can_remove ? <DeleteConfirmModal hideModal={closeRemoving} /> : <div></div>;
+        return can_remove ?
+            <DeleteConfirmModal cancelAndHide={cancelAndHide} confirmAndHide={confirmAndHide} /> :
+            <div></div>
+        ;
     }
     const open_removing = () => {
         modalmode.set_mode(modalmode.REMOVING);
         show_modal();
     };
-    const close_removing = () => {
+    const close_removing = (confirmed = false) => {
+        if( !confirmed ) {
+            close_modal();
+            return;
+        }
         const ajax = delete_comment_api(cid);
         ajax.then((response) => {
             console.log(response);
@@ -193,7 +196,11 @@ export function ModalOprationPanel({ pid, cid, onDelete, onEdit, preloadDatas })
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <RemoveForm modalmode={modalmode} closeRemoving={close_removing} />
+                    <RemoveForm
+                        modalmode={modalmode}
+                        confirmAndHide={() => close_removing(true)}
+                        cancelAndHide={() => close_removing(false)}
+                    />
                     <EditForm modalmode={modalmode} pid={pid} preloadDatas={preloadDatas} closeEditing={close_editing} />
                     <ChangelogForm modalmode={modalmode} cid={cid} closeChangelog={close_changelog} />
                 </Modal.Body>
@@ -238,7 +245,11 @@ export function UserOprationPanel({ pid, cid, onDelete, onEdit, preloadDatas }) 
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <RemoveForm modalmode={modalmode} closeRemoving={close_removing} />
+                    <RemoveForm
+                        modalmode={modalmode}
+                        confirmAndHide={() => close_removing(true)}
+                        cancelAndHide={() => close_removing(false)}
+                    />
                     <EditForm modalmode={modalmode} pid={pid} preloadDatas={preloadDatas} closeEditing={close_editing} />
                     <ChangelogForm modalmode={modalmode} cid={cid} closeChangelog={close_changelog} />
                 </Modal.Body>
