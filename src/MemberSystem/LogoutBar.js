@@ -18,6 +18,7 @@ import {
   FaUserFriends,
 } from "react-icons/fa";
 import "./DropdownMenu.css";
+import html2canvas from "html2canvas";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
@@ -68,6 +69,21 @@ function LogoutBar() {
       console.error("Logout error:", error);
     }
   };
+
+  // const exportPageAsPNG = () => {
+  //   html2canvas(document.getElementById("content")).then((canvas) => {
+  //     // 創建一個圖片元素
+  //     const img = canvas.toDataURL("image/png");
+
+  //     // 創建一個鏈接元素，用於下載
+  //     const link = document.createElement("a");
+  //     link.href = img;
+  //     link.download = "exported-page.png"; // 指定下載的文件名
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  //   });
+  // };
 
   return (
     <div>
@@ -154,7 +170,7 @@ function LogoutBar() {
                   <MdAccountCircle style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>會員中心</span>
                 </Link>
-                <Link to="" className="nav-link">
+                <Link to="/attribution" className="nav-link">
                   <FaUserFriends style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>你的貢獻</span>
                 </Link>
@@ -162,11 +178,10 @@ function LogoutBar() {
                   <FaCommentAlt style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>評論與評價</span>
                 </Link>
-                <Link to="" className="nav-link">
+                <Link to="#" className="nav-link">
                   <FaFileExport style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>匯出頁面</span>
                 </Link>
-
                 <Link onClick={handleLogout} className="nav-link">
                   <FaSignOutAlt style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>登出</span>
