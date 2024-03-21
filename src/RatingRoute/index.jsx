@@ -2,7 +2,7 @@
 import { Container, Button, Row, Col } from "react-bootstrap";
 import CommentModal from "./CommentModal";
 import { modal_modules } from "./CommentModal/utils";
-import CommentItem from "./CommentModal/UsersCommentItem";
+import { UsersCommentItem } from "./CommentModal/CommentItem/index";
 import LogoutBar from "../MemberSystem/LogoutBar";
 import { useState, useEffect } from "react";
 import { get_user_comments_api } from "./CommentModal/api";
@@ -73,7 +73,7 @@ function UserComments() {
     }, []);
     return <article className="user-comment">
         <h2>用戶發表的意見</h2>
-        {list.map( (item) => <CommentItem key={item.cid} item={item} onEdit={edit_action} onDelete={delete_action} /> )}
+        {list.map( (item) => <UsersCommentItem key={item.cid} item={item} onEdit={edit_action} onDelete={delete_action} /> )}
     </article>;
 }
 

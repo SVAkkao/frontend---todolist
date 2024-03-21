@@ -1,4 +1,5 @@
 // react-bootstrap
+import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 // FontAwesome
@@ -6,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
 // Local
 import OprationPanel from "./OprationPanel";
+import UserOprationPanel from "../UsersCommentItem/OprationPanel";
 
 /**
  * How many stars should we have?
@@ -38,7 +40,7 @@ const generate_rate = (r = "0") => {
 
 const DEFAULT_ITEM = { "cid": "", "avatar": "", "rate": "", "comment": "", "date": "", "pid": "", "uid": "" };
 
-export default function CommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
+export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 48; 
     const stars = generate_rate(item.rate);
     const alt = `User ${item.uid}`;
@@ -56,4 +58,45 @@ export default function CommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
             </span>
         </div>
     </ListGroup.Item>;
+}
+
+export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
+    const imgsize = 64; 
+    const stars = generate_rate(item.rate);
+    const alt = `User ${item.uid}`;
+    const src = item.photo || "avatar-template.svg";
+    return <Card className="user-comment-panel mb-4">
+        <Card.Body>
+            <Card.Title>
+                <div className="user-comment-header">
+                    <div className="item -avatar">
+                        <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
+                    </div>
+                    <div className="item -info">
+                        <div>
+                            <p className="title usertitle"><strong className="allcaps">User</strong></p>
+                        </div>
+                        <div>
+                            <span>
+                                { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
+                            </span>
+                        </div>
+                    </div>
+                    <div className="item -opration">
+                        <UserOprationPanel
+                            cid={item.cid}
+                            onEdit={onEdit}
+                            onDelete={onDelete}
+                            preloadDatas={item}
+                        />
+                    </div>
+                </div>
+            </Card.Title>
+            <Card.Text>
+                <article>
+                    <p>{ item.comment }</p>
+                </article>
+            </Card.Text>
+        </Card.Body>
+    </Card>;
 }
