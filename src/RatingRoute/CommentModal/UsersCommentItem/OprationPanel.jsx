@@ -67,11 +67,46 @@ function ChangelogList({ cid, closeChangelog }) {
     </div>;
 }
 
-export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas }) {
-    const { show, close_modal, show_modal } = modal_modules();
-    const modalmode = modal_mode_modules();
-    // Removing actions
-    function RemoveForm({ modalmode, closeRemoving }) {
+function changelog_modules(modalmode, show_modal, close_modal) {
+    const ChangelogForm = ({ modalmode, cid, closeChangelog }) => {
+        const can_log = modalmode.mode === modalmode.CHANGELOG;
+        return can_log ? <ChangelogList cid={cid} closeChangelog={closeChangelog} /> : <div></div>;
+    };
+    const open_changelog = () => {
+        modalmode.set_mode(modalmode.CHANGELOG);
+        show_modal();
+    };
+    const close_changelog = () => {
+        close_modal();
+    };
+    return { open_changelog, ChangelogForm, close_changelog };
+}
+
+function edit_modules(modalmode, show_modal, cid, onEdit, close_modal) {
+    const EditForm = ({ modalmode, pid, closeEditing, preloadDatas }) => {
+        const can_edit = modalmode.mode === modalmode.EDITING;
+        return can_edit ? <CommentForm pid={pid} submitAction={closeEditing} preloadDatas={preloadDatas} method="PUT" /> : <div></div>;
+    };
+    const open_editing = () => {
+        modalmode.set_mode(modalmode.EDITING);
+        show_modal();
+    };
+    const close_editing = (form_dom) => {
+        const ajax = change_comment_api(form_dom, cid);
+        ajax.then((response) => {
+            console.log(response);
+            onEdit();
+            close_modal();
+        }).catch((response) => {
+            console.error(response);
+            alert(response.message);
+        });
+    };
+    return { open_editing, EditForm, close_editing };
+}
+
+function remove_modules(modalmode, show_modal, cid, onDelete, close_modal) {
+    const RemoveForm = ({ modalmode, closeRemoving }) => {
         const can_remove = modalmode.mode === modalmode.REMOVING;
         return can_remove ? <DeleteConfirmModal hideModal={closeRemoving} /> : <div></div>;
     }
@@ -81,47 +116,27 @@ export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas
     };
     const close_removing = () => {
         const ajax = delete_comment_api(cid);
-        ajax.then( (response) => {
+        ajax.then((response) => {
             console.log(response);
             onDelete();
             close_modal();
-        }).catch( (response) => {
+        }).catch((response) => {
             console.error(response);
             alert(response.message);
         });
     };
+    return { RemoveForm, open_removing, close_removing };
+}
+
+export default function OprationPanel({ pid, cid, onDelete, onEdit, preloadDatas }) {
+    const { show, close_modal, show_modal } = modal_modules();
+    const modalmode = modal_mode_modules();
+    // Removing actions
+    const { RemoveForm, open_removing, close_removing } = remove_modules(modalmode, show_modal, cid, onDelete, close_modal);
     // Editing actions
-    function EditForm({ modalmode, pid, closeEditing, preloadDatas }) {
-        const can_edit = modalmode.mode === modalmode.EDITING;
-        return can_edit ? <CommentForm pid={pid} submitAction={closeEditing} preloadDatas={preloadDatas} method="PUT" /> : <div></div>;
-    }
-    const open_editing = () => {
-        modalmode.set_mode(modalmode.EDITING);
-        show_modal();
-    };
-    const close_editing = (form_dom) => {
-        const ajax = change_comment_api(form_dom, cid);
-        ajax.then( (response) => {
-            console.log(response);
-            onEdit();
-            close_modal();
-        }).catch( (response) => {
-            console.error(response);
-            alert(response.message);
-        });
-    };
+    const { open_editing, EditForm, close_editing } = edit_modules(modalmode, show_modal, cid, onEdit, close_modal);
     // Changelog actions
-    function ChangelogForm({ modalmode, cid, closeChangelog }) {
-        const can_log = modalmode.mode === modalmode.CHANGELOG;
-        return can_log ? <ChangelogList cid={cid} closeChangelog={closeChangelog} /> : <div></div>;
-    }
-    const open_changelog = () => {
-        modalmode.set_mode(modalmode.CHANGELOG);
-        show_modal();
-    };
-    const close_changelog = () => {
-        close_modal();
-    };
+    const { open_changelog, ChangelogForm, close_changelog } = changelog_modules(modalmode, show_modal, close_modal);
     // HTML
     const ModalTitle = ({ modalmode }) => {
         switch (modalmode.mode) {
