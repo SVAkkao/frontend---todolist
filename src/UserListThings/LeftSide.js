@@ -30,7 +30,7 @@ function LeftSide() {
                 <Col sm={10}>
                     <Row className='text-right m-4'>
                         <Col sm={5} className="d-flex align-items-center">
-                            <Form.Label className='text-left m-1'>感想</Form.Label>
+                            <Form.Label className='text-left '>感想</Form.Label>
                         </Col>
                         <Col sm={7} className="d-flex justify-content-end">
                             <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
@@ -39,7 +39,7 @@ function LeftSide() {
                             <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
                             <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
                         </Col>
-                        <Col>
+                        <Col sm={12}>
                             <Form.Control type="text" placeholder='抒發感想' />
                         </Col>
                     </Row>
