@@ -27,7 +27,27 @@ function LeftSide() {
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
-                <Col className='text-center' sm={10}>
+                <Col sm={10}>
+                    <Row className='text-right m-4'>
+                        <Col sm={5} className="d-flex align-items-center">
+                            <Form.Label className='text-left m-1'>感想</Form.Label>
+                        </Col>
+                        <Col sm={7} className="d-flex justify-content-end">
+                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
+                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
+                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
+                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
+                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
+                        </Col>
+                        <Col>
+                            <Form.Control type="text" placeholder='抒發感想' />
+                        </Col>
+                    </Row>
+                </Col>
+                <Col sm={1}></Col>
+            </Row>
+            <Row>
+                <Col className='text-center align-items-center justify-content-center' sm={10}>
                     <Form.Label>感想</Form.Label>
                     <Form.Control type="text" placeholder='抒發感想' />
                 </Col>
