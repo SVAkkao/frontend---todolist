@@ -17,14 +17,14 @@ const List = () => {
         <Row className='h-100'>
           <Col sm={3}>
           <Fetch>
-              {(data) => <RightSide data={data} />}
+              {(data) => <LeftSide data={data} />}
             </Fetch>
           </Col>
           <Col sm={6} className='bg-color4'>
             <TwoAreaMiddle></TwoAreaMiddle>
           </Col>
           <Col sm={3}>
-            <LeftSide></LeftSide>
+            <RightSide></RightSide>
           </Col>
         </Row>
       </Container>
