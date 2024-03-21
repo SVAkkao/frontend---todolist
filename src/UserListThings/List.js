@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogoutBar from '../MemberSystem/LogoutBar';
 import { Container, Row, Col} from 'react-bootstrap';
 import RightSide from './RightSide';
@@ -9,19 +9,28 @@ import Fetch from './Fetch';
 
 
 
+
 const List = () => {
+
+  const [listSelectedTlid, listSetSelectedTlid] = useState(null);
+  const giveTlid =  (tlid) => {
+    listSetSelectedTlid(tlid);
+    // console.log(listSelectedTlid)
+};
+// console.log(listSelectedTlid)
+
   return (
     <>
       <LogoutBar></LogoutBar>
       <Container fluid className='vh-100' >
         <Row className='h-100'>
           <Col sm={3}>
-          <Fetch>
-              {(data) => <LeftSide data={data} />}
+          <Fetch onSelect2={giveTlid}>
+              {/* {(data,onSelect) => <LeftSide data={data} onSelect={onSelect}/>} */}
             </Fetch>
           </Col>
           <Col sm={6} className='bg-color4'>
-            <TwoAreaMiddle></TwoAreaMiddle>
+            <TwoAreaMiddle selectedTlid ={listSelectedTlid}></TwoAreaMiddle>
           </Col>
           <Col sm={3}>
             <RightSide></RightSide>

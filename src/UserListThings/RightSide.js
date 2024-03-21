@@ -43,6 +43,19 @@ function RightSide() {
                 </Col>
                 <Col sm={1}></Col>
             </Row>
+            <Row className='m-4' style={{ alignItems: 'center' }}>
+                <Col sm={1}></Col>
+                <Col sm={10}><Form.Label className='text-left '>回歸時間</Form.Label></Col>
+                <Col sm={1}></Col>
+                <Col sm={1}></Col>
+                <Col className='text-center' sm={5}>
+                    <Form.Control type="date" />
+                </Col>
+                <Col className='text-center' sm={5}>
+                    <Form.Control type="time" />
+                </Col>
+                <Col sm={1}></Col>
+            </Row>
             <Budget></Budget>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
