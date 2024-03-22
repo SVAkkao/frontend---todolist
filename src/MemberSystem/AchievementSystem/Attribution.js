@@ -63,22 +63,8 @@ const ContributionIcon = ({ type }) => {
   }
   return null;
 };
-const ContributionsPanel = ({ contributions, comments, filter }) => {
-  const [listTitles, setListTitles] = useState([]);
 
-  useEffect(() => {
-    if (filter === "list") {
-      // 当 filter 为 "list" 时，获取清单标题
-      getUserListTitle()
-        .then((response) => {
-          // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
-          setListTitles(response.data.titles);
-        })
-        .catch((error) => {
-          console.error("获取清单标题失败：", error);
-        });
-    }
-  }, [filter]);
+const ContributionsPanel = ({ listTitles, comments, filter }) => {
   if (filter === "comment") {
     return comments.map((comment, index, array) => (
       <React.Fragment key={comment.cid}>
@@ -109,8 +95,9 @@ const ContributionsPanel = ({ contributions, comments, filter }) => {
       </React.Fragment>
     ));
   }
+  return <span>Type unknown</span>;
 
-  // return contributions.map((contribution, index, array) => (
+  // return userData.contributions.map((contribution, index, array) => (
   //   <React.Fragment key={index}>
   //     <ListItem>
   //       <ListItemAvatar>
@@ -161,8 +148,19 @@ const UserIntroduction = () => {
 };
 
 const AchievementsPage = () => {
-  const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
+  const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
   const [userComments, setUserComments] = useState([]);
+  const [listTitles, setListTitles] = useState([]);
+  const fetchUserListTitles = () => {
+    getUserListTitle()
+    .then((response) => {
+      // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
+      setListTitles(response.data.titles);
+    })
+    .catch((error) => {
+      console.error("获取清单标题失败：", error);
+    });
+  };
   /**
    * Get the user's comments and add it into the list.
    */
@@ -176,6 +174,7 @@ const AchievementsPage = () => {
   };
   useEffect(() => {
     fetchUserComment();
+    fetchUserListTitles();
   }, []);
 
   return (
@@ -211,8 +210,8 @@ const AchievementsPage = () => {
           <List style={{ padding: 20 }}>
             <ContributionsPanel
               filter={filter}
-              contributions={userData.contributions}
               comments={userComments}
+              listTitles={listTitles}
             />
           </List>
         </Card>
