@@ -1,7 +1,32 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
+const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyProject() {
+function JourneyProject({journeyprojectdataforjourneyproject}) {
+
+    
+//拿pname
+const [journeyprojectname, setJourneyProjectName] = useState([]);
+
+useEffect(() => {
+
+    fetch(API_HOST + '/api/POST/searchprojectname', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify({ pid: journeyprojectdataforjourneyproject.pid })
+      })
+      .then(response => response.json())
+      .then(data => {
+        setJourneyProjectName(data)
+      })
+      .catch(error => console.error(error));
+    
+    }, [journeyprojectdataforjourneyproject]);
+//
+
+
   return (
     <Row className='mt-4'>
     <Col sm={2}></Col>
@@ -12,7 +37,7 @@ function JourneyProject() {
                     <Form>
                         <Form.Check
                             type='checkbox'
-                            label={<div style={{ textAlign: 'center' }}>吃牛奶冰淇淋</div>}
+                            label={<div style={{ textAlign: 'center' }}>{journeyprojectname.pname}</div>}
                             className='text2'
                         />
                     </Form>

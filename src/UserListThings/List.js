@@ -12,12 +12,20 @@ import Fetch from './Fetch';
 
 const List = () => {
 
+  //拿mylist給的tlid
   const [listSelectedTlid, listSetSelectedTlid] = useState(null);
   const giveTlid =  (tlid) => {
     listSetSelectedTlid(tlid);
-    // console.log(listSelectedTlid)
 };
-// console.log(listSelectedTlid)
+//
+
+  //拿userdata
+  const [userid, setUserId] = useState(null);
+  const giveUserid =  (id) => {
+    setUserId(id);
+    console.log(id)
+};
+  //
 
   return (
     <>
@@ -25,7 +33,7 @@ const List = () => {
       <Container fluid className='vh-100' >
         <Row className='h-100'>
           <Col sm={3}>
-          <Fetch onSelect2={giveTlid}>
+          <Fetch onSelect2={giveTlid} giveUserid={giveUserid}>
               {/* {(data,onSelect) => <LeftSide data={data} onSelect={onSelect}/>} */}
             </Fetch>
           </Col>

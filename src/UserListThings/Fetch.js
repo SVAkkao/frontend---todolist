@@ -14,21 +14,25 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 
 
-function Fetch({onSelect2}) {
+function Fetch({onSelect2,giveUserid}) {
 
-  const [data1, setData1] = useState({});
   const [data2, setData2] = useState([]);
-  // const [testdata, setTestData] = useState([]);
-  const [listdata, FetchsetListData] = useState(null);
 
+  const [listdata, FetchsetListData] = useState(null);
+  
   if (onSelect2 && typeof onSelect2 === 'function') {
   onSelect2(listdata)
-  // console.log("listdata")
 }
   const onSelect1 = (tlid)=>{
     FetchsetListData(tlid)
-    // console.log(listdata)
   }
+  //傳id給List
+  const [iddata, setIdData] = useState(null);
+  
+  if (giveUserid && typeof giveUserid === 'function') {
+    giveUserid(iddata)
+  }
+  //
 
   const token = localStorage.getItem('userToken');
   const headers = new Headers({
@@ -44,6 +48,9 @@ function Fetch({onSelect2}) {
     })
       .then(response => response.json())
       .then(data => {
+
+        setIdData(data.id)
+
         const userId = data.id;
         // 繼續使用userId來發送下一個HTTP請求
         const body = JSON.stringify({
@@ -57,12 +64,6 @@ function Fetch({onSelect2}) {
         })
           .then(response => response.json())
           .then(data => {
-            
-            setData1(data)
-
-            const tlid = data.tlid
-            const jid = data.jid
-            const jpid = data.jpid
 
             const selectlistBodies = data.tlid.map(tlid => ({ tlid }));
 
