@@ -37,6 +37,13 @@ const generate_rate = (r = "0") => {
     return result;
 };
 
+const RatingItem = ({ rate = "0" }) => {
+    const stars = generate_rate(rate);
+    return (<span>
+        { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
+    </span>);
+};
+
 const DEFAULT_ITEM = {
     "cid":"","uid":0,"pid":0,"username":"","comment":"","rate":5,"created_at":"","photo":""
 };
@@ -48,21 +55,21 @@ const DEFAULT_ITEM = {
  */
 export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 48; 
-    const stars = generate_rate(item.rate);
     const alt = `User ${item.uid}`;
     const src = item.photo || "avatar-template.svg";
     return <ListGroup.Item className="comment-panel">
         <ModalOprationPanel
-            cid={item.cid} onEdit={onEdit} onDelete={onDelete} preloadDatas={item}
+            cid={item.cid}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            preloadDatas={item}
         />
         <div className="item-panel">
             <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
             <p>{ item.comment }</p>
         </div>
         <div className="item-panel">
-            <span>
-                { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
-            </span>
+            <RatingItem rate={item.rate} />
         </div>
     </ListGroup.Item>;
 }
@@ -74,7 +81,6 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
  */
 export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 64; 
-    const stars = generate_rate(item.rate);
     const alt = `User ${item.uid}`;
     const src = item.photo || "avatar-template.svg";
     return <Card className="user-comment-panel mb-4">
@@ -94,9 +100,7 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                             </span>
                         </div>
                         <div>
-                            <span>
-                                { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
-                            </span>
+                            <RatingItem rate={item.rate} />
                         </div>
                     </div>
                     <div className="item -opration">
