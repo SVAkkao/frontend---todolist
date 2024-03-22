@@ -45,7 +45,13 @@ const RatingItem = ({ rate = "0" }) => {
 };
 
 const DEFAULT_ITEM = {
-    "cid":"","uid":0,"pid":0,"username":"","comment":"","rate":5,"created_at":"","photo":""
+    "cid":"",
+    "username":"",
+    "projectname":"",
+    "photo":"",
+    "comment":"",
+    "rate":5,
+    "created_at":"",
 };
 
 /**
@@ -55,7 +61,7 @@ const DEFAULT_ITEM = {
  */
 export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 48; 
-    const alt = `User ${item.uid}`;
+    const alt = `User ${item.username}`;
     const src = item.photo || "avatar-template.svg";
     return <ListGroup.Item className="comment-panel">
         <ModalOprationPanel
@@ -81,7 +87,7 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
  */
 export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 64; 
-    const alt = `User ${item.uid}`;
+    const alt = `User ${item.username}`;
     const src = item.photo || "avatar-template.svg";
     return <Card className="user-comment-panel mb-4">
         <Card.Body>
@@ -93,7 +99,7 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                     <div className="item -info">
                         <div>
                             <p className="title usertitle">
-                                <strong className="allcaps">{item.username}</strong>
+                                <strong className="allcaps">{item.username}</strong> @ <span>{item.projectname}</span>
                             </p>
                             <span>
                                 <time dateTime={item.created_at}>{ (new Date(item.created_at)).toUTCString() }</time>
