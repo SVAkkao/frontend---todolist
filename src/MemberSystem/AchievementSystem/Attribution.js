@@ -12,10 +12,12 @@ import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 // Other
-import "./Attribution.css";
 import axios from "axios";
+import "./Attribution.css";
 import Announce from "./Announce";
 import LogoutBar from "../LogoutBar";
+// Comment components
+import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
@@ -64,20 +66,13 @@ const ContributionIcon = ({ type }) => {
   return null;
 };
 
-const ContributionsPanel = ({ listTitles, comments, filter }) => {
+const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
   if (filter === "comment") {
-    return comments.map((comment, index, array) => (
-      <React.Fragment key={comment.cid}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ContributionIcon type="comment" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={comment.comment} />
-        </ListItem>
-        {index < array.length - 1 && <Divider />}
-      </React.Fragment>
+    return comments.map((comment) => (
+        <UsersCommentItem
+          key={comment.cid} item={comment}
+          onEdit={onUpdateList} onDelete={onUpdateList}
+        />
     ));
   } else if (filter === "list") {
     // 假設 contributions 是包含 title 的對象陣列
@@ -172,9 +167,12 @@ const AchievementsPage = () => {
       console.error("取得留言失敗：", error);
     }
   };
-  useEffect(() => {
+  const onUpdateList = () => {
     fetchUserComment();
     fetchUserListTitles();
+  };
+  useEffect(() => {
+    onUpdateList();
   }, []);
 
   return (
@@ -212,6 +210,7 @@ const AchievementsPage = () => {
               filter={filter}
               comments={userComments}
               listTitles={listTitles}
+              onUpdateList={onUpdateList}
             />
           </List>
         </Card>
