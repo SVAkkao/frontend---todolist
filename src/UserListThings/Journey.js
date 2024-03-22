@@ -6,27 +6,36 @@ import JourneyProject from './JourneyProject';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function Journey({journeydataforjourney}) {
+function Journey({ journeydataforjourney, attractions, projects }) {
     
 
     //拿aname
     const [attractionname, setAttraction] = useState([]);
+    // attractions
     useEffect(() => {
-
-        fetch(API_HOST + '/api/POST/searchattraction', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-              },
-            body: JSON.stringify({ aid: journeydataforjourney.aid })
-          })
-          .then(response => response.json())
-          .then(data => {
-            setAttraction(data)
-          })
-          .catch(error => console.error(error));
+      // const aas = [{
+      //     "aid": 20,
+      //     "aname": "111"
+      // }];
+      const data = attractions.filter( ({ aid }) => aid === journeydataforjourney.aid )[0];
+      setAttraction(data);
+      // journeydataforjourney.aid
+      // debugger
+        // fetch(API_HOST + '/api/POST/searchattraction', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //     body: JSON.stringify({ aid: journeydataforjourney.aid })
+        //   })
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     setAttraction(data)
+        //   })
+        //   .catch(error => console.error(error));
         
-        }, [journeydataforjourney]);
+        //
+    }, [journeydataforjourney]);
     //
 
     //拿jpid
@@ -49,7 +58,8 @@ function Journey({journeydataforjourney}) {
           })
           .catch(error => console.error(error));
         
-        }, [journeydataforjourney]);
+        },
+        [journeydataforjourney]);
 //
 
 
@@ -76,7 +86,7 @@ function Journey({journeydataforjourney}) {
             </Col>
             <Col sm={1}></Col>
             {journeyproject.map((item, index) => (
-        <JourneyProject key={index} journeyprojectdataforjourneyproject={item}/>
+        <JourneyProject key={index} journeyprojectdataforjourneyproject={item} projects={projects} />
       ))}
         </Row>
     )

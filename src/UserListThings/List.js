@@ -19,13 +19,13 @@ const List = () => {
 };
 //
 
-  //拿userdata
-  const [userid, setUserId] = useState(null);
-  const giveUserid =  (id) => {
-    setUserId(id);
-    console.log(id)
-};
-  //
+//   //拿userdata
+//   const [userid, setUserId] = useState(null);
+//   const giveUserid =  (id) => {
+//     setUserId(id);
+//     console.log(id)
+// };
+//   //
 
   return (
     <>
@@ -33,7 +33,7 @@ const List = () => {
       <Container fluid className='vh-100' >
         <Row className='h-100'>
           <Col sm={3}>
-          <Fetch onSelect2={giveTlid} giveUserid={giveUserid}>
+          <Fetch onSelect2={giveTlid}>
               {/* {(data,onSelect) => <LeftSide data={data} onSelect={onSelect}/>} */}
             </Fetch>
           </Col>

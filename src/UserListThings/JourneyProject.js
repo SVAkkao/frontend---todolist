@@ -2,26 +2,16 @@ import React,{useState,useEffect} from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyProject({journeyprojectdataforjourneyproject}) {
+function JourneyProject({ journeyprojectdataforjourneyproject, projects }) {
 
     
 //拿pname
 const [journeyprojectname, setJourneyProjectName] = useState([]);
 
 useEffect(() => {
+    const data = projects.filter( ({ pid }) => pid === journeyprojectdataforjourneyproject.pid )[0];
+    setJourneyProjectName(data);
 
-    fetch(API_HOST + '/api/POST/searchprojectname', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-        body: JSON.stringify({ pid: journeyprojectdataforjourneyproject.pid })
-      })
-      .then(response => response.json())
-      .then(data => {
-        setJourneyProjectName(data)
-      })
-      .catch(error => console.error(error));
     
     }, [journeyprojectdataforjourneyproject]);
 //
