@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import LogoutBar from "../LogoutBar";
-import Avatar from "@mui/material/Avatar";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
+// material conponents
+import {
+  Avatar,
+  Card, CardContent,
+  Typography,
+  List, ListItem, ListItemAvatar, ListItemText,
+  Divider,
+} from "@mui/material";
+// material icons
 import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+// Other
 import "./Attribution.css";
+import axios from "axios";
 import Announce from "./Announce";
+import LogoutBar from "../LogoutBar";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
