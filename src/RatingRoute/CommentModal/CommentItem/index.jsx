@@ -38,8 +38,7 @@ const generate_rate = (r = "0") => {
 };
 
 const DEFAULT_ITEM = {
-    "cid": "", "avatar": "", "rate": "", "comment": "",
-    "date": "", "pid": "", "uid": "", "created_at": ""
+    "cid":"","uid":0,"pid":0,"username":"","comment":"","rate":5,"created_at":"","photo":""
 };
 
 /**
@@ -88,7 +87,7 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                     <div className="item -info">
                         <div>
                             <p className="title usertitle">
-                                <strong className="allcaps">User</strong>
+                                <strong className="allcaps">{item.username}</strong>
                             </p>
                             <span>
                                 <time dateTime={item.created_at}>{ (new Date(item.created_at)).toUTCString() }</time>
