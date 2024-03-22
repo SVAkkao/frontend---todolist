@@ -37,7 +37,16 @@ const generate_rate = (r = "0") => {
     return result;
 };
 
-const DEFAULT_ITEM = { "cid": "", "avatar": "", "rate": "", "comment": "", "date": "", "pid": "", "uid": "" };
+const RatingItem = ({ rate = "0" }) => {
+    const stars = generate_rate(rate);
+    return (<span>
+        { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
+    </span>);
+};
+
+const DEFAULT_ITEM = {
+    "cid":"","uid":0,"pid":0,"username":"","comment":"","rate":5,"created_at":"","photo":""
+};
 
 /**
  * Used by the 各景點活動的意見 modal
@@ -46,21 +55,21 @@ const DEFAULT_ITEM = { "cid": "", "avatar": "", "rate": "", "comment": "", "date
  */
 export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 48; 
-    const stars = generate_rate(item.rate);
     const alt = `User ${item.uid}`;
     const src = item.photo || "avatar-template.svg";
     return <ListGroup.Item className="comment-panel">
         <ModalOprationPanel
-            cid={item.cid} onEdit={onEdit} onDelete={onDelete} preloadDatas={item}
+            cid={item.cid}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            preloadDatas={item}
         />
         <div className="item-panel">
             <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
             <p>{ item.comment }</p>
         </div>
         <div className="item-panel">
-            <span>
-                { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
-            </span>
+            <RatingItem rate={item.rate} />
         </div>
     </ListGroup.Item>;
 }
@@ -72,24 +81,26 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
  */
 export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 64; 
-    const stars = generate_rate(item.rate);
     const alt = `User ${item.uid}`;
     const src = item.photo || "avatar-template.svg";
     return <Card className="user-comment-panel mb-4">
         <Card.Body>
             <Card.Title>
                 <div className="user-comment-header">
-                    <div className="item -avatar">
+                    <div className="item -avatar p-1">
                         <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
                     </div>
                     <div className="item -info">
                         <div>
-                            <p className="title usertitle"><strong className="allcaps">User</strong></p>
+                            <p className="title usertitle">
+                                <strong className="allcaps">{item.username}</strong>
+                            </p>
+                            <span>
+                                <time dateTime={item.created_at}>{ (new Date(item.created_at)).toUTCString() }</time>
+                            </span>
                         </div>
                         <div>
-                            <span>
-                                { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
-                            </span>
+                            <RatingItem rate={item.rate} />
                         </div>
                     </div>
                     <div className="item -opration">
@@ -103,9 +114,7 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                 </div>
             </Card.Title>
             <Card.Text>
-                <article>
-                    <p>{ item.comment }</p>
-                </article>
+                <span>{ item.comment }</span>
             </Card.Text>
         </Card.Body>
     </Card>;
