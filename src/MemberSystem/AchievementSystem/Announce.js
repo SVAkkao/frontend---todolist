@@ -32,18 +32,21 @@ function Announce() {
 
   return (
     <>
-      <div onClick={() => setModalIsOpen(true)}>
-        <h5 style={{ cursor: "pointer" }}>
-          <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
-          積分：
-        </h5>
-      </div>
-      <div onClick={() => setModalIsOpen(true)}>
-        <h5 style={{ cursor: "pointer" }}>
-          <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-          等級：
-        </h5>
-      </div>
+      <span
+        style={{ fontSize: "20px", cursor: "pointer" }}
+        onClick={() => setModalIsOpen(true)}
+      >
+        <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
+        積分：
+      </span>
+      <br></br>
+      <span
+        style={{ fontSize: "20px", cursor: "pointer" }}
+        onClick={() => setModalIsOpen(true)}
+      >
+        <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
+        等級：
+      </span>
 
       <Modal
         isOpen={modalIsOpen}
@@ -76,6 +79,7 @@ function Announce() {
         >
           <CloseIcon />
         </Button>
+
         <h3>
           <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
           積分說明
@@ -88,7 +92,7 @@ function Announce() {
             >{`${grade.name} - ${grade.points}`}</li>
           ))}
         </ul>
-        <br></br>
+        <hr></hr>
         <h3>
           <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
           等級說明：
