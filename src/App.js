@@ -17,6 +17,7 @@ import AchievementsPage from "./MemberSystem/AchievementSystem/Attribution.js";
 import List from "./UserListThings/List.js";
 import Alist from "./UserListThings/Alist.js";
 import Fetch from "./UserListThings/Fetch.js";
+import PreTest from "./prelist/src/PreTest.js";
 
 const router = createBrowserRouter([
   //會員系統
@@ -60,6 +61,8 @@ const router = createBrowserRouter([
   { path: "/alist", element: <Alist /> },
   { path: "/fetch", element: <Fetch /> },
 
+  //prelist
+  { path: '/prelist', element: <PreTest/> },
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
   { path: "/ratingroute", element: <Navigate to="/ratings" /> },
