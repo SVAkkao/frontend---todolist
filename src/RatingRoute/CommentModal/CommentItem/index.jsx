@@ -37,7 +37,10 @@ const generate_rate = (r = "0") => {
     return result;
 };
 
-const DEFAULT_ITEM = { "cid": "", "avatar": "", "rate": "", "comment": "", "date": "", "pid": "", "uid": "" };
+const DEFAULT_ITEM = {
+    "cid": "", "avatar": "", "rate": "", "comment": "",
+    "date": "", "pid": "", "uid": "", "created_at": ""
+};
 
 /**
  * Used by the 各景點活動的意見 modal
@@ -84,7 +87,12 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                     </div>
                     <div className="item -info">
                         <div>
-                            <p className="title usertitle"><strong className="allcaps">User</strong></p>
+                            <p className="title usertitle">
+                                <strong className="allcaps">User</strong>
+                            </p>
+                            <span>
+                                <time dateTime={item.created_at}>{ (new Date(item.created_at)).toUTCString() }</time>
+                            </span>
                         </div>
                         <div>
                             <span>
