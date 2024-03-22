@@ -180,33 +180,42 @@ const AchievementsPage = () => {
   return (
     <div style={{ backgroundColor: "#fffeef" }}>
       <LogoutBar />
-      <br />
-      <br />
-      <Card sx={{ maxWidth: "50%", minHeight: "84vh", m: "auto" }}>
-        <UserIntroduction />
-        <div className="button-row">
-          {/* Repeat the button element for each button you need */}
-          <button className="custom-button" onClick={() => setFilter("list")}>
-            清單
-          </button>
-          <button className="custom-button" onClick={() => setFilter("photo")}>
-            相片
-          </button>
-          <button
-            className="custom-button"
-            onClick={() => setFilter("comment")}
-          >
-            評論
-          </button>
-        </div>
-        <List style={{ padding: 20 }}>
-          <ContributionsPanel
-            filter={filter}
-            contributions={userData.contributions}
-            comments={userComments}
-          />
-        </List>
-      </Card>
+      <div className="mainpage">
+        <Card
+          sx={{
+            maxWidth: "800px",
+            minHeight: "84vh",
+            m: "auto",
+          }}
+        >
+          <UserIntroduction />
+          <div className="button-row">
+            {/* Repeat the button element for each button you need */}
+            <button className="custom-button" onClick={() => setFilter("list")}>
+              清單
+            </button>
+            <button
+              className="custom-button"
+              onClick={() => setFilter("photo")}
+            >
+              相片
+            </button>
+            <button
+              className="custom-button"
+              onClick={() => setFilter("comment")}
+            >
+              評論
+            </button>
+          </div>
+          <List style={{ padding: 20 }}>
+            <ContributionsPanel
+              filter={filter}
+              contributions={userData.contributions}
+              comments={userComments}
+            />
+          </List>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -79,9 +79,11 @@ function UserComments() {
 
 function RatingRoute() {
     return <div id="rating-route">
-        <LogoutBar></LogoutBar>
-        <Container fluid className="vh-100">
-            <h1 className="text-center mb-3">評價系統</h1>
+        <LogoutBar />
+        <Container className="vh-100">
+            <Row>
+                <h1 className="text-center mb-3">評價系統</h1>
+            </Row>
             <Row className="h-100">
                 <Col sm={6}>
                     <ProjectComponents />

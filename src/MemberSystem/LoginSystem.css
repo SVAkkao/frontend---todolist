@@ -1,0 +1,42 @@
+.container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.login-system {
+  width: 40%;
+  margin: 120px 0px;
+}
+
+@media (max-width: 768px) {
+  #NavList {
+    display: none;
+  }
+  .responsive-hide {
+    display: none;
+  }
+  .desktop-img {
+    display: none;
+  }
+
+  .desktop {
+    display: none;
+  }
+
+  .login-system {
+    width: 90%;
+    padding: 0px 50px;
+  }
+}
+
+.mobile-img {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-img {
+    display: block; /* 显示移动图片 */
+  }
+}
