@@ -81,7 +81,7 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
         <Card.Body>
             <Card.Title>
                 <div className="user-comment-header">
-                    <div className="item -avatar">
+                    <div className="item -avatar p-1">
                         <Image width={imgsize} height={imgsize} src={src} roundedCircle alt={alt} />
                     </div>
                     <div className="item -info">
