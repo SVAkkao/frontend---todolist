@@ -14,18 +14,15 @@ import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import "./Attribution.css";
-import { FaMedal } from "react-icons/fa";
-import { MdGrade } from "react-icons/md";
+import Announce from "./Announce";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 const userData = {
-  points: 1200,
-  level: "LV.3‧探險家",
   contributions: [
-    { type: "to-do-list", content: "访问故宫" },
-    { type: "comment", content: "这里的风景真是太美了！" },
+    { type: "to-do-list", content: "訪問故宮" },
+    { type: "to-do-list", content: "花東之旅" },
     // 更多贡献...
   ],
 };
@@ -47,6 +44,14 @@ const getUserCommentApi = () => {
     },
   });
 };
+const getUserListTitle = () => {
+  const token = localStorage.getItem("userToken");
+  return axios.get(`${API_HOST}/api/touristlist-title`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 // Components
 const ContributionIcon = ({ type }) => {
@@ -58,6 +63,21 @@ const ContributionIcon = ({ type }) => {
   return null;
 };
 const ContributionsPanel = ({ contributions, comments, filter }) => {
+  const [listTitles, setListTitles] = useState([]);
+
+  useEffect(() => {
+    if (filter === "list") {
+      // 当 filter 为 "list" 时，获取清单标题
+      getUserListTitle()
+        .then((response) => {
+          // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
+          setListTitles(response.data.titles);
+        })
+        .catch((error) => {
+          console.error("获取清单标题失败：", error);
+        });
+    }
+  }, [filter]);
   if (filter === "comment") {
     return comments.map((comment, index, array) => (
       <React.Fragment key={comment.cid}>
@@ -72,21 +92,38 @@ const ContributionsPanel = ({ contributions, comments, filter }) => {
         {index < array.length - 1 && <Divider />}
       </React.Fragment>
     ));
+  } else if (filter === "list") {
+    // 假設 contributions 是包含 title 的對象陣列
+    return listTitles.map((title, index) => (
+      <React.Fragment key={index}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+              <ContributionIcon type="to-do-list" />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={title} />
+        </ListItem>
+        {index < listTitles.length - 1 && <Divider />}
+      </React.Fragment>
+    ));
   }
-  return contributions.map((contribution, index, array) => (
-    <React.Fragment key={index}>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-            <ContributionIcon type={contribution.type} />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={contribution.content} />
-      </ListItem>
-      {index < array.length - 1 && <Divider />}
-    </React.Fragment>
-  ));
+
+  // return contributions.map((contribution, index, array) => (
+  //   <React.Fragment key={index}>
+  //     <ListItem>
+  //       <ListItemAvatar>
+  //         <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+  //           <ContributionIcon type={contribution.type} />
+  //         </Avatar>
+  //       </ListItemAvatar>
+  //       <ListItemText primary={contribution.content} />
+  //     </ListItem>
+  //     {index < array.length - 1 && <Divider />}
+  //   </React.Fragment>
+  // ));
 };
+
 const UserIntroduction = () => {
   const [userName, setUserName] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
@@ -117,14 +154,7 @@ const UserIntroduction = () => {
         </Typography>
       </div>
       <br />
-      <h5>
-        <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
-        積分：{userData.points}
-      </h5>
-      <h5>
-        <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-        等級：{userData.level}
-      </h5>
+      <Announce></Announce>
     </CardContent>
   );
 };
