@@ -5,7 +5,6 @@ import JourneyProject from './JourneyProject'
 import Pages from './Pages'
 import { Row, Col, Form } from 'react-bootstrap';
 import './color.css';
-import './hover.css';
 
 
 function IndexMiddle() {
@@ -27,26 +26,6 @@ function IndexMiddle() {
                 <Col sm={1}></Col>
                 <Pages></Pages>
                 <Col sm={1}></Col>
-            </Row>
-
-            <Row className='m-4' style={{ alignItems: 'center' }}>
-                <Col sm={1}></Col>
-                <Col className='text-center' sm={4}>
-                    <Form.Control type="date" />
-                </Col>
-                <Col className='text-center' sm={1}>
-                    <img src='/UserListSource/to.png' style={{ width: "24px", height: '24px', paddingBottom: '0' }}></img>
-                </Col>
-                <Col className='text-center' sm={4}>
-                    <Form.Control type="date" />
-                </Col>
-                <Col className='text-center' sm={1}>
-                    <a><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }}></img></a>
-                </Col>
-                <Col sm={1}></Col>
-
-                <Journey />
-                <JourneyProject />
             </Row>
         </>
     )
