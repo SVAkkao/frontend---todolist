@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import "./LoginSystem.css";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -30,22 +31,19 @@ function Register() {
     }
 
     try {
-      const response = await fetch(
-        `${API_HOST}/api/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            username: formData.name,
-            email: formData.email,
-            password: formData.password,
-            // confirmPassword 不需要發送到後端，除非後端明確要求
-          }),
-        }
-      );
+      const response = await fetch(`${API_HOST}/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.name,
+          email: formData.email,
+          password: formData.password,
+          // confirmPassword 不需要發送到後端，除非後端明確要求
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Something went wrong");
@@ -90,17 +88,12 @@ function Register() {
             width: "48%",
             margin: "50px",
           }}
+          className="desktop-img"
         >
           <img src="https://media.discordapp.net/attachments/1134860695343738910/1219167827118788608/ariel_wu_A_man_is_traveling_in_a_city_minimalist_simple_soft_co_20f9f7a2-6238-44dc-bf69-1919c16a50d4.png?ex=660a5185&is=65f7dc85&hm=ff47e5d4aa292cf2040a1d0b733333e7bd9ca1eb129c1c9d9338a2250b6a5195&=&format=webp&quality=lossless&width=929&height=619"></img>
         </div>
-        <div
-          style={{
-            width: "40%",
-            margin: "50px 50px",
-            padding: "70px",
-          }}
-        >
-          <div className="col-md-10">
+        <div className="login-system">
+          <div className="col-12 col-md-10 ">
             <h2>註冊</h2>
             <br></br>
             <form onSubmit={handleSubmit} id="mydata">

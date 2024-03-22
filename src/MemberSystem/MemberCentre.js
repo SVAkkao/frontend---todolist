@@ -9,11 +9,7 @@ function MemberCentre() {
   return (
     <div style={{ backgroundColor: "#fffeef" }}>
       <LogoutBar></LogoutBar>
-      <br></br>
-      {/* <div className="title">
-        <h2>會員中心</h2>
-      </div> */}
-      <br></br>
+
       <div className="user-profile">
         <ChangeAvatar />
         <br></br>

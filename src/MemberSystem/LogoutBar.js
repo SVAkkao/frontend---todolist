@@ -18,7 +18,7 @@ import {
   FaUserFriends,
 } from "react-icons/fa";
 import "./DropdownMenu.css";
-import html2canvas from "html2canvas";
+import "./LoginSystem.css";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
@@ -108,7 +108,10 @@ function LogoutBar() {
                 onClick={toggleDropdown}
                 style={{ display: "flex", cursor: "pointer" }}
               >
-                <span style={{ fontSize: "24px", padding: "10px" }}>
+                <span
+                  style={{ fontSize: "24px", padding: "10px" }}
+                  className="desktop"
+                >
                   歡迎回來！
                 </span>
                 <div

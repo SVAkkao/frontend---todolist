@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import LogoutBar from "../LogoutBar";
-import Avatar from "@mui/material/Avatar";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
+// material conponents
+import {
+  Avatar,
+  Card, CardContent,
+  Typography,
+  List, ListItem, ListItemAvatar, ListItemText,
+  Divider,
+} from "@mui/material";
+// material icons
 import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+// Other
+import axios from "axios";
 import "./Attribution.css";
 import Announce from "./Announce";
+import LogoutBar from "../LogoutBar";
+// Comment components
+import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
@@ -62,35 +65,14 @@ const ContributionIcon = ({ type }) => {
   }
   return null;
 };
-const ContributionsPanel = ({ contributions, comments, filter }) => {
-  const [listTitles, setListTitles] = useState([]);
 
-  useEffect(() => {
-    if (filter === "list") {
-      // 当 filter 为 "list" 时，获取清单标题
-      getUserListTitle()
-        .then((response) => {
-          // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
-          setListTitles(response.data.titles);
-        })
-        .catch((error) => {
-          console.error("获取清单标题失败：", error);
-        });
-    }
-  }, [filter]);
+const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
   if (filter === "comment") {
-    return comments.map((comment, index, array) => (
-      <React.Fragment key={comment.cid}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ContributionIcon type="comment" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={comment.comment} />
-        </ListItem>
-        {index < array.length - 1 && <Divider />}
-      </React.Fragment>
+    return comments.map((comment) => (
+        <UsersCommentItem
+          key={comment.cid} item={comment}
+          onEdit={onUpdateList} onDelete={onUpdateList}
+        />
     ));
   } else if (filter === "list") {
     // 假設 contributions 是包含 title 的對象陣列
@@ -108,8 +90,9 @@ const ContributionsPanel = ({ contributions, comments, filter }) => {
       </React.Fragment>
     ));
   }
+  return <span>Type unknown</span>;
 
-  // return contributions.map((contribution, index, array) => (
+  // return userData.contributions.map((contribution, index, array) => (
   //   <React.Fragment key={index}>
   //     <ListItem>
   //       <ListItemAvatar>
@@ -160,8 +143,19 @@ const UserIntroduction = () => {
 };
 
 const AchievementsPage = () => {
-  const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
+  const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
   const [userComments, setUserComments] = useState([]);
+  const [listTitles, setListTitles] = useState([]);
+  const fetchUserListTitles = () => {
+    getUserListTitle()
+    .then((response) => {
+      // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
+      setListTitles(response.data.titles);
+    })
+    .catch((error) => {
+      console.error("获取清单标题失败：", error);
+    });
+  };
   /**
    * Get the user's comments and add it into the list.
    */
@@ -173,40 +167,54 @@ const AchievementsPage = () => {
       console.error("取得留言失敗：", error);
     }
   };
-  useEffect(() => {
+  const onUpdateList = () => {
     fetchUserComment();
+    fetchUserListTitles();
+  };
+  useEffect(() => {
+    onUpdateList();
   }, []);
 
   return (
     <div style={{ backgroundColor: "#fffeef" }}>
       <LogoutBar />
-      <br />
-      <br />
-      <Card sx={{ maxWidth: "50%", minHeight: "84vh", m: "auto" }}>
-        <UserIntroduction />
-        <div className="button-row">
-          {/* Repeat the button element for each button you need */}
-          <button className="custom-button" onClick={() => setFilter("list")}>
-            清單
-          </button>
-          <button className="custom-button" onClick={() => setFilter("photo")}>
-            相片
-          </button>
-          <button
-            className="custom-button"
-            onClick={() => setFilter("comment")}
-          >
-            評論
-          </button>
-        </div>
-        <List style={{ padding: 20 }}>
-          <ContributionsPanel
-            filter={filter}
-            contributions={userData.contributions}
-            comments={userComments}
-          />
-        </List>
-      </Card>
+      <div className="mainpage">
+        <Card
+          sx={{
+            maxWidth: "800px",
+            minHeight: "84vh",
+            m: "auto",
+          }}
+        >
+          <UserIntroduction />
+          <div className="button-row">
+            {/* Repeat the button element for each button you need */}
+            <button className="custom-button" onClick={() => setFilter("list")}>
+              清單
+            </button>
+            <button
+              className="custom-button"
+              onClick={() => setFilter("photo")}
+            >
+              相片
+            </button>
+            <button
+              className="custom-button"
+              onClick={() => setFilter("comment")}
+            >
+              評論
+            </button>
+          </div>
+          <List style={{ padding: 20 }}>
+            <ContributionsPanel
+              filter={filter}
+              comments={userComments}
+              listTitles={listTitles}
+              onUpdateList={onUpdateList}
+            />
+          </List>
+        </Card>
+      </div>
     </div>
   );
 };
