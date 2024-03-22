@@ -182,7 +182,7 @@ const AchievementsPage = () => {
       <LogoutBar />
       <br />
       <br />
-      <Card sx={{ maxWidth: "50%", minHeight: "84vh", m: "auto" }}>
+      <Card sx={{ maxWidth: "800px", minHeight: "84vh", m: "auto" }}>
         <UserIntroduction />
         <div className="button-row">
           {/* Repeat the button element for each button you need */}
