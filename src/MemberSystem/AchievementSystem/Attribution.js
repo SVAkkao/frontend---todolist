@@ -21,25 +21,17 @@ import { useUserStore } from "../../stores/user";
 import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+// const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
-const userData = {
-  contributions: [
-    { type: "to-do-list", content: "訪問故宮" },
-    { type: "to-do-list", content: "花東之旅" },
-    // 更多贡献...
-  ],
-};
+// const userData = {
+//   contributions: [
+//     { type: "to-do-list", content: "訪問故宮" },
+//     { type: "to-do-list", content: "花東之旅" },
+//     // 更多贡献...
+//   ],
+// };
 
 // API calls
-const getUserApi = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/user`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
 const getUserCommentApi = () => {
   const token = localStorage.getItem("userToken");
   return axios.get(`${API_HOST}/api/user-comment`, {
@@ -159,7 +151,8 @@ const AchievementsPage = () => {
     fetchUserListTitles();
   };
   useEffect(() => {
-    onUpdateList();
+    fetchUserComment();
+    fetchUserListTitles();
   }, []);
 
   return (
