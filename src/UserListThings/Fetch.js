@@ -34,63 +34,59 @@ function Fetch({onSelect2}) {
   // }
   //
 
-  const token = localStorage.getItem('userToken');
-  const headers = new Headers({
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  });
-
   useEffect(() => {
+    const getRequestHeaders = () => {
+      const token = localStorage.getItem('userToken');
+      const headers = new Headers({
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      });
+      return headers;
+    };
 
-    fetch(API_HOST + '/api/user', {
-      method: 'GET',
-      headers: headers
-    })
-      .then(response => response.json())
+    const ajaxUserList = async () => {
+      const response = await fetch(`${API_HOST}/api/user`, {
+        method: 'GET',
+        headers: getRequestHeaders()
+      });
+      return await response.json();
+    };
+
+    const getUserrelatedids = (body) => {
+      return fetch(API_HOST + '/api/POST/userrelatedids', {
+        method: 'POST',
+        headers: getRequestHeaders(),
+        body: body
+      })
+        .then(response => response.json());
+    };
+    
+    ajaxUserList()
       .then(data => {
-
-        // setIdData(data.id)
-
         const userId = data.id;
         // 繼續使用userId來發送下一個HTTP請求
         const body = JSON.stringify({
           id: userId
         });
-
-        fetch(API_HOST + '/api/POST/userrelatedids', {
-          method: 'POST',
-          headers: headers,
-          body: body
-        })
-          .then(response => response.json())
-          .then(data => {
-
+        getUserrelatedids(body).then(data => {
             const selectlistBodies = data.tlid.map(tlid => ({ tlid }));
-
+            const getSelectLists = Promise.all(selectlistBodies.map(selectlistBody => fetch(API_HOST + '/api/POST/selectlist', {
+                method: 'POST',
+                headers: getRequestHeaders(),
+                body: JSON.stringify(selectlistBody)
+              }).then(response => response.json())
+            ));
             // const selectlistBody = JSON.stringify({tlid: tlid[0] })
             // setTestData(selectlistBodies)
-            Promise.all(selectlistBodies.map(selectlistBody =>
-              fetch(API_HOST + '/api/POST/selectlist', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(selectlistBody)
-              })
-              .then(response => response.json())
-            ))
+            getSelectLists
               .then(data => {
                 setData2(data)
               })
               .catch(error => console.error(error));
-              
-            
-
-
-          })
+        })
           .catch(error => console.error(error));
-
-      })
+    })
       .catch(error => console.error(error));
-
   }, []);
 
   // useEffect(() => {
@@ -109,5 +105,3 @@ function Fetch({onSelect2}) {
 
 export default Fetch;
  
-
-
