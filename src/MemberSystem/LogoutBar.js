@@ -19,36 +19,25 @@ import {
 } from "react-icons/fa";
 import "./DropdownMenu.css";
 import "./LoginSystem.css";
+// Store
+import { useUserStore } from "../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 function LogoutBar() {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState("");
-  const [userPhoto, setUserPhoto] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const userStore = useUserStore();
 
   const toggleDropdown = () => setShowDropdown(!showDropdown);
 
   useEffect(() => {
-    // 函数用于获取当前登录用户信息
     const fetchUser = async () => {
-      const token = localStorage.getItem("userToken"); // 从localStorage获取token
-      try {
-        const response = await axios.get(`${API_HOST}/api/user`, {
-          // 确保地址与你的Laravel后端服务地址匹配
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUserName(response.data.name); // 假设响应中包含用户姓名
-        setUserPhoto(response.data.photo);
-      } catch (error) {
-        console.error("获取用户信息失败:", error);
+      if( userStore.user.id === 0 ) {
+        await userStore.getUser();
       }
     };
-
     fetchUser();
   }, []);
 
@@ -95,7 +84,7 @@ function LogoutBar() {
         style={{ backgroundColor: "#AAD9BB", height: "100px" }}
       >
         <div className="container-fluid">
-          <img src="logo.svg" style={{ height: "80px" }}></img>
+          <img src="logo.svg" style={{ height: "80px" }} alt="清單樂旅 Logo" />
           <Link to="/list" style={{ textDecoration: "none" }}>
             <div className="navbar-brand" style={{ fontSize: "32px" }}>
               清單樂旅
@@ -128,8 +117,8 @@ function LogoutBar() {
                 >
                   <img
                     src={
-                      userPhoto
-                        ? `${API_IMAGE}${userPhoto}`
+                      userStore.user.photo
+                        ? `${API_IMAGE}${userStore.user.photo}`
                         : "avatar-template.svg"
                     }
                     alt="User avatar"
@@ -164,8 +153,8 @@ function LogoutBar() {
                   >
                     <img
                       src={
-                        userPhoto
-                          ? `${API_IMAGE}${userPhoto}`
+                        userStore.user.photo
+                          ? `${API_IMAGE}${userStore.user.photo}`
                           : "avatar-template.svg"
                       }
                       alt="User avatar"
@@ -178,9 +167,9 @@ function LogoutBar() {
                       }}
                     />
                   </div>
-                  {userName && (
+                  {userStore.user.name && (
                     <span style={{ fontSize: "24px", marginRight: "10px" }}>
-                      {userName}
+                      {userStore.user.name}
                     </span>
                   )}
                 </div>
