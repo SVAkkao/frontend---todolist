@@ -23,7 +23,17 @@ import "./LoginSystem.css";
 import { useUserStore } from "../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+async function userLogout() {
+  const token = localStorage.getItem("userToken");
+  // 在请求头中添加token
+  const response = await axios.post(`${API_HOST}/api/logout`,{},{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+}
 
 function LogoutBar() {
   const navigate = useNavigate();
@@ -43,19 +53,10 @@ function LogoutBar() {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem("userToken");
-      // 在请求头中添加token
-      const response = await axios.post(
-        `${API_HOST}/api/logout`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await userLogout();
       console.log("Logged out successfully:", response.data);
       localStorage.removeItem("userToken");
+      userStore.resetUser();
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
@@ -66,7 +67,6 @@ function LogoutBar() {
   //   html2canvas(document.getElementById("content")).then((canvas) => {
   //     // 創建一個圖片元素
   //     const img = canvas.toDataURL("image/png");
-
   //     // 創建一個鏈接元素，用於下載
   //     const link = document.createElement("a");
   //     link.href = img;
@@ -116,11 +116,7 @@ function LogoutBar() {
                   }}
                 >
                   <img
-                    src={
-                      userStore.user.photo
-                        ? `${API_IMAGE}${userStore.user.photo}`
-                        : "avatar-template.svg"
-                    }
+                    src={userStore.getUserPhoto()}
                     alt="User avatar"
                     style={{
                       width: "100%",
@@ -152,11 +148,7 @@ function LogoutBar() {
                     }}
                   >
                     <img
-                      src={
-                        userStore.user.photo
-                          ? `${API_IMAGE}${userStore.user.photo}`
-                          : "avatar-template.svg"
-                      }
+                      src={userStore.getUserPhoto()}
                       alt="User avatar"
                       style={{
                         width: "100%",
@@ -207,3 +199,5 @@ function LogoutBar() {
 }
 
 export default LogoutBar;
+
+

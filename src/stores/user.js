@@ -1,7 +1,8 @@
 import { create } from "zustand";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-// const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+
 const USER_DEFAULT = {
     "id": 0,
     "name": "",
@@ -12,8 +13,11 @@ const USER_DEFAULT = {
     "cellphone": ""
 };
 
-export const useUserStore = create((set) => ({
+export const useUserStore = create((set, get) => ({
     user: USER_DEFAULT,
+    /**
+     * HTTP GET the user
+     */
     getUser: async () => {
         set({ user: USER_DEFAULT });
         try {
@@ -32,6 +36,17 @@ export const useUserStore = create((set) => ({
             set({ user: USER_DEFAULT });
         }
     },
+    /**
+     * 取得用戶大頭貼
+     * @returns {String} 用戶大頭貼
+     */
+    getUserPhoto: () => {
+        const photo = get().user.photo;
+        return photo ? `${API_IMAGE}${photo}` : "avatar-template.svg";
+    },
+    /**
+     * 重設用戶
+     */
     resetUser: () => set({ user: USER_DEFAULT }),
     updateUser: (newUser) => set({ user: newUser }),
 }));
