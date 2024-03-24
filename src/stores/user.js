@@ -14,6 +14,9 @@ const USER_DEFAULT = {
 };
 
 export const useUserStore = create((set, get) => ({
+    /**
+     * 使用者資料
+     */
     user: USER_DEFAULT,
     /**
      * 呼叫使用者資料 API
@@ -48,6 +51,9 @@ export const useUserStore = create((set, get) => ({
      * 重設用戶
      */
     resetUser: () => set({ user: USER_DEFAULT }),
+    /**
+     * 修改使用者資料
+     */
     updateUser: (newUser) => set({ user: newUser }),
 }));
 
