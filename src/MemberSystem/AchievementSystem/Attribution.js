@@ -16,6 +16,7 @@ import axios from "axios";
 import "./Attribution.css";
 import Announce from "./Announce";
 import LogoutBar from "../LogoutBar";
+import { useUserStore } from "../../stores/user";
 // Comment components
 import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
 
@@ -108,32 +109,18 @@ const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
 };
 
 const UserIntroduction = () => {
-  const [userName, setUserName] = useState("");
-  const [userPhoto, setUserPhoto] = useState("");
-
-  const fetchUser = async () => {
-    try {
-      const response = await getUserApi();
-      setUserName(response.data.name);
-      setUserPhoto(response.data.photo);
-    } catch (error) {
-      console.error("取得用戶訊息失敗：", error);
-    }
-  };
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const { user, getUserPhoto } = useUserStore();
 
   return (
     <CardContent>
       <br />
       <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Avatar
-          src={userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"}
+          src={getUserPhoto()}
           style={{ width: 100, height: 100, marginRight: 10 }}
         />
         <Typography variant="h3" sx={{ ml: 2 }}>
-          {userName}
+          {user.name}
         </Typography>
       </div>
       <br />
