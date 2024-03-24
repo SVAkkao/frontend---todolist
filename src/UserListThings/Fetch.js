@@ -45,11 +45,11 @@ function Fetch({onSelect2}) {
     };
 
     const ajaxUserList = async () => {
-      const response = await fetch(`${API_HOST}/api/user`, {
+      return fetch(`${API_HOST}/api/user`, {
         method: 'GET',
-        headers: getRequestHeaders()
-      });
-      return await response.json();
+        headers: getRequestHeaders(),
+      })
+        .then(response => response.json());
     };
 
     const getUserrelatedids = (body) => {
