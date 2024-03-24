@@ -16,7 +16,7 @@ const USER_DEFAULT = {
 export const useUserStore = create((set, get) => ({
     user: USER_DEFAULT,
     /**
-     * HTTP GET the user
+     * 呼叫使用者資料 API
      */
     getUser: async () => {
         set({ user: USER_DEFAULT });

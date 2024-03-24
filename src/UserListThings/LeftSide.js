@@ -1,48 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import Image from "react-bootstrap/Image";
-import axios from "axios";
+// import Image from "react-bootstrap/Image";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Mylist from "./Mylist";
-
-const API_HOST = process.env.REACT_APP_API_URL;
-const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+import { useUserStore } from "../stores/user";
 
 function LeftSide({ data, onSelect }) {
   const [selectedTlid, setSelectedTlid] = useState(null);
+  const { user, getUserPhoto } = useUserStore();
 
-  //呼叫使用者資料API
-  const getUserApi = () => {
-    const token = localStorage.getItem("userToken");
-    return axios.get(`${API_HOST}/api/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-  };
-
-  const [userName, setUserName] = useState("");
-  const [userPhoto, setUserPhoto] = useState("");
-
-  const fetchUser = async () => {
-    try {
-      const response = await getUserApi();
-      setUserName(response.data.name);
-      setUserPhoto(response.data.photo);
-    } catch (error) {
-      console.error("取得用戶訊息失敗：", error);
-    }
-  };
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  
   if (onSelect && typeof onSelect === "function" && selectedTlid !== null) {
     onSelect(selectedTlid);
-    //   console.log(onSelect);
-    //   console.log("到底");
+    // console.log(onSelect);
+    // console.log("到底");
   }
 
   const handleButtonClick = (tlid) => {
@@ -61,13 +32,11 @@ function LeftSide({ data, onSelect }) {
             style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
           >
             <Avatar
-              src={
-                userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"
-              }
+              src={getUserPhoto()}
               style={{ width: 150, height: 150, margin: 20 }}
             />
             <Typography variant="h3" sx={{ ml: 2 }}>
-              {userName}
+              {user.name}
             </Typography>
           </div>
         </Col>
