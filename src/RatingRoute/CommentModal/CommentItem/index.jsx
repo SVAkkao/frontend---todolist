@@ -1,11 +1,8 @@
-// react-bootstrap
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
-// FontAwesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
 // Local
+import { FaStar, FaStarHalf } from "react-icons/fa6";
 import { ModalOprationPanel, UserOprationPanel } from "./OprationPanel";
 
 /**
@@ -22,10 +19,10 @@ const generate_rate = (r = "0") => {
     // Array
     const result = [];
     for (let i = 0; i < full_star_num; i++) {
-        result.push(faStar);
+        result.push(FaStar);
     }
     for (let j = 0; j < half_star_num; j++) {
-        result.push(faStarHalf);
+        result.push(FaStarHalf);
     }
     // Empty stars
     /*
@@ -40,7 +37,7 @@ const generate_rate = (r = "0") => {
 const RatingItem = ({ rate = "0" }) => {
     const stars = generate_rate(rate);
     return (<span>
-        { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
+        { stars.map( (Icon, i) => <Icon key={i} /> ) }
     </span>);
 };
 
