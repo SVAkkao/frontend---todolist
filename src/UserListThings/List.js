@@ -12,12 +12,20 @@ import Fetch from './Fetch';
 
 const List = () => {
 
+  //拿mylist給的tlid
   const [listSelectedTlid, listSetSelectedTlid] = useState(null);
   const giveTlid =  (tlid) => {
     listSetSelectedTlid(tlid);
-    // console.log(listSelectedTlid)
 };
-// console.log(listSelectedTlid)
+//
+
+//   //拿userdata
+//   const [userid, setUserId] = useState(null);
+//   const giveUserid =  (id) => {
+//     setUserId(id);
+//     console.log(id)
+// };
+//   //
 
   return (
     <>

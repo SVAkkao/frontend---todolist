@@ -1,11 +1,8 @@
-// react-bootstrap
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
-// FontAwesome
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons"
 // Local
+import { FaStar, FaStarHalf } from "react-icons/fa6";
 import { ModalOprationPanel, UserOprationPanel } from "./OprationPanel";
 
 /**
@@ -22,10 +19,10 @@ const generate_rate = (r = "0") => {
     // Array
     const result = [];
     for (let i = 0; i < full_star_num; i++) {
-        result.push(faStar);
+        result.push(FaStar);
     }
     for (let j = 0; j < half_star_num; j++) {
-        result.push(faStarHalf);
+        result.push(FaStarHalf);
     }
     // Empty stars
     /*
@@ -40,12 +37,18 @@ const generate_rate = (r = "0") => {
 const RatingItem = ({ rate = "0" }) => {
     const stars = generate_rate(rate);
     return (<span>
-        { stars.map( (c, i) => <FontAwesomeIcon key={i} icon={c} /> ) }
+        { stars.map( (Icon, i) => <Icon key={i} /> ) }
     </span>);
 };
 
 const DEFAULT_ITEM = {
-    "cid":"","uid":0,"pid":0,"username":"","comment":"","rate":5,"created_at":"","photo":""
+    "cid":"",
+    "username":"",
+    "projectname":"",
+    "photo":"",
+    "comment":"",
+    "rate":5,
+    "created_at":"",
 };
 
 /**
@@ -55,7 +58,7 @@ const DEFAULT_ITEM = {
  */
 export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 48; 
-    const alt = `User ${item.uid}`;
+    const alt = `User ${item.username}`;
     const src = item.photo || "avatar-template.svg";
     return <ListGroup.Item className="comment-panel">
         <ModalOprationPanel
@@ -81,7 +84,7 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
  */
 export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
     const imgsize = 64; 
-    const alt = `User ${item.uid}`;
+    const alt = `User ${item.username}`;
     const src = item.photo || "avatar-template.svg";
     return <Card className="user-comment-panel mb-4">
         <Card.Body>
@@ -93,7 +96,7 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                     <div className="item -info">
                         <div>
                             <p className="title usertitle">
-                                <strong className="allcaps">{item.username}</strong>
+                                <strong className="allcaps">{item.username}</strong> @ <span>{item.projectname}</span>
                             </p>
                             <span>
                                 <time dateTime={item.created_at}>{ (new Date(item.created_at)).toUTCString() }</time>

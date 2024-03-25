@@ -12,31 +12,26 @@ import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 // Other
-import "./Attribution.css";
 import axios from "axios";
+import "./Attribution.css";
 import Announce from "./Announce";
 import LogoutBar from "../LogoutBar";
+import { useUserStore } from "../../stores/user";
+// Comment components
+import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+// const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
-const userData = {
-  contributions: [
-    { type: "to-do-list", content: "訪問故宮" },
-    { type: "to-do-list", content: "花東之旅" },
-    // 更多贡献...
-  ],
-};
+// const userData = {
+//   contributions: [
+//     { type: "to-do-list", content: "訪問故宮" },
+//     { type: "to-do-list", content: "花東之旅" },
+//     // 更多贡献...
+//   ],
+// };
 
 // API calls
-const getUserApi = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/user`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
 const getUserCommentApi = () => {
   const token = localStorage.getItem("userToken");
   return axios.get(`${API_HOST}/api/user-comment`, {
@@ -63,35 +58,14 @@ const ContributionIcon = ({ type }) => {
   }
   return null;
 };
-const ContributionsPanel = ({ contributions, comments, filter }) => {
-  const [listTitles, setListTitles] = useState([]);
 
-  useEffect(() => {
-    if (filter === "list") {
-      // 当 filter 为 "list" 时，获取清单标题
-      getUserListTitle()
-        .then((response) => {
-          // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
-          setListTitles(response.data.titles);
-        })
-        .catch((error) => {
-          console.error("获取清单标题失败：", error);
-        });
-    }
-  }, [filter]);
+const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
   if (filter === "comment") {
-    return comments.map((comment, index, array) => (
-      <React.Fragment key={comment.cid}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ContributionIcon type="comment" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={comment.comment} />
-        </ListItem>
-        {index < array.length - 1 && <Divider />}
-      </React.Fragment>
+    return comments.map((comment) => (
+        <UsersCommentItem
+          key={comment.cid} item={comment}
+          onEdit={onUpdateList} onDelete={onUpdateList}
+        />
     ));
   } else if (filter === "list") {
     // 假設 contributions 是包含 title 的對象陣列
@@ -109,8 +83,9 @@ const ContributionsPanel = ({ contributions, comments, filter }) => {
       </React.Fragment>
     ));
   }
+  return <span>Type unknown</span>;
 
-  // return contributions.map((contribution, index, array) => (
+  // return userData.contributions.map((contribution, index, array) => (
   //   <React.Fragment key={index}>
   //     <ListItem>
   //       <ListItemAvatar>
@@ -126,32 +101,18 @@ const ContributionsPanel = ({ contributions, comments, filter }) => {
 };
 
 const UserIntroduction = () => {
-  const [userName, setUserName] = useState("");
-  const [userPhoto, setUserPhoto] = useState("");
-
-  const fetchUser = async () => {
-    try {
-      const response = await getUserApi();
-      setUserName(response.data.name);
-      setUserPhoto(response.data.photo);
-    } catch (error) {
-      console.error("取得用戶訊息失敗：", error);
-    }
-  };
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  const { user, getUserPhoto } = useUserStore();
 
   return (
     <CardContent>
       <br />
       <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <Avatar
-          src={userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"}
+          src={getUserPhoto()}
           style={{ width: 100, height: 100, marginRight: 10 }}
         />
         <Typography variant="h3" sx={{ ml: 2 }}>
-          {userName}
+          {user.name}
         </Typography>
       </div>
       <br />
@@ -161,8 +122,19 @@ const UserIntroduction = () => {
 };
 
 const AchievementsPage = () => {
-  const [filter, setFilter] = useState("all"); // 新的状态变量，用于筛选显示
+  const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
   const [userComments, setUserComments] = useState([]);
+  const [listTitles, setListTitles] = useState([]);
+  const fetchUserListTitles = () => {
+    getUserListTitle()
+    .then((response) => {
+      // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
+      setListTitles(response.data.titles);
+    })
+    .catch((error) => {
+      console.error("获取清单标题失败：", error);
+    });
+  };
   /**
    * Get the user's comments and add it into the list.
    */
@@ -174,8 +146,13 @@ const AchievementsPage = () => {
       console.error("取得留言失敗：", error);
     }
   };
+  const onUpdateList = () => {
+    fetchUserComment();
+    fetchUserListTitles();
+  };
   useEffect(() => {
     fetchUserComment();
+    fetchUserListTitles();
   }, []);
 
   return (
@@ -211,8 +188,9 @@ const AchievementsPage = () => {
           <List style={{ padding: 20 }}>
             <ContributionsPanel
               filter={filter}
-              contributions={userData.contributions}
               comments={userComments}
+              listTitles={listTitles}
+              onUpdateList={onUpdateList}
             />
           </List>
         </Card>
