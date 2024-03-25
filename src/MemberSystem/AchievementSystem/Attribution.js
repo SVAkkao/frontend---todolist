@@ -91,7 +91,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
     ))} </div>;
     case "photo":
       const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
-      return <article className="images-warpper">{
+      return <article className="images-warpper waterfall-effect">{
         photoList.map( (photo, index) => <section key={photo} className="item m-2">
           <img src={photo} alt={imgalt(photo, index)} />
         </section> )
