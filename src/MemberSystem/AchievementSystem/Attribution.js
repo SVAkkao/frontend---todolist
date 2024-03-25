@@ -63,7 +63,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
     </section>);
   }
   const EmptyList = () => <p className="text-center m-2">沒有資料！要不要試試加點東西看看呢 ;-)</p>;
-  function renderList(listTitles) {
+  function RenderedList({ listTitles }) {
     if (listTitles.length > 0) {
       return <List style={{ padding: 20 }}>{
         listTitles.map((title, index) => (<React.Fragment key={index}>
@@ -82,7 +82,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
     }
     return <EmptyList />;
   }
-  function RenderImageList(photoList) {
+  function RenderedImageList({ photoList }) {
     const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
     const photoslist_comp = photoList.map((photo, index) => <section key={photo} className="item m-2">
       <img src={photo} alt={imgalt(photo, index)} />
@@ -94,7 +94,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
       photoslist_comp
     }</article>;
   }
-  function renderComments(comments, onUpdateList) {
+  function RenderedComments({ comments, onUpdateList }) {
     const commentslist_comp = comments.map((comment) => (<UsersCommentItem
       key={comment.cid}
       item={comment}
@@ -108,12 +108,9 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
     </article>;
   }  
   switch (filter) {
-    case "list":
-      return renderList(listTitles, EmptyList);
-    case "photo":
-      return RenderImageList(photoList, EmptyList);
-    case "comment":
-      return renderComments(comments, onUpdateList, EmptyList);
+    case "list": return <RenderedList listTitles={listTitles} />
+    case "photo": return <RenderedImageList photoList={photoList} />;
+    case "comment": return <RenderedComments comments={comments} onUpdateList={onUpdateList} />
     default: return <EmptyList />;
   }
 };
