@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 // material conponents
 import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
   Avatar,
-  Card, CardContent,
+  Card,
+  CardContent,
   Typography,
-  List, ListItem, ListItemAvatar, ListItemText,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   Divider,
 } from "@mui/material";
 // material icons
@@ -42,7 +49,7 @@ const getUserCommentApi = () => {
 };
 const getUserListTitle = () => {
   const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/touristlist-title`, {
+  return axios.get(`${API_HOST}/api/user-tourlist`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -62,26 +69,31 @@ const ContributionIcon = ({ type }) => {
 const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
   if (filter === "comment") {
     return comments.map((comment) => (
-        <UsersCommentItem
-          key={comment.cid} item={comment}
-          onEdit={onUpdateList} onDelete={onUpdateList}
-        />
+      <UsersCommentItem
+        key={comment.cid}
+        item={comment}
+        onEdit={onUpdateList}
+        onDelete={onUpdateList}
+      />
     ));
   } else if (filter === "list") {
-    // 假設 contributions 是包含 title 的對象陣列
-    return listTitles.map((title, index) => (
-      <React.Fragment key={index}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ContributionIcon type="to-do-list" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={title} />
-        </ListItem>
-        {index < listTitles.length - 1 && <Divider />}
-      </React.Fragment>
-    ));
+    return (
+      <div>
+        {listTitles.map((title, index) => (
+          <React.Fragment key={index}>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+                  <ContributionIcon type="to-do-list" />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={title} />
+            </ListItem>
+            {index < listTitles.length - 1 && <Divider />}
+          </React.Fragment>
+        ))}
+      </div>
+    );
   }
   return <span>Type unknown</span>;
 
@@ -125,16 +137,19 @@ const AchievementsPage = () => {
   const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
   const [userComments, setUserComments] = useState([]);
   const [listTitles, setListTitles] = useState([]);
+
   const fetchUserListTitles = () => {
     getUserListTitle()
-    .then((response) => {
-      // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
-      setListTitles(response.data.titles);
-    })
-    .catch((error) => {
-      console.error("获取清单标题失败：", error);
-    });
+      .then((response) => {
+        // 直接使用response.data來獲取服務器響應的數據
+        const titles = response.data.map((item) => item.tourListTitle);
+        setListTitles(titles);
+      })
+      .catch((error) => {
+        console.error("There was a problem with your fetch operation:", error);
+      });
   };
+
   /**
    * Get the user's comments and add it into the list.
    */
