@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Pic from './FormThings/Pic';
 import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
+import Split from './Split';
 import { Row, Col, Form } from 'react-bootstrap';
 import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -34,6 +35,7 @@ function RightSide() {
                 <Col sm={1}></Col>
                 <Col sm={10}><Form.Label className='text-left '>出發時間</Form.Label></Col>
                 <Col sm={1}></Col>
+
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={5}>
                     <Form.Control type="date" />
@@ -47,6 +49,7 @@ function RightSide() {
                 <Col sm={1}></Col>
                 <Col sm={10}><Form.Label className='text-left '>回歸時間</Form.Label></Col>
                 <Col sm={1}></Col>
+                
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={5}>
                     <Form.Control type="date" />

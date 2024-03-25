@@ -31,7 +31,7 @@ const List = () => {
     <>
       <LogoutBar></LogoutBar>
       <Container fluid className='vh-100' >
-        <Row className='h-100'>
+        <Row className='h-100 w-100'>
           <Col sm={3}>
           <Fetch onSelect2={giveTlid}>
               {/* {(data,onSelect) => <LeftSide data={data} onSelect={onSelect}/>} */}
