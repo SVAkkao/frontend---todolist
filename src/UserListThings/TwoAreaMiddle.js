@@ -17,7 +17,8 @@ function TwoAreaMiddle({ selectedTlid }) {
         const response = await fetch(API_HOST + '/api/attraction', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
             },
         });
         const data = await response.json();
@@ -43,6 +44,7 @@ function TwoAreaMiddle({ selectedTlid }) {
     }, []);
 
     const fetchAreaData = async (selectedTlid) => {
+        const token = localStorage.getItem("userToken");
         const getParams = (input) => {
             if (input == null) {
                 return "";
@@ -54,7 +56,8 @@ function TwoAreaMiddle({ selectedTlid }) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: getParams(selectedTlid)
         });
@@ -73,7 +76,8 @@ function TwoAreaMiddle({ selectedTlid }) {
         const response = await fetch(API_HOST + '/api/POST/selectjourney', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
             },
             body: JSON.stringify({ tlid: selectedTlid })
         });
@@ -136,7 +140,6 @@ function TwoAreaMiddle({ selectedTlid }) {
                     tlid: selectedTlid,
                     title: inputValue
                 })
-
             });
         }
     }
