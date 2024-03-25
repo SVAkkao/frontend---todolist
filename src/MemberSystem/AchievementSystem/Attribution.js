@@ -2,175 +2,147 @@ import React, { useEffect, useState } from "react";
 // material conponents
 import {
   Avatar,
-  Card, CardContent,
+  Card,
+  CardContent,
   Typography,
-  List, ListItem, ListItemAvatar, ListItemText,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   Divider,
 } from "@mui/material";
 // material icons
 import { blue } from "@mui/material/colors";
-import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-// Other
-import axios from "axios";
-import "./Attribution.css";
+// Components
 import Announce from "./Announce";
 import LogoutBar from "../LogoutBar";
-// Comment components
 import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
+import Spinner from "react-bootstrap/Spinner";
+// Other
+import { useUserStore } from "../../stores/user";
+import "./Attribution.css";
+import { getUserListTitle, getPhotos, getUserCommentApi } from "./api";
 
-const API_HOST = process.env.REACT_APP_API_URL;
-const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+const EmptyList = () => <p className="text-center m-2">
+  沒有資料！要不要試試加點東西看看呢 ;-)
+</p>;
 
-const userData = {
-  contributions: [
-    { type: "to-do-list", content: "訪問故宮" },
-    { type: "to-do-list", content: "花東之旅" },
-    // 更多贡献...
-  ],
-};
-
-// API calls
-const getUserApi = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/user`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-const getUserCommentApi = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/user-comment`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-const getUserListTitle = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/touristlist-title`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
-// Components
-const ContributionIcon = ({ type }) => {
-  if (type === "to-do-list") {
-    return <ListAltIcon />;
-  } else if (type === "comment") {
-    return <CommentIcon />;
-  }
-  return null;
-};
-
-const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
-  if (filter === "comment") {
-    return comments.map((comment) => (
-        <UsersCommentItem
-          key={comment.cid} item={comment}
-          onEdit={onUpdateList} onDelete={onUpdateList}
-        />
-    ));
-  } else if (filter === "list") {
-    // 假設 contributions 是包含 title 的對象陣列
-    return listTitles.map((title, index) => (
-      <React.Fragment key={index}>
+function RenderedList({ list }) {
+  if (list.length > 0) {
+    return <List style={{ padding: 20 }}>{
+      list.map((title, index) => (<React.Fragment key={index}>
         <ListItem>
           <ListItemAvatar>
             <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ContributionIcon type="to-do-list" />
+              <ListAltIcon />
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={title} />
         </ListItem>
-        {index < listTitles.length - 1 && <Divider />}
-      </React.Fragment>
-    ));
+        {index < list.length - 1 && <Divider />}
+      </React.Fragment>)
+      )
+    }</List>;
   }
-  return <span>Type unknown</span>;
+  return <EmptyList />;
+}
 
-  // return userData.contributions.map((contribution, index, array) => (
-  //   <React.Fragment key={index}>
-  //     <ListItem>
-  //       <ListItemAvatar>
-  //         <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-  //           <ContributionIcon type={contribution.type} />
-  //         </Avatar>
-  //       </ListItemAvatar>
-  //       <ListItemText primary={contribution.content} />
-  //     </ListItem>
-  //     {index < array.length - 1 && <Divider />}
-  //   </React.Fragment>
-  // ));
+function RenderedImageList({ list }) {
+  const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
+  const photoslist_comp = list.map((photo, index) => <section key={photo} className="item m-2">
+    <img src={photo} alt={imgalt(photo, index)} />
+  </section>);
+  if (list.length < 1) {
+    return <EmptyList />;
+  }
+  return <article className="images-warpper waterfall-effect m-2">{
+    photoslist_comp
+  }</article>;
+}
+
+function RenderedComments({ list, onUpdateList }) {
+  const commentslist_comp = list.map((comment) => (<UsersCommentItem
+    key={comment.cid}
+    item={comment}
+    onEdit={onUpdateList}
+    onDelete={onUpdateList}
+  />));
+  if (list.length < 1) {
+    return <EmptyList />;
+  }
+  return <article className="comments-warpper m-2">
+    { commentslist_comp }
+  </article>;
+}
+
+const LoadingComp = () => <section className="text-center m-3">
+  <Spinner animation="border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </Spinner>
+</section>;
+
+const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList, loading }) => {
+  if( loading ) {
+    return <LoadingComp />;
+  }  
+  switch (filter) {
+    case "list": return <RenderedList list={listTitles} />
+    case "photo": return <RenderedImageList list={photoList} />;
+    case "comment": return <RenderedComments list={comments} onUpdateList={onUpdateList} />
+    default: return <EmptyList />;
+  }
 };
 
 const UserIntroduction = () => {
-  const [userName, setUserName] = useState("");
-  const [userPhoto, setUserPhoto] = useState("");
-
-  const fetchUser = async () => {
-    try {
-      const response = await getUserApi();
-      setUserName(response.data.name);
-      setUserPhoto(response.data.photo);
-    } catch (error) {
-      console.error("取得用戶訊息失敗：", error);
-    }
-  };
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  return (
-    <CardContent>
-      <br />
-      <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-        <Avatar
-          src={userPhoto ? `${API_IMAGE}${userPhoto}` : "avatar-template.svg"}
-          style={{ width: 100, height: 100, marginRight: 10 }}
-        />
-        <Typography variant="h3" sx={{ ml: 2 }}>
-          {userName}
-        </Typography>
-      </div>
-      <br />
-      <Announce></Announce>
-    </CardContent>
-  );
+  const { user, getUserPhoto } = useUserStore();
+  return (<CardContent>
+    <br />
+    <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+      <Avatar
+        src={getUserPhoto()}
+        style={{ width: 100, height: 100, marginRight: 10 }}
+      />
+      <Typography variant="h3" sx={{ ml: 2 }}>
+        {user.name}
+      </Typography>
+    </div>
+    <br />
+    <Announce />
+  </CardContent>);
 };
 
 const AchievementsPage = () => {
-  const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
-  const [userComments, setUserComments] = useState([]);
+  // 新的状态变量，用于筛选显示
+  const [filter, setFilter] = useState("list");
+  const [loading, setLoading] = useState(false);
+
+  // AJAX lists
   const [listTitles, setListTitles] = useState([]);
-  const fetchUserListTitles = () => {
-    getUserListTitle()
-    .then((response) => {
-      // 假设返回的数据格式是 { titles: ["标题1", "标题2", ...] }
-      setListTitles(response.data.titles);
-    })
-    .catch((error) => {
-      console.error("获取清单标题失败：", error);
+  const [photoList, setPhotoList] = useState([]);
+  const [userComments, setUserComments] = useState([]);
+
+  // Actions
+  const onUpdateList = () => {
+    setLoading(true);
+    const api_requestss = Promise.all([
+      getUserListTitle(),
+      getPhotos(),
+      getUserCommentApi(),
+    ]);
+    api_requestss.then( ([lists, photos, comments]) => {
+      // 直接使用response.data來獲取服務器響應的數據
+      const titles = lists.data.map((item) => item.tourListTitle);
+      setListTitles( titles );
+      setPhotoList(photos.data.result);
+      setUserComments(comments.data.result);
+    }).catch( (e) => {
+      alert(e);
+    }).finally( () => {
+      setLoading(false);
     });
   };
-  /**
-   * Get the user's comments and add it into the list.
-   */
-  const fetchUserComment = async () => {
-    try {
-      const response = await getUserCommentApi();
-      setUserComments(response.data.result);
-    } catch (error) {
-      console.error("取得留言失敗：", error);
-    }
-  };
-  const onUpdateList = () => {
-    fetchUserComment();
-    fetchUserListTitles();
-  };
+
   useEffect(() => {
     onUpdateList();
   }, []);
@@ -205,14 +177,14 @@ const AchievementsPage = () => {
               評論
             </button>
           </div>
-          <List style={{ padding: 20 }}>
-            <ContributionsPanel
-              filter={filter}
-              comments={userComments}
-              listTitles={listTitles}
-              onUpdateList={onUpdateList}
-            />
-          </List>
+          <ContributionsPanel
+            loading={loading}
+            filter={filter}
+            comments={userComments}
+            listTitles={listTitles}
+            photoList={photoList}
+            onUpdateList={onUpdateList}
+          />
         </Card>
       </div>
     </div>

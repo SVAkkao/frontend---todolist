@@ -21,8 +21,33 @@
   margin-top: 50px;
 }
 
+/* https://www.tpisoftware.com/tpu/articleDetails/2604 */
+.waterfall-effect {
+  max-width: 100%;
+  margin: 0 auto;
+  column-count: 3;
+  column-gap: 10px;
+}
+.waterfall-effect .item {
+  padding: 5px;
+  box-sizing: border-box;
+  margin: 0 auto 5px;
+  break-inside: avoid;
+}
+.waterfall-effect img {
+  max-width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* 499 */
 @media (max-width: 768px) {
   .mainpage {
     margin-top: 0;
+  }
+}
+@media (max-width: 499px) {
+  .waterfall-effect {
+    column-count: 1;
   }
 }
