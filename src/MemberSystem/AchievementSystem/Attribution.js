@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 // material conponents
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
   Avatar,
   Card,
   CardContent,
@@ -18,14 +15,14 @@ import {
 import { blue } from "@mui/material/colors";
 import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
-// Other
-import axios from "axios";
-import "./Attribution.css";
+// Components
 import Announce from "./Announce";
 import LogoutBar from "../LogoutBar";
-import { useUserStore } from "../../stores/user";
-// Comment components
 import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
+// Other
+import axios from "axios";
+import { useUserStore } from "../../stores/user";
+import "./Attribution.css";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
