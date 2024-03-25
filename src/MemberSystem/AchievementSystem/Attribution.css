@@ -40,8 +40,14 @@
   object-position: 50% 50%;
 }
 
+/* 499 */
 @media (max-width: 768px) {
   .mainpage {
     margin-top: 0;
+  }
+}
+@media (max-width: 499px) {
+  .waterfall-effect {
+    column-count: 1;
   }
 }
