@@ -66,9 +66,9 @@ const ContributionIcon = ({ type }) => {
   return null;
 };
 
-const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
-  if (filter === "comment") {
-    return comments.map((comment) => (
+const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList }) => {
+  switch (filter) {
+    case "comment": return comments.map((comment) => (
       <UsersCommentItem
         key={comment.cid}
         item={comment}
@@ -76,24 +76,20 @@ const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
         onDelete={onUpdateList}
       />
     ));
-  } else if (filter === "list") {
-    return (
-      <div>
-        {listTitles.map((title, index) => (
-          <React.Fragment key={index}>
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                  <ContributionIcon type="to-do-list" />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={title} />
-            </ListItem>
-            {index < listTitles.length - 1 && <Divider />}
-          </React.Fragment>
-        ))}
-      </div>
-    );
+    case "list": return <div> {listTitles.map((title, index) => (
+      <React.Fragment key={index}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+              <ContributionIcon type="to-do-list" />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={title} />
+        </ListItem>
+        {index < listTitles.length - 1 && <Divider />}
+      </React.Fragment>
+    ))} </div>;
+    default: return <></>;
   }
 };
 
