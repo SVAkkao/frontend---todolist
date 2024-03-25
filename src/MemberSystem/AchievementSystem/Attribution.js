@@ -20,38 +20,10 @@ import LogoutBar from "../LogoutBar";
 import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
 import Spinner from "react-bootstrap/Spinner";
 // Other
-import axios from "axios";
 import { useUserStore } from "../../stores/user";
 import "./Attribution.css";
+import { getUserListTitle, getPhotos, getUserCommentApi } from "./api";
 
-const API_HOST = process.env.REACT_APP_API_URL;
-
-// API calls
-const getUserCommentApi = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/user-comment`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-const getUserListTitle = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/user-tourlist`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-const getPhotos = () => {
-  const token = localStorage.getItem("userToken");
-  return axios.get(`${API_HOST}/api/uploaded-images`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: "application/json"
-    },
-  });
-};
 
 // Components
 const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList, loading }) => {

@@ -5,18 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Modal from "react-modal";
 import { MdGrade } from "react-icons/md"; // 确保您已经安装了react-icons
 import { FaMedal } from "react-icons/fa";
-
-const API_HOST = process.env.REACT_APP_API_URL;
-function getUserScore() {
-  const userToken = localStorage.getItem("userToken");
-  return fetch(`${API_HOST}/api/user-score`, {
-    method: "GET", // 或者是POST，取決於你的API
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userToken}`, // 根據你的API設計調整這裡
-    },
-  }).then((response) => response.json());
-}
+import { getUserScore } from "./api";
 
 function ScoreExplanation() {
   const grade = [
