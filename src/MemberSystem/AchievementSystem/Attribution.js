@@ -18,6 +18,7 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import Announce from "./Announce";
 import LogoutBar from "../LogoutBar";
 import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
+import Spinner from "react-bootstrap/Spinner";
 // Other
 import axios from "axios";
 import { useUserStore } from "../../stores/user";
@@ -53,35 +54,53 @@ const getPhotos = () => {
 };
 
 // Components
-const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList }) => {
-  const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
+const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList, loading }) => {
+  if( loading ) {
+    return (<section className="text-center m-3">
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    </section>);
+  }
+  const EmptyList = () => <p className="text-center m-2">沒有資料！要不要試試加點東西看看呢 ;-)</p>;
   switch (filter) {
-    case "comment": return <article className="comments-warpper m-2">
-      { comments.map((comment) => ( <UsersCommentItem
-          key={comment.cid}
-          item={comment}
-          onEdit={onUpdateList}
-          onDelete={onUpdateList}
-        /> )) }
-    </article>;
-    case "list": return <List style={{ padding: 20 }}>
-      {listTitles.map((title, index) => ( <React.Fragment key={index}>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                <ListAltIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={title} />
-          </ListItem>
-          {index < listTitles.length - 1 && <Divider />}
-      </React.Fragment> ))}
-    </List>;
-    case "photo": return <article className="images-warpper waterfall-effect m-2">{
-        photoList.map( (photo, index) => <section key={photo} className="item m-2">
-          <img src={photo} alt={imgalt(photo, index)} />
-        </section> )
-      }</article>;
+    case "list":
+      const listTitlesListComp = listTitles.map((title, index) => (<React.Fragment key={index}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+              <ListAltIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={title} />
+        </ListItem>
+        {index < listTitles.length - 1 && <Divider />}
+      </React.Fragment>)
+      );
+      if( listTitles.length < 1 ) {
+        return <EmptyList />;
+      }
+      return <List style={{ padding: 20 }}>{ listTitlesListComp }</List>;
+    case "photo":
+      const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
+      const photoslist_comp = photoList.map((photo, index) => <section key={photo} className="item m-2">
+        <img src={photo} alt={imgalt(photo, index)} />
+      </section>);
+      if( photoList.length < 1 ) {
+        return <EmptyList />;
+      }
+      return <article className="images-warpper waterfall-effect m-2">{ photoslist_comp }</article>;
+    case "comment":
+      const commentslist_comp = comments.length > 1 ? comments.map((comment) => (<UsersCommentItem
+        key={comment.cid}
+        item={comment}
+        onEdit={onUpdateList}
+        onDelete={onUpdateList}
+      />)) : <EmptyList />;
+      if( comments.length < 1 ) {
+        return <EmptyList />;
+      }
+      return <article className="comments-warpper m-2">{ commentslist_comp }</article>;
     default: return <></>;
   }
 };
@@ -107,6 +126,9 @@ const UserIntroduction = () => {
 const AchievementsPage = () => {
   // 新的状态变量，用于筛选显示
   const [filter, setFilter] = useState("list");
+  const [loading, setLoading] = useState(false);
+
+  // AJAX lists
   const [listTitles, setListTitles] = useState([]);
   const [photoList, setPhotoList] = useState([]);
   const [userComments, setUserComments] = useState([]);
@@ -124,10 +146,15 @@ const AchievementsPage = () => {
       setListTitles( titles );
       setPhotoList(photos.data.result);
       setUserComments(comments.data.result);
+    }).catch( (e) => {
+      alert(e);
+    }).finally( () => {
+      setLoading(false);
     });
   };
-  
+
   useEffect(() => {
+    setLoading(true);
     onUpdateList();
   }, []);
 
@@ -162,6 +189,7 @@ const AchievementsPage = () => {
             </button>
           </div>
           <ContributionsPanel
+            loading={loading}
             filter={filter}
             comments={userComments}
             listTitles={listTitles}
