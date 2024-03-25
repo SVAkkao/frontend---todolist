@@ -11,24 +11,21 @@ const API_HOST = process.env.REACT_APP_API_URL;
 function Announce() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [score, setScore] = useState(null); // 狀態用於儲存分數
-  const [achievement, setAchievement] = useState("Loading...");
 
   useEffect(() => {
     const userToken = localStorage.getItem("userToken"); // 從localStorage獲取userToken
     if (userToken) {
-      fetch(`${API_HOST}/api/user-score`, {
+      const ajax = fetch(`${API_HOST}/api/user-score`, {
         method: "GET", // 或者是POST，取決於你的API
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userToken}`, // 根據你的API設計調整這裡
         },
       })
-        .then((response) => response.json())
+        .then((response) => response.json());
+      ajax
         .then((data) => {
           setScore(data.totalScore); // 假設API響應中有一個score字段
-          const userAchievement = getUserAchievement(data.totalScore);
-          // 更新成就状态
-          setAchievement(userAchievement);
         })
         .catch((error) => {
           console.error("Error fetching score:", error);
@@ -98,7 +95,7 @@ function Announce() {
         onClick={() => setModalIsOpen(true)}
       >
         <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-        等級：{achievement}
+        等級：{getUserAchievement(score)}
       </span>
 
       <Modal
