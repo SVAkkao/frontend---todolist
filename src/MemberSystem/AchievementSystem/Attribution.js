@@ -68,30 +68,33 @@ const ContributionIcon = ({ type }) => {
 
 const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList }) => {
   switch (filter) {
-    case "comment": return comments.map((comment) => (
-      <UsersCommentItem
-        key={comment.cid}
-        item={comment}
-        onEdit={onUpdateList}
-        onDelete={onUpdateList}
-      />
-    ));
-    case "list": return <div> {listTitles.map((title, index) => (
-      <React.Fragment key={index}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ContributionIcon type="to-do-list" />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={title} />
-        </ListItem>
-        {index < listTitles.length - 1 && <Divider />}
-      </React.Fragment>
-    ))} </div>;
+    // 
+    case "comment": return <article className="comments-warpper m-2">
+      { comments.map((comment) => ( <UsersCommentItem
+          key={comment.cid}
+          item={comment}
+          onEdit={onUpdateList}
+          onDelete={onUpdateList}
+        /> )) }
+    </article>;
+    case "list": return <List style={{ padding: 20 }}>
+      {listTitles.map((title, index) => (
+        <React.Fragment key={index}>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+                <ContributionIcon type="to-do-list" />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={title} />
+          </ListItem>
+          {index < listTitles.length - 1 && <Divider />}
+        </React.Fragment>
+      ))}
+    </List>;
     case "photo":
       const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
-      return <article className="images-warpper waterfall-effect">{
+      return <article className="images-warpper waterfall-effect m-2">{
         photoList.map( (photo, index) => <section key={photo} className="item m-2">
           <img src={photo} alt={imgalt(photo, index)} />
         </section> )
@@ -198,7 +201,6 @@ const AchievementsPage = () => {
               評論
             </button>
           </div>
-          <List style={{ padding: 20 }}>
             <ContributionsPanel
               filter={filter}
               comments={userComments}
@@ -206,7 +208,6 @@ const AchievementsPage = () => {
               photoList={photoList}
               onUpdateList={onUpdateList}
             />
-          </List>
         </Card>
       </div>
     </div>
