@@ -44,12 +44,19 @@ function TwoAreaMiddle({ selectedTlid }) {
     }, []);
 
     const fetchAreaData = async () => {
-        const response = await fetch(API_HOST + '/api/POST/selectlist', {
-            method: 'POST',
+        const getParams = (selectlistBody) => {
+            if (selectlistBody == null) {
+                return "";
+            }
+            return new URLSearchParams(selectlistBody)
+        };
+        const response = await fetch(
+            `${API_HOST}/api/GET/selectlist?${getParams(selectedTlid)}`, {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({ tlid: selectedTlid })
         });
         const data = await response.json();
         setAreaData(data);

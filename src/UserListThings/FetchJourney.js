@@ -23,7 +23,8 @@ function Fetch() {
   const token = localStorage.getItem('userToken');
   const headers = new Headers({
     'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   });
 
   useEffect(() => {
@@ -57,12 +58,17 @@ function Fetch() {
             const selectlistBodies = data.tlid.map(tlid => ({ tlid }));
 
             // const selectlistBody = JSON.stringify({tlid: tlid[0] })
-            setTestData(selectlistBodies)
+            setTestData(selectlistBodies);
+            const getParams = (selectlistBody) => {
+              if (selectlistBody == null) {
+                  return "";
+              }
+              return new URLSearchParams(selectlistBody)
+            };
             Promise.all(selectlistBodies.map(selectlistBody =>
-              fetch(API_HOST + '/api/POST/selectlist', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(selectlistBody)
+              fetch(`${API_HOST}/api/GET/selectlist?${getParams(selectlistBody)}`, {
+                method: 'GET',
+                headers: headers
               })
               .then(response => response.json())
             ))
