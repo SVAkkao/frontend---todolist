@@ -65,10 +65,12 @@ function Fetch() {
               }
               return new URLSearchParams(selectlistBody)
             };
+            console.log({selectlistBodies});
             Promise.all(selectlistBodies.map(selectlistBody =>
-              fetch(`${API_HOST}/api/GET/selectlist?${getParams(selectlistBody)}`, {
-                method: 'GET',
-                headers: headers
+              fetch(`${API_HOST}/api/POST/selectlist`, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(selectlistBody)
               })
               .then(response => response.json())
             ))

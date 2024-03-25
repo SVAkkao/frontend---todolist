@@ -51,12 +51,14 @@ function TwoAreaMiddle({ selectedTlid }) {
             return new URLSearchParams(selectlistBody)
         };
         const response = await fetch(
-            `${API_HOST}/api/GET/selectlist?${getParams(selectedTlid)}`, {
-            method: 'GET',
+            // ${getParams(selectedTlid)}
+            `${API_HOST}/api/POST/selectlist`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
+            body: JSON.stringify(selectedTlid)
         });
         const data = await response.json();
         setAreaData(data);

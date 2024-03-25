@@ -69,9 +69,10 @@ function Fetch({ onSelect2 }) {
             return new URLSearchParams(selectlistBody)
           };
           const getSelectLists = Promise.all(selectlistBodies.map(selectlistBody => fetch(
-            `${API_HOST}/api/GET/selectlist?${getParams(selectlistBody)}`, {
-            method: 'GET',
+            `${API_HOST}/api/POST/selectlist`, {
+            method: 'POST',
             headers: getRequestHeaders(),
+            body: JSON.stringify(selectlistBody),
           }).then(response => response.json())
           ));
           // const selectlistBody = JSON.stringify({tlid: tlid[0] })
