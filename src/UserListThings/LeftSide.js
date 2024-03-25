@@ -49,7 +49,7 @@ function LeftSide({ data, onSelect }) {
           <a className="supportColor">已完成</a>
         </Col>
       </Row>
-      {data.map((item, index) => (
+      {data.tourist_lists.map((item, index) => (
         <Mylist key={index} data={item} onButtonClick={handleButtonClick} />
       ))}
       <Row>

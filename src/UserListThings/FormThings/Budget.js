@@ -11,10 +11,10 @@ function Budget() {
             <Col sm={1}></Col>
             <Col sm={1}></Col>
             <Col className='text-center' sm={5}>
-                <Form.Control type="text" />
+                <Form.Control type="text" placeholder='費用名稱' />
             </Col>
             <Col className='text-center' sm={5}>
-                <Form.Control type="number" />
+                <Form.Control type="number" placeholder='費用金額' min='0' />
             </Col>
             <Col sm={1}></Col>
         </Row>
