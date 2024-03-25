@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Spinner, Modal, Form, Button } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 // import Image from "react-bootstrap/Image";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Mylist from "./Mylist";
 import axios from 'axios'
+import { NavLink } from 'react-router-dom';
 
 import { useUserStore } from "../stores/user";
 
@@ -124,6 +125,14 @@ const getUserApi = () => {
 
 function LeftSide({ data, onSelect, onUpdateInfo }) {
 
+  const [notFinishActive, setNotFinishActive] = useState(true);
+  const [finishActive, setFinishActive] = useState(false);
+  const handleBtnClick = (activeSetter) => {
+    // 将所有按钮的状态设置为非活动状态
+    setNotFinishActive(false);
+    setFinishActive(false);
+    activeSetter(true);
+  }
   const [selectedTlid, setSelectedTlid] = useState(null);
 
   if (onSelect && typeof onSelect === "function" && selectedTlid !== null) {
@@ -177,12 +186,16 @@ function LeftSide({ data, onSelect, onUpdateInfo }) {
           </div>
         </Col>
       </Row>
-      <Row className="m-5 text2" style={{ justifyContent: 'space-between' }}>
-        <Col>
-          <a className="supportColor">未完成</a>
+      <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
+        <Col sm={5}>
+          <NavLink to='/list' className="supportColor text-left w-100">
+            <a onClick={() => handleBtnClick(setNotFinishActive)} style={{ borderBottom: notFinishActive ? 'solid 3px #80BCBD' : '0px', color: notFinishActive ? 'black' : '#939393' }}>未完成</a>
+          </NavLink>
         </Col>
-        <Col>
-          <a className="supportColor">已完成</a>
+        <Col sm={5}>
+          <NavLink to='/list' className="supportColor text-right w-100">
+            <a onClick={() => handleBtnClick(setFinishActive)} style={{ borderBottom: finishActive ? 'solid 3px #80BCBD' : '0px', color: finishActive ? 'black' : '#939393' }}>已完成</a>
+          </NavLink>
         </Col>
       </Row>
       {data.map((item, index) => (
