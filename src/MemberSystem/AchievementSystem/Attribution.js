@@ -67,8 +67,8 @@ const ContributionIcon = ({ type }) => {
 };
 
 const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList }) => {
+  const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
   switch (filter) {
-    // 
     case "comment": return <article className="comments-warpper m-2">
       { comments.map((comment) => ( <UsersCommentItem
           key={comment.cid}
@@ -92,9 +92,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
         </React.Fragment>
       ))}
     </List>;
-    case "photo":
-      const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
-      return <article className="images-warpper waterfall-effect m-2">{
+    case "photo": return <article className="images-warpper waterfall-effect m-2">{
         photoList.map( (photo, index) => <section key={photo} className="item m-2">
           <img src={photo} alt={imgalt(photo, index)} />
         </section> )
