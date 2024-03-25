@@ -89,6 +89,11 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
         {index < listTitles.length - 1 && <Divider />}
       </React.Fragment>
     ))} </div>;
+    case "photo":
+      const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
+      return photoList.map( (photo, index) => <section key={photo}>
+      <img src={photo} alt={imgalt(photo, index)} />
+    </section> );
     default: return <></>;
   }
 };
