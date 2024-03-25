@@ -105,7 +105,8 @@ const UserIntroduction = () => {
 };
 
 const AchievementsPage = () => {
-  const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
+  // 新的状态变量，用于筛选显示
+  const [filter, setFilter] = useState("list");
   // Comment modules
   const [userComments, setUserComments] = useState([]);
   const fetchUserComment = async () => {
