@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import JourneyProject from './JourneyProject'
 import Journey from './Journey'
 import './color.css'
@@ -97,6 +97,8 @@ function TwoAreaMiddle({ selectedTlid }) {
     //送出景點資料成為行程
     const [searchvalue, setSearchValue] = useState('');
 
+ 
+
     const handleSearchClick = async () => {
 
         const addjourneydata = {
@@ -120,9 +122,60 @@ function TwoAreaMiddle({ selectedTlid }) {
         await fetchJourneyData();
     };
     //
+    
+//改title名
+
+    const titleName = useRef(null);
+
+ // 監聽滑鼠點擊事件
+ function handleClickOutside(event) {
+    // 檢查點擊事件是否發生在input元素之外
+    if (titleName.current && !titleName.current.contains(event.relatedTarget)) {
+        const inputValue = titleName.current.value;
+        console.log(inputValue)
+        
+        fetch(API_HOST + '/api/POST/updatelist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                tlid: selectedTlid,
+                title: inputValue
+            })
+            
+        });
+    
+
+}
+    
+}
+  // 將滑鼠點擊事件添加到document上
+
+//
+// 監聽input的改變事件
+const handleTitleChange = (event) => {
+    setAreaData({
+      ...areaData,
+      title: event.target.value
+    });
+  };
+
+
     return (
         <>
-            <Row className='m-4'><Col className='text-center'><p className='text1'>{areaData.title}</p></Col></Row>
+
+            <Row className='m-4'>
+            <Col className='text-center'>
+            <Form.Control ref={titleName}
+            className='text1 p-2 m-4' 
+            value={areaData.title} 
+            onChange={handleTitleChange}
+            onBlur={handleClickOutside}
+            type="text"  />
+            </Col>
+            </Row>
+
             <Row className='m-4'><Col className='text-center'><p className='text2'>總金額: xx元</p></Col></Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>

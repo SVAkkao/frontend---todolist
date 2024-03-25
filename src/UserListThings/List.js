@@ -1,31 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LogoutBar from '../MemberSystem/LogoutBar';
-import { Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import RightSide from './RightSide';
 import LeftSide from './LeftSide';
 import './color.css';
 import TwoAreaMiddle from './TwoAreaMiddle';
 import Fetch from './Fetch';
 
+const API_HOST = process.env.REACT_APP_API_URL;
 
 
 
 const List = () => {
 
   //拿mylist給的tlid
-  const [listSelectedTlid, listSetSelectedTlid] = useState(null);
-  const giveTlid =  (tlid) => {
-    listSetSelectedTlid(tlid);
-};
-//
+  const [listSelectedTlid, setSelectedTlid] = useState(null);
 
-//   //拿userdata
-//   const [userid, setUserId] = useState(null);
-//   const giveUserid =  (id) => {
-//     setUserId(id);
-//     console.log(id)
-// };
-//   //
+
+  //原來的fetch
+  const [alldata, setAllData] = useState([]);
+  useEffect(() => {
+    const getRequestHeaders = () => {
+      const token = localStorage.getItem('userToken');
+      const headers = new Headers({
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      });
+      return headers;
+    };
+
+    fetch(API_HOST + '/api/user_all_informations', {
+      method: 'GET',
+      headers: getRequestHeaders(),
+      })
+      .then(response => response.json())
+      .then((data)=>{
+        console.log(data)
+        setAllData(data)
+      });
+  
+   
+  }, []);
+
+
 
   return (
     <>
@@ -33,12 +50,10 @@ const List = () => {
       <Container fluid className='vh-100' >
         <Row className='h-100'>
           <Col sm={3}>
-          <Fetch onSelect2={giveTlid}>
-              {/* {(data,onSelect) => <LeftSide data={data} onSelect={onSelect}/>} */}
-            </Fetch>
+            <LeftSide data={alldata} onSelect={setSelectedTlid} />
           </Col>
           <Col sm={6} className='bg-color4'>
-            <TwoAreaMiddle selectedTlid ={listSelectedTlid}></TwoAreaMiddle>
+            <TwoAreaMiddle selectedTlid={listSelectedTlid}></TwoAreaMiddle>
           </Col>
           <Col sm={3}>
             <RightSide></RightSide>
