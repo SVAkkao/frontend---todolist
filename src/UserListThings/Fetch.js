@@ -30,7 +30,8 @@ function Fetch({ onSelect2 }) {
       const token = localStorage.getItem('userToken');
       const headers = new Headers({
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       });
       return headers;
     };
@@ -61,10 +62,18 @@ function Fetch({ onSelect2 }) {
         });
         getUserrelatedids(body).then(data => {
           const selectlistBodies = data.tlid.map(tlid => ({ tlid }));
-          const getSelectLists = Promise.all(selectlistBodies.map(selectlistBody => fetch(API_HOST + '/api/POST/selectlist', {
+          const getParams = (input) => {
+            if (input == null) {
+                return "";
+            }
+            return JSON.stringify(input);
+            // return new URLSearchParams(selectlistBody)
+          };
+          const getSelectLists = Promise.all(selectlistBodies.map(selectlistBody => fetch(
+            `${API_HOST}/api/POST/selectlist`, {
             method: 'POST',
             headers: getRequestHeaders(),
-            body: JSON.stringify(selectlistBody)
+            body: getParams(selectlistBody),
           }).then(response => response.json())
           ));
           // const selectlistBody = JSON.stringify({tlid: tlid[0] })
