@@ -28,10 +28,10 @@ const EmptyList = () => <p className="text-center m-2">
   沒有資料！要不要試試加點東西看看呢 ;-)
 </p>;
 
-function RenderedList({ listTitles }) {
-  if (listTitles.length > 0) {
+function RenderedList({ list }) {
+  if (list.length > 0) {
     return <List style={{ padding: 20 }}>{
-      listTitles.map((title, index) => (<React.Fragment key={index}>
+      list.map((title, index) => (<React.Fragment key={index}>
         <ListItem>
           <ListItemAvatar>
             <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
@@ -40,7 +40,7 @@ function RenderedList({ listTitles }) {
           </ListItemAvatar>
           <ListItemText primary={title} />
         </ListItem>
-        {index < listTitles.length - 1 && <Divider />}
+        {index < list.length - 1 && <Divider />}
       </React.Fragment>)
       )
     }</List>;
@@ -48,12 +48,12 @@ function RenderedList({ listTitles }) {
   return <EmptyList />;
 }
 
-function RenderedImageList({ photoList }) {
+function RenderedImageList({ list }) {
   const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
-  const photoslist_comp = photoList.map((photo, index) => <section key={photo} className="item m-2">
+  const photoslist_comp = list.map((photo, index) => <section key={photo} className="item m-2">
     <img src={photo} alt={imgalt(photo, index)} />
   </section>);
-  if (photoList.length < 1) {
+  if (list.length < 1) {
     return <EmptyList />;
   }
   return <article className="images-warpper waterfall-effect m-2">{
@@ -61,14 +61,14 @@ function RenderedImageList({ photoList }) {
   }</article>;
 }
 
-function RenderedComments({ comments, onUpdateList }) {
-  const commentslist_comp = comments.map((comment) => (<UsersCommentItem
+function RenderedComments({ list, onUpdateList }) {
+  const commentslist_comp = list.map((comment) => (<UsersCommentItem
     key={comment.cid}
     item={comment}
     onEdit={onUpdateList}
     onDelete={onUpdateList}
   />));
-  if (comments.length < 1) {
+  if (list.length < 1) {
     return <EmptyList />;
   }
   return <article className="comments-warpper m-2">
@@ -87,9 +87,9 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
     return <LoadingComp />;
   }  
   switch (filter) {
-    case "list": return <RenderedList listTitles={listTitles} />
-    case "photo": return <RenderedImageList photoList={photoList} />;
-    case "comment": return <RenderedComments comments={comments} onUpdateList={onUpdateList} />
+    case "list": return <RenderedList list={listTitles} />
+    case "photo": return <RenderedImageList list={photoList} />;
+    case "comment": return <RenderedComments list={comments} onUpdateList={onUpdateList} />
     default: return <EmptyList />;
   }
 };
