@@ -18,6 +18,18 @@ function TripLists({ triplist, handleButtonClick }) {
   ));
 }
 
+function AddList() {
+  return <Row>
+    <Col className="text-center">
+      <img
+        className="mb-5 click-icon"
+        style={{ width: "48px", height: "48px" }}
+        src="/UserListSource/add.png"
+        alt="Add icon" />
+    </Col>
+  </Row>;
+}
+
 function LeftSide({ data, onSelect }) {
   const [selectedTlid, setSelectedTlid] = useState(null);
   const { user, getUserPhoto } = useUserStore();
@@ -64,16 +76,7 @@ function LeftSide({ data, onSelect }) {
         </Col>
       </Row>
       <TripLists triplist={data.tourist_lists} handleButtonClick={handleButtonClick} />
-      <Row>
-        <Col className="text-center">
-          <img
-            className="mb-5"
-            style={{ width: "48px", height: "48px" }}
-            src="/UserListSource/add.png"
-            alt="Add icon"
-          />
-        </Col>
-      </Row>
+      <AddList />
     </>
   );
 }
