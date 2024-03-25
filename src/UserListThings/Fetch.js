@@ -62,17 +62,18 @@ function Fetch({ onSelect2 }) {
         });
         getUserrelatedids(body).then(data => {
           const selectlistBodies = data.tlid.map(tlid => ({ tlid }));
-          const getParams = (selectlistBody) => {
-            if (selectlistBody == null) {
+          const getParams = (input) => {
+            if (input == null) {
                 return "";
             }
-            return new URLSearchParams(selectlistBody)
+            return JSON.stringify(input);
+            // return new URLSearchParams(selectlistBody)
           };
           const getSelectLists = Promise.all(selectlistBodies.map(selectlistBody => fetch(
             `${API_HOST}/api/POST/selectlist`, {
             method: 'POST',
             headers: getRequestHeaders(),
-            body: JSON.stringify(selectlistBody),
+            body: getParams(selectlistBody),
           }).then(response => response.json())
           ));
           // const selectlistBody = JSON.stringify({tlid: tlid[0] })

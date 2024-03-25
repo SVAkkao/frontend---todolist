@@ -43,33 +43,29 @@ function TwoAreaMiddle({ selectedTlid }) {
         fetchProjects();
     }, []);
 
-    const fetchAreaData = async () => {
-        const getParams = (selectlistBody) => {
-            if (selectlistBody == null) {
+    const fetchAreaData = async (selectedTlid) => {
+        const getParams = (input) => {
+            if (input == null) {
                 return "";
             }
-            return new URLSearchParams(selectlistBody)
+            return JSON.stringify(input)
         };
         const response = await fetch(
-            // ${getParams(selectedTlid)}
             `${API_HOST}/api/POST/selectlist`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(selectedTlid)
+            body: getParams(selectedTlid)
         });
         const data = await response.json();
         setAreaData(data);
     }
 
     useEffect(() => {
-        fetchAreaData();
+        fetchAreaData(selectedTlid);
     }, [selectedTlid]);
-    //
-
-
 
     //JourneyData
     const [JourneyData, setJourneyData] = useState([]);

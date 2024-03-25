@@ -59,18 +59,18 @@ function Fetch() {
 
             // const selectlistBody = JSON.stringify({tlid: tlid[0] })
             setTestData(selectlistBodies);
-            const getParams = (selectlistBody) => {
-              if (selectlistBody == null) {
+            const getParams = (input) => {
+              if (input == null) {
                   return "";
               }
-              return new URLSearchParams(selectlistBody)
+              return JSON.stringify(input);
+              // return new URLSearchParams(selectlistBody)
             };
-            console.log({selectlistBodies});
             Promise.all(selectlistBodies.map(selectlistBody =>
               fetch(`${API_HOST}/api/POST/selectlist`, {
                 method: 'POST',
                 headers: headers,
-                body: JSON.stringify(selectlistBody)
+                body: getParams(selectlistBody)
               })
               .then(response => response.json())
             ))
