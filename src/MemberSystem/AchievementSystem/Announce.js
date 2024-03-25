@@ -7,6 +7,16 @@ import { MdGrade } from "react-icons/md"; // 确保您已经安装了react-icons
 import { FaMedal } from "react-icons/fa";
 
 const API_HOST = process.env.REACT_APP_API_URL;
+function getUserScore() {
+  const userToken = localStorage.getItem("userToken");
+  return fetch(`${API_HOST}/api/user-score`, {
+    method: "GET", // 或者是POST，取決於你的API
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken}`, // 根據你的API設計調整這裡
+    },
+  }).then((response) => response.json());
+}
 
 function Announce() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -15,15 +25,7 @@ function Announce() {
   useEffect(() => {
     const userToken = localStorage.getItem("userToken"); // 從localStorage獲取userToken
     if (userToken) {
-      const ajax = fetch(`${API_HOST}/api/user-score`, {
-        method: "GET", // 或者是POST，取決於你的API
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`, // 根據你的API設計調整這裡
-        },
-      })
-        .then((response) => response.json());
-      ajax
+      getUserScore(userToken)
         .then((data) => {
           setScore(data.totalScore); // 假設API響應中有一個score字段
         })
@@ -128,6 +130,7 @@ function Announce() {
         >
           <CloseIcon />
         </Button>
+        <article className="explanation">
         <h3>
           <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
           積分說明
@@ -153,6 +156,7 @@ function Announce() {
             >{`${level.name} - ${level.points}`}</li>
           ))}
         </ul>
+        </article>
       </Modal>
     </>
   );
