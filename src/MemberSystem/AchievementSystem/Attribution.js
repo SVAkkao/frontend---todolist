@@ -101,7 +101,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
         return <EmptyList />;
       }
       return <article className="comments-warpper m-2">{ commentslist_comp }</article>;
-    default: return <></>;
+    default: return <EmptyList />;
   }
 };
 
