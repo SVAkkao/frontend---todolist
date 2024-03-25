@@ -30,11 +30,14 @@ const List = () => {
   const [listSelectedTlid, setSelectedTlid] = useState([]);
   // 原來的fetch
   const [alldata, setAllData] = useState([]);
-  useEffect(() => {
-    const ajax = get_all_info();
-    ajax.then((data)=>{
-      // console.log(data)
+  const update_info = () => {
+    get_all_info().then((data)=>{
       setAllData(data)
+    });
+  };
+  useEffect(() => {
+    get_all_info().then((data)=>{
+      setAllData(data);
     });
   }, []);
   return (
@@ -43,7 +46,11 @@ const List = () => {
       <Container fluid className="vh-100" >
         <Row className="h-100 w-100">
           <Col sm={3}>
-            <LeftSide data={alldata} onSelect={setSelectedTlid} />
+            <LeftSide
+              data={alldata}
+              onSelect={setSelectedTlid}
+              onUpdateInfo={update_info}
+            />
           </Col>
           <Col sm={6} className="bg-color4">
             <TwoAreaMiddle selectedTlid={listSelectedTlid} />

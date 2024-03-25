@@ -1,10 +1,24 @@
 import React, { useState } from "react";
-import { Row, Col, Spinner } from "react-bootstrap";
+import { Row, Col, Spinner, Modal, Form, Button } from "react-bootstrap";
 // import Image from "react-bootstrap/Image";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Mylist from "./Mylist";
 import { useUserStore } from "../stores/user";
+
+const API_HOST = process.env.REACT_APP_API_URL;
+
+// API calls
+const postAddList = (body) => {
+  const token = localStorage.getItem("userToken");
+  return fetch(`${API_HOST}/api/POST/addlist`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body
+  }).then( r => r.json() );
+};
 
 // Components
 function TripLists({ triplist, handleButtonClick }) {
@@ -19,14 +33,57 @@ function TripLists({ triplist, handleButtonClick }) {
   ));
 }
 
-function AddList() {
+function AddList({ onUpdateInfo }) {
+  // Modal modules
+  const [modalModel, setModalModel] = useState(false);
+  const closeModal = () => setModalModel(false);
+  const openModal = () => setModalModel(true);
+  // AJAX modules
+  const addList = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formdata = new FormData(form);
+    postAddList(formdata).then( () => {
+      onUpdateInfo();
+      closeModal();
+    }).catch( (e) => {
+      alert(e);
+    });
+    // postAddList = (formdata);
+  };
   return <Row>
     <Col className="text-center">
       <img
         className="mb-5 click-icon"
         style={{ width: "48px", height: "48px" }}
         src="/UserListSource/add.png"
-        alt="Add icon" />
+        alt="Add icon"
+        onClick={openModal}
+      />
+      <Modal show={modalModel} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>新增清單</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="text-center">好。清單要叫什麼名字呢？</p>
+          <Form onSubmit={addList}>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>清單名字</Form.Label>
+              <Form.Control
+                type="text"
+                name="title"
+                placeholder="取個響亮的名字吧"
+                autoFocus
+                required
+                aria-required
+              />
+            </Form.Group>
+            <Button type="submit">
+              送出
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Col>
   </Row>;
 }
@@ -48,7 +105,7 @@ function UserInfo() {
   </Row>;
 }
 
-function LeftSide({ data, onSelect }) {
+function LeftSide({ data, onSelect, onUpdateInfo }) {
   const [selectedTlid, setSelectedTlid] = useState(null);
 
   if (onSelect && typeof onSelect === "function" && selectedTlid !== null) {
@@ -82,7 +139,7 @@ function LeftSide({ data, onSelect }) {
         triplist={data.tourist_lists}
         handleButtonClick={handleButtonClick}
       />
-      <AddList />
+      <AddList onUpdateInfo={onUpdateInfo} />
     </>
   );
 }
