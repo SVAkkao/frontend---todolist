@@ -16,12 +16,8 @@ import MemberCentre from "./MemberSystem/MemberCentre.js";
 import AchievementsPage from "./MemberSystem/AchievementSystem/Attribution.js";
 import List from "./UserListThings/List.js";
 import Alist from "./UserListThings/Alist.js";
-import Book from "./UserListThings/Pages/Book.js";
-import Aboard from "./UserListThings/Pages/Aboard.js";
-import History from "./UserListThings/Pages/History.js";
-import Water from "./UserListThings/Pages/Water.js";
-import Outdoor from "./UserListThings/Pages/Outdoor.js";
 import Fetch from "./UserListThings/Fetch.js";
+import SplitCost from "./UserListThings/SplitCost.js";
 
 const router = createBrowserRouter([
   //會員系統
@@ -64,12 +60,8 @@ const router = createBrowserRouter([
   { path: "/list", element: <List /> },
   { path: "/alist", element: <Alist /> },
   { path: "/fetch", element: <Fetch /> },
+  { path: "/money", element: <SplitCost /> },
   //
-  // { path: "/book", element: <Book /> },
-  // { path: "/aboard", element: <Aboard /> },
-  // { path: "/history", element: <History /> },
-  // { path: "/water", element: <Water /> },
-  // { path: "/outdoor", element: <Outdoor /> },
 
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
