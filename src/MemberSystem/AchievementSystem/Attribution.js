@@ -107,48 +107,28 @@ const UserIntroduction = () => {
 const AchievementsPage = () => {
   // 新的状态变量，用于筛选显示
   const [filter, setFilter] = useState("list");
-  // Comment modules
-  const [userComments, setUserComments] = useState([]);
-  const fetchUserComment = async () => {
-    try {
-      const response = await getUserCommentApi();
-      setUserComments(response.data.result);
-    } catch (error) {
-      console.error("取得留言失敗：", error);
-    }
-  };
-  // Triplist modules
   const [listTitles, setListTitles] = useState([]);
-  const fetchUserListTitles = () => {
-    getUserListTitle()
-      .then((response) => {
-        // 直接使用response.data來獲取服務器響應的數據
-        const titles = response.data.map((item) => item.tourListTitle);
-        setListTitles(titles);
-      })
-      .catch((error) => {
-        console.error("There was a problem with your fetch operation:", error);
-      });
-  };
-  // Photo modules
   const [photoList, setPhotoList] = useState([]);
-  const fetchPhotos = async () => {
-    try {
-      const response = await getPhotos();
-      setPhotoList(response.data.result);
-    } catch (error) {
-      console.error("取得相片失敗：", error);
-    }
-  };
+  const [userComments, setUserComments] = useState([]);
+
+  // Actions
   const onUpdateList = () => {
-    fetchUserComment();
-    fetchUserListTitles();
-    fetchPhotos();
+    const api_requestss = Promise.all([
+      getUserListTitle(),
+      getPhotos(),
+      getUserCommentApi(),
+    ]);
+    api_requestss.then( ([lists, photos, comments]) => {
+      // 直接使用response.data來獲取服務器響應的數據
+      const titles = lists.data.map((item) => item.tourListTitle);
+      setListTitles( titles );
+      setPhotoList(photos.data.result);
+      setUserComments(comments.data.result);
+    });
   };
+  
   useEffect(() => {
-    fetchUserComment();
-    fetchUserListTitles();
-    fetchPhotos();
+    onUpdateList();
   }, []);
 
   return (
