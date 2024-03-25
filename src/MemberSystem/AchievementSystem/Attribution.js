@@ -21,15 +21,6 @@ import { useUserStore } from "../../stores/user";
 import { UsersCommentItem } from "../../RatingRoute/CommentModal/CommentItem/index";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-// const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
-
-// const userData = {
-//   contributions: [
-//     { type: "to-do-list", content: "訪問故宮" },
-//     { type: "to-do-list", content: "花東之旅" },
-//     // 更多贡献...
-//   ],
-// };
 
 // API calls
 const getUserCommentApi = () => {
@@ -48,6 +39,15 @@ const getUserListTitle = () => {
     },
   });
 };
+const getPhotos = () => {
+  const token = localStorage.getItem("userToken");
+  return axios.get(`${API_HOST}/api/uploaded-images`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json"
+    },
+  });
+};
 
 // Components
 const ContributionIcon = ({ type }) => {
@@ -59,17 +59,15 @@ const ContributionIcon = ({ type }) => {
   return null;
 };
 
-const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
-  if (filter === "comment") {
-    return comments.map((comment) => (
+const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList }) => {
+  switch (filter) {
+    case "comment": return comments.map((comment) => (
         <UsersCommentItem
           key={comment.cid} item={comment}
           onEdit={onUpdateList} onDelete={onUpdateList}
         />
     ));
-  } else if (filter === "list") {
-    // 假設 contributions 是包含 title 的對象陣列
-    return listTitles.map((title, index) => (
+    case "list": return listTitles.map((title, index) => (
       <React.Fragment key={index}>
         <ListItem>
           <ListItemAvatar>
@@ -82,22 +80,9 @@ const ContributionsPanel = ({ listTitles, comments, filter, onUpdateList }) => {
         {index < listTitles.length - 1 && <Divider />}
       </React.Fragment>
     ));
+  
+    default: return <span>Type unknown</span>;
   }
-  return <span>Type unknown</span>;
-
-  // return userData.contributions.map((contribution, index, array) => (
-  //   <React.Fragment key={index}>
-  //     <ListItem>
-  //       <ListItemAvatar>
-  //         <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-  //           <ContributionIcon type={contribution.type} />
-  //         </Avatar>
-  //       </ListItemAvatar>
-  //       <ListItemText primary={contribution.content} />
-  //     </ListItem>
-  //     {index < array.length - 1 && <Divider />}
-  //   </React.Fragment>
-  // ));
 };
 
 const UserIntroduction = () => {
@@ -125,6 +110,7 @@ const AchievementsPage = () => {
   const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
   const [userComments, setUserComments] = useState([]);
   const [listTitles, setListTitles] = useState([]);
+  const [photoList, setPhotoList] = useState([]);
   const fetchUserListTitles = () => {
     getUserListTitle()
     .then((response) => {
@@ -146,13 +132,23 @@ const AchievementsPage = () => {
       console.error("取得留言失敗：", error);
     }
   };
+  const fetchPhotos = async () => {
+    try {
+      const response = await getPhotos();
+      setPhotoList(response.data.result);
+    } catch (error) {
+      console.error("取得相片失敗：", error);
+    }
+  };
   const onUpdateList = () => {
     fetchUserComment();
     fetchUserListTitles();
+    fetchPhotos();
   };
   useEffect(() => {
     fetchUserComment();
     fetchUserListTitles();
+    fetchPhotos();
   }, []);
 
   return (
@@ -190,6 +186,7 @@ const AchievementsPage = () => {
               filter={filter}
               comments={userComments}
               listTitles={listTitles}
+              photoList={photoList}
               onUpdateList={onUpdateList}
             />
           </List>
