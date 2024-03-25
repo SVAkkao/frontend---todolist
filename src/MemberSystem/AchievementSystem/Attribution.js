@@ -75,8 +75,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
         /> )) }
     </article>;
     case "list": return <List style={{ padding: 20 }}>
-      {listTitles.map((title, index) => (
-        <React.Fragment key={index}>
+      {listTitles.map((title, index) => ( <React.Fragment key={index}>
           <ListItem>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
@@ -86,8 +85,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
             <ListItemText primary={title} />
           </ListItem>
           {index < listTitles.length - 1 && <Divider />}
-        </React.Fragment>
-      ))}
+      </React.Fragment> ))}
     </List>;
     case "photo": return <article className="images-warpper waterfall-effect m-2">{
         photoList.map( (photo, index) => <section key={photo} className="item m-2">
@@ -100,30 +98,36 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
 
 const UserIntroduction = () => {
   const { user, getUserPhoto } = useUserStore();
-
-  return (
-    <CardContent>
-      <br />
-      <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-        <Avatar
-          src={getUserPhoto()}
-          style={{ width: 100, height: 100, marginRight: 10 }}
-        />
-        <Typography variant="h3" sx={{ ml: 2 }}>
-          {user.name}
-        </Typography>
-      </div>
-      <br />
-      <Announce></Announce>
-    </CardContent>
-  );
+  return (<CardContent>
+    <br />
+    <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+      <Avatar
+        src={getUserPhoto()}
+        style={{ width: 100, height: 100, marginRight: 10 }}
+      />
+      <Typography variant="h3" sx={{ ml: 2 }}>
+        {user.name}
+      </Typography>
+    </div>
+    <br />
+    <Announce />
+  </CardContent>);
 };
 
 const AchievementsPage = () => {
   const [filter, setFilter] = useState("list"); // 新的状态变量，用于筛选显示
+  // Comment modules
   const [userComments, setUserComments] = useState([]);
+  const fetchUserComment = async () => {
+    try {
+      const response = await getUserCommentApi();
+      setUserComments(response.data.result);
+    } catch (error) {
+      console.error("取得留言失敗：", error);
+    }
+  };
+  // Triplist modules
   const [listTitles, setListTitles] = useState([]);
-  const [photoList, setPhotoList] = useState([]);
   const fetchUserListTitles = () => {
     getUserListTitle()
       .then((response) => {
@@ -135,18 +139,8 @@ const AchievementsPage = () => {
         console.error("There was a problem with your fetch operation:", error);
       });
   };
-
-  /**
-   * Get the user's comments and add it into the list.
-   */
-  const fetchUserComment = async () => {
-    try {
-      const response = await getUserCommentApi();
-      setUserComments(response.data.result);
-    } catch (error) {
-      console.error("取得留言失敗：", error);
-    }
-  };
+  // Photo modules
+  const [photoList, setPhotoList] = useState([]);
   const fetchPhotos = async () => {
     try {
       const response = await getPhotos();
