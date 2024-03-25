@@ -97,7 +97,6 @@ function Announce() {
         <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
         等級：{getUserAchievement(score)}
       </span>
-
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -129,7 +128,6 @@ function Announce() {
         >
           <CloseIcon />
         </Button>
-
         <h3>
           <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
           積分說明

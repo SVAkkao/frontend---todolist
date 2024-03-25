@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 // material icons
 import { blue } from "@mui/material/colors";
-import CommentIcon from "@mui/icons-material/Comment";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 // Components
 import Announce from "./Announce";
@@ -54,15 +53,6 @@ const getPhotos = () => {
 };
 
 // Components
-const ContributionIcon = ({ type }) => {
-  if (type === "to-do-list") {
-    return <ListAltIcon />;
-  } else if (type === "comment") {
-    return <CommentIcon />;
-  }
-  return null;
-};
-
 const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList }) => {
   const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
   switch (filter) {
@@ -79,7 +69,7 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
           <ListItem>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                <ContributionIcon type="to-do-list" />
+                <ListAltIcon />
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={title} />
@@ -190,13 +180,13 @@ const AchievementsPage = () => {
               評論
             </button>
           </div>
-            <ContributionsPanel
-              filter={filter}
-              comments={userComments}
-              listTitles={listTitles}
-              photoList={photoList}
-              onUpdateList={onUpdateList}
-            />
+          <ContributionsPanel
+            filter={filter}
+            comments={userComments}
+            listTitles={listTitles}
+            photoList={photoList}
+            onUpdateList={onUpdateList}
+          />
         </Card>
       </div>
     </div>
