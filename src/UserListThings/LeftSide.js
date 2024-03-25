@@ -6,6 +6,18 @@ import Typography from "@mui/material/Typography";
 import Mylist from "./Mylist";
 import { useUserStore } from "../stores/user";
 
+function TripLists({ triplist, handleButtonClick }) {
+  if( !Array.isArray(triplist) ) {
+    return <p className="text-center">現在還沒有旅遊清單。下一個能悸動你心中地方在哪呢？</p>;
+  }
+  if( triplist.length < 1 ) {
+    return <p className="text-center">現在還沒有旅遊清單。下一個能悸動你心中地方在哪呢？</p>;
+  }
+  return triplist.map((item, index) => (
+    <Mylist key={index} data={item} onButtonClick={handleButtonClick} />
+  ));
+}
+
 function LeftSide({ data, onSelect }) {
   const [selectedTlid, setSelectedTlid] = useState(null);
   const { user, getUserPhoto } = useUserStore();
@@ -23,11 +35,6 @@ function LeftSide({ data, onSelect }) {
   if (!data) {
     return null;
   }
-  // if (!data.tourist_lists) {
-  //   return <Spinner animation="border" role="status">
-  //     <span className="visually-hidden">Loading...</span>
-  //   </Spinner>;
-  // }
 
   return (
     <>
@@ -54,16 +61,14 @@ function LeftSide({ data, onSelect }) {
           <a className="supportColor">已完成</a>
         </Col>
       </Row>
-      {data.tourist_lists.map((item, index) => (
-        <Mylist key={index} data={item} onButtonClick={handleButtonClick} />
-      ))}
+      <TripLists triplist={data.tourist_lists} handleButtonClick={handleButtonClick} />
       <Row>
         <Col className="text-center">
           <img
             className="mb-5"
             style={{ width: "48px", height: "48px" }}
             src="/UserListSource/add.png"
-            alt="Icon"
+            alt="Add icon"
           />
         </Col>
       </Row>
