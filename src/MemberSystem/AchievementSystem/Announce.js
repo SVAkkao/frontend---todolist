@@ -18,23 +18,7 @@ function getUserScore() {
   }).then((response) => response.json());
 }
 
-function Announce() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [score, setScore] = useState(null); // 狀態用於儲存分數
-
-  useEffect(() => {
-    const userToken = localStorage.getItem("userToken"); // 從localStorage獲取userToken
-    if (userToken) {
-      getUserScore(userToken)
-        .then((data) => {
-          setScore(data.totalScore); // 假設API響應中有一個score字段
-        })
-        .catch((error) => {
-          console.error("Error fetching score:", error);
-        });
-    }
-  }, []);
-
+function ScoreExplanation() {
   const grade = [
     { name: "創建清單", points: "5積分" },
     { name: "新增景點", points: "5積分" },
@@ -42,7 +26,6 @@ function Announce() {
     { name: "新增相片", points: "20積分" },
     { name: "新增評論", points: "20積分" },
   ];
-
   const levels = [
     { name: "LV.1 新手旅行者", points: "0積分" },
     { name: "LV.2 城市漫步者", points: "100積分" },
@@ -55,6 +38,49 @@ function Announce() {
     { name: "LV.9 旅行大使", points: "20,000積分" },
     { name: "LV.10 世界公民", points: "30,000積分" },
   ];
+  return <section className="explanation">
+    <h3>
+      <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
+      積分說明
+    </h3>
+    <ul>
+      {grade.map((grade, index) => (
+        <li
+          key={index}
+          style={{ fontSize: "20px", margin: "2px" }}
+        >{`${grade.name} - ${grade.points}`}</li>
+      ))}
+    </ul>
+    <hr></hr>
+    <h3>
+      <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
+      等級說明：
+    </h3>
+    <ul>
+      {levels.map((level, index) => (
+        <li
+          key={index}
+          style={{ fontSize: "20px", margin: "2px" }}
+        >{`${level.name} - ${level.points}`}</li>
+      ))}
+    </ul>
+  </section>;
+}
+
+function Announce() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [score, setScore] = useState(null); // 狀態用於儲存分數
+
+  useEffect(() => {
+    getUserScore()
+      .then((data) => {
+        // 假設API響應中有一個score字段
+        setScore(data.totalScore);
+      })
+      .catch((error) => {
+        console.error("Error fetching score:", error);
+      });
+  }, []);
 
   function getUserAchievement(score) {
     if (score >= 30000) {
@@ -83,22 +109,24 @@ function Announce() {
   }
 
   return (
-    <>
-      <span
-        style={{ fontSize: "20px", cursor: "pointer" }}
-        onClick={() => setModalIsOpen(true)}
-      >
-        <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
-        積分：{score}
-      </span>
-      <br></br>
-      <span
-        style={{ fontSize: "20px", cursor: "pointer" }}
-        onClick={() => setModalIsOpen(true)}
-      >
-        <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-        等級：{getUserAchievement(score)}
-      </span>
+    <article className="announce">
+      <section className="score">
+        <span
+          style={{ fontSize: "20px", cursor: "pointer" }}
+          onClick={() => setModalIsOpen(true)}
+        >
+          <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
+          積分：{score}
+        </span>
+        <br></br>
+        <span
+          style={{ fontSize: "20px", cursor: "pointer" }}
+          onClick={() => setModalIsOpen(true)}
+        >
+          <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
+          等級：{getUserAchievement(score)}
+        </span>
+      </section>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -130,35 +158,9 @@ function Announce() {
         >
           <CloseIcon />
         </Button>
-        <article className="explanation">
-        <h3>
-          <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
-          積分說明
-        </h3>
-        <ul>
-          {grade.map((grade, index) => (
-            <li
-              key={index}
-              style={{ fontSize: "20px", margin: "2px" }}
-            >{`${grade.name} - ${grade.points}`}</li>
-          ))}
-        </ul>
-        <hr></hr>
-        <h3>
-          <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-          等級說明：
-        </h3>
-        <ul>
-          {levels.map((level, index) => (
-            <li
-              key={index}
-              style={{ fontSize: "20px", margin: "2px" }}
-            >{`${level.name} - ${level.points}`}</li>
-          ))}
-        </ul>
-        </article>
+        <ScoreExplanation />
       </Modal>
-    </>
+    </article>
   );
 }
 
