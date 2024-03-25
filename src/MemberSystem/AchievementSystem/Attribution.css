@@ -21,6 +21,10 @@
   margin-top: 50px;
 }
 
+.images-warpper img {
+  max-width: 100%;
+}
+
 @media (max-width: 768px) {
   .mainpage {
     margin-top: 0;
