@@ -24,61 +24,67 @@ import { useUserStore } from "../../stores/user";
 import "./Attribution.css";
 import { getUserListTitle, getPhotos, getUserCommentApi } from "./api";
 
+const EmptyList = () => <p className="text-center m-2">
+  沒有資料！要不要試試加點東西看看呢 ;-)
+</p>;
 
-// Components
-const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList, loading }) => {
-  if( loading ) {
-    return (<section className="text-center m-3">
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    </section>);
+function RenderedList({ listTitles }) {
+  if (listTitles.length > 0) {
+    return <List style={{ padding: 20 }}>{
+      listTitles.map((title, index) => (<React.Fragment key={index}>
+        <ListItem>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+              <ListAltIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={title} />
+        </ListItem>
+        {index < listTitles.length - 1 && <Divider />}
+      </React.Fragment>)
+      )
+    }</List>;
   }
-  const EmptyList = () => <p className="text-center m-2">沒有資料！要不要試試加點東西看看呢 ;-)</p>;
-  function RenderedList({ listTitles }) {
-    if (listTitles.length > 0) {
-      return <List style={{ padding: 20 }}>{
-        listTitles.map((title, index) => (<React.Fragment key={index}>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-                <ListAltIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={title} />
-          </ListItem>
-          {index < listTitles.length - 1 && <Divider />}
-        </React.Fragment>)
-        )
-      }</List>;
-    }
+  return <EmptyList />;
+}
+
+function RenderedImageList({ photoList }) {
+  const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
+  const photoslist_comp = photoList.map((photo, index) => <section key={photo} className="item m-2">
+    <img src={photo} alt={imgalt(photo, index)} />
+  </section>);
+  if (photoList.length < 1) {
     return <EmptyList />;
   }
-  function RenderedImageList({ photoList }) {
-    const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
-    const photoslist_comp = photoList.map((photo, index) => <section key={photo} className="item m-2">
-      <img src={photo} alt={imgalt(photo, index)} />
-    </section>);
-    if (photoList.length < 1) {
-      return <EmptyList />;
-    }
-    return <article className="images-warpper waterfall-effect m-2">{
-      photoslist_comp
-    }</article>;
+  return <article className="images-warpper waterfall-effect m-2">{
+    photoslist_comp
+  }</article>;
+}
+
+function RenderedComments({ comments, onUpdateList }) {
+  const commentslist_comp = comments.map((comment) => (<UsersCommentItem
+    key={comment.cid}
+    item={comment}
+    onEdit={onUpdateList}
+    onDelete={onUpdateList}
+  />));
+  if (comments.length < 1) {
+    return <EmptyList />;
   }
-  function RenderedComments({ comments, onUpdateList }) {
-    const commentslist_comp = comments.map((comment) => (<UsersCommentItem
-      key={comment.cid}
-      item={comment}
-      onEdit={onUpdateList}
-      onDelete={onUpdateList}
-    />));
-    if (comments.length < 1) {
-      return <EmptyList />;
-    }
-    return <article className="comments-warpper m-2">
-      { commentslist_comp }
-    </article>;
+  return <article className="comments-warpper m-2">
+    { commentslist_comp }
+  </article>;
+}
+
+const LoadingComp = () => <section className="text-center m-3">
+  <Spinner animation="border" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </Spinner>
+</section>;
+
+const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList, loading }) => {
+  if( loading ) {
+    return <LoadingComp />;
   }  
   switch (filter) {
     case "list": return <RenderedList listTitles={listTitles} />
@@ -118,6 +124,7 @@ const AchievementsPage = () => {
 
   // Actions
   const onUpdateList = () => {
+    setLoading(true);
     const api_requestss = Promise.all([
       getUserListTitle(),
       getPhotos(),
@@ -137,7 +144,6 @@ const AchievementsPage = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     onUpdateList();
   }, []);
 
