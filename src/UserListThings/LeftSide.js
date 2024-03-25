@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 // import Image from "react-bootstrap/Image";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -22,6 +22,11 @@ function LeftSide({ data, onSelect }) {
 
   if (!data) {
     return null;
+  }
+  if (!data.tourist_lists) {
+    return <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>;
   }
 
   return (
