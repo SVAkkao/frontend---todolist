@@ -63,44 +63,57 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
     </section>);
   }
   const EmptyList = () => <p className="text-center m-2">沒有資料！要不要試試加點東西看看呢 ;-)</p>;
+  function renderList(listTitles) {
+    if (listTitles.length > 0) {
+      return <List style={{ padding: 20 }}>{
+        listTitles.map((title, index) => (<React.Fragment key={index}>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+                <ListAltIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={title} />
+          </ListItem>
+          {index < listTitles.length - 1 && <Divider />}
+        </React.Fragment>)
+        )
+      }</List>;
+    }
+    return <EmptyList />;
+  }
+  function RenderImageList(photoList) {
+    const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
+    const photoslist_comp = photoList.map((photo, index) => <section key={photo} className="item m-2">
+      <img src={photo} alt={imgalt(photo, index)} />
+    </section>);
+    if (photoList.length < 1) {
+      return <EmptyList />;
+    }
+    return <article className="images-warpper waterfall-effect m-2">{
+      photoslist_comp
+    }</article>;
+  }
+  function renderComments(comments, onUpdateList) {
+    const commentslist_comp = comments.map((comment) => (<UsersCommentItem
+      key={comment.cid}
+      item={comment}
+      onEdit={onUpdateList}
+      onDelete={onUpdateList} />));
+    if (comments.length < 1) {
+      return <EmptyList />;
+    }
+    return <article className="comments-warpper m-2">
+      { commentslist_comp }
+    </article>;
+  }  
   switch (filter) {
     case "list":
-      const listTitlesListComp = listTitles.map((title, index) => (<React.Fragment key={index}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ListAltIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={title} />
-        </ListItem>
-        {index < listTitles.length - 1 && <Divider />}
-      </React.Fragment>)
-      );
-      if( listTitles.length < 1 ) {
-        return <EmptyList />;
-      }
-      return <List style={{ padding: 20 }}>{ listTitlesListComp }</List>;
+      return renderList(listTitles, EmptyList);
     case "photo":
-      const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
-      const photoslist_comp = photoList.map((photo, index) => <section key={photo} className="item m-2">
-        <img src={photo} alt={imgalt(photo, index)} />
-      </section>);
-      if( photoList.length < 1 ) {
-        return <EmptyList />;
-      }
-      return <article className="images-warpper waterfall-effect m-2">{ photoslist_comp }</article>;
+      return RenderImageList(photoList, EmptyList);
     case "comment":
-      const commentslist_comp = comments.length > 1 ? comments.map((comment) => (<UsersCommentItem
-        key={comment.cid}
-        item={comment}
-        onEdit={onUpdateList}
-        onDelete={onUpdateList}
-      />)) : <EmptyList />;
-      if( comments.length < 1 ) {
-        return <EmptyList />;
-      }
-      return <article className="comments-warpper m-2">{ commentslist_comp }</article>;
+      return renderComments(comments, onUpdateList, EmptyList);
     default: return <EmptyList />;
   }
 };
