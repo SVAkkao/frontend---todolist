@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 // Routes
+
 import Register from "./MemberSystem/Register.js";
 import HomePage from "./MemberSystem/HomePage.js";
 import Login from "./MemberSystem/LoginPage.js";
