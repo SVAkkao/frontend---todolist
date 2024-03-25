@@ -99,7 +99,8 @@ const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateL
       key={comment.cid}
       item={comment}
       onEdit={onUpdateList}
-      onDelete={onUpdateList} />));
+      onDelete={onUpdateList}
+    />));
     if (comments.length < 1) {
       return <EmptyList />;
     }
