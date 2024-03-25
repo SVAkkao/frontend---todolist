@@ -5,11 +5,15 @@ function BudgetManage() {
     const pieParams = { height: 200, margin: { right: 5 } };
     const amount = useRef(0);
     const [amountValue, setAmountValue] = useState(0);
-    const inputAmount = (event)=>{
+    const inputAmount = (event) => {
         setAmountValue(
             amount.current.value
         );
     }
+    const data = [
+        { value: amountValue, label: '已用預算' },
+        { value: 15, label: '剩餘預算' }
+    ];
     return (
         <>
             <Row>
@@ -27,7 +31,18 @@ function BudgetManage() {
                 <Row>
                     <Col sm={1}></Col>
                     <Col><PieChart
-                        series={[{ data: [{ value: amountValue }, { value: 15 }, { value: 20 }] }]}
+                        colors={['#939393', '#80BCBD']}
+                        series={[
+                            {
+                                arcLabel: (item) => `${item.label} (${item.value})`,
+                                arcLabelMinAngle: 45,
+                                data,
+                                cx: 120,
+                                cy: 100,
+                                highlightScope: { faded: 'global', highlighted: 'item' },
+                                faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                            },
+                        ]}
                         {...pieParams}
                     /></Col>
                     <Col sm={1}></Col>
