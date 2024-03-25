@@ -69,7 +69,7 @@ function TwoAreaMiddle({ selectedTlid }) {
     //JourneyData
     const [JourneyData, setJourneyData] = useState([]);
 
-    const fetchJourneyData = async () => {
+    const fetchJourneyData = async (selectedTlid) => {
         const response = await fetch(API_HOST + '/api/POST/selectjourney', {
             method: 'POST',
             headers: {
@@ -80,11 +80,11 @@ function TwoAreaMiddle({ selectedTlid }) {
         const data = await response.json();
         setJourneyData(data);
         console.log(data)
-
     }
 
     useEffect(() => {
-        fetchJourneyData();
+        console.log(selectedTlid);
+        fetchJourneyData(selectedTlid);
     }, [selectedTlid]);
 
     // useEffect(() => {  

@@ -23,11 +23,11 @@ function LeftSide({ data, onSelect }) {
   if (!data) {
     return null;
   }
-  if (!data.tourist_lists) {
-    return <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>;
-  }
+  // if (!data.tourist_lists) {
+  //   return <Spinner animation="border" role="status">
+  //     <span className="visually-hidden">Loading...</span>
+  //   </Spinner>;
+  // }
 
   return (
     <>

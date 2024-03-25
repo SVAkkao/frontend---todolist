@@ -27,7 +27,7 @@ function get_all_info() {
 
 const List = () => {
   // 拿mylist給的tlid
-  const [listSelectedTlid, setSelectedTlid] = useState(null);
+  const [listSelectedTlid, setSelectedTlid] = useState([]);
   // 原來的fetch
   const [alldata, setAllData] = useState([]);
   useEffect(() => {
