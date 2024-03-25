@@ -33,7 +33,9 @@ function LeftSide({ data, onSelect }) {
   };
 
   if (!data) {
-    return null;
+    return <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>;
   }
 
   return (
