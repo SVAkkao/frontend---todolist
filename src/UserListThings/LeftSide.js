@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Mylist from "./Mylist";
 import { useUserStore } from "../stores/user";
 
+// Components
 function TripLists({ triplist, handleButtonClick }) {
   if( !Array.isArray(triplist) ) {
     return <p className="text-center">現在還沒有旅遊清單。下一個能悸動你心中地方在哪呢？</p>;
@@ -30,9 +31,25 @@ function AddList() {
   </Row>;
 }
 
+function UserInfo() {
+  const { user, getUserPhoto } = useUserStore();
+  return <Row style={{ alignItems: "center" }}>
+    <Col>
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+        <Avatar
+          src={getUserPhoto()}
+          style={{ width: 150, height: 150, margin: 20 }}
+        />
+        <Typography variant="h3" sx={{ ml: 2 }}>
+          {user.name}
+        </Typography>
+      </div>
+    </Col>
+  </Row>;
+}
+
 function LeftSide({ data, onSelect }) {
   const [selectedTlid, setSelectedTlid] = useState(null);
-  const { user, getUserPhoto } = useUserStore();
 
   if (onSelect && typeof onSelect === "function" && selectedTlid !== null) {
     onSelect(selectedTlid);
@@ -52,21 +69,7 @@ function LeftSide({ data, onSelect }) {
 
   return (
     <>
-      <Row style={{ alignItems: "center" }}>
-        <Col>
-          <div
-            style={{ display: "flex", alignItems: "center", marginBottom: 2 }}
-          >
-            <Avatar
-              src={getUserPhoto()}
-              style={{ width: 150, height: 150, margin: 20 }}
-            />
-            <Typography variant="h3" sx={{ ml: 2 }}>
-              {user.name}
-            </Typography>
-          </div>
-        </Col>
-      </Row>
+      <UserInfo />
       <Row className="m-5 text2" style={{ justifyContent: "space-between" }}>
         <Col>
           <a className="supportColor">未完成</a>
@@ -75,7 +78,10 @@ function LeftSide({ data, onSelect }) {
           <a className="supportColor">已完成</a>
         </Col>
       </Row>
-      <TripLists triplist={data.tourist_lists} handleButtonClick={handleButtonClick} />
+      <TripLists
+        triplist={data.tourist_lists}
+        handleButtonClick={handleButtonClick}
+      />
       <AddList />
     </>
   );
