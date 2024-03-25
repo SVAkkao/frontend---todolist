@@ -30,11 +30,14 @@ const List = () => {
   const [listSelectedTlid, setSelectedTlid] = useState([]);
   // 原來的fetch
   const [alldata, setAllData] = useState([]);
+
+
   const update_info = () => {
     get_all_info().then((data)=>{
       setAllData(data)
     });
   };
+
   useEffect(() => {
     get_all_info().then((data)=>{
       setAllData(data);
@@ -49,7 +52,7 @@ const List = () => {
             <LeftSide
               data={alldata}
               onSelect={setSelectedTlid}
-              onUpdateInfo={update_info}
+             update_info={update_info}
             />
           </Col>
           <Col sm={6} className="bg-color4">

@@ -12,16 +12,7 @@ const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 
 
-const postAddList = (body) => {
-  const token = localStorage.getItem("userToken");
-  return fetch(`${API_HOST}/api/POST/addlist`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body
-  }).then(r => r.json());
-};
+
 
 // Components
 // function TripLists({ triplist, handleButtonClick }) {
@@ -122,7 +113,7 @@ const getUserApi = () => {
 
 
 
-function LeftSide({ data, onSelect, onUpdateInfo }) {
+function LeftSide({ data, onSelect, update_info }) {
 
   const [selectedTlid, setSelectedTlid] = useState(null);
 
@@ -156,6 +147,21 @@ function LeftSide({ data, onSelect, onUpdateInfo }) {
       <span className="visually-hidden">Loading...</span>
     </Spinner>;
   }
+
+  const postAddList = () => {
+    const token = localStorage.getItem("userToken");
+    fetch(`${API_HOST}/api/POST/addlist`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        title: "請輸入旅行名稱..."
+      })
+    }).then(r => r.json());
+    update_info();
+  };
 
   return (
     <>
