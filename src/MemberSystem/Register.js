@@ -52,7 +52,7 @@ function Register() {
       const data = await response.json();
       console.log("success");
       localStorage.setItem("userToken", data.token);
-      navigate("/Fetch", { state: { email: data.user.email } });
+      navigate("/alist", { state: { email: data.user.email } });
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred, please try again.");
