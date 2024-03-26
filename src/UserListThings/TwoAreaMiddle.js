@@ -3,6 +3,7 @@ import JourneyProject from './JourneyProject'
 import Journey from './Journey'
 import './color.css'
 import { Row, Col, Form } from 'react-bootstrap';
+import Day from "./Day";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -158,7 +159,9 @@ function TwoAreaMiddle({ selectedTlid }) {
                 <Col className='text-center'>
                     <Form.Control
                         ref={titleName}
-                        className='text1 p-2 m-4'
+                        className='text1 p-2 m-4 bg-color4 text-center'
+                        style={{borderColor: 'transparent'}}
+                        placeholder='請輸入標題'
                         value={areaData.title}
                         onChange={handleTitleChange}
                         onBlur={handleClickOutside}
@@ -191,6 +194,7 @@ function TwoAreaMiddle({ selectedTlid }) {
                 {JourneyData.map((item, index) => (
                     <Journey key={index} journeydataforjourney={item} attractions={attractions} projects={projects} />
                 ))}
+                <Day></Day>
             </Row>
             <Row className='m-4'>
                 <Col sm={1}></Col>

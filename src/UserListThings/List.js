@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LogoutBar from "../MemberSystem/LogoutBar";
-import { Container, Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import RightSide from "./RightSide";
 import LeftSide from "./LeftSide";
 import TwoAreaMiddle from "./TwoAreaMiddle";
@@ -33,36 +33,34 @@ const List = () => {
 
 
   const update_info = () => {
-    get_all_info().then((data)=>{
+    get_all_info().then((data) => {
       setAllData(data)
     });
   };
 
   useEffect(() => {
-    get_all_info().then((data)=>{
+    get_all_info().then((data) => {
       setAllData(data);
     });
   }, []);
   return (
     <>
       <LogoutBar />
-      <Container fluid className="vh-100" >
-        <Row className="h-100 w-100">
-          <Col sm={3}>
-            <LeftSide
-              data={alldata}
-              onSelect={setSelectedTlid}
-             update_info={update_info}
-            />
-          </Col>
-          <Col sm={6} className="bg-color4">
-            <TwoAreaMiddle selectedTlid={listSelectedTlid} />
-          </Col>
-          <Col sm={3}>
-            <RightSide />
-          </Col>
-        </Row>
-      </Container>
+      <Row className="h-100">
+        <Col sm={3}>
+          <LeftSide
+            data={alldata}
+            onSelect={setSelectedTlid}
+            update_info={update_info}
+          />
+        </Col>
+        <Col sm={6} className="bg-color4">
+          <TwoAreaMiddle selectedTlid={listSelectedTlid} />
+        </Col>
+        <Col sm={3}>
+          <RightSide />
+        </Col>
+      </Row>
     </>
   );
 };

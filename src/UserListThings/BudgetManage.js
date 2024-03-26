@@ -37,12 +37,13 @@ function BudgetManage() {
                                 arcLabel: (item) => `${item.label} (${item.value})`,
                                 arcLabelMinAngle: 45,
                                 data,
-                                cx: 120,
+                                cx: 150,
                                 cy: 100,
                                 highlightScope: { faded: 'global', highlighted: 'item' },
                                 faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
                             },
                         ]}
+                        slotProps={{ legend: { hidden: true } }}
                         {...pieParams}
                     /></Col>
                     <Col sm={1}></Col>
