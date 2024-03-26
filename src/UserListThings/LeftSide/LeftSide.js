@@ -22,9 +22,21 @@ async function ajaxAddList() {
   });
   return await r.json();
 }
+async function ajaxRemoveList(tlid = 0) {
+  const token = localStorage.getItem("userToken");
+  const r = await fetch(`${API_HOST}/api/POST/deletelist`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ tlid })
+  });
+  return await r.json();
+}
 
 // Components
-function TripLists({ list, finishedSelected, onButtonClick }) {
+function TripLists({ list, finishedSelected, onButtonClick, onRemove }) {
   const isEarlierThanToday = (input) => {
     // Today
     const today = new Date();
@@ -43,7 +55,12 @@ function TripLists({ list, finishedSelected, onButtonClick }) {
     return list.filter( item => !isEarlierThanToday(item.end_date) );
   };
   return getList(list, finishedSelected).map((item, index) => (
-    <Mylist key={index} data={item} onButtonClick={onButtonClick} />
+    <Mylist
+      key={item.tlid}
+      data={item}
+      onButtonClick={onButtonClick}
+      onRemove={onRemove}
+    />
   ))
 }
 function UserInfo() {
@@ -118,6 +135,11 @@ function LeftSide({ data, onSelect, update_info }) {
       update_info();
     });
   };
+  const onRemove = (tlid) => {
+    ajaxRemoveList(tlid).then( () => {
+      update_info();
+    });
+  };
   if (!data) {
     return <Spinner animation="border" role="status">
       <span className="visually-hidden">Loading...</span>
@@ -133,6 +155,7 @@ function LeftSide({ data, onSelect, update_info }) {
       <TripLists
         list={data}
         onButtonClick={onSelect}
+        onRemove={onRemove}
         finishedSelected={finishedSelected}
       />
       <AddListBtn

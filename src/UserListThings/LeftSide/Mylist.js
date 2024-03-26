@@ -16,7 +16,7 @@ function DateInfo({ startDate, endDate }) {
 }
 
 
-function Mylist({ data, onButtonClick }) {
+function Mylist({ data, onButtonClick, onRemove }) {
     const [image, setImage] = useState(null);
     const previewImg = image ? URL.createObjectURL(image) : "/UserListSource/Mylist.webp";
     return (
@@ -25,15 +25,14 @@ function Mylist({ data, onButtonClick }) {
                 <Card className='mt-4'>
                     <Card.Body className='click-icon'
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}
-                        onClick={() => onButtonClick(data.tlid)}
                     >
-                        <div style={{ flex: '1', textAlign: 'center' }}>
+                        <div style={{ flex: '1', textAlign: 'center' }} onClick={() => onButtonClick(data.tlid)}>
                             <Card.Text className='text3'>
                                 {data.title}
                             </Card.Text>
                         </div>
                         {/* <div> <Button variant="light" onClick={() => onButtonClick(data.tlid)}>選擇</Button> </div> */}
-                        <div>
+                        <div onClick={() => onRemove(data.tlid)}>
                             <img style={{ width: "20px", height: '20px', paddingBottom: '0' }} src="/UserListSource/delete.png" alt="Delete icon" />
                         </div>
                     </Card.Body>
@@ -51,7 +50,6 @@ function Mylist({ data, onButtonClick }) {
                             onChange={(e) => setImage(e.target.files[0])}
                         />
                     </div>
-
                     {/* <input id="upload" type="file" /> */}
                     {/* <label type="button" for="upload" class="uploadImg" style={{ border: 'grey', width: '100%', height: '200px' }}></label> */}
                     {/* <Card.Img variant="bottom" src="/UserListSource/Mylist.webp" style={{ border: 'grey', width: '100%', height: '200px' }} /> */}
