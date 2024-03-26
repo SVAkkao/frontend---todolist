@@ -59,20 +59,24 @@ function NavigationLinks({ handleBtnClick, finishedSelected }) {
     borderBottom: finishedSelected ? 'solid 3px #80BCBD' : '0px',
     color: finishedSelected ? 'black' : '#939393'
   };
+  const nonDefaultBtnStyle = {
+    backgroundColor: 'transparent',
+    border: 'none'
+  };
   return <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
     <Col sm={5}>
-      <span className="supportColor text-left w-100 click-icon">
+      <button className="supportColor text-left w-100 click-icon" style={nonDefaultBtnStyle}>
         <span onClick={() => handleBtnClick(false)} style={unfinishedStyle}>
           未完成
         </span>
-      </span>
+      </button>
     </Col>
     <Col sm={5}>
-      <span className="supportColor text-left w-100 click-icon">
+      <button className="supportColor text-left w-100 click-icon" style={nonDefaultBtnStyle}>
         <span onClick={() => handleBtnClick(true)} style={finishedStyle}>
           已完成
         </span>
-      </span>
+      </button>
     </Col>
   </Row>;
 }
