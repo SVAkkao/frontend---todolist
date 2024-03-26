@@ -7,7 +7,7 @@ import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
 
-function RightSide() {
+function RightSide({ changeMoneyClick }) {
     const [think, setThink] = useState('');
     const [memo, setMemo] = useState('');
 
@@ -38,9 +38,7 @@ function RightSide() {
             <Row>
                 <Col sm={3}></Col>
                 <Col sm={4}>
-                    <NavLink to='/money'>
-                        <a>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
-                    </NavLink>
+                    <a onClick={changeMoneyClick}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
                 </Col>
                 <Col className='text-right' sm={4}>
                     <NavLink to='/ratings'>

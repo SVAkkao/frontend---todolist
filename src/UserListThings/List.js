@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import RightSide from "./RightSide";
 import LeftSide from "./LeftSide/LeftSide";
 import TwoAreaMiddle from "./TwoAreaMiddle";
+import Money from "./Money";
 // import Fetch from "./Fetch";
 import "./color.css";
 
@@ -25,6 +26,22 @@ function get_all_info() {
   return ajax;
 }
 
+const RightSpace = ()=>{
+  const [showMoney, setShowMoney] = useState(false);
+
+  const changeMoneyClick = () => {
+    setShowMoney(true);
+  };
+  if (showMoney) {
+    return <Money />;
+  }
+
+  return <RightSide changeMoneyClick={changeMoneyClick} />;
+
+}
+
+
+
 const List = () => {
 
   // 原來的fetch
@@ -45,6 +62,7 @@ const List = () => {
     });
   }, []);
 
+
   return (
     <>
       <LogoutBar />
@@ -60,7 +78,7 @@ const List = () => {
           <TwoAreaMiddle  alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info}/>
         </Col>
         <Col sm={3}>
-          <RightSide />
+          <RightSpace/>
         </Col>
       </Row>
     </>
