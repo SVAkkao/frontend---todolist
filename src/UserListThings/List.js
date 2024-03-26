@@ -26,23 +26,25 @@ function get_all_info() {
 }
 
 const List = () => {
-  // 拿mylist給的tlid
-  const [listSelectedTlid, setSelectedTlid] = useState([]);
+
   // 原來的fetch
   const [alldata, setAllData] = useState([]);
-
+  // 拿mylist給的tlid
+  const [listSelectedTlid, setSelectedTlid] = useState("");
 
   const update_info = () => {
-    get_all_info().then((data)=>{
+    get_all_info().then((data) => {
       setAllData(data)
     });
   };
 
   useEffect(() => {
-    get_all_info().then((data)=>{
+    get_all_info().then((data) => {
       setAllData(data);
+      setSelectedTlid(data[0].tlid);
     });
   }, []);
+
   return (
     <>
       <LogoutBar />
@@ -52,11 +54,15 @@ const List = () => {
             <LeftSide
               data={alldata}
               onSelect={setSelectedTlid}
-             update_info={update_info}
+              update_info={update_info}
             />
           </Col>
           <Col sm={6} className="bg-color4">
-            <TwoAreaMiddle selectedTlid={listSelectedTlid} />
+              <TwoAreaMiddle
+                selectedTlid={listSelectedTlid}
+                alldata={alldata}
+                update_info={update_info}
+              />
           </Col>
           <Col sm={3}>
             <RightSide />

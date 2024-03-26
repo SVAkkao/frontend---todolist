@@ -124,11 +124,7 @@ function LeftSide({ data, onSelect, update_info }) {
     setFinishActive(false);
     activeSetter(true);
   }
-  const [selectedTlid, setSelectedTlid] = useState(null);
 
-  if (onSelect && typeof onSelect === "function" && selectedTlid !== null) {
-    onSelect(selectedTlid);
-  }
 
   const [userName, setUserName] = useState('')
   const [userPhoto, setUserPhoto] = useState('')
@@ -147,9 +143,6 @@ function LeftSide({ data, onSelect, update_info }) {
   }, [])
 
 
-  const handleButtonClick = (tlid) => {
-    setSelectedTlid(tlid);
-  };
 
   if (!data) {
     return <Spinner animation="border" role="status">
@@ -168,8 +161,11 @@ function LeftSide({ data, onSelect, update_info }) {
       body: JSON.stringify({
         title: "請輸入旅行名稱..."
       })
-    }).then(r => r.json());
-    update_info();
+    }).then(r => r.json()).then(()=>{
+      update_info();
+    }
+    );
+    
   };
 
   return (
@@ -205,7 +201,7 @@ function LeftSide({ data, onSelect, update_info }) {
         </Col>
       </Row>
       {data.map((item, index) => (
-        <Mylist key={index} data={item} onButtonClick={handleButtonClick} />
+        <Mylist key={index} data={item} onButtonClick={onSelect} />
       ))}
       <Row>
         <Col className="text-center">

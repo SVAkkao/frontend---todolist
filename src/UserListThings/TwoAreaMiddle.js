@@ -2,105 +2,131 @@ import React, { useState, useEffect, useRef } from 'react'
 import JourneyProject from './JourneyProject'
 import Journey from './Journey'
 import './color.css'
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form, Spinner } from 'react-bootstrap';
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function TwoAreaMiddle({ selectedTlid }) {
-    //tlid詳細內容
-    const [areaData, setAreaData] = useState([]);
-    const [attractions, setAttractions] = useState([]);
-    const [projects, setProjects] = useState([]);
-    // /attraction
+function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
+    const [listdata, setListdata] = useState({
+    });
+    const [searchvalue, setSearchValue] = useState('');
+    const titleName = useRef(null);
+    // // debugger;
+    // const startdate = (listdata = { start_date: "" }) => {
+    //     // console.log(listdata);
+    //     return listdata ? new Date(listdata.start_date).toLocaleDateString() : new Date().toLocaleDateString()
+    // };
+    // const enddate = (listdata = { end_date: "" }) => {
+    //     return listdata ? new Date(listdata.end_date).toLocaleDateString() : new Date().toLocaleDateString();
+    // };
 
-    const fetchAttractions = async () => {
-        const response = await fetch(API_HOST + '/api/attraction', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-        });
-        const data = await response.json();
-        setAttractions(data.result);
-    }
 
+
+    //////////////////////////////////////////////////////////////////////////////
+
+    // //tlid詳細內容
+    // const [areaData, setAreaData] = useState([]);
+    // const [attractions, setAttractions] = useState([]);
+    // const [projects, setProjects] = useState([]);
+    // // /attraction
+
+    // const fetchAttractions = async () => {
+    //     const response = await fetch(API_HOST + '/api/attraction', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //         },
+    //     });
+    //     const data = await response.json();
+    //     setAttractions(data.result);
+    // }
+
+    // useEffect(() => {
+    //     fetchAttractions();
+    // }, []);
+    // const fetchProjects = async () => {
+    //     const response = await fetch(API_HOST + '/api/project', {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //     });
+    //     const data = await response.json();
+    //     setProjects(data.result);
+    // }
+
+    // useEffect(() => {
+    //     fetchProjects();
+    // }, []);
+
+    // const fetchAreaData = async (selectedTlid) => {
+    //     const token = localStorage.getItem("userToken");
+    //     const getParams = (input) => {
+    //         if (input == null) {
+    //             return "";
+    //         }
+    //         return JSON.stringify(input)
+    //     };
+    //     const response = await fetch(
+    //         `${API_HOST}/api/POST/selectlist`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //             'Authorization': `Bearer ${token}`,
+    //         },
+    //         body: getParams(selectedTlid)
+    //     });
+    //     const data = await response.json();
+    //     setAreaData(data);
+    // }
+
+    // useEffect(() => {
+    //     fetchAreaData(selectedTlid);
+    // }, [selectedTlid]);
+
+    // //JourneyData
+    // const [JourneyData, setJourneyData] = useState([]);
+
+    // const fetchJourneyData = async (selectedTlid) => {
+    //     const response = await fetch(API_HOST + '/api/POST/selectjourney', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Accept': 'application/json',
+    //         },
+    //         body: JSON.stringify({ tlid: selectedTlid })
+    //     });
+    //     const data = await response.json();
+    //     setJourneyData(data);
+    //     // console.log(data)
+    // }
+
+    // useEffect(() => {
+    //     // console.log(selectedTlid);
+    //     fetchJourneyData(selectedTlid);
+    // }, [selectedTlid]);
+
+    // // useEffect(() => {  
+    // //     console.log(JourneyData)
+    // // }, [JourneyData]);
+    //////////////////////////////////////////////////////////////////////////////
+
+
+    //選取ALLDATA中指定的TLID資料
+
+    // 過濾出 tlid 為特定值的資料
     useEffect(() => {
-        fetchAttractions();
-    }, []);
-    const fetchProjects = async () => {
-        const response = await fetch(API_HOST + '/api/project', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        });
-        const data = await response.json();
-        setProjects(data.result);
-    }
-
-    useEffect(() => {
-        fetchProjects();
-    }, []);
-
-    const fetchAreaData = async (selectedTlid) => {
-        const token = localStorage.getItem("userToken");
-        const getParams = (input) => {
-            if (input == null) {
-                return "";
-            }
-            return JSON.stringify(input)
-        };
-        const response = await fetch(
-            `${API_HOST}/api/POST/selectlist`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: getParams(selectedTlid)
-        });
-        const data = await response.json();
-        setAreaData(data);
-    }
-
-    useEffect(() => {
-        fetchAreaData(selectedTlid);
-    }, [selectedTlid]);
-
-    //JourneyData
-    const [JourneyData, setJourneyData] = useState([]);
-
-    const fetchJourneyData = async (selectedTlid) => {
-        const response = await fetch(API_HOST + '/api/POST/selectjourney', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ tlid: selectedTlid })
-        });
-        const data = await response.json();
-        setJourneyData(data);
-        console.log(data)
-    }
-
-    useEffect(() => {
-        console.log(selectedTlid);
-        fetchJourneyData(selectedTlid);
-    }, [selectedTlid]);
-
-    // useEffect(() => {  
-    //     console.log(JourneyData)
-    // }, [JourneyData]);
+        const tlid = selectedTlid;
+        const filteredData = alldata.filter(item => item.tlid == tlid);
+        setListdata(filteredData[0])
+    }, [selectedTlid])
 
     //清單時間日期相關
-    const startdate = new Date(areaData.start_date).toLocaleDateString('en-CA');
-    const enddate = new Date(areaData.end_date).toLocaleDateString('en-CA');
+
 
     //送出景點資料成為行程
-    const [searchvalue, setSearchValue] = useState('');
 
     const handleSearchClick = async () => {
         const addjourneydata = {
@@ -119,39 +145,66 @@ function TwoAreaMiddle({ selectedTlid }) {
         console.log('Data submitted successfully!', data);
 
         // 等待非同步請求完成後再更新畫面
-        await fetchAreaData();
-        await fetchJourneyData();
+        await update_info();
     };
 
     //改title名
-    const titleName = useRef(null);
     // 監聽滑鼠點擊事件
     function handleClickOutside(event) {
         // 檢查點擊事件是否發生在input元素之外
         if (titleName.current && !titleName.current.contains(event.relatedTarget)) {
             const inputValue = titleName.current.value;
             console.log(inputValue);
+            const token = localStorage.getItem("userToken");
             fetch(`${API_HOST}/api/POST/updatelist`, {
                 method: 'POST',
                 headers: {
+                    "Authorization": `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     tlid: selectedTlid,
                     title: inputValue
                 })
-            });
+            })
+            .then(()=>{
+                update_info()
+            }
+            )
+            ;
         }
     }
     // 將滑鼠點擊事件添加到document上
 
     // 監聽input的改變事件
     const handleTitleChange = (event) => {
-        setAreaData({
-            ...areaData,
+        setListdata({
+            ...listdata,
             title: event.target.value
         });
     };
+    // const getDefaultTitle = (listdata) => {
+    //     if (listdata) {
+    //         return listdata.title;
+    //     }
+    //     return '';
+    // };
+
+    // if (!alldata) {
+    //     return <Spinner animation="border" role="status">
+    //         <span className="visually-hidden">Loading...</span>
+    //     </Spinner>;
+    // }
+    // if( alldata.length < 1 ) {
+    //     return <Spinner animation="border" role="status">
+    //         <span className="visually-hidden">Loading...</span>
+    //     </Spinner>;
+    // }
+    if (!listdata) {
+        return <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>;
+    }
     return (
         <>
             <Row className='m-4'>
@@ -159,7 +212,7 @@ function TwoAreaMiddle({ selectedTlid }) {
                     <Form.Control
                         ref={titleName}
                         className='text1 p-2 m-4'
-                        value={areaData.title}
+                        value={listdata.title}
                         onChange={handleTitleChange}
                         onBlur={handleClickOutside}
                         type="text"
@@ -174,13 +227,17 @@ function TwoAreaMiddle({ selectedTlid }) {
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={4}>
-                    <Form.Control defaultValue={startdate} type="date" />
+                    <Form.Control
+                        defaultValue={listdata.start_date}
+                        type="date" />
                 </Col>
                 <Col className='text-center' sm={1}>
                     <img src='/UserListSource/to.png' style={{ width: "24px", height: '24px', paddingBottom: '0' }} alt="The next icon" />
                 </Col>
                 <Col className='text-center' sm={4}>
-                    <Form.Control defaultValue={enddate} type="date" />
+                    <Form.Control
+                        defaultValue={listdata.end_date}
+                        type="date" />
                 </Col>
                 <Col className='text-center' sm={1}>
                     <a>
@@ -188,9 +245,9 @@ function TwoAreaMiddle({ selectedTlid }) {
                     </a>
                 </Col>
                 <Col sm={1}></Col>
-                {JourneyData.map((item, index) => (
-                    <Journey key={index} journeydataforjourney={item} attractions={attractions} projects={projects} />
-                ))}
+                {/* {listdata.journeys.map((item, index) => (
+                    <Journey key={index} journeydataforjourney={item} />
+                ))} */}
             </Row>
             <Row className='m-4'>
                 <Col sm={1}></Col>
