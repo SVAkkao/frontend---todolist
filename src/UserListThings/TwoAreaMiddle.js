@@ -121,6 +121,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
     // 過濾出 tlid 為特定值的資料
     useEffect(() => {
         const tlid = selectedTlid;
+        console.log(alldata);
         const filteredData = alldata.filter(item => item.tlid == tlid);
         setListdata(filteredData[0])
     }, [selectedTlid])

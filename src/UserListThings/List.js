@@ -57,7 +57,7 @@ const List = () => {
           />
         </Col>
         <Col sm={6} className="bg-color4">
-          <TwoAreaMiddle selectedTlid={listSelectedTlid} />
+          <TwoAreaMiddle  alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info}/>
         </Col>
         <Col sm={3}>
           <RightSide />
