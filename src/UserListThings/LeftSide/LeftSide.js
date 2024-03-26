@@ -26,18 +26,26 @@ function UserInfo() {
   </Row>;
 }
 
-function NavigationLinks({ handleBtnClick, setNotFinishActive, notFinishActive, setFinishActive, finishActive }) {
+function NavigationLinks({ handleBtnClick, finishedSelected }) {
+  const unfinishedStyle = {
+    borderBottom: !finishedSelected ? 'solid 3px #80BCBD' : '0px',
+    color: !finishedSelected ? 'black' : '#939393'
+  };
+  const finishedStyle = {
+    borderBottom: finishedSelected ? 'solid 3px #80BCBD' : '0px',
+    color: finishedSelected ? 'black' : '#939393'
+  };
   return <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
     <Col sm={5}>
       <span className="supportColor text-left w-100 click-icon">
-        <span onClick={() => handleBtnClick(setNotFinishActive)} style={{ borderBottom: notFinishActive ? 'solid 3px #80BCBD' : '0px', color: notFinishActive ? 'black' : '#939393' }}>
+        <span onClick={() => handleBtnClick(false)} style={unfinishedStyle}>
           未完成
         </span>
       </span>
     </Col>
     <Col sm={5}>
       <span className="supportColor text-left w-100 click-icon">
-        <span onClick={() => handleBtnClick(setFinishActive)} style={{ borderBottom: finishActive ? 'solid 3px #80BCBD' : '0px', color: finishActive ? 'black' : '#939393' }}>
+        <span onClick={() => handleBtnClick(true)} style={finishedStyle}>
           已完成
         </span>
       </span>
@@ -46,13 +54,10 @@ function NavigationLinks({ handleBtnClick, setNotFinishActive, notFinishActive, 
 }
 
 function LeftSide({ data, onSelect, update_info }) {
-  const [notFinishActive, setNotFinishActive] = useState(true);
-  const [finishActive, setFinishActive] = useState(false);
-  const handleBtnClick = (activeSetter) => {
-    // 将所有按钮的状态设置为非活动状态
-    setNotFinishActive(false);
-    setFinishActive(false);
-    activeSetter(true);
+  const [finishedSelected, setFinishedSelected] = useState(false);
+  const handleBtnClick = (input = true) => {
+    console.log(input ? "已完成" : "未完成");
+    setFinishedSelected(input);
   }
   const postAddList = () => {
     const token = localStorage.getItem("userToken");
@@ -80,10 +85,7 @@ function LeftSide({ data, onSelect, update_info }) {
       <UserInfo />
       <NavigationLinks
         handleBtnClick={handleBtnClick}
-        setNotFinishActive={setNotFinishActive}
-        notFinishActive={notFinishActive}
-        setFinishActive={setFinishActive}
-        finishActive={finishActive}
+        finishedSelected={finishedSelected}
       />
       {data.map((item, index) => (
         <Mylist key={index} data={item} onButtonClick={onSelect} />
