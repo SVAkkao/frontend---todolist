@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Mylist from "./Mylist";
 import { useUserStore } from "../../stores/user";
 
+// AJAX APIs
 const API_HOST = process.env.REACT_APP_API_URL;
 // const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 async function ajaxAddList() {
@@ -21,7 +22,6 @@ async function ajaxAddList() {
   });
   return await r.json();
 }
-
 
 // Components
 function TripLists({ list, finishedSelected, onButtonClick }) {
@@ -88,6 +88,24 @@ function NavigationLinks({ handleBtnClick, finishedSelected }) {
     </Col>
   </Row>;
 }
+function AddListBtn({ postAddList }) {
+  return <Row>
+    <Col className="text-center">
+      <button
+        type="button"
+        onClick={postAddList}
+        style={{ border: "none", backgroundColor: "transparent" }}
+      >
+        <img
+          className="mb-5"
+          style={{ width: '48px', height: '48px' }}
+          src="/UserListSource/add.png"
+          alt="Add icon"
+        />
+      </button>
+    </Col>
+  </Row>;
+}
 
 function LeftSide({ data, onSelect, update_info }) {
   const [finishedSelected, setFinishedSelected] = useState(false);
@@ -117,24 +135,12 @@ function LeftSide({ data, onSelect, update_info }) {
         onButtonClick={onSelect}
         finishedSelected={finishedSelected}
       />
-      <Row>
-        <Col className="text-center">
-          <button
-            type="button"
-            onClick={postAddList}
-            style={{ border: "none", backgroundColor: "transparent" }}
-          >
-            <img
-              className="mb-5"
-              style={{ width: '48px', height: '48px' }}
-              src="/UserListSource/add.png"
-              alt="Icon"
-            />
-          </button>
-        </Col>
-      </Row>
+      <AddListBtn
+        postAddList={postAddList}
+      />
     </>
   );
 }
 
 export default LeftSide;
+
