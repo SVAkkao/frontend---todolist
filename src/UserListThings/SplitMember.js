@@ -4,7 +4,7 @@ import { Row, Col, Form } from 'react-bootstrap';
 function SplitMember() {
     return (
         <>
-            <Row className='text-right mb-4'>
+            <Row className='text-right ms-4'>
                 <Col sm={1} className='text-center'></Col>
                 <Col sm={10}>
                     <Row>

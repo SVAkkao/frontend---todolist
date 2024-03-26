@@ -4,6 +4,7 @@ import Journey from './Journey'
 import './color.css'
 import { Row, Col, Form } from 'react-bootstrap';
 import Day from "./Day";
+import { NavLink } from 'react-router-dom';
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -160,7 +161,7 @@ function TwoAreaMiddle({ selectedTlid }) {
                     <Form.Control
                         ref={titleName}
                         className='text1 p-2 m-4 bg-color4 text-center'
-                        style={{borderColor: 'transparent'}}
+                        style={{ borderColor: 'transparent' }}
                         placeholder='請輸入標題'
                         value={areaData.title}
                         onChange={handleTitleChange}
@@ -175,7 +176,7 @@ function TwoAreaMiddle({ selectedTlid }) {
                 </Col>
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
-                <Col sm={1}></Col>
+                {/* <Col sm={1}></Col> */}
                 <Col className='text-center' sm={4}>
                     <Form.Control defaultValue={startdate} type="date" />
                 </Col>
@@ -185,10 +186,11 @@ function TwoAreaMiddle({ selectedTlid }) {
                 <Col className='text-center' sm={4}>
                     <Form.Control defaultValue={enddate} type="date" />
                 </Col>
-                <Col className='text-center' sm={1}>
-                    <a>
-                        <img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} alt="A travel bag" />
-                    </a>
+                <Col className='text-center' sm={2}>
+                    <NavLink to='/prelist'>
+                        <a><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />行前準備</a>
+                    </NavLink>
+
                 </Col>
                 <Col sm={1}></Col>
                 {JourneyData.map((item, index) => (

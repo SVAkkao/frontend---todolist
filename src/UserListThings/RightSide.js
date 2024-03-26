@@ -5,6 +5,7 @@ import Budget from './FormThings/Budget';
 import { Row, Col, Form } from 'react-bootstrap';
 import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
+import { NavLink } from 'react-router-dom';
 
 function RightSide() {
     const [think, setThink] = useState('');
@@ -35,9 +36,16 @@ function RightSide() {
                 </Col>
             </Row>
             <Row>
-                <Col sm={8}></Col>
+                <Col sm={3}></Col>
+                <Col sm={4}>
+                    <NavLink to='/money'>
+                        <a>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    </NavLink>
+                </Col>
                 <Col className='text-right' sm={4}>
-                    <a>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    <NavLink to='/ratings'>
+                        <a>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    </NavLink>
                 </Col>
                 <Col sm={1}></Col>
             </Row>
