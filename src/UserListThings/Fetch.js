@@ -1,9 +1,7 @@
 // Fetch.js
-// import React, { useEffect, useRef, useState } from 'react'
 import React, { useState, useEffect } from "react";
-// import Overlay from 'react-bootstrap/Overlay';
-// import { useLocation } from "react-router-dom";
 import LeftSide from "./LeftSide/LeftSide";
+import { useUserStore } from "../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const getRequestHeaders = () => {
@@ -47,20 +45,25 @@ const getSelectIds = (selectlistBodies = []) => {
     headers: getRequestHeaders(),
     body: getParams(selectlistBody),
   }).then(response => response.json());
-  return Promise.all( selectlistBodies.map( ajaxInstance ) );
+  return ajaxInstance([]);
+  // return Promise.all( selectlistBodies.map( ajaxInstance ) );
 }
 
 function Fetch({ onSelect2 }) {
+  const {user} = useUserStore();
   const [data2, setData2] = useState([]);
   const [listdata, FetchsetListData] = useState(null);
+
+  // Unknown
   if (onSelect2 && typeof onSelect2 === 'function') {
     onSelect2(listdata)
   }
-  function ajaxAction(setData2) {
-    ajaxUserList().then(data => {
+
+  // AJAX
+  function ajaxAction(userId, setData2) {
       // 繼續使用userId來發送下一個HTTP請求
       const body = JSON.stringify({
-        id: data.id
+        id: userId
       });
       getUserrelatedids(body).then(data => {
         const selectlistBodies = data.tlid.map(tlid => ({ tlid }));
@@ -69,15 +72,21 @@ function Fetch({ onSelect2 }) {
           setData2(data);
         }).catch(error => console.error(error));
       }).catch(error => console.error(error));
-    }).catch(error => console.error(error));
   }
   useEffect(() => {
-    ajaxAction(setData2);
-  }, []);
+    if(user.id) {
+      ajaxAction(user.id, setData2);
+    }
+  }, [user]);
+
+  // Actions
+  if(!data2) {
+    return <p>Loading...</p>;
+  }
   return <LeftSide
     data={data2}
     onSelect={(tlid) => FetchsetListData(tlid)}
-    update_info={() => ajaxAction(setData2)}
+    update_info={() => ajaxAction(user.id, setData2)}
   />;
 }
 
