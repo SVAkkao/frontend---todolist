@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Col, Spinner } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import Mylist from "../Mylist";
+import Mylist from "./Mylist";
 import { useUserStore } from "../../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;

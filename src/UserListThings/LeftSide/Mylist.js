@@ -2,10 +2,8 @@ import React from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap';
 
 function Mylist({ data, onButtonClick }) {
-
     const startDate = new Date(data.start_date).toLocaleDateString();
     const endDate = new Date(data.end_date).toLocaleDateString();
-
     return (
         <Row className='m-5'>
             <Col>
