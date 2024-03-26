@@ -18,6 +18,7 @@ import AchievementsPage from "./MemberSystem/AchievementSystem/Attribution.js";
 import List from "./UserListThings/List.js";
 import Alist from "./UserListThings/Alist.js";
 import Fetch from "./UserListThings/Fetch.js";
+import PreTest from "./prelist/src/PreTest.js";
 import SplitCost from "./UserListThings/SplitCost.js";
 
 const router = createBrowserRouter([
@@ -64,6 +65,8 @@ const router = createBrowserRouter([
   { path: "/money", element: <SplitCost /> },
   //
 
+  //prelist
+  { path: '/prelist', element: <PreTest/> },
   //評價系統
   { path: "/ratings", element: <RatingRoute /> },
   { path: "/ratingroute", element: <Navigate to="/ratings" /> },

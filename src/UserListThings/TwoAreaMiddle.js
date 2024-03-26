@@ -3,6 +3,8 @@ import JourneyProject from './JourneyProject'
 import Journey from './Journey'
 import './color.css'
 import { Row, Col, Form, Spinner } from 'react-bootstrap';
+import Day from "./Day";
+import { NavLink } from 'react-router-dom';
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -211,8 +213,10 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
                 <Col className='text-center'>
                     <Form.Control
                         ref={titleName}
-                        className='text1 p-2 m-4'
                         value={listdata.title}
+                        className='text1 p-2 m-4 bg-color4 text-center'
+                        style={{ borderColor: 'transparent' }}
+                        placeholder='請輸入標題'
                         onChange={handleTitleChange}
                         onBlur={handleClickOutside}
                         type="text"
@@ -225,7 +229,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
                 </Col>
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
-                <Col sm={1}></Col>
+                {/* <Col sm={1}></Col> */}
                 <Col className='text-center' sm={4}>
                     <Form.Control
                         defaultValue={listdata.start_date}
@@ -239,15 +243,17 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
                         defaultValue={listdata.end_date}
                         type="date" />
                 </Col>
-                <Col className='text-center' sm={1}>
-                    <a>
-                        <img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} alt="A travel bag" />
-                    </a>
+                <Col className='text-center' sm={2}>
+                    <NavLink to='/prelist'>
+                        <a><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />行前準備</a>
+                    </NavLink>
+
                 </Col>
                 <Col sm={1}></Col>
-                {/* {listdata.journeys.map((item, index) => (
-                    <Journey key={index} journeydataforjourney={item} />
-                ))} */}
+                {/* {JourneyData.map((item, index) => (
+                    <Journey key={index} journeydataforjourney={item} attractions={attractions} projects={projects} />
+                ))}
+                <Day></Day> */}
             </Row>
             <Row className='m-4'>
                 <Col sm={1}></Col>

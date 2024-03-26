@@ -10,26 +10,31 @@ function Mylist({ data, onButtonClick }) {
         <Row className='m-5'>
             <Col>
                 <Card className='mt-4'>
-                    <Card.Body style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}>
-                        <div style={{ flex: '1', textAlign: 'center' }}>
-                            <Card.Text className='text3'>
-                                {data.title}
-                            </Card.Text>
-                        </div>
-                        <div>
+                    <a onClick={() => onButtonClick(data.tlid)}>
+                        <Card.Body style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}>
+                            <div style={{ flex: '1', textAlign: 'center' }}>
+                                <Card.Text className='text3'>
+                                    {data.title}
+                                </Card.Text>
+                            </div>
+                            {/* <div>
                             <Button variant="light" onClick={() => onButtonClick(data.tlid)}>選擇</Button>
-                        </div>
-                        <div>
-                            <img style={{ width: "20px", height: '20px', paddingBottom: '0' }} src="/UserListSource/delete.png" alt="Icon" />
-                        </div>
-                    </Card.Body>
+                        </div> */}
+                            <div>
+                                <img style={{ width: "20px", height: '20px', paddingBottom: '0' }} src="/UserListSource/delete.png" alt="Icon" />
+                            </div>
+                        </Card.Body>
+                    </a>
+                    
                     <Card.Img variant="bottom" src="/UserListSource/Mylist.webp" style={{ border: 'grey', width: '100%', height: '200px' }} />
                 </Card>
             </Col>
             <Row className='mt-3' style={{ alignItems: 'center' }}>
-                <Col><p className='text4'>{startDate}</p></Col>
+                <Col sm={1}></Col>
+                <Col><p className='text4 supportColor'>{startDate}</p></Col>
                 <Col><img style={{ width: "24px", height: '24px', marginBottom: '12px', paddingBottom: '0' }} src="/UserListSource/to.png" alt="Icon" /></Col>
-                <Col><p className='text4'>{endDate}</p></Col>
+                <Col><p className='text4 supportColor'>{endDate}</p></Col>
+                <Col sm={1}></Col>
             </Row>
         </Row>
     )

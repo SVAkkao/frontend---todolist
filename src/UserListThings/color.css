@@ -1,3 +1,6 @@
+body {
+    overflow-x: hidden; /* 隱藏水平滾動條 */
+}
 a{
     text-decoration: none;
     cursor: pointer;

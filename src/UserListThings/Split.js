@@ -7,7 +7,7 @@ function Split() {
 
     return (
         <>
-            <Row style={{ alignItems: 'center' }}>
+            <Row style={{ alignItems: 'center' }} className='m-4'>
                 <Col sm={1}></Col>
                 <Col sm={5}><Form.Label className='text-left'>費用名稱</Form.Label></Col>
                 <Col sm={5}><Form.Label className='text-left'>費用金額</Form.Label></Col>
@@ -22,7 +22,7 @@ function Split() {
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-            <Row className='mt-4'>
+            <Row className='mt-4 ms-4'>
                 <Col sm={1}></Col>
                 <Col className="d-flex align-items-center">
                     <Form.Label className='text-left'>同行人員</Form.Label>
@@ -30,7 +30,7 @@ function Split() {
                 <Col sm={1}></Col>
             </Row>
             <SplitMember />
-            <Row style={{ alignItems: 'center' }}>
+            <Row style={{ alignItems: 'center' }} className='m-4'>
                 <Col sm={1}></Col>
                 <Col sm={5}>
                     <a>

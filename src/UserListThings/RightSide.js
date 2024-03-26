@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Pic from './FormThings/Pic';
 import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
-import Split from './Split';
 import { Row, Col, Form } from 'react-bootstrap';
 import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
+import { NavLink } from 'react-router-dom';
 
 function RightSide() {
     const [think, setThink] = useState('');
@@ -22,12 +22,30 @@ function RightSide() {
     return (
         <>
             <Row className='m-4'>
-                <Col className='text-center'><p className='text1'>Journey's title</p></Col>
+                <Col className='text-center'>
+                    <Form.Control
+                        // ref={titleName}
+                        className='text1 p-2 m-4 text-center'
+                        style={{ borderColor: 'transparent' }}
+                        placeholder='請輸入標題'
+                        // value={areaData.title}
+                        // onChange={handleTitleChange}
+                        // onBlur={handleClickOutside}
+                        type="text"
+                    />
+                </Col>
             </Row>
             <Row>
-                <Col sm={8}></Col>
+                <Col sm={3}></Col>
+                <Col sm={4}>
+                    <NavLink to='/money'>
+                        <a>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    </NavLink>
+                </Col>
                 <Col className='text-right' sm={4}>
-                    <a>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    <NavLink to='/ratings'>
+                        <a>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    </NavLink>
                 </Col>
                 <Col sm={1}></Col>
             </Row>
@@ -49,7 +67,7 @@ function RightSide() {
                 <Col sm={1}></Col>
                 <Col sm={10}><Form.Label className='text-left '>回歸時間</Form.Label></Col>
                 <Col sm={1}></Col>
-                
+
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={5}>
                     <Form.Control type="date" />
