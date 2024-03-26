@@ -5,6 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 // Routes
+
 import Register from "./MemberSystem/Register.js";
 import HomePage from "./MemberSystem/HomePage.js";
 import Login from "./MemberSystem/LoginPage.js";
@@ -17,7 +18,11 @@ import AchievementsPage from "./MemberSystem/AchievementSystem/Attribution.js";
 import List from "./UserListThings/List.js";
 import Alist from "./UserListThings/Alist.js";
 import Fetch from "./UserListThings/Fetch.js";
+<<<<<<< HEAD
 import PreTest from "./prelist/src/PreTest.js";
+=======
+import SplitCost from "./UserListThings/SplitCost.js";
+>>>>>>> 22ca42469cb5643cc0ce127e04d48fd8191f53d4
 
 const router = createBrowserRouter([
   //會員系統
@@ -60,6 +65,8 @@ const router = createBrowserRouter([
   { path: "/list", element: <List /> },
   { path: "/alist", element: <Alist /> },
   { path: "/fetch", element: <Fetch /> },
+  { path: "/money", element: <SplitCost /> },
+  //
 
   //prelist
   { path: '/prelist', element: <PreTest/> },

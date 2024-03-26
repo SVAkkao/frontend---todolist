@@ -21,7 +21,18 @@ function RightSide() {
     return (
         <>
             <Row className='m-4'>
-                <Col className='text-center'><p className='text1'>Journey's title</p></Col>
+                <Col className='text-center'>
+                    <Form.Control
+                        // ref={titleName}
+                        className='text1 p-2 m-4 text-center'
+                        style={{ borderColor: 'transparent' }}
+                        placeholder='請輸入標題'
+                        // value={areaData.title}
+                        // onChange={handleTitleChange}
+                        // onBlur={handleClickOutside}
+                        type="text"
+                    />
+                </Col>
             </Row>
             <Row>
                 <Col sm={8}></Col>
@@ -34,6 +45,7 @@ function RightSide() {
                 <Col sm={1}></Col>
                 <Col sm={10}><Form.Label className='text-left '>出發時間</Form.Label></Col>
                 <Col sm={1}></Col>
+
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={5}>
                     <Form.Control type="date" />
@@ -47,6 +59,7 @@ function RightSide() {
                 <Col sm={1}></Col>
                 <Col sm={10}><Form.Label className='text-left '>回歸時間</Form.Label></Col>
                 <Col sm={1}></Col>
+
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={5}>
                     <Form.Control type="date" />

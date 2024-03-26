@@ -1,20 +1,53 @@
 .button-row {
-  display: flex; /* Align buttons in a row */
-  justify-content: space-around; /* Equal spacing around the buttons */
+  display: flex;
+  justify-content: space-around;
 }
 
 .custom-button {
   width: 34%;
-  padding: 10px 20px; /* Adjust the padding as needed */
-  background-color: rgb(255, 255, 255); /* Background color */
+  padding: 10px 20px;
+  background-color: rgb(255, 255, 255);
   border: none;
-  font-size: 16px; /* Adjust the font size as needed */
-  cursor: pointer; /* Mouse cursor on hover */
+  font-size: 16px;
+  cursor: pointer;
   box-shadow: 0px 3px 3px rgba(212, 212, 212, 0.2);
 }
 
 .custom-button:hover {
-  background-color: #f0f0f0; /* Lighter background on hover */
+  background-color: #f0f0f0;
 }
 
-/* Apply additional styles if necessary to match your image exactly */
+.mainpage {
+  margin-top: 50px;
+}
+
+/* https://www.tpisoftware.com/tpu/articleDetails/2604 */
+.waterfall-effect {
+  max-width: 100%;
+  margin: 0 auto;
+  column-count: 3;
+  column-gap: 10px;
+}
+.waterfall-effect .item {
+  padding: 5px;
+  box-sizing: border-box;
+  margin: 0 auto 5px;
+  break-inside: avoid;
+}
+.waterfall-effect img {
+  max-width: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+
+/* 499 */
+@media (max-width: 768px) {
+  .mainpage {
+    margin-top: 0;
+  }
+}
+@media (max-width: 499px) {
+  .waterfall-effect {
+    column-count: 1;
+  }
+}

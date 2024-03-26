@@ -1,36 +1,66 @@
 import React,{useState,useEffect} from 'react'
 import './color.css'
 import { Row, Col, Form } from 'react-bootstrap';
+import JourneyProject from './JourneyProject';
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function Journey(data) {
+function Journey({ journeydataforjourney, attractions, projects }) {
     
+
     //拿aname
-    const [attraction, setAttraction] = useState([]);
+    const [attractionname, setAttraction] = useState([]);
+    // attractions
+    useEffect(() => {
+      // const aas = [{
+      //     "aid": 20,
+      //     "aname": "111"
+      // }];
+      const data = attractions.filter( ({ aid }) => aid === journeydataforjourney.aid )[0];
+      setAttraction(data);
+      // journeydataforjourney.aid
+      // debugger
+        // fetch(API_HOST + '/api/POST/searchattraction', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //       },
+        //     body: JSON.stringify({ aid: journeydataforjourney.aid })
+        //   })
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     setAttraction(data)
+        //   })
+        //   .catch(error => console.error(error));
+        
+        //
+    }, [journeydataforjourney]);
+    //
+
+    //拿jpid
+    const [journeyproject, setJourneyProject] = useState([]);
+    
 
     useEffect(() => {
         
-        fetch(API_HOST + '/api/POST/searchattraction', {
+        fetch(API_HOST + '/api/POST/selectjourneyproject', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
               },
-            body: JSON.stringify({ aid: data.aid })
+            body: JSON.stringify({ jid: journeydataforjourney.jid })
           })
           .then(response => response.json())
           .then(data => {
-            setAttraction(data)
+            setJourneyProject(data)
+            console.log(data)
           })
           .catch(error => console.error(error));
-        }, [data]);
-
-        useEffect(() => {  
-            console.log(data.aid);
-            console.log(attraction)
-        }, [attraction]);
-        //
+        
+        },
+        [journeydataforjourney]);
+//
 
 
     return (
@@ -43,7 +73,7 @@ function Journey(data) {
                             <Form>
                                 <Form.Check
                                     type='checkbox'
-                                    label={<div style={{ textAlign: 'center' }}>{attraction.aname}</div>}
+                                    label={<div style={{ textAlign: 'center' }}>{attractionname.aname}</div>}
                                     className='text2'
                                 />
                             </Form>
@@ -55,6 +85,9 @@ function Journey(data) {
                 </button>
             </Col>
             <Col sm={1}></Col>
+            {journeyproject.map((item, index) => (
+        <JourneyProject key={index} journeyprojectdataforjourneyproject={item} projects={projects} />
+      ))}
         </Row>
     )
 }

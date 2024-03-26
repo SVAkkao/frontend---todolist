@@ -1,42 +1,66 @@
-import React, { useState } from 'react';
-import LogoutBar from '../MemberSystem/LogoutBar';
-import { Container, Row, Col} from 'react-bootstrap';
-import RightSide from './RightSide';
-import LeftSide from './LeftSide';
-import './color.css';
-import TwoAreaMiddle from './TwoAreaMiddle';
-import Fetch from './Fetch';
+import React, { useState, useEffect } from "react";
+import LogoutBar from "../MemberSystem/LogoutBar";
+import { Row, Col } from "react-bootstrap";
+import RightSide from "./RightSide";
+import LeftSide from "./LeftSide";
+import TwoAreaMiddle from "./TwoAreaMiddle";
+// import Fetch from "./Fetch";
+import "./color.css";
 
+const API_HOST = process.env.REACT_APP_API_URL;
 
-
+function get_all_info() {
+  const getRequestHeaders = () => {
+    const token = localStorage.getItem("userToken");
+    const headers = new Headers({
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    });
+    return headers;
+  };
+  const ajax = fetch(API_HOST + "/api/user_all_informations", {
+    method: "GET",
+    headers: getRequestHeaders(),
+  }).then(response => response.json());
+  return ajax;
+}
 
 const List = () => {
+  // 拿mylist給的tlid
+  const [listSelectedTlid, setSelectedTlid] = useState([]);
+  // 原來的fetch
+  const [alldata, setAllData] = useState([]);
 
-  const [listSelectedTlid, listSetSelectedTlid] = useState(null);
-  const giveTlid =  (tlid) => {
-    listSetSelectedTlid(tlid);
-    // console.log(listSelectedTlid)
-};
-// console.log(listSelectedTlid)
 
+  const update_info = () => {
+    get_all_info().then((data) => {
+      setAllData(data)
+    });
+  };
+
+  useEffect(() => {
+    get_all_info().then((data) => {
+      setAllData(data);
+    });
+  }, []);
   return (
     <>
-      <LogoutBar></LogoutBar>
-      <Container fluid className='vh-100' >
-        <Row className='h-100'>
-          <Col sm={3}>
-          <Fetch onSelect2={giveTlid}>
-              {/* {(data,onSelect) => <LeftSide data={data} onSelect={onSelect}/>} */}
-            </Fetch>
-          </Col>
-          <Col sm={6} className='bg-color4'>
-            <TwoAreaMiddle selectedTlid ={listSelectedTlid}></TwoAreaMiddle>
-          </Col>
-          <Col sm={3}>
-            <RightSide></RightSide>
-          </Col>
-        </Row>
-      </Container>
+      <LogoutBar />
+      <Row className="h-100">
+        <Col sm={3}>
+          <LeftSide
+            data={alldata}
+            onSelect={setSelectedTlid}
+            update_info={update_info}
+          />
+        </Col>
+        <Col sm={6} className="bg-color4">
+          <TwoAreaMiddle selectedTlid={listSelectedTlid} />
+        </Col>
+        <Col sm={3}>
+          <RightSide />
+        </Col>
+      </Row>
     </>
   );
 };
