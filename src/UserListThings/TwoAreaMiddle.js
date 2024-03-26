@@ -8,6 +8,18 @@ import { NavLink } from 'react-router-dom';
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
+function JourneyList({ journeys }) {
+    if (!journeys) {
+        return <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>;
+    }
+    return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
+    // return journeys.map((item, index) => (
+    //     <Journey key={index} journeydataforjourney={item}/>
+    // ))
+}
+
 function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
     const [listdata, setListdata] = useState({
     });
@@ -251,10 +263,8 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
 
                 </Col>
                 <Col sm={1}></Col>
-                {/* {JourneyData.map((item, index) => (
-                    <Journey key={index} journeydataforjourney={item} attractions={attractions} projects={projects} />
-                ))}
-                <Day></Day> */}
+                <JourneyList journeys={listdata.journeys} />
+                <Day></Day>
             </Row>
             <Row className='m-4'>
                 <Col sm={1}></Col>
