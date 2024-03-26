@@ -32,6 +32,9 @@ async function ajaxRemoveList(tlid = 0) {
     },
     body: JSON.stringify({ tlid })
   });
+  if (r.status === 204) {
+    return {};
+  } 
   return await r.json();
 }
 
