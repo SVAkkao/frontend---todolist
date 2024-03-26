@@ -9,6 +9,28 @@ const API_HOST = process.env.REACT_APP_API_URL;
 // const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 
 // Components
+function TripLists({ list, finishedSelected, onButtonClick }) {
+  const isEarlierThanToday = (input) => {
+    // Today
+    const today = new Date();
+    today.setHours(23, 59, 59, 0);
+
+    // Input date
+    const inputDate = new Date(input);
+    inputDate.setHours(23, 59, 59, 0);
+    
+    return inputDate < today;
+  };
+  const getList = (list = [], finishedSelected) => {
+    if( finishedSelected ) {
+      return list.filter( item => isEarlierThanToday(item.end_date) );
+    }
+    return list.filter( item => !isEarlierThanToday(item.end_date) );
+  };
+  return getList(list, finishedSelected).map((item, index) => (
+    <Mylist key={index} data={item} onButtonClick={onButtonClick} />
+  ))
+}
 function UserInfo() {
   const { user, getUserPhoto } = useUserStore();
   return <Row style={{ alignItems: 'center' }}>
@@ -87,9 +109,11 @@ function LeftSide({ data, onSelect, update_info }) {
         handleBtnClick={handleBtnClick}
         finishedSelected={finishedSelected}
       />
-      {data.map((item, index) => (
-        <Mylist key={index} data={item} onButtonClick={onSelect} />
-      ))}
+      <TripLists
+        list={data}
+        onButtonClick={onSelect}
+        finishedSelected={finishedSelected}
+      />
       <Row>
         <Col className="text-center">
           <button
