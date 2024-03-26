@@ -1,121 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Row, Col, Spinner } from "react-bootstrap";
-// import Image from "react-bootstrap/Image";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Mylist from "../Mylist";
-import axios from 'axios'
 import { NavLink } from 'react-router-dom';
 
 import { useUserStore } from "../../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-const API_IMAGE = process.env.REACT_APP_IMAGE_URL
-
-
-
+// const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 
 // Components
-// function TripLists({ triplist, handleButtonClick }) {
-//   if( !Array.isArray(triplist) ) {
-//     return <p className="text-center">現在還沒有旅遊清單。下一個能悸動你心中地方在哪呢？</p>;
-//   }
-//   if( triplist.length < 1 ) {
-//     return <p className="text-center">現在還沒有旅遊清單。下一個能悸動你心中地方在哪呢？</p>;
-//   }
-//   return triplist.map((item, index) => (
-//     <Mylist key={index} data={item} onButtonClick={handleButtonClick} />
-//   ));
-// }
-
-// function AddList({ onUpdateInfo }) {
-//   // Modal modules
-//   const [modalModel, setModalModel] = useState(false);
-//   const closeModal = () => setModalModel(false);
-//   const openModal = () => setModalModel(true);
-//   // AJAX modules
-//   const addList = (e) => {
-//     e.preventDefault();
-//     const form = e.target;
-//     const formdata = new FormData(form);
-//     postAddList(formdata).then( () => {
-//       onUpdateInfo();
-//       closeModal();
-//     }).catch( (e) => {
-//       alert(e);
-//     });
-//     // postAddList = (formdata);
-//   };
-//   return <Row>
-//     <Col className="text-center">
-//       <img
-//         className="mb-5 click-icon"
-//         style={{ width: "48px", height: "48px" }}
-//         src="/UserListSource/add.png"
-//         alt="Add icon"
-//         onClick={openModal}
-//       />
-//       <Modal show={modalModel} onHide={closeModal}>
-//         <Modal.Header closeButton>
-//           <Modal.Title>新增清單</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//           <p className="text-center">好。清單要叫什麼名字呢？</p>
-//           <Form onSubmit={addList}>
-//             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-//               <Form.Label>清單名字</Form.Label>
-//               <Form.Control
-//                 type="text"
-//                 name="title"
-//                 placeholder="取個響亮的名字吧"
-//                 autoFocus
-//                 required
-//                 aria-required
-//               />
-//             </Form.Group>
-//             <Button type="submit">
-//               送出
-//             </Button>
-//           </Form>
-//         </Modal.Body>
-//       </Modal>
-//     </Col>
-//   </Row>;
-// }
-
-// function UserInfo() {
-//   const { user, getUserPhoto } = useUserStore();
-//   return <Row style={{ alignItems: "center" }}>
-//     <Col>
-//       <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-//         <Avatar
-//           src={getUserPhoto()}
-//           style={{ width: 150, height: 150, margin: 20 }}
-//         />
-//         <Typography variant="h3" sx={{ ml: 2 }}>
-//           {user.name}
-//         </Typography>
-//       </div>
-//     </Col>
-//   </Row>;
-// }
-
-
-//呼叫使用者資料API
-const getUserApi = () => {
-  const token = localStorage.getItem('userToken')
-  return axios.get(`${API_HOST}/api/user`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+function UserInfo() {
+  const { user, getUserPhoto } = useUserStore();
+  return <Row style={{ alignItems: 'center' }}>
+    <Col>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+        <Avatar
+          src={getUserPhoto()}
+          style={{ width: 150, height: 150, margin: 20 }}
+        />
+        <Typography variant="h3" sx={{ ml: 2 }}>
+          {user.name}
+        </Typography>
+      </div>
+    </Col>
+  </Row>;
 }
 
-
-
+function NavigationLinks({ handleBtnClick, setNotFinishActive, notFinishActive, setFinishActive, finishActive }) {
+  return <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
+    <Col sm={5}>
+      <NavLink to='/list' className="supportColor text-left w-100">
+        <a onClick={() => handleBtnClick(setNotFinishActive)} style={{ borderBottom: notFinishActive ? 'solid 3px #80BCBD' : '0px', color: notFinishActive ? 'black' : '#939393' }}>
+          未完成
+        </a>
+      </NavLink>
+    </Col>
+    <Col sm={5}>
+      <NavLink to='/list' className="supportColor text-right w-100">
+        <a onClick={() => handleBtnClick(setFinishActive)} style={{ borderBottom: finishActive ? 'solid 3px #80BCBD' : '0px', color: finishActive ? 'black' : '#939393' }}>
+          已完成
+        </a>
+      </NavLink>
+    </Col>
+  </Row>;
+}
 
 function LeftSide({ data, onSelect, update_info }) {
-
   const [notFinishActive, setNotFinishActive] = useState(true);
   const [finishActive, setFinishActive] = useState(false);
   const handleBtnClick = (activeSetter) => {
@@ -124,32 +56,6 @@ function LeftSide({ data, onSelect, update_info }) {
     setFinishActive(false);
     activeSetter(true);
   }
-
-
-  const [userName, setUserName] = useState('')
-  const [userPhoto, setUserPhoto] = useState('')
-
-  const fetchUser = async () => {
-    try {
-      const response = await getUserApi()
-      setUserName(response.data.name)
-      setUserPhoto(response.data.photo)
-    } catch (error) {
-      console.error('取得用戶訊息失敗：', error)
-    }
-  }
-  useEffect(() => {
-    fetchUser()
-  }, [])
-
-
-
-  if (!data) {
-    return <Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>;
-  }
-
   const postAddList = () => {
     const token = localStorage.getItem("userToken");
     fetch(`${API_HOST}/api/POST/addlist`, {
@@ -165,41 +71,22 @@ function LeftSide({ data, onSelect, update_info }) {
       update_info();
     }
     );
-    
   };
-
+  if (!data) {
+    return <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>;
+  }
   return (
     <>
-
-      <Row style={{ alignItems: 'center' }}>
-        <Col>
-          <div
-            style={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}
-          >
-            <Avatar
-              src={
-                userPhoto ? `${API_IMAGE}${userPhoto}` : 'avatar-template.svg'
-              }
-              style={{ width: 150, height: 150, margin: 20 }}
-            />
-            <Typography variant="h3" sx={{ ml: 2 }}>
-              {userName}
-            </Typography>
-          </div>
-        </Col>
-      </Row>
-      <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
-        <Col sm={5}>
-          <NavLink to='/list' className="supportColor text-left w-100">
-            <a onClick={() => handleBtnClick(setNotFinishActive)} style={{ borderBottom: notFinishActive ? 'solid 3px #80BCBD' : '0px', color: notFinishActive ? 'black' : '#939393' }}>未完成</a>
-          </NavLink>
-        </Col>
-        <Col sm={5}>
-          <NavLink to='/list' className="supportColor text-right w-100">
-            <a onClick={() => handleBtnClick(setFinishActive)} style={{ borderBottom: finishActive ? 'solid 3px #80BCBD' : '0px', color: finishActive ? 'black' : '#939393' }}>已完成</a>
-          </NavLink>
-        </Col>
-      </Row>
+      <UserInfo />
+      <NavigationLinks
+        handleBtnClick={handleBtnClick}
+        setNotFinishActive={setNotFinishActive}
+        notFinishActive={notFinishActive}
+        setFinishActive={setFinishActive}
+        finishActive={finishActive}
+      />
       {data.map((item, index) => (
         <Mylist key={index} data={item} onButtonClick={onSelect} />
       ))}
@@ -219,12 +106,6 @@ function LeftSide({ data, onSelect, update_info }) {
           </button>
         </Col>
       </Row>
-
-      {/* <TripLists
-        triplist={data.tourist_lists}
-        handleButtonClick={handleButtonClick}
-      /> */}
-      {/* <AddList onUpdateInfo={onUpdateInfo} /> */}
     </>
   );
 }
