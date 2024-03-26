@@ -1,5 +1,5 @@
 import React from 'react'
-import './App.css';
+import './Pre.css';
 import WeatherApp from './components/WeatherApp';
 import { PreWrapper } from './components/PreWrapper';
 
