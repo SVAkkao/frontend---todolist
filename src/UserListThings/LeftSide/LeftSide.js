@@ -7,6 +7,21 @@ import { useUserStore } from "../../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 // const API_IMAGE = process.env.REACT_APP_IMAGE_URL
+async function ajaxAddList() {
+  const token = localStorage.getItem("userToken");
+  const r = await fetch(`${API_HOST}/api/POST/addlist`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      title: "請輸入旅行名稱..."
+    })
+  });
+  return await r.json();
+}
+
 
 // Components
 function TripLists({ list, finishedSelected, onButtonClick }) {
@@ -47,7 +62,6 @@ function UserInfo() {
     </Col>
   </Row>;
 }
-
 function NavigationLinks({ handleBtnClick, finishedSelected }) {
   const unfinishedStyle = {
     borderBottom: !finishedSelected ? 'solid 3px #80BCBD' : '0px',
@@ -78,24 +92,13 @@ function NavigationLinks({ handleBtnClick, finishedSelected }) {
 function LeftSide({ data, onSelect, update_info }) {
   const [finishedSelected, setFinishedSelected] = useState(false);
   const handleBtnClick = (input = true) => {
-    console.log(input ? "已完成" : "未完成");
+    // console.log(input ? "已完成" : "未完成");
     setFinishedSelected(input);
   }
   const postAddList = () => {
-    const token = localStorage.getItem("userToken");
-    fetch(`${API_HOST}/api/POST/addlist`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        title: "請輸入旅行名稱..."
-      })
-    }).then(r => r.json()).then(()=>{
+    ajaxAddList().then(()=>{
       update_info();
-    }
-    );
+    });
   };
   if (!data) {
     return <Spinner animation="border" role="status">
