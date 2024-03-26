@@ -39,12 +39,12 @@ function RightSide() {
                 <Col sm={3}></Col>
                 <Col sm={4}>
                     <NavLink to='/money'>
-                        <a>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                        <a id='money' style={{color: '#939393'}}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
                     </NavLink>
                 </Col>
                 <Col className='text-right' sm={4}>
                     <NavLink to='/ratings'>
-                        <a>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                        <a id='ratings' style={{color: '#939393'}}>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
                     </NavLink>
                 </Col>
                 <Col sm={1}></Col>

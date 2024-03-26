@@ -25,6 +25,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
     });
     const [searchvalue, setSearchValue] = useState('');
     const titleName = useRef(null);
+
     // // debugger;
     // const startdate = (listdata = { start_date: "" }) => {
     //     // console.log(listdata);
@@ -258,7 +259,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
                 </Col>
                 <Col className='text-center' sm={2}>
                     <NavLink to='/prelist'>
-                        <a><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />行前準備</a>
+                        <a id='prelist' style={{color: '#939393'}}><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0'}} className='m-2' />行前準備</a>
                     </NavLink>
 
                 </Col>
