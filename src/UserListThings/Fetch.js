@@ -14,14 +14,6 @@ const getRequestHeaders = () => {
   return headers;
 };
 
-const ajaxUserList = async () => {
-  return fetch(`${API_HOST}/api/user`, {
-    method: 'GET',
-    headers: getRequestHeaders(),
-  })
-    .then(response => response.json());
-};
-
 const getUserrelatedids = (body = {}) => {
   return fetch(`${API_HOST}/api/POST/userrelatedids`, {
     method: 'POST',
