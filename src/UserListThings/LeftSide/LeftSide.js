@@ -3,11 +3,11 @@ import { Row, Col, Spinner } from "react-bootstrap";
 // import Image from "react-bootstrap/Image";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import Mylist from "./Mylist";
+import Mylist from "../Mylist";
 import axios from 'axios'
 import { NavLink } from 'react-router-dom';
 
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL

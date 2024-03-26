@@ -2,8 +2,8 @@ import React from 'react';
 import Money from './Money';
 import LogoutBar from '../MemberSystem/LogoutBar';
 import TwoAreaMiddle from './TwoAreaMiddle';
-import Fetch from './Fetch';
-import LeftSide from './LeftSide';
+// import Fetch from './Fetch';
+// import LeftSide from './LeftSide';
 import { Container, Row, Col} from 'react-bootstrap';
 
 function SplitCost() {

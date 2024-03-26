@@ -1,5 +1,5 @@
 import React from 'react';
-import LeftSide from './LeftSide';
+import LeftSide from './LeftSide/LeftSide';
 import Fetch from './Fetch';
 import LogoutBar from '../MemberSystem/LogoutBar';
 import { Row, Col } from 'react-bootstrap';
@@ -9,8 +9,7 @@ import './color.css';
 function Alist() {
     return (
         <>
-            <LogoutBar></LogoutBar>
-
+            <LogoutBar />
             <Row>
                 <Col sm={3}>
                     <Fetch>
@@ -18,7 +17,7 @@ function Alist() {
                     </Fetch>
                 </Col>
                 <Col sm={9} className='bg-color4'>
-                    <IndexMiddle></IndexMiddle>
+                    <IndexMiddle />
                 </Col>
             </Row>
 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 // import Overlay from 'react-bootstrap/Overlay';
 // import { useLocation } from "react-router-dom";
-import LeftSide from "./LeftSide";
+import LeftSide from "./LeftSide/LeftSide";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
