@@ -2,19 +2,9 @@ import React,{useState,useEffect} from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyProject({ journeyprojectdataforjourneyproject, projects }) {
+function JourneyProject({ journeyProjectsdata }) {
 
     
-//拿pname
-const [journeyprojectname, setJourneyProjectName] = useState([]);
-
-useEffect(() => {
-    const data = projects.filter( ({ pid }) => pid === journeyprojectdataforjourneyproject.pid )[0];
-    setJourneyProjectName(data);
-
-    
-    }, [journeyprojectdataforjourneyproject]);
-//
 
 
   return (
@@ -27,7 +17,7 @@ useEffect(() => {
                     <Form>
                         <Form.Check
                             type='checkbox'
-                            label={<div style={{ textAlign: 'center' }}>{journeyprojectname.pname}</div>}
+                            label={<div style={{ textAlign: 'center' }}>{journeyProjectsdata.project.pname}</div>}
                             className='text2'
                         />
                     </Form>
