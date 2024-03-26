@@ -65,15 +65,15 @@ function NavigationLinks({ handleBtnClick, finishedSelected }) {
   };
   return <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
     <Col sm={5}>
-      <button type="button" className="supportColor text-left w-100 click-icon" style={nonDefaultBtnStyle}>
-        <span onClick={() => handleBtnClick(false)} style={unfinishedStyle}>
+      <button type="button" className="supportColor text-left w-100" style={nonDefaultBtnStyle} onClick={() => handleBtnClick(false)}>
+        <span style={unfinishedStyle}>
           未完成
         </span>
       </button>
     </Col>
     <Col sm={5}>
-      <button type="button" className="supportColor text-left w-100 click-icon" style={nonDefaultBtnStyle}>
-        <span onClick={() => handleBtnClick(true)} style={finishedStyle}>
+      <button type="button" className="supportColor text-left w-100" style={nonDefaultBtnStyle} onClick={() => handleBtnClick(true)}>
+        <span style={finishedStyle}>
           已完成
         </span>
       </button>
