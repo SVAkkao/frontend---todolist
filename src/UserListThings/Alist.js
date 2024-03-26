@@ -1,5 +1,4 @@
 import React from 'react';
-import LeftSide from './LeftSide/LeftSide';
 import Fetch from './Fetch';
 import LogoutBar from '../MemberSystem/LogoutBar';
 import { Row, Col } from 'react-bootstrap';
@@ -12,15 +11,12 @@ function Alist() {
             <LogoutBar />
             <Row>
                 <Col sm={3}>
-                    <Fetch>
-                        {(data) => <LeftSide data={data} />}
-                    </Fetch>
+                    <Fetch />
                 </Col>
                 <Col sm={9} className='bg-color4'>
                     <IndexMiddle />
                 </Col>
             </Row>
-
         </>
     )
 }
