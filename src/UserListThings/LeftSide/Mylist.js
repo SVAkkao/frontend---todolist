@@ -2,10 +2,8 @@ import React, {useState} from 'react'
 import { Row, Col, Card, } from 'react-bootstrap';
 
 function Mylist({ data, onButtonClick }) {
-
     const startDate = new Date(data.start_date).toLocaleDateString();
     const endDate = new Date(data.end_date).toLocaleDateString();
-
     const [image, setImage] = useState(null);
     const previewImg = image ? URL.createObjectURL(image) : "/UserListSource/Mylist.webp"
     return (
