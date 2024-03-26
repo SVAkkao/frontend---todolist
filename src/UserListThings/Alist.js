@@ -2,7 +2,7 @@ import React from 'react';
 import Fetch from './Fetch';
 import LogoutBar from '../MemberSystem/LogoutBar';
 import { Row, Col } from 'react-bootstrap';
-import IndexMiddle from './IndexMiddle';
+import IndexMiddle from './Alist/IndexMiddle';
 import './color.css';
 
 function Alist() {

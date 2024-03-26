@@ -1,8 +1,8 @@
 import React from 'react'
-import Journey from './Journey'
+// import Journey from './Journey'
 import CarouselImg from './CarouselImg'
-import JourneyProject from './JourneyProject'
-import Pages from './Pages'
+// import JourneyProject from './JourneyProject'
+import Pages from '../Pages'
 import { Row, Col, Container } from 'react-bootstrap';
 import './color.css';
 import { NavLink } from 'react-router-dom';
@@ -10,9 +10,12 @@ import { NavLink } from 'react-router-dom';
 
 function IndexMiddle() {
     return (
-        <>
-            <Container>
-                <Row className='m-4'><Col className='text-center'><p className='text2'>來趟盡興的旅行吧!</p></Col></Row>
+        <Container>
+                <Row className='m-4'>
+                    <Col className='text-center'>
+                        <p className='text2'>來趟盡興的旅行吧!</p>
+                    </Col>
+                </Row>
                 <CarouselImg />
                 <Row className='m-4 text-center'>
                     <Col sm={1}></Col>
@@ -25,11 +28,12 @@ function IndexMiddle() {
                 </Row>
                 <Row className='m-4 text-center'>
                     <Col sm={1}></Col>
-                    <Col sm={10}><Pages></Pages></Col>
+                    <Col sm={10}>
+                        <Pages />
+                    </Col>
                     <Col sm={1}></Col>
                 </Row>
             </Container>
-        </>
     )
 }
 
