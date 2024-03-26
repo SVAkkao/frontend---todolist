@@ -6,9 +6,10 @@ import { Row, Col, Form, Spinner } from "react-bootstrap";
 import Day from "./Day";
 import { NavLink } from "react-router-dom";
 
+
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ journeys }) {
+function JourneyList({ journeys, update_info, onFocusJourney }) {
   if (!journeys) {
     return (
       <Spinner animation="border" role="status">
@@ -18,7 +19,7 @@ function JourneyList({ journeys }) {
   }
   // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
   return journeys.map((item, index) => (
-    <Journey key={index} journeydata={item} />
+    <Journey key={index} journeydata={item} update_info={update_info} onFocusJourney={onFocusJourney} />
   ));
 }
 
@@ -60,16 +61,16 @@ function TotalCost({ costData }) {
     return acc;
   }, 0);
 
-      const totalAmount = jTotalAmount + jpTotalAmount
-    
-      return <div>{totalAmount}</div>;
+  const totalAmount = jTotalAmount + jpTotalAmount
+
+  return <div>{totalAmount}</div>;
 }
 
-function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
-    const [listdata, setListdata] = useState({
-    });
-    const [searchvalue, setSearchValue] = useState('');
-    const titleName = useRef(null);
+function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney }) {
+  const [listdata, setListdata] = useState({
+  });
+  const [searchvalue, setSearchValue] = useState('');
+  const titleName = useRef(null);
 
 
   // 過濾出 tlid 為特定值的資料
@@ -119,6 +120,8 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
         body: JSON.stringify({
           tlid: selectedTlid,
           title: inputValue,
+          start_date: listdata.start_date,
+          end_date: listdata.end_date
         }),
       }).then(() => {
         update_info();
@@ -150,8 +153,8 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
   //     return <Spinner animation="border" role="status">
   //         <span className="visually-hidden">Loading...</span>
   //     </Spinner>;
-  // }
-  if (!listdata) {
+  // } 
+  if (!listdata || !selectedTlid) {
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>
@@ -207,7 +210,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
           </NavLink>
         </Col>
         <Col sm={1}></Col>
-        <JourneyList journeys={listdata.journeys} />
+        <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} />
         <Day></Day>
       </Row>
       <Row className="m-4">

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import "./LoginSystem.css";
+import { ajaxAddList, ajaxRemoveList } from "../UserListThings/LeftSide/api";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -52,6 +53,7 @@ function Register() {
       const data = await response.json();
       console.log("success");
       localStorage.setItem("userToken", data.token);
+      ajaxAddList();
       navigate("/alist", { state: { email: data.user.email } });
     } catch (error) {
       console.error("Error:", error);

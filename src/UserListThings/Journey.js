@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './color.css'
 import { Row, Col, Form, Spinner } from 'react-bootstrap';
 import JourneyProject from './JourneyProject';
@@ -14,78 +14,87 @@ function JourneyProjectList({ journeyProjects }) {
     }
     // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
     return journeyProjects.map((item, index) => (
-        <JourneyProject key={index} journeyProjectsdata={item}/>
+        <JourneyProject key={index} journeyProjectsdata={item} />
     ))
 
-                {/* {journeyproject.map((item, index) => (
+    {/* {journeyproject.map((item, index) => (
         <JourneyProject key={index} journeyprojectdata={item} projects={projects} />
       ))} */}
 }
 
-function Journey({ journeydata }) {
-    
-///////////////////////
-    // //拿aname
-    // const [attractionname, setAttraction] = useState([]);
-    // // attractions
-    // useEffect(() => {
-    //   // const aas = [{
-    //   //     "aid": 20,
-    //   //     "aname": "111"
-    //   // }];
-    //   const data = attractions.filter( ({ aid }) => aid === journeydataforjourney.aid )[0];
-    //   setAttraction(data);
-    //   // journeydataforjourney.aid
-    //   // debugger
-    //     // fetch(API_HOST + '/api/POST/searchattraction', {
-    //     //     method: 'POST',
-    //     //     headers: {
-    //     //         'Content-Type': 'application/json'
-    //     //       },
-    //     //     body: JSON.stringify({ aid: journeydataforjourney.aid })
-    //     //   })
-    //     //   .then(response => response.json())
-    //     //   .then(data => {
-    //     //     setAttraction(data)
-    //     //   })
-    //     //   .catch(error => console.error(error));
-        
-    //     //
-    // }, [journeydataforjourney]);
-    // //
-//////////////////
 
-/////////////////////////
-    //拿jpid
-//     const [journeyproject, setJourneyProject] = useState([]);
-    
 
-//     useEffect(() => {
-        
-//         fetch(API_HOST + '/api/POST/selectjourneyproject', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//               },
-//             body: JSON.stringify({ jid: journeydataforjourney.jid })
-//           })
-//           .then(response => response.json())
-//           .then(data => {
-//             setJourneyProject(data)
-//             console.log(data)
-//           })
-//           .catch(error => console.error(error));
-        
-//         },
-//         [journeydataforjourney]);
-// //
-//////////////////////////////
+function Journey({ journeydata, update_info, onFocusJourney }) {
+    const [journeyDataValue, setJourneyDataValue] = useState({});
+    const [checkedValue, setCheckedValue] = useState(false);
+
+    useEffect(() => {
+        setJourneyDataValue(journeydata)
+        if (journeydata.jchecked == 1) {
+            setCheckedValue(true)
+        } else {
+            setCheckedValue(false)
+        }
+
+    }, [journeydata]);
+
+    if (!journeyDataValue) {
+        return (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        );
+    }
+
+
+    const updateJourneyChecked = (checked) => {
+        fetch(`${API_HOST}/api/POST/updatejourney`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                jid: journeyDataValue.jid,
+                aname: journeyDataValue.attraction.aname,
+                arrived_date: journeyDataValue.arrived_date,
+                arrived_time: journeyDataValue.arrived_time,
+                leaved_time: journeyDataValue.leaved_time,
+                jmemo: journeyDataValue.jmemo,
+                jrate: journeyDataValue.jrate,
+                jchecked: checked,
+            })
+        });
+    }
+
+    const onRemoveJourney = () => {
+        fetch(`${API_HOST}/api/POST/deletejourney`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                jid: journeyDataValue.jid,
+            })
+        })
+            .then(() => {
+                update_info();
+            })
+            ;
+    }
+
+
+    function checked(event) {
+        setCheckedValue(event.target.checked);
+        updateJourneyChecked(event.target.checked);
+        // console.log(event.target.checked); // 這將在控制檯中打印出checkbox的當前狀態（true表示勾選，false表示未勾選）
+    }
+
 
     return (
         <Row className='mt-4'>
             <Col sm={1}></Col>
             <Col sm={10}>
-                <button className='bg-color2 rounded p-3' style={{ borderColor: 'transparent', width: '100%' }}>
+                <button onClick={onFocusJourney(journeydata.jid)} className='bg-color2 rounded p-3' style={{ borderColor: 'transparent', width: '100%' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ flex: '1', textAlign: 'center' }}>
                             <Form>
@@ -93,10 +102,12 @@ function Journey({ journeydata }) {
                                     type='checkbox'
                                     label={<div style={{ textAlign: 'center' }}>{journeydata.attraction.aname}</div>}
                                     className='text2'
+                                    onChange={checked}
+                                    checked={checkedValue}
                                 />
                             </Form>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div onClick={onRemoveJourney} style={{ display: 'flex', alignItems: 'center' }}>
                             <img style={{ width: "24px", height: '24px', paddingBottom: '0' }} src="/UserListSource/delete.png" alt="Icon" />
                         </div>
                     </div>
@@ -104,7 +115,7 @@ function Journey({ journeydata }) {
             </Col>
             <Col sm={1}></Col>
             <JourneyProjectList journeyProjects={journeydata.journey_projects
-}/>
+            } />
 
         </Row>
     )

@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Pic from './FormThings/Pic';
 import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form, Spinner } from 'react-bootstrap';
 import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
 
-function RightSide({ changeMoneyClick }) {
+function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, selectedTlid }) {
     const [think, setThink] = useState('');
     const [memo, setMemo] = useState('');
+    const [journeyData, setJourneyData] = useState({
+    });
+
+
+    useEffect(() => {
+        const jid = selectedjid;
+        console.log(alldata)
+        const tlid = selectedTlid;
+        const filtereListdData = alldata.filter((item) => item.tlid == tlid);
+        console.log(filtereListdData[0]);
+        const filtereJourneydData = filtereListdData.jid.filter((item) => item.jid == jid);
+        setJourneyData(filtereJourneydData[0]);
+    }, [selectedTlid, alldata]);
 
     const handleThinkChange = (event) => {
         setThink(event.target.value);
@@ -18,6 +31,15 @@ function RightSide({ changeMoneyClick }) {
         setMemo(event.target.value);
     };
 
+
+
+    if (!journeyData || !selectedTlid || !selectedjid) {
+        return (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        );
+    }
 
     return (
         <>
@@ -45,7 +67,7 @@ function RightSide({ changeMoneyClick }) {
                 </Col>
                 <Col className='text-right' sm={4}>
                     <NavLink to='/ratings'>
-                        <a id='ratings' style={{color: '#939393'}}>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                        <a id='ratings' style={{ color: '#939393' }}>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
                     </NavLink>
                 </Col>
                 <Col sm={1}></Col>

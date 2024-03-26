@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LogoutBar from "../MemberSystem/LogoutBar";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import RightSide from "./RightSide";
 import LeftSide from "./LeftSide/LeftSide";
 import TwoAreaMiddle from "./TwoAreaMiddle";
@@ -26,17 +26,29 @@ function get_all_info() {
   return ajax;
 }
 
-const RightSpace = ()=>{
+const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid }) => {
   const [showMoney, setShowMoney] = useState(false);
 
   const changeMoneyClick = () => {
     setShowMoney(true);
   };
-  if (showMoney) {
-    return <Money />;
+
+  if (!alldata || !selectedTlid || selectedjid) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
+  } else {
+    if (showMoney) {
+      return <Money />;
+    }
+    console.log("alldata" + alldata);
+    console.log(selectedTlid);
+    console.log("selectedjid" + selectedjid);
+    return <RightSide changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />;
   }
 
-  return <RightSide changeMoneyClick={changeMoneyClick} />;
 
 }
 
@@ -48,6 +60,7 @@ const List = () => {
   const [alldata, setAllData] = useState([]);
   // 拿mylist給的tlid
   const [listSelectedTlid, setSelectedTlid] = useState("");
+  const [selectedjid, setSelectedjid] = useState("");
 
   const update_info = () => {
     get_all_info().then((data) => {
@@ -59,6 +72,7 @@ const List = () => {
     get_all_info().then((data) => {
       setAllData(data);
       setSelectedTlid(data[0].tlid);
+      setSelectedjid(data[0].journeys[0]);
     });
   }, []);
 
@@ -66,7 +80,7 @@ const List = () => {
   return (
     <>
       <Row className="h-100">
-      <LogoutBar />
+        <LogoutBar />
         <Col sm={3}>
           <LeftSide
             data={alldata}
@@ -75,10 +89,10 @@ const List = () => {
           />
         </Col>
         <Col sm={6} className="bg-color4">
-          <TwoAreaMiddle  alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info}/>
+          <TwoAreaMiddle alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} />
         </Col>
         <Col sm={3}>
-          <RightSpace/>
+          <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} />
         </Col>
       </Row>
     </>
