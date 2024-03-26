@@ -4,9 +4,8 @@ import CarouselImg from './CarouselImg'
 // import JourneyProject from './JourneyProject'
 import Pages from '../Pages'
 import { Row, Col, Container } from 'react-bootstrap';
-import './color.css';
 import { NavLink } from 'react-router-dom';
-
+import '../color.css';
 
 function IndexMiddle() {
     return (
