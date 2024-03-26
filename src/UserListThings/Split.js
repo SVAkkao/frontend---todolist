@@ -35,7 +35,7 @@ function Split() {
                 <Col sm={5}>
                     <a>
                         <img className='text-left m-2' style={{ width: "32px", height: '32px' }} src="/UserListSource/add.png" alt="Icon" />
-                        <Form.Label className='text-left '>新增成員</Form.Label>
+                        <Form.Label className='text-left'>新增成員</Form.Label>
                     </a>
                 </Col>
                 <Col><button className='bg-color1 text-right p-2 rounded' style={{ border: 'transparent', color: 'white' }}>計算費用</button></Col>

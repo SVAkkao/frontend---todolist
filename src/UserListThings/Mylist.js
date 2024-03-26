@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Row, Col, Card, Button } from 'react-bootstrap';
 
 function Mylist({ data, onButtonClick }) {
@@ -6,6 +6,8 @@ function Mylist({ data, onButtonClick }) {
     const startDate = new Date(data.start_date).toLocaleDateString();
     const endDate = new Date(data.end_date).toLocaleDateString();
 
+    const [image, setImage] = useState(null);
+    const previewImg = image ? URL.createObjectURL(image) : "/UserListSource/Mylist.webp"
     return (
         <Row className='m-5'>
             <Col>
@@ -25,8 +27,19 @@ function Mylist({ data, onButtonClick }) {
                             </div>
                         </Card.Body>
                     </a>
-                    
-                    <Card.Img variant="bottom" src="/UserListSource/Mylist.webp" style={{ border: 'grey', width: '100%', height: '200px' }} />
+
+                    <div className="flex">
+                        <div className="imgwrap">
+                            
+                        </div>
+                        <label className="uploadbtn text-center" htmlFor="upload" ><img src={previewImg} style={{width: '100%', height: '200px'}} /></label>
+                        <input type="file" accept="image/jpeg" id="upload" className='d-none'
+                            onChange={(e) => setImage(e.target.files[0])} />
+                    </div>
+
+                    {/* <input id="upload" type="file" /> */}
+                    {/* <label type="button" for="upload" class="uploadImg" style={{ border: 'grey', width: '100%', height: '200px' }}></label> */}
+                    {/* <Card.Img variant="bottom" src="/UserListSource/Mylist.webp" style={{ border: 'grey', width: '100%', height: '200px' }} /> */}
                 </Card>
             </Col>
             <Row className='mt-3' style={{ alignItems: 'center' }}>
