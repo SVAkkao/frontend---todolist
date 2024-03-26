@@ -60,7 +60,6 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
     });
     const [searchvalue, setSearchValue] = useState('');
     const titleName = useRef(null);
-<<<<<<< HEAD
 
     // // debugger;
     // const startdate = (listdata = { start_date: "" }) => {
@@ -70,8 +69,6 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
     // const enddate = (listdata = { end_date: "" }) => {
     //     return listdata ? new Date(listdata.end_date).toLocaleDateString() : new Date().toLocaleDateString();
     // };
-=======
->>>>>>> 098e4be78cfc20e521ab569ffed85ecacc02d886
 
 
 
