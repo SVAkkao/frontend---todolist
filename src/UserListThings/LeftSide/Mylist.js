@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Row, Col, Card, Button } from 'react-bootstrap';
+import { Row, Col, Card, } from 'react-bootstrap';
 
 function Mylist({ data, onButtonClick }) {
     const startDate = new Date(data.start_date).toLocaleDateString();
@@ -30,8 +30,8 @@ function Mylist({ data, onButtonClick }) {
                         <div className="imgwrap">
                             
                         </div>
-                        <label className="uploadbtn text-center" htmlFor="upload" ><img src={previewImg} style={{width: '100%', height: '200px'}} /></label>
-                        <input type="file" accept="image/jpeg" id="upload" className='d-none'
+                        <label className="uploadbtn text-center" htmlFor="upload"><img src={previewImg} style={{width: '100%', height: '200px'}} /></label>
+                        <input type="file" accept="image/jpeg" id="upload" className='d-none' multiple
                             onChange={(e) => setImage(e.target.files[0])} />
                     </div>
 

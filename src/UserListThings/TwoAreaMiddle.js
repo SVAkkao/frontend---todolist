@@ -52,7 +52,7 @@ function TotalCost({ costData }) {
 
       const totalAmount = jTotalAmount + jpTotalAmount
     
-      return <div>{totalAmount}</div>;
+      return <div className='text2 supportColor'>總金額：{totalAmount}元</div>;
 }
 
 function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
@@ -60,6 +60,15 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
     });
     const [searchvalue, setSearchValue] = useState('');
     const titleName = useRef(null);
+
+    // // debugger;
+    // const startdate = (listdata = { start_date: "" }) => {
+    //     // console.log(listdata);
+    //     return listdata ? new Date(listdata.start_date).toLocaleDateString() : new Date().toLocaleDateString()
+    // };
+    // const enddate = (listdata = { end_date: "" }) => {
+    //     return listdata ? new Date(listdata.end_date).toLocaleDateString() : new Date().toLocaleDateString();
+    // };
 
 
 
@@ -194,7 +203,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info }) {
                 </Col>
                 <Col className='text-center' sm={2}>
                     <NavLink to='/prelist'>
-                        <a><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />行前準備</a>
+                        <a id='prelist' style={{color: '#939393'}}><img src='/UserListSource/bag.png' style={{ width: "20px", height: '20px', paddingBottom: '0'}} className='m-2' />行前準備</a>
                     </NavLink>
 
                 </Col>

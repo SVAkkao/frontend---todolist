@@ -65,8 +65,8 @@ const List = () => {
 
   return (
     <>
-      <LogoutBar />
       <Row className="h-100">
+      <LogoutBar />
         <Col sm={3}>
           <LeftSide
             data={alldata}
