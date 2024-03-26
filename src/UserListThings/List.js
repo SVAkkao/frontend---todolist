@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LogoutBar from "../MemberSystem/LogoutBar";
 import { Row, Col } from "react-bootstrap";
 import RightSide from "./RightSide";
-import LeftSide from "./LeftSide";
+import LeftSide from "./LeftSide/LeftSide";
 import TwoAreaMiddle from "./TwoAreaMiddle";
 // import Fetch from "./Fetch";
 import "./color.css";

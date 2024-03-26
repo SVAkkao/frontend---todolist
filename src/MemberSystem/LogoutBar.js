@@ -26,7 +26,10 @@ const API_HOST = process.env.REACT_APP_API_URL;
 async function userLogout() {
   const token = localStorage.getItem("userToken");
   // 在请求头中添加token
-  const response = await axios.post(`${API_HOST}/api/logout`,{},{
+  const response = await axios.post(
+    `${API_HOST}/api/logout`,
+    {},
+    {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -44,7 +47,7 @@ function LogoutBar() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      if( userStore.user.id === 0 ) {
+      if (userStore.user.id === 0) {
         await userStore.getUser();
       }
     };
@@ -85,7 +88,7 @@ function LogoutBar() {
       >
         <div className="container-fluid">
           <img src="logo.svg" style={{ height: "80px" }} alt="清單樂旅 Logo" />
-          <Link to="/list" style={{ textDecoration: "none" }}>
+          <Link to="/alist" style={{ textDecoration: "none" }}>
             <div className="navbar-brand" style={{ fontSize: "32px" }}>
               清單樂旅
             </div>
@@ -165,7 +168,7 @@ function LogoutBar() {
                     </span>
                   )}
                 </div>
-                <Link to="/list" className="nav-link">
+                <Link to="/alist" className="nav-link">
                   <MdHome style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>首頁</span>
                 </Link>
@@ -199,5 +202,3 @@ function LogoutBar() {
 }
 
 export default LogoutBar;
-
-
