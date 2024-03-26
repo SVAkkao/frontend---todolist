@@ -3,8 +3,6 @@ import { Row, Col, Spinner } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Mylist from "../Mylist";
-import { NavLink } from 'react-router-dom';
-
 import { useUserStore } from "../../stores/user";
 
 const API_HOST = process.env.REACT_APP_API_URL;
@@ -31,18 +29,18 @@ function UserInfo() {
 function NavigationLinks({ handleBtnClick, setNotFinishActive, notFinishActive, setFinishActive, finishActive }) {
   return <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
     <Col sm={5}>
-      <NavLink to='/list' className="supportColor text-left w-100">
-        <a onClick={() => handleBtnClick(setNotFinishActive)} style={{ borderBottom: notFinishActive ? 'solid 3px #80BCBD' : '0px', color: notFinishActive ? 'black' : '#939393' }}>
+      <span className="supportColor text-left w-100 click-icon">
+        <span onClick={() => handleBtnClick(setNotFinishActive)} style={{ borderBottom: notFinishActive ? 'solid 3px #80BCBD' : '0px', color: notFinishActive ? 'black' : '#939393' }}>
           未完成
-        </a>
-      </NavLink>
+        </span>
+      </span>
     </Col>
     <Col sm={5}>
-      <NavLink to='/list' className="supportColor text-right w-100">
-        <a onClick={() => handleBtnClick(setFinishActive)} style={{ borderBottom: finishActive ? 'solid 3px #80BCBD' : '0px', color: finishActive ? 'black' : '#939393' }}>
+      <span className="supportColor text-left w-100 click-icon">
+        <span onClick={() => handleBtnClick(setFinishActive)} style={{ borderBottom: finishActive ? 'solid 3px #80BCBD' : '0px', color: finishActive ? 'black' : '#939393' }}>
           已完成
-        </a>
-      </NavLink>
+        </span>
+      </span>
     </Col>
   </Row>;
 }
