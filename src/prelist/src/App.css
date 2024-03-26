@@ -24,7 +24,7 @@ h1 {
   font-size: 1.75rem;
 }
 
-.TodoWrapper {
+.PreWrapper {
   background: #80BCBD
 
   ;
@@ -33,12 +33,12 @@ h1 {
   border-radius: 5px;
 }
 
-.TodoForm {
+.PreForm {
   width: 100%;
   margin-bottom: 1rem;
 }
 
-.todo-input {
+.pre-input {
   outline: none;
   background: rgb(184, 151, 151);
   border: 1px solid #80BCBD;
@@ -49,11 +49,11 @@ h1 {
   color: #262525;
 }
 
-.todo-input::placeholder {
+.pre-input::placeholder {
   color: #ffffff4d;
 }
 
-.todo-btn {
+.pre-btn {
   background: #D5F0C1;
   color: #5b5555;
   border: none;
@@ -61,7 +61,7 @@ h1 {
   cursor: pointer;
 }
 
-.Todo {
+.Pre {
   display: flex;
   justify-content: space-between;
   align-items: center;
