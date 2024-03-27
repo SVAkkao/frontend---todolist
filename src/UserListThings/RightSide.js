@@ -31,30 +31,29 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
 
 
-    // if (!journeyData || !selectedTlid || !selectedjid) {
-    //     return (
-    //         <Spinner animation="border" role="status">
-    //             <span className="visually-hidden">Loading...</span>
-    //         </Spinner>
-    //     );
-    // }
+    if (!journeyData || !selectedTlid || !selectedjid || !alldata) {
+        return (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        );
+    }
 
-    console.log(journeyData)
+
 
     return (
         <>
             <Row className='m-4'>
                 <Col className='text-center'>
-                    <Form.Control
-                        // ref={titleName}
-                        className='text1 p-2 m-4 text-center'
-                        style={{ borderColor: 'transparent' }}
-                        placeholder='請輸入標題'
-                        // value={journeyData.attraction.aname}
-                        // onChange={handleTitleChange}
-                        // onBlur={handleClickOutside}
-                        type="text"
-                    />
+                    {journeyData.attraction && (
+                        <Form.Control
+                            style={{ borderColor: 'transparent' }}
+                            className='text1 p-2 m-4 text-center'
+                            value={journeyData.attraction.aname}
+                            type="text"
+                            placeholder="請輸入標題"
+                        />
+                    )}
                 </Col>
             </Row>
             <Row>

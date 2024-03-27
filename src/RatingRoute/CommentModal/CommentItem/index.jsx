@@ -55,15 +55,24 @@ const DEFAULT_ITEM = {
   created_at: "",
 };
 
+const UserAvatar = ({ username, photo, imgsize }) => {
+  const alt = `The profile picture of user ${username}`;
+  const src = photo || "avatar-template.svg";
+  return <Image
+    roundedCircle
+    width={imgsize}
+    height={imgsize}
+    src={src}
+    alt={alt}
+  />;
+};
+
 /**
  * Used by the 各景點活動的意見 modal
  * @param {*} param
  * @returns
  */
 export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
-  const imgsize = 48;
-  const alt = `User ${item.username}`;
-  const src = item.photo || "avatar-template.svg";
   return (
     <ListGroup.Item className="comment-panel">
       <ModalOprationPanel
@@ -73,13 +82,7 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
         preloadDatas={item}
       />
       <div className="item-panel">
-        <Image
-          width={imgsize}
-          height={imgsize}
-          src={src}
-          roundedCircle
-          alt={alt}
-        />
+        <UserAvatar imgsize={48} {...item} />
         <p>{item.comment}</p>
       </div>
       <div className="item-panel">
@@ -89,28 +92,30 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
   );
 }
 
+function DatetimeInfo({ created_at }) {
+  function convertUTCtoLocal(inputDate) {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const sourceDate = new Date(inputDate);
+      const locales = navigator.language;
+      const options = { timeZone: timeZone, hour12: false };
+      return sourceDate.toLocaleString(locales, options).replace(",", "");
+  }
+  return <time dateTime={created_at}>{convertUTCtoLocal(created_at)}</time>;
+}
+
 /**
  * Used by the 用戶發表的意見 list
  * @param {*} param
  * @returns
  */
 export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
-  const imgsize = 64;
-  const alt = `User ${item.username}`;
-  const src = item.photo || "avatar-template.svg";
   return (
     <Card className="user-comment-panel mb-4">
       <Card.Body>
         <Card.Title>
           <div className="user-comment-header">
             <div className="item -avatar p-1">
-              <Image
-                width={imgsize}
-                height={imgsize}
-                src={src}
-                roundedCircle
-                alt={alt}
-              />
+              <UserAvatar imgsize={64} {...item} />
             </div>
             <div
               className="item -info"
@@ -122,13 +127,10 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                   <span>{item.projectname}</span>
                 </p>
                 <span>
-                  <time dateTime={item.created_at}>
-                    {new Date(item.created_at).toUTCString()}
-                  </time>
+                  <DatetimeInfo {...item} />
                 </span>
               </div>
             </div>
-
             <div className="item -opration">
               <UserOprationPanel
                 cid={item.cid}

@@ -3,8 +3,9 @@ import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 // import Modal from "@mui/material/Modal";
 import Modal from "react-modal";
-import { MdGrade } from "react-icons/md"; // 确保您已经安装了react-icons
+import { MdGrade } from "react-icons/md";
 import { FaMedal } from "react-icons/fa";
+import { FaQuestionCircle } from "react-icons/fa";
 import { getUserScore } from "./api";
 
 function ScoreExplanation() {
@@ -27,33 +28,35 @@ function ScoreExplanation() {
     { name: "LV.9 旅行大使", points: "20,000積分" },
     { name: "LV.10 世界公民", points: "30,000積分" },
   ];
-  return <section className="explanation">
-    <h3>
-      <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
-      積分說明
-    </h3>
-    <ul>
-      {grade.map((grade, index) => (
-        <li
-          key={index}
-          style={{ fontSize: "20px", margin: "2px" }}
-        >{`${grade.name} - ${grade.points}`}</li>
-      ))}
-    </ul>
-    <hr></hr>
-    <h3>
-      <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
-      等級說明：
-    </h3>
-    <ul>
-      {levels.map((level, index) => (
-        <li
-          key={index}
-          style={{ fontSize: "20px", margin: "2px" }}
-        >{`${level.name} - ${level.points}`}</li>
-      ))}
-    </ul>
-  </section>;
+  return (
+    <section className="explanation">
+      <h3>
+        <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
+        積分說明
+      </h3>
+      <ul>
+        {grade.map((grade, index) => (
+          <li
+            key={index}
+            style={{ fontSize: "20px", margin: "2px" }}
+          >{`${grade.name} - ${grade.points}`}</li>
+        ))}
+      </ul>
+      <hr></hr>
+      <h3>
+        <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
+        等級說明：
+      </h3>
+      <ul>
+        {levels.map((level, index) => (
+          <li
+            key={index}
+            style={{ fontSize: "20px", margin: "2px" }}
+          >{`${level.name} - ${level.points}`}</li>
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 function Announce() {
@@ -114,6 +117,19 @@ function Announce() {
         >
           <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
           等級：{getUserAchievement(score)}
+        </span>
+        <br></br>
+        <span
+          style={{
+            fontSize: "16px",
+            cursor: "pointer",
+            margin: "10px",
+            marginTop: "10px",
+            color: "#2894FF",
+          }}
+          onClick={() => setModalIsOpen(true)}
+        >
+          點擊查看積分與等級規則
         </span>
       </section>
       <Modal

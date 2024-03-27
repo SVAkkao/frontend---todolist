@@ -25,12 +25,12 @@ function ChangePassword() {
     const token = localStorage.getItem("userToken");
 
     if (!token) {
-      alert("No token found. Please login first.");
+      alert("請先登入！");
       return;
     }
 
     if (newPassword !== newPasswordConfirmation) {
-      alert("The new password and confirmation password do not match.");
+      alert("新密碼跟確認密碼不吻合！");
       return;
     }
 
@@ -50,13 +50,13 @@ function ChangePassword() {
       );
 
       if (response.status === 200) {
-        alert("Password updated successfully!");
+        alert("更新成功！");
         // 清除输入字段
         setCurrentPassword("");
         setNewPassword("");
         setNewPasswordConfirmation("");
       } else {
-        alert("Failed to update password.");
+        alert("更新失敗:(");
       }
     } catch (error) {
       console.error("Error updating password:", error);
