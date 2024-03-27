@@ -6,7 +6,6 @@ import Mylist from "./Mylist";
 import { useUserStore } from "../../stores/user";
 import { ajaxAddList, ajaxRemoveList } from "./api";
 
-// Components
 function TripLists({ list, finishedSelected, onButtonClick, onRemove }) {
   const isEarlierThanToday = (input) => {
     // Today
@@ -99,7 +98,7 @@ function AddListBtn({ postAddList }) {
   </Row>;
 }
 
-function LeftSide({ data, onSelect, update_info }) {
+export default function LeftSide({ data, onSelect, update_info }) {
   const [finishedSelected, setFinishedSelected] = useState(false);
   const handleBtnClick = (input = true) => {
     // console.log(input ? "已完成" : "未完成");
@@ -138,7 +137,4 @@ function LeftSide({ data, onSelect, update_info }) {
       />
     </>
   );
-}
-
-export default LeftSide;
-
+};
