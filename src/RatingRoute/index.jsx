@@ -50,12 +50,12 @@ function PidSelector({ change_action }) {
             <Form.Control
                 type="text"
                 id="search-project-query"
-                aria-describedby="Project query"
+                aria-describedby="search-project-query-description"
                 value={query}
                 onChange={(e) => set_query(e.target.value)}
             />
             <Form.Text id="search-project-query-description" muted>
-                還有 {projects.length - result_list.length} 個景點活動等待你發掘
+                除了關鍵字以外，還有 {projects.length - result_list.length} 個景點活動等待你發掘
             </Form.Text>
         </div>
         {result_list}
