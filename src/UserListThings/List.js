@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import LogoutBar from "../MemberSystem/LogoutBar";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import RightSide from "./RightSide";
 import LeftSide from "./LeftSide/LeftSide";
 import TwoAreaMiddle from "./TwoAreaMiddle";
+import Money from "./Money";
 // import Fetch from "./Fetch";
 import "./color.css";
 
@@ -25,12 +26,42 @@ function get_all_info() {
   return ajax;
 }
 
+const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmount }) => {
+  const [showMoney, setShowMoney] = useState(false);
+
+  const changeMoneyClick = () => {
+    setShowMoney(true);
+  };
+
+  // if (!alldata || !selectedTlid || selectedjid) {
+  //   return (
+  //     <Spinner animation="border" role="status">
+  //       <span className="visually-hidden">Loading...</span>
+  //     </Spinner>
+  //   );
+  // } else {
+    if (showMoney) {
+      return <Money totalAmount={totalAmount} setShowMoney={setShowMoney}/>;
+    }
+    // console.log("alldata" + alldata);
+    // console.log(selectedTlid);
+    // console.log("selectedjid" + selectedjid);
+    return <RightSide changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />;
+  // }
+
+
+}
+
+
+
 const List = () => {
 
   // 原來的fetch
   const [alldata, setAllData] = useState([]);
   // 拿mylist給的tlid
   const [listSelectedTlid, setSelectedTlid] = useState("");
+  const [selectedjid, setSelectedjid] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
 
   const update_info = () => {
     get_all_info().then((data) => {
@@ -42,13 +73,15 @@ const List = () => {
     get_all_info().then((data) => {
       setAllData(data);
       setSelectedTlid(data[0].tlid);
+      setSelectedjid(data[0].journeys[0]);
     });
   }, []);
+
 
   return (
     <>
       <Row className="h-100">
-      <LogoutBar />
+        <LogoutBar />
         <Col sm={3}>
           <LeftSide
             data={alldata}
@@ -57,10 +90,10 @@ const List = () => {
           />
         </Col>
         <Col sm={6} className="bg-color4">
-          <TwoAreaMiddle  alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info}/>
+          <TwoAreaMiddle alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
         <Col sm={3}>
-          <RightSide />
+          <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount}/>
         </Col>
       </Row>
     </>

@@ -18,7 +18,7 @@ function SplitCost() {
                         </Fetch> */}
                     </Col>
                     <Col sm={6} className='bg-color4'>
-                        <TwoAreaMiddle></TwoAreaMiddle>
+                        {/* <TwoAreaMiddle></TwoAreaMiddle> */}
                     </Col>
                     <Col sm={3}>
                         <Money></Money>
