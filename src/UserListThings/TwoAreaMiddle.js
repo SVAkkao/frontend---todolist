@@ -24,48 +24,54 @@ function JourneyList({ journeys, update_info, onFocusJourney }) {
 }
 
 function TotalCost({ costData, setTotalAmount }) {
-    if (!costData || !costData.journeys) {
+  const [totalAmountForTwoAreaMiddle, setTotalAmountForTwoAreaMiddle] = useState('');
+
+  useEffect(()=>{
+    const jTotalAmount = costData.journeys.reduce((acc, item) => {
+      if (item.jbudgets) {
+        return (
+          acc + 
+          item.jbudgets.reduce((sum, budgetItem) => {
+          return sum + Number(budgetItem.jbamount);
+        }, 0)
+      );
+  }
+  return acc;
+}, 0);
+
+    const jpTotalAmount = costData.journeys.reduce((acc, journey) => {
+      if (journey.journey_projects) {
+        const projectTotal = journey.journey_projects.reduce((sum, project) => {
+          if (project.jpbudgets) {
+            return (
+              sum + 
+              project.jpbudgets.reduce((total, budget) => {
+              return total + Number(budget.jpbamount);
+            }, 0)
+            );
+          }
+          return sum;
+        }, 0);
+        return acc + projectTotal;
+      }
+      return acc;
+    }, 0);
+
+    const totalAmount = jTotalAmount + jpTotalAmount;
+    setTotalAmount(totalAmount);
+    setTotalAmountForTwoAreaMiddle(totalAmount)
+
+  }
+  ,[costData])
+
+    
+      if (!costData || !costData.journeys || !totalAmountForTwoAreaMiddle) {
         return (<Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
         </Spinner>);
     }
-
-    console.log(costData)
-
-    const jTotalAmount = costData.journeys.reduce((acc, item) => {
-        if (item.jbudgets) {
-          return (
-            acc + 
-            item.jbudgets.reduce((sum, budgetItem) => {
-            return sum + Number(budgetItem.jbamount);
-          }, 0)
-        );
-    }
-    return acc;
-}, 0);
-
-      const jpTotalAmount = costData.journeys.reduce((acc, journey) => {
-        if (journey.journey_projects) {
-          const projectTotal = journey.journey_projects.reduce((sum, project) => {
-            if (project.jpbudgets) {
-              return (
-                sum + 
-                project.jpbudgets.reduce((total, budget) => {
-                return total + Number(budget.jpbamount);
-              }, 0)
-              );
-            }
-            return sum;
-          }, 0);
-          return acc + projectTotal;
-        }
-        return acc;
-      }, 0);
-
-      const totalAmount = jTotalAmount + jpTotalAmount;
-      setTotalAmount(totalAmount);
     
-      return <div>總共：{totalAmount}元</div>;
+      return <div>總共：{totalAmountForTwoAreaMiddle}元</div>;
 }
 
 

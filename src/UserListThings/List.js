@@ -7,6 +7,7 @@ import TwoAreaMiddle from "./TwoAreaMiddle";
 import Money from "./Money";
 // import Fetch from "./Fetch";
 import "./color.css";
+import {ajaxAddList} from "./LeftSide/api"
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -96,7 +97,9 @@ const List = () => {
   const setSelectedTlidAndOther =(data)=>{
     setSelectedTlid(data);
     const filtereListdData = alldata.filter((item) => item.tlid == data);
-    setSelectedjid(filtereListdData[0].journeys[0].jid);
+    if(filtereListdData[0].journeys[0] != null){
+      setSelectedjid(filtereListdData[0].journeys[0].jid);
+    }
   }
 
   return (

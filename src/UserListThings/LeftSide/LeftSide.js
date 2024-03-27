@@ -15,14 +15,14 @@ function TripLists({ list, finishedSelected, onButtonClick, onRemove }) {
     // Input date
     const inputDate = new Date(input);
     inputDate.setHours(23, 59, 59, 0);
-    
+
     return inputDate < today;
   };
   const getList = (list = [], finishedSelected) => {
-    if( finishedSelected ) {
-      return list.filter( item => isEarlierThanToday(item.end_date) );
+    if (finishedSelected) {
+      return list.filter(item => isEarlierThanToday(item.end_date));
     }
-    return list.filter( item => !isEarlierThanToday(item.end_date) );
+    return list.filter(item => !isEarlierThanToday(item.end_date));
   };
   return getList(list, finishedSelected).map((item, index) => (
     <Mylist
@@ -105,12 +105,24 @@ export default function LeftSide({ data, onSelect, update_info }) {
     setFinishedSelected(input);
   }
   const postAddList = () => {
-    ajaxAddList().then(()=>{
+    ajaxAddList().then(() => {
       update_info();
     });
   };
   const onRemove = (tlid) => {
-    ajaxRemoveList(tlid).then( () => {
+    // 找到要刪除的 tlid 所在的索引
+    const index = data.findIndex((item) => item.tlid === tlid);
+
+    // 使用 filter() 方法過濾出除了被刪除的 tlid 外的其他 tlid
+    const otherTlids = data.filter((item, i) => i !== index).map((item) => item.tlid);
+
+    // 調用 onSelect() 函式來切換到其他的 tlid 清單
+    if (otherTlids.length > 0) {
+      onSelect(otherTlids[0]);
+    }
+  
+
+    ajaxRemoveList(tlid).then(() => {
       update_info();
     });
   };
