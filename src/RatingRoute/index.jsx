@@ -1,5 +1,5 @@
 // react-bootstrap
-import { Container, Button, Form, Divider } from "react-bootstrap";
+import { Container, Button, Form } from "react-bootstrap";
 import CommentModal from "./CommentModal";
 import { modal_modules } from "./CommentModal/utils";
 import { UsersCommentItem } from "./CommentModal/CommentItem/index";
