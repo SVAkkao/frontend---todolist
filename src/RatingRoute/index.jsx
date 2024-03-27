@@ -15,6 +15,8 @@ async function get_project_api() {
 }
 
 function PidSelector({ change_action }) {
+
+  // Project modules
   const [projects, set_projects] = useState([]);
   const get_projects = () => {
     get_project_api().then((response) => {
@@ -24,6 +26,11 @@ function PidSelector({ change_action }) {
   useEffect(() => {
     get_projects();
   }, []);
+
+  // Search modules
+  const [query, set_query] = useState("");
+
+  // DOM rendering
   const btn_item = (its) => (<Button
       key={its.pid}
       variant="secondary"
@@ -34,12 +41,18 @@ function PidSelector({ change_action }) {
     >
     {its.pname}
   </Button>);
-  // DOM render
-  return (
-    <section className="pid-selectors">
-      {projects.map(btn_item)}
-    </section>
-  );
+  return (<section className="pid-selectors">
+    <div className="search-form">
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => set_query(e.target.value)}
+      />
+      <p className="as">{query}</p>
+    </div>
+    <hr />
+    {projects.map(btn_item)}
+  </section>);
 }
 
 function ProjectComponents() {
@@ -52,7 +65,6 @@ function ProjectComponents() {
   return (
     <article className="project-comment">
       <h2 style={{ padding: "10px 0px" }}>各景點活動的意見</h2>
-
       <h5>點選項目以顯示意見</h5>
       <PidSelector change_action={change_pid} />
       <p>PID: {pid}</p>
