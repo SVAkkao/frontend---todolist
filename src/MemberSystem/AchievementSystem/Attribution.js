@@ -24,92 +24,118 @@ import { useUserStore } from "../../stores/user";
 import "./Attribution.css";
 import { getUserListTitle, getPhotos, getUserCommentApi } from "./api";
 
-const EmptyList = () => <p className="text-center m-2">
-  沒有資料！要不要試試加點東西看看呢 ;-)
-</p>;
+const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
+
+const EmptyList = () => (
+  <p className="text-center m-2">沒有資料！要不要試試加點東西看看呢 ;-)</p>
+);
 
 function RenderedList({ list }) {
   if (list.length > 0) {
-    return <List style={{ padding: 20 }}>{
-      list.map((title, index) => (<React.Fragment key={index}>
-        <ListItem>
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
-              <ListAltIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={title} />
-        </ListItem>
-        {index < list.length - 1 && <Divider />}
-      </React.Fragment>)
-      )
-    }</List>;
+    return (
+      <List style={{ padding: 20 }}>
+        {list.map((title, index) => (
+          <React.Fragment key={index}>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar sx={{ bgcolor: blue[100], color: blue[600] }}>
+                  <ListAltIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={title} />
+            </ListItem>
+            {index < list.length - 1 && <Divider />}
+          </React.Fragment>
+        ))}
+      </List>
+    );
   }
   return <EmptyList />;
 }
 
 function RenderedImageList({ list }) {
   const imgalt = (photo, index) => `The ${index + 1} photo: ${photo}`;
-  const photoslist_comp = list.map((photo, index) => <section key={photo} className="item m-2">
-    <img src={photo} alt={imgalt(photo, index)} />
-  </section>);
+  const photoslist_comp = list.map((photo, index) => (
+    <section key={photo} className="item m-2">
+      <img src={`${API_IMAGE}${photo}`} alt={imgalt(photo, index)} />
+    </section>
+  ));
   if (list.length < 1) {
     return <EmptyList />;
   }
-  return <article className="images-warpper waterfall-effect m-2">{
-    photoslist_comp
-  }</article>;
+  return (
+    <article className="images-warpper waterfall-effect m-2">
+      {photoslist_comp}
+    </article>
+  );
 }
 
 function RenderedComments({ list, onUpdateList }) {
-  const commentslist_comp = list.map((comment) => (<UsersCommentItem
-    key={comment.cid}
-    item={comment}
-    onEdit={onUpdateList}
-    onDelete={onUpdateList}
-  />));
+  const commentslist_comp = list.map((comment) => (
+    <UsersCommentItem
+      key={comment.cid}
+      item={comment}
+      onEdit={onUpdateList}
+      onDelete={onUpdateList}
+    />
+  ));
   if (list.length < 1) {
     return <EmptyList />;
   }
-  return <article className="comments-warpper m-2">
-    { commentslist_comp }
-  </article>;
+  return (
+    <article className="comments-warpper m-2">{commentslist_comp}</article>
+  );
 }
 
-const LoadingComp = () => <section className="text-center m-3">
-  <Spinner animation="border" role="status">
-    <span className="visually-hidden">Loading...</span>
-  </Spinner>
-</section>;
+const LoadingComp = () => (
+  <section className="text-center m-3">
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </section>
+);
 
-const ContributionsPanel = ({ listTitles, comments, photoList, filter, onUpdateList, loading }) => {
-  if( loading ) {
+const ContributionsPanel = ({
+  listTitles,
+  comments,
+  photoList,
+  filter,
+  onUpdateList,
+  loading,
+}) => {
+  if (loading) {
     return <LoadingComp />;
-  }  
+  }
   switch (filter) {
-    case "list": return <RenderedList list={listTitles} />
-    case "photo": return <RenderedImageList list={photoList} />;
-    case "comment": return <RenderedComments list={comments} onUpdateList={onUpdateList} />
-    default: return <EmptyList />;
+    case "list":
+      return <RenderedList list={listTitles} />;
+    case "photo":
+      return <RenderedImageList list={photoList} />;
+    case "comment":
+      return <RenderedComments list={comments} onUpdateList={onUpdateList} />;
+    default:
+      return <EmptyList />;
   }
 };
 
 const UserIntroduction = () => {
   const { user, getUserPhoto } = useUserStore();
-  return (<CardContent>
-    <br />
-    <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
-      <Avatar
-        src={getUserPhoto()}
-        style={{ width: 100, height: 100, marginRight: 10 }}
-      />
-      <Typography variant="h3" sx={{ ml: 2 }}>
-        {user.name}
-      </Typography>
-    </div>
-    <br />
-    <Announce />
-  </CardContent>);
+  return (
+    <CardContent>
+      <br />
+      <div style={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
+        <Avatar
+          src={getUserPhoto()}
+          style={{ width: 100, height: 100, marginRight: 10 }}
+        />
+        <Typography variant="h3" sx={{ ml: 2 }}>
+          {user.name}
+        </Typography>
+      </div>
+      <br />
+      <Announce />
+    </CardContent>
+  );
 };
 
 const AchievementsPage = () => {
@@ -130,17 +156,20 @@ const AchievementsPage = () => {
       getPhotos(),
       getUserCommentApi(),
     ]);
-    api_requestss.then( ([lists, photos, comments]) => {
-      // 直接使用response.data來獲取服務器響應的數據
-      const titles = lists.data.map((item) => item.tourListTitle);
-      setListTitles( titles );
-      setPhotoList(photos.data.result);
-      setUserComments(comments.data.result);
-    }).catch( (e) => {
-      alert(e);
-    }).finally( () => {
-      setLoading(false);
-    });
+    api_requestss
+      .then(([lists, photos, comments]) => {
+        // 直接使用response.data來獲取服務器響應的數據
+        const titles = lists.data.map((item) => item.tourListTitle);
+        setListTitles(titles);
+        setPhotoList(photos.data.result);
+        setUserComments(comments.data.result);
+      })
+      .catch((e) => {
+        alert(e);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
