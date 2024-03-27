@@ -10,19 +10,16 @@ import { NavLink } from 'react-router-dom';
 function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, selectedTlid }) {
     const [think, setThink] = useState('');
     const [memo, setMemo] = useState('');
-    const [journeyData, setJourneyData] = useState({
-    });
+    const [journeyData, setJourneyData] = useState({});
 
 
     useEffect(() => {
         const jid = selectedjid;
-        console.log(alldata)
         const tlid = selectedTlid;
         const filtereListdData = alldata.filter((item) => item.tlid == tlid);
-        console.log(filtereListdData[0]);
-        const filtereJourneydData = filtereListdData.jid.filter((item) => item.jid == jid);
+        const filtereJourneydData = filtereListdData[0].journeys.filter((item) => item.jid == jid);
         setJourneyData(filtereJourneydData[0]);
-    }, [selectedTlid, alldata]);
+    }, [selectedTlid, alldata, selectedjid]);
 
     const handleThinkChange = (event) => {
         setThink(event.target.value);
@@ -41,6 +38,8 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
         );
     }
 
+    console.log(journeyData)
+
     return (
         <>
             <Row className='m-4'>
@@ -50,7 +49,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                         className='text1 p-2 m-4 text-center'
                         style={{ borderColor: 'transparent' }}
                         placeholder='請輸入標題'
-                        // value={areaData.title}
+                        // value={journeyData.attraction.aname}
                         // onChange={handleTitleChange}
                         // onBlur={handleClickOutside}
                         type="text"
@@ -74,29 +73,32 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
-                <Col sm={10}><Form.Label className='text-left '>出發時間</Form.Label></Col>
+                <Col sm={10}><Form.Label className='text-left '>出發日期</Form.Label></Col>
                 <Col sm={1}></Col>
 
                 <Col sm={1}></Col>
-                <Col className='text-center' sm={5}>
-                    <Form.Control type="date" />
-                </Col>
-                <Col className='text-center' sm={5}>
-                    <Form.Control type="time" />
+                <Col className='text-center' sm={10}>
+                    <Form.Control
+                        value={journeyData.arrived_date}
+                        type="date" />
                 </Col>
                 <Col sm={1}></Col>
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
-                <Col sm={10}><Form.Label className='text-left '>回歸時間</Form.Label></Col>
+                <Col sm={10}><Form.Label className='text-left '>時間</Form.Label></Col>
                 <Col sm={1}></Col>
 
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={5}>
-                    <Form.Control type="date" />
+                    <Form.Control
+                        value={journeyData.arrived_time != null ? journeyData.arrived_time : "00:00:00"}
+                        type="time" />
                 </Col>
                 <Col className='text-center' sm={5}>
-                    <Form.Control type="time" />
+                    <Form.Control
+                        value={journeyData.leaved_time != null ? journeyData.leaved_time : "00:00:00"}
+                        type="time" />
                 </Col>
                 <Col sm={1}></Col>
             </Row>

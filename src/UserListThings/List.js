@@ -33,7 +33,15 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid }) => {
     setShowMoney(true);
   };
 
-  if (!alldata || !selectedTlid || selectedjid) {
+  // return <div>
+  //   <p><span>selectedTlid: {selectedTlid}</span>
+  //   </p>
+  //   <p>
+  //     <span>selectedjid: {JSON.stringify(selectedjid)}</span>
+  //   </p>
+  // </div>
+
+  if (!alldata || !selectedTlid || !selectedjid) {
     return (
       <Spinner animation="border" role="status">
         <span className="visually-hidden">Loading...</span>
@@ -43,10 +51,18 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid }) => {
     if (showMoney) {
       return <Money />;
     }
-    console.log("alldata" + alldata);
-    console.log(selectedTlid);
-    console.log("selectedjid" + selectedjid);
-    return <RightSide changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />;
+
+    return(
+    <RightSide changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
+  //     <div>
+  //     <p><span>selectedTlid: {selectedTlid}</span>
+  //   </p>
+  //   <p>
+  //     <span>selectedjid: {JSON.stringify(selectedjid)}</span>
+  //   </p>
+  // </div >
+  );
+  
   }
 
 
@@ -72,10 +88,15 @@ const List = () => {
     get_all_info().then((data) => {
       setAllData(data);
       setSelectedTlid(data[0].tlid);
-      setSelectedjid(data[0].journeys[0]);
+      setSelectedjid(data[0].journeys[0].jid);
     });
   }, []);
 
+  const setSelectedTlidAndOther =(data)=>{
+    setSelectedTlid(data);
+    const filtereListdData = alldata.filter((item) => item.tlid == data);
+    setSelectedjid(filtereListdData[0].journeys[0].jid);
+  }
 
   return (
     <>
@@ -84,12 +105,13 @@ const List = () => {
         <Col sm={3}>
           <LeftSide
             data={alldata}
-            onSelect={setSelectedTlid}
+            onSelect={setSelectedTlidAndOther}
             update_info={update_info}
           />
         </Col>
         <Col sm={6} className="bg-color4">
-          <TwoAreaMiddle alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} />
+          <TwoAreaMiddle alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info}
+            onFocusJourney={setSelectedjid} />
         </Col>
         <Col sm={3}>
           <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} />
