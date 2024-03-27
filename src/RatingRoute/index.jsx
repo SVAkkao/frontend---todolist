@@ -22,27 +22,22 @@ function PidSelector({ change_action }) {
     });
   };
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      get_projects();
-    }
-    return () => (mounted = false);
+    get_projects();
   }, []);
+  const btn_item = (its) => (<Button
+      key={its.pid}
+      variant="secondary"
+      className="m-2"
+      data-pid={its.pid}
+      data-aid={its.aid}
+      onClick={() => change_action(its.pid)}
+    >
+    {its.pname}
+  </Button>);
   // DOM render
   return (
     <section className="pid-selectors">
-      {projects.map((its) => (
-        <Button
-          key={its.pid}
-          variant="secondary"
-          className="m-2"
-          data-pid={its.pid}
-          data-aid={its.aid}
-          onClick={() => change_action(its.pid)}
-        >
-          {its.pname}
-        </Button>
-      ))}
+      {projects.map(btn_item)}
     </section>
   );
 }
@@ -82,18 +77,17 @@ function UserComments() {
   useEffect(() => {
     request_list();
   }, []);
+  const comment_item = (item) => (
+    <UsersCommentItem
+      key={item.cid}
+      item={item}
+      onEdit={edit_action}
+      onDelete={delete_action} />
+  );
   return (
     <article className="user-comment">
       <h2 style={{ padding: "10px 0px" }}>用戶發表的意見</h2>
-
-      {list.map((item) => (
-        <UsersCommentItem
-          key={item.cid}
-          item={item}
-          onEdit={edit_action}
-          onDelete={delete_action}
-        />
-      ))}
+      {list.map(comment_item)}
     </article>
   );
 }
@@ -108,7 +102,6 @@ function RatingRoute() {
       }}
     >
       <LogoutBar />
-
       <Container>
         <div
           style={{
