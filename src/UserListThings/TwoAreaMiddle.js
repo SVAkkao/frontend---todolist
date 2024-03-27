@@ -6,7 +6,6 @@ import { Row, Col, Form, Spinner } from "react-bootstrap";
 import Day from "./Day";
 import { NavLink } from "react-router-dom";
 
-
 const API_HOST = process.env.REACT_APP_API_URL;
 
 function JourneyList({ journeys, update_info, onFocusJourney }) {
@@ -19,62 +18,72 @@ function JourneyList({ journeys, update_info, onFocusJourney }) {
   }
   // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
   return journeys.map((item, index) => (
-    <Journey key={index} journeydata={item} update_info={update_info} onFocusJourney={onFocusJourney} />
+    <Journey
+      key={index}
+      journeydata={item}
+      update_info={update_info}
+      onFocusJourney={onFocusJourney}
+    />
   ));
 }
 
 function TotalCost({ costData, setTotalAmount }) {
-    if (!costData || !costData.journeys) {
-        return (<Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-        </Spinner>);
-    }
+  if (!costData || !costData.journeys) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    );
+  }
 
-    console.log(costData)
+  console.log(costData);
 
-    const jTotalAmount = costData.journeys.reduce((acc, item) => {
-        if (item.jbudgets) {
-          return (
-            acc + 
-            item.jbudgets.reduce((sum, budgetItem) => {
-            return sum + Number(budgetItem.jbamount);
-          }, 0)
-        );
+  const jTotalAmount = costData.journeys.reduce((acc, item) => {
+    if (item.jbudgets) {
+      return (
+        acc +
+        item.jbudgets.reduce((sum, budgetItem) => {
+          return sum + Number(budgetItem.jbamount);
+        }, 0)
+      );
     }
     return acc;
-}, 0);
+  }, 0);
 
-      const jpTotalAmount = costData.journeys.reduce((acc, journey) => {
-        if (journey.journey_projects) {
-          const projectTotal = journey.journey_projects.reduce((sum, project) => {
-            if (project.jpbudgets) {
-              return (
-                sum + 
-                project.jpbudgets.reduce((total, budget) => {
-                return total + Number(budget.jpbamount);
-              }, 0)
-              );
-            }
-            return sum;
-          }, 0);
-          return acc + projectTotal;
+  const jpTotalAmount = costData.journeys.reduce((acc, journey) => {
+    if (journey.journey_projects) {
+      const projectTotal = journey.journey_projects.reduce((sum, project) => {
+        if (project.jpbudgets) {
+          return (
+            sum +
+            project.jpbudgets.reduce((total, budget) => {
+              return total + Number(budget.jpbamount);
+            }, 0)
+          );
         }
-        return acc;
+        return sum;
       }, 0);
+      return acc + projectTotal;
+    }
+    return acc;
+  }, 0);
 
-      const totalAmount = jTotalAmount + jpTotalAmount;
-      setTotalAmount(totalAmount);
-    
-      return <div>總共：{totalAmount}元</div>;
+  const totalAmount = jTotalAmount + jpTotalAmount;
+  setTotalAmount(totalAmount);
+
+  return <div>總共：{totalAmount}元</div>;
 }
 
-
-function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, setTotalAmount }) {
-  const [listdata, setListdata] = useState({
-  });
-  const [searchvalue, setSearchValue] = useState('');
+function TwoAreaMiddle({
+  selectedTlid,
+  alldata,
+  update_info,
+  onFocusJourney,
+  setTotalAmount,
+}) {
+  const [listdata, setListdata] = useState({});
+  const [searchvalue, setSearchValue] = useState("");
   const titleName = useRef(null);
-
 
   // 過濾出 tlid 為特定值的資料
   useEffect(() => {
@@ -98,6 +107,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
       },
       body: JSON.stringify(addjourneydata),
     }).then((response) => {
@@ -124,7 +134,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
           tlid: selectedTlid,
           title: inputValue,
           start_date: listdata.start_date,
-          end_date: listdata.end_date
+          end_date: listdata.end_date,
         }),
       }).then(() => {
         update_info();
@@ -156,7 +166,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
   //     return <Spinner animation="border" role="status">
   //         <span className="visually-hidden">Loading...</span>
   //     </Spinner>;
-  // } 
+  // }
   if (!listdata || !selectedTlid) {
     return (
       <Spinner animation="border" role="status">
@@ -182,7 +192,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
       </Row>
       <Row className="m-4">
         <Col className="text-center">
-          <TotalCost costData={listdata} setTotalAmount={setTotalAmount}/>
+          <TotalCost costData={listdata} setTotalAmount={setTotalAmount} />
         </Col>
       </Row>
       <Row className="m-4" style={{ alignItems: "center" }}>
@@ -213,7 +223,11 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
           </NavLink>
         </Col>
         <Col sm={1}></Col>
-        <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} />
+        <JourneyList
+          journeys={listdata.journeys}
+          update_info={update_info}
+          onFocusJourney={onFocusJourney}
+        />
         {/* <Day></Day> */}
       </Row>
       <Row className="m-4">
