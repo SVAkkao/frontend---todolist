@@ -55,15 +55,24 @@ const DEFAULT_ITEM = {
   created_at: "",
 };
 
+const UserAvatar = ({ username, photo, imgsize }) => {
+  const alt = `The profile picture of user ${username}`;
+  const src = photo || "avatar-template.svg";
+  return <Image
+    roundedCircle
+    width={imgsize}
+    height={imgsize}
+    src={src}
+    alt={alt}
+  />;
+};
+
 /**
  * Used by the 各景點活動的意見 modal
  * @param {*} param
  * @returns
  */
 export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
-  const imgsize = 48;
-  const alt = `User ${item.username}`;
-  const src = item.photo || "avatar-template.svg";
   return (
     <ListGroup.Item className="comment-panel">
       <ModalOprationPanel
@@ -73,13 +82,7 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
         preloadDatas={item}
       />
       <div className="item-panel">
-        <Image
-          width={imgsize}
-          height={imgsize}
-          src={src}
-          roundedCircle
-          alt={alt}
-        />
+        <UserAvatar imgsize={48} {...item} />
         <p>{item.comment}</p>
       </div>
       <div className="item-panel">
@@ -95,22 +98,13 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
  * @returns
  */
 export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
-  const imgsize = 64;
-  const alt = `User ${item.username}`;
-  const src = item.photo || "avatar-template.svg";
   return (
     <Card className="user-comment-panel mb-4">
       <Card.Body>
         <Card.Title>
           <div className="user-comment-header">
             <div className="item -avatar p-1">
-              <Image
-                width={imgsize}
-                height={imgsize}
-                src={src}
-                roundedCircle
-                alt={alt}
-              />
+              <UserAvatar imgsize={64} {...item} />
             </div>
             <div
               className="item -info"
