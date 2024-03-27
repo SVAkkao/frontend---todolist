@@ -30,13 +30,13 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
 
 
-    // if (!journeyData || !selectedTlid || !selectedjid) {
-    //     return (
-    //         <Spinner animation="border" role="status">
-    //             <span className="visually-hidden">Loading...</span>
-    //         </Spinner>
-    //     );
-    // }
+    if (!journeyData || !selectedTlid || !selectedjid) {
+        return (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        );
+    }
 
     console.log(journeyData)
 
@@ -49,7 +49,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                         className='text1 p-2 m-4 text-center'
                         style={{ borderColor: 'transparent' }}
                         placeholder='請輸入標題'
-                        // value={journeyData.attraction.aname}
+                        // value={journeyData.attraction.aname != null ? journeyData.attraction.aname : '請輸入標題'}
                         // onChange={handleTitleChange}
                         // onBlur={handleClickOutside}
                         type="text"
