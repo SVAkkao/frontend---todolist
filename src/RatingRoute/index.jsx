@@ -1,5 +1,5 @@
 // react-bootstrap
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Form, Divider } from "react-bootstrap";
 import CommentModal from "./CommentModal";
 import { modal_modules } from "./CommentModal/utils";
 import { UsersCommentItem } from "./CommentModal/CommentItem/index";
@@ -15,8 +15,7 @@ async function get_project_api() {
 }
 
 function PidSelector({ change_action }) {
-
-  // Project modules
+  // Get projects
   const [projects, set_projects] = useState([]);
   const get_projects = () => {
     get_project_api().then((response) => {
@@ -26,12 +25,15 @@ function PidSelector({ change_action }) {
   useEffect(() => {
     get_projects();
   }, []);
-
-  // Search modules
+  // Search keyword
   const [query, set_query] = useState("");
-
+  // Build result list
+  const max_limit = 5;
+  const build_list = (source_projects = [], query = "", limit = 5) => {
+    return source_projects.filter( ({ pname }) => pname.includes(query) ).slice( 0, limit );
+  };
   // DOM rendering
-  const btn_item = (its) => (<Button
+  const result_list = build_list(projects, query, max_limit).map( (its) => (<Button
       key={its.pid}
       variant="secondary"
       className="m-2"
@@ -40,18 +42,23 @@ function PidSelector({ change_action }) {
       onClick={() => change_action(its.pid)}
     >
     {its.pname}
-  </Button>);
+    </Button>)
+  );
   return (<section className="pid-selectors">
-    <div className="search-form">
-      <input
+    <div className="search-form mb-3">
+      <Form.Label htmlFor="search-project-query">請輸入關鍵字</Form.Label>
+      <Form.Control
         type="text"
+        id="search-project-query"
+        aria-describedby="Project query"
         value={query}
         onChange={(e) => set_query(e.target.value)}
       />
-      <p className="as">{query}</p>
+      <Form.Text id="search-project-query-description" muted>
+        還有 {projects.length - result_list.length} 個景點活動等待你發掘
+      </Form.Text>
     </div>
-    <hr />
-    {projects.map(btn_item)}
+    {result_list}
   </section>);
 }
 
@@ -63,11 +70,9 @@ function ProjectComponents() {
     show_modal();
   };
   return (
-    <article className="project-comment">
-      <h2 style={{ padding: "10px 0px" }}>各景點活動的意見</h2>
-      <h5>點選項目以顯示意見</h5>
+    <article className="project-comment" data-pid={pid}>
+      <h2 className="mb-4">各景點活動的意見</h2>
       <PidSelector change_action={change_pid} />
-      <p>PID: {pid}</p>
       <div className="modal">
         <CommentModal show={show} handleClose={close_modal} pid={pid} />
       </div>
