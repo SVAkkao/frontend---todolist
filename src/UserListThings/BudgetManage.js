@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 import { PieChart } from '@mui/x-charts/PieChart';
-function BudgetManage() {
+function BudgetManage({totalAmount}) {
     const pieParams = { height: 200, margin: { right: 5 } };
     const amount = useRef(0);
     const [amountValue, setAmountValue] = useState(0);
@@ -10,10 +10,26 @@ function BudgetManage() {
             amount.current.value
         );
     }
+    let retainEarning = amountValue - totalAmount;
+    let neg = 0;
+    let cost = 0;
+    if (retainEarning >= 0){
+        neg = 0;
+        retainEarning = amountValue - totalAmount;
+        cost = totalAmount;
+    }else{
+        cost = amountValue;
+        neg = totalAmount-amountValue;
+        retainEarning = 0;
+    }
+
+
     const data = [
-        { value: amountValue, label: '已用預算' },
-        { value: 15, label: '剩餘預算' }
+        { value: cost, label: '已用預算' },
+        { value: retainEarning, label: '剩餘預算' },
+        { value: neg, label: '超出預算'}
     ];
+
     return (
         <>
             <Row className='m-4'>
@@ -30,7 +46,7 @@ function BudgetManage() {
 
                 <Col sm={1}></Col>
                 <Col><PieChart
-                    colors={['#939393', '#80BCBD']}
+                    colors={['#939393', '#80BCBD', '#D2302B']}
                     series={[
                         {
                             arcLabel: (item) => `${item.label} (${item.value})`,

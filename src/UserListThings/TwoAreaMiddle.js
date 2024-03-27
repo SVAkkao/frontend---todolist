@@ -23,50 +23,53 @@ function JourneyList({ journeys, update_info, onFocusJourney }) {
   ));
 }
 
-function TotalCost({ costData }) {
-  if (!costData || !costData.journeys) {
-    return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    );
-  }
-  const jTotalAmount = costData.journeys.reduce((acc, item) => {
-    if (item.jbudgets) {
-      return (
-        acc +
-        item.jbudgets.reduce((sum, budgetItem) => {
-          return sum + Number(budgetItem.jbamount);
-        }, 0)
-      );
+function TotalCost({ costData, setTotalAmount }) {
+    if (!costData || !costData.journeys) {
+        return (<Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>);
     }
-    return acc;
-  }, 0);
 
-  const jpTotalAmount = costData.journeys.reduce((acc, journey) => {
-    if (journey.journey_projects) {
-      const projectTotal = journey.journey_projects.reduce((sum, project) => {
-        if (project.jpbudgets) {
+    console.log(costData)
+
+    const jTotalAmount = costData.journeys.reduce((acc, item) => {
+        if (item.jbudgets) {
           return (
-            sum +
-            project.jpbudgets.reduce((total, budget) => {
-              return total + Number(budget.jpbamount);
-            }, 0)
-          );
-        }
-        return sum;
-      }, 0);
-      return acc + projectTotal;
+            acc + 
+            item.jbudgets.reduce((sum, budgetItem) => {
+            return sum + Number(budgetItem.jbamount);
+          }, 0)
+        );
     }
     return acc;
-  }, 0);
+}, 0);
 
-  const totalAmount = jTotalAmount + jpTotalAmount
+      const jpTotalAmount = costData.journeys.reduce((acc, journey) => {
+        if (journey.journey_projects) {
+          const projectTotal = journey.journey_projects.reduce((sum, project) => {
+            if (project.jpbudgets) {
+              return (
+                sum + 
+                project.jpbudgets.reduce((total, budget) => {
+                return total + Number(budget.jpbamount);
+              }, 0)
+              );
+            }
+            return sum;
+          }, 0);
+          return acc + projectTotal;
+        }
+        return acc;
+      }, 0);
 
-  return <div>{totalAmount}</div>;
+      const totalAmount = jTotalAmount + jpTotalAmount;
+      setTotalAmount(totalAmount);
+    
+      return <div>總共：{totalAmount}元</div>;
 }
 
-function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney }) {
+
+function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, setTotalAmount }) {
   const [listdata, setListdata] = useState({
   });
   const [searchvalue, setSearchValue] = useState('');
@@ -179,7 +182,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney }) {
       </Row>
       <Row className="m-4">
         <Col className="text-center">
-          <TotalCost costData={listdata} />
+          <TotalCost costData={listdata} setTotalAmount={setTotalAmount}/>
         </Col>
       </Row>
       <Row className="m-4" style={{ alignItems: "center" }}>
@@ -199,7 +202,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney }) {
         </Col>
         <Col className="text-center" sm={2}>
           <NavLink to="/prelist">
-            <a id="prelist" style={{ color: "#939393" }}>
+            <a id="prelist">
               <img
                 src="/UserListSource/bag.png"
                 style={{ width: "20px", height: "20px", paddingBottom: "0" }}
@@ -211,7 +214,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney }) {
         </Col>
         <Col sm={1}></Col>
         <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} />
-        <Day></Day>
+        {/* <Day></Day> */}
       </Row>
       <Row className="m-4">
         <Col sm={1}></Col>
