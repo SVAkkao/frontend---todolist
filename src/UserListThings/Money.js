@@ -35,11 +35,11 @@ function Money({ totalAmount, setShowMoney }) {
                             <a onClick={() => handleButtonClick(setBudgetActive)} style={{ borderBottom: budgetActive ? 'solid 3px #80BCBD' : '0px', color: budgetActive ? 'black' : '#939393' }}>預算管理</a>
                         </NavLink>
                     </Col>
-                    {/* <Col>
+                    <Col>
                         <NavLink to='/list' className="supportColor text-right">
                             <a onClick={() => handleButtonClick(setSplitActive)} style={{ borderBottom: splitActive ? 'solid 3px #80BCBD' : '0px', color: splitActive ? 'black' : '#939393' }}>分帳計算</a>
                         </NavLink>
-                    </Col> */}
+                    </Col>
                     <Col sm={1}></Col>
                 </Row>
                 {budgetActive && <BudgetManage totalAmount={totalAmount} />}

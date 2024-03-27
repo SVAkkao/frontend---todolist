@@ -4,6 +4,7 @@ import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
 import { Row, Col, Form, Spinner } from 'react-bootstrap';
 import './color.css';
+import './likeStyle.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
 
@@ -110,11 +111,11 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                             <Form.Label className='text-left'>感想</Form.Label>
                         </Col>
                         <Col sm={7} className="d-flex justify-content-end">
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
-                            <img src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} />
+                            <a><img className='like5' src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} /></a>
+                            <a><img className='like4' src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} /></a>
+                            <a><img className='like3' src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} /></a>
+                            <a><img className='like2' src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} /></a>
+                            <a><img className='like1' src='/UserListSource/heart.png' style={{ width: "20px", height: '20px', margin: '0 2px' }} /></a>
                         </Col>
                     </Row>
                     <Row>
