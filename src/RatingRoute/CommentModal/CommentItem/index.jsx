@@ -92,6 +92,17 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
   );
 }
 
+function DatetimeInfo({ created_at }) {
+  function convertUTCtoLocal(inputDate) {
+      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const sourceDate = new Date(inputDate);
+      const locales = navigator.language;
+      const options = { timeZone: timeZone, hour12: false };
+      return sourceDate.toLocaleString(locales, options).replace(",", "");
+  }
+  return <time dateTime={created_at}>{convertUTCtoLocal(created_at)}</time>;
+}
+
 /**
  * Used by the 用戶發表的意見 list
  * @param {*} param
@@ -116,13 +127,10 @@ export function UsersCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
                   <span>{item.projectname}</span>
                 </p>
                 <span>
-                  <time dateTime={item.created_at}>
-                    {new Date(item.created_at).toUTCString()}
-                  </time>
+                  <DatetimeInfo {...item} />
                 </span>
               </div>
             </div>
-
             <div className="item -opration">
               <UserOprationPanel
                 cid={item.cid}
