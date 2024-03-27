@@ -214,7 +214,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
         </Col>
         <Col sm={1}></Col>
         <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} />
-        <Day></Day>
+        {/* <Day></Day> */}
       </Row>
       <Row className="m-4">
         <Col sm={1}></Col>
