@@ -27,7 +27,7 @@ function EditProfile() {
     const token = localStorage.getItem("userToken"); // 从localStorage中获取token
 
     if (!token) {
-      alert("No token found. Please login first.");
+      alert("請先登入！");
       return;
     }
 
@@ -46,9 +46,9 @@ function EditProfile() {
       );
 
       if (response.status === 200) {
-        alert("User info updated successfully!");
+        alert("上傳成功！");
       } else {
-        alert("Failed to update user info.");
+        alert("上傳失敗！");
       }
     } catch (error) {
       console.error("Error updating user info:", error);
@@ -71,7 +71,11 @@ function EditProfile() {
           <label>
             手機號碼：
             <br />
-            <input type="text" value={cellphone} onChange={handleCellphoneChange} />
+            <input
+              type="text"
+              value={cellphone}
+              onChange={handleCellphoneChange}
+            />
           </label>
         </div>
         <button type="submit">保存</button>
