@@ -26,7 +26,7 @@ function get_all_info() {
   return ajax;
 }
 
-const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid }) => {
+const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmount }) => {
   const [showMoney, setShowMoney] = useState(false);
 
   const changeMoneyClick = () => {
@@ -49,7 +49,7 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid }) => {
     );
   } else {
     if (showMoney) {
-      return <Money />;
+      return <Money totalAmount={totalAmount} setShowMoney={setShowMoney}/>;
     }
 
     return(
@@ -77,6 +77,7 @@ const List = () => {
   // 拿mylist給的tlid
   const [listSelectedTlid, setSelectedTlid] = useState("");
   const [selectedjid, setSelectedjid] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
 
   const update_info = () => {
     get_all_info().then((data) => {
@@ -110,11 +111,10 @@ const List = () => {
           />
         </Col>
         <Col sm={6} className="bg-color4">
-          <TwoAreaMiddle alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info}
-            onFocusJourney={setSelectedjid} />
+          <TwoAreaMiddle alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
         <Col sm={3}>
-          <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} />
+          <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount}/>
         </Col>
       </Row>
     </>

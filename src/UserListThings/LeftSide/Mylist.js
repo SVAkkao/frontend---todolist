@@ -2,19 +2,19 @@ import React, {useState} from 'react'
 import { Row, Col, Card, } from 'react-bootstrap';
 
 function DateInfo({ startDate, endDate }) {
-    const sd = new Date(startDate).toLocaleDateString();
-    const ed = new Date(endDate).toLocaleDateString();
+    const renderDate = (date) => {
+        return new Date(date).toLocaleDateString();
+    }
     return <Row className='mt-3' style={{ alignItems: 'center' }}>
         <Col sm={1}></Col>
-        <Col><p className='text4 supportColor'>{sd}</p></Col>
+        <Col><p className='text4 supportColor'>{renderDate(startDate)}</p></Col>
         <Col>
             <img style={{ width: "24px", height: '24px', marginBottom: '12px', paddingBottom: '0' }} src="/UserListSource/to.png" alt="Icon" />
         </Col>
-        <Col><p className='text4 supportColor'>{ed}</p></Col>
+        <Col><p className='text4 supportColor'>{renderDate(endDate)}</p></Col>
         <Col sm={1}></Col>
     </Row>;
 }
-
 
 function Mylist({ data, onButtonClick, onRemove }) {
     const [image, setImage] = useState(null);
@@ -27,7 +27,7 @@ function Mylist({ data, onButtonClick, onRemove }) {
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}
                     >
                         <div style={{ flex: '1', textAlign: 'center' }} onClick={() => onButtonClick(data.tlid)}>
-                            <Card.Text className='text3'>
+                            <Card.Text className='text3 text-truncate' style={{ maxWidth: '80%' }}>
                                 {data.title}
                             </Card.Text>
                         </div>

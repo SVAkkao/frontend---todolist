@@ -30,13 +30,13 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
 
 
-    if (!journeyData || !selectedTlid || !selectedjid) {
-        return (
-            <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </Spinner>
-        );
-    }
+    // if (!journeyData || !selectedTlid || !selectedjid) {
+    //     return (
+    //         <Spinner animation="border" role="status">
+    //             <span className="visually-hidden">Loading...</span>
+    //         </Spinner>
+    //     );
+    // }
 
     console.log(journeyData)
 
@@ -66,7 +66,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 </Col>
                 <Col className='text-right' sm={4}>
                     <NavLink to='/ratings'>
-                        <a id='ratings' style={{ color: '#939393' }}>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                        <a id='ratings'>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
                     </NavLink>
                 </Col>
                 <Col sm={1}></Col>

@@ -1,13 +1,14 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
 
-function GetCarouselItem(i, itemsInGroup) {
+function GetCarouselItem(i = 0, itemsInGroup = ["/logo.svg"]) {
     const renderImg = (image, index) => (<img
         key={image}
         src={image}
         className="d-block"
         style={{ width: '33.33%' }} // 设置每个图片的宽度
-        alt={`Slide ${index}`} />);
+        alt={`Slide ${index}`}
+    />);
     return <Carousel.Item key={i}>
         <div className="d-flex justify-content-between">
             {itemsInGroup.map(renderImg)}
@@ -17,15 +18,16 @@ function GetCarouselItem(i, itemsInGroup) {
 
 function getCarouselList(images = []) {
     // 计算轮播图子项的数量
-    const itemCount = Math.ceil(images.length / 3);
+    const radix = 3;
+    const itemCount = Math.ceil(images.length / radix);
 
     // 生成每组轮播图子项
     const result = [];
 
     for (let i = 0; i < itemCount; i++) {
         // Indexes
-        const startIndex = i * 3;
-        const itemsInGroup = images.slice(startIndex, startIndex + 3);
+        const startIndex = i * radix;
+        const itemsInGroup = images.slice(startIndex, startIndex + radix);
         // Action
         result.push( GetCarouselItem(i, itemsInGroup) );
     }
