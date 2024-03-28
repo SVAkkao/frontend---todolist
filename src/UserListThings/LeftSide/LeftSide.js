@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, } from "react";
 import { Row, Col, Spinner } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
@@ -24,6 +24,9 @@ function TripLists({ list, finishedSelected, onButtonClick, onRemove }) {
     }
     return list.filter(item => !isEarlierThanToday(item.end_date));
   };
+
+
+
   return getList(list, finishedSelected).map((item, index) => (
     <Mylist
       key={item.tlid}

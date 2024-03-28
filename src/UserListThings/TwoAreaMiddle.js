@@ -23,6 +23,7 @@ function JourneyList({ journeys, update_info, onFocusJourney, setShowJourney }) 
       journeydata={item}
       update_info={update_info}
       onFocusJourney={onFocusJourney}
+      setShowJourney={setShowJourney}
     />
   ));
 }
@@ -268,7 +269,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
           </NavLink>
         </Col>
         <Col sm={1}></Col>
-        <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} />
+        <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney} />
         {/* <Day></Day> */}
       </Row>
       <Row className="m-4">

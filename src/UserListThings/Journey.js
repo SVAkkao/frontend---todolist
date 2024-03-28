@@ -6,7 +6,7 @@ import JourneyProject from './JourneyProject';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function JourneyProjectList({ journeyProjects }) {
+function JourneyProjectList({ journeyProjects, setShowJourney }) {
     if (!journeyProjects) {
         return <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -14,7 +14,7 @@ function JourneyProjectList({ journeyProjects }) {
     }
     // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
     return journeyProjects.map((item, index) => (
-        <JourneyProject key={index} journeyProjectsdata={item} />
+        <JourneyProject key={index} journeyProjectsdata={item} setShowJourney={setShowJourney} />
     ))
 
     {/* {journeyproject.map((item, index) => (
@@ -24,7 +24,7 @@ function JourneyProjectList({ journeyProjects }) {
 
 
 
-function Journey({ journeydata, update_info, onFocusJourney }) {
+function Journey({ journeydata, update_info, onFocusJourney, setShowJourney }) {
     const [journeyDataValue, setJourneyDataValue] = useState({});
     const [checkedValue, setCheckedValue] = useState(false);
 
@@ -97,6 +97,7 @@ function Journey({ journeydata, update_info, onFocusJourney }) {
             case "select":
                 console.log(journeydata.jid);
                 onFocusJourney(journeydata.jid);
+                setShowJourney(true);
                 break;
             case "check":
                 checked(event);
