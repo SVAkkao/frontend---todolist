@@ -83,6 +83,7 @@ const List = () => {
   const update_info = () => {
     get_all_info().then((data) => {
       setAllData(data);
+      console.log(data)
     });
   };
 

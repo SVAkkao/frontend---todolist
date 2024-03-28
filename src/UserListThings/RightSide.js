@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import Pic from './FormThings/Pic';
 import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
@@ -9,9 +9,11 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
 
 function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, selectedTlid }) {
-    const [think, setThink] = useState('');
-    const [memo, setMemo] = useState('');
+    const [thinkvalue, setThinkValue] = useState('');
+    const [memoValue, setMemoValue] = useState('');
     const [journeyData, setJourneyData] = useState({});
+    const think = useRef(null);
+    const memo = useRef(null);
 
 
     useEffect(() => {
@@ -23,10 +25,10 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
     }, [selectedTlid, alldata, selectedjid]);
 
     const handleThinkChange = (event) => {
-        setThink(event.target.value);
+        setThinkValue(event.target.value);
     };
     const handleMemoChange = (event) => {
-        setMemo(event.target.value);
+        setMemoValue(event.target.value);
     };
 
 
@@ -121,7 +123,8 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     <Row>
                         <Col sm={12}>
                             <TextareaAutosize
-                                value={think}
+                                ref={think}
+                                value={journeyData.jmemo}
                                 onChange={handleThinkChange}
                                 placeholder="抒發感想"
                                 className='rounded'
