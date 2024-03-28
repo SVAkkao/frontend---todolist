@@ -40,7 +40,7 @@ function Split() {
                 </Col>
                 <Col><button className='bg-color1 text-right p-2 rounded' style={{ border: 'transparent', color: 'white' }}>計算費用</button></Col>
                 <Col sm={1}>
-                    <a><img src='/UserListSource/send.png' style={{ width: "32px", height: '32px', paddingBottom: '0' }} /></a>
+                    <a><img src='/UserListSource/delete.png' style={{ width: "32px", height: '32px', paddingBottom: '0' }} /></a>
                 </Col>
                 <Col sm={1}></Col>
 
