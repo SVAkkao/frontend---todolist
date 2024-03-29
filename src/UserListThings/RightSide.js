@@ -68,14 +68,32 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 body: JSON.stringify(updateJourneyData),
             }
         )
-            .then((response) => {
-                console.log(response.json());
-                update_info();
-            })
-            .then(() => {
-
+        .then(() => {
+            // 發送 HTTP 請求，將費用數據提交到服務器
+            journeyData.jbudgets.forEach((item) => {
+              fetch(API_HOST + "/api/POST/updatejbudget",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    jbid: item.jbid,
+                    jbname: item.jbname,
+                    jbamount: item.jbamount,
+                  }),
+                }
+              );
             });
-    }
+            update_info();
+          })
+          .then(() => {
+    
+          });
+      };    
+   
+   
+        
 
     const addBudgetClick = () => {
         fetch(API_HOST + "/api/POST/addjbudget",
@@ -87,7 +105,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 body: JSON.stringify(
                     {
                         jid: journeyData.jid,
-                        jbname: "",
+                        jbname: "未命名",
                         jbamount: "0"
                     }
                 ),
@@ -123,6 +141,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                             onChange={handleAnameChange}
                             type="text"
                             placeholder="請輸入標題"
+                            onBlur={handleUpdateClick}
                         />
                     )}
                 </Col>
@@ -177,7 +196,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             {journeyData.jbudgets &&
             (
                 journeyData.jbudgets.map((item, index) => (
-                <Budget key={index} budgetData={item} setJourneyData={setJourneyData} />
+                <Budget key={index} budgetData={item} setJourneyData={setJourneyData} handleUpdateClick={handleUpdateClick}/>
             ))
             )}
 
@@ -205,6 +224,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                                 placeholder="抒發感想"
                                 className='rounded'
                                 style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
+                                onBlur={handleUpdateClick}
                             />
                         </Col>
                     </Row>
@@ -226,6 +246,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                         placeholder="新增備註"
                         className='rounded'
                         style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
+                        onBlur={handleUpdateClick}
                     />
                 </Col>
                 <Col sm={1}></Col>
