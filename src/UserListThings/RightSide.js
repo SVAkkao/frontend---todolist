@@ -77,7 +77,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             });
     }
 
-    const addBudgetClick = (selectedjid) => {
+    const addBudgetClick = () => {
         fetch(API_HOST + "/api/POST/addjbudget",
             {
                 method: "POST",
@@ -86,14 +86,15 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 },
                 body: JSON.stringify(
                     {
-                        jid: selectedjid,
+                        jid: journeyData.jid,
                         jbname: "",
-                        jbamount: 0
+                        jbamount: "0"
                     }
                 ),
             }
         )
-            .then(() => {
+            .then((response) => {
+                console.log(response.json())
                 update_info();
             })
     }
@@ -173,9 +174,12 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 <Col sm={1}></Col>
             </Row>
 
-            {journeyData.jbudgets.map((item, index) => (
+            {journeyData.jbudgets &&
+            (
+                journeyData.jbudgets.map((item, index) => (
                 <Budget key={index} budgetData={item} setJourneyData={setJourneyData} />
-            ))}
+            ))
+            )}
 
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>

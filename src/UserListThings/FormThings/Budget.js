@@ -16,10 +16,10 @@ function Budget({budgetData, setJourneyData}) {
         <Col sm={1}></Col>
         <Col sm={1}></Col>
         <Col className='text-center' sm={5}>
-            <Form.Control type="text" placeholder='費用名稱' />
+            <Form.Control type="text" placeholder='費用名稱' value={budgetData.jbname}/>
         </Col>
         <Col className='text-center' sm={5}>
-            <Form.Control type="number" placeholder='費用金額' min='0' />
+            <Form.Control type="number" placeholder='費用金額' min='0' value={budgetData.jbamount}/>
         </Col>
         <Col sm={1}></Col>
     </Row>
