@@ -9,9 +9,9 @@ import '../../UserListThings/color.css';
 
 export default function PreTest() {
   return (
-    <>
+    <div className='vh-100'>
       <LogoutBar />
-      <Row className="App bg-color4 vh-100">
+      <Row className="App bg-color4 h-100"  style={{ overflowY: 'auto'}}>
         <Col></Col>
         <Col>
           <PreWrapper />
@@ -19,6 +19,6 @@ export default function PreTest() {
         </Col>
         <Col></Col>
       </Row>
-    </>
+    </div>
   );
 }
