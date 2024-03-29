@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 import { PieChart } from '@mui/x-charts/PieChart';
-import { ChartContainer, BarChart } from '@mui/x-charts';
+import { BarChart } from '@mui/x-charts';
 
 function BudgetManage({ totalAmount }) {
 

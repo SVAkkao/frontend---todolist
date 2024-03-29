@@ -9,13 +9,14 @@ import IndexMiddle from "./Alist/IndexMiddle";
 import "./color.css";
 
 function Alist() {
+
     return (<main className="attraction-list">
             <LogoutBar />
             <Row>
-                <Col sm={3}>
+                {/* <Col sm={3}>
                     <Fetch />
-                </Col>
-                <Col sm={9} className="bg-color4">
+                </Col> */}
+                <Col className="bg-color4">
                     <IndexMiddle />
                 </Col>
             </Row>
