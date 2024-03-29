@@ -91,13 +91,13 @@ const WeatherApp = () => {
             },
           ],
         });
-          console.log(completion.choices[0]);
+          console.log(completion.choices[0].message.content);
         
   
-        // 检查 completion.data.choices 是否存在并且是一个数组
+        // completion.data.choices 
         if (completion && completion.data && Array.isArray(completion.data.choices)) {
           const response = completion.data.choices[0].message.content;
-          setRecommendations(response.split("\n"));
+          setRecommendations(response);
         } else {
           setError('OpenAI返回的格式不符合預期');
         }
@@ -139,7 +139,7 @@ const WeatherApp = () => {
           <p>當地日出時間：{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>
           <p>當地日落時間：{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>
           <button onClick={handleSubmitToChat}>發送到 OpenAI</button>
-          {recommendations.length > 0 && (
+          (
             <div>
               <h3>建議和景點推薦：</h3>
               <ul>
@@ -148,7 +148,7 @@ const WeatherApp = () => {
                 ))}
               </ul>
             </div>
-          )}
+          )
         </div>
       )}
     </div>

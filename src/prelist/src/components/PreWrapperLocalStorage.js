@@ -1,17 +1,13 @@
 import React from 'react';
-import uuidv4 from 'uuid/v4';
-import { TodoForm } from './TodoForm';
-import { Todo } from './Todo';
+import axios from 'axios';
+
+
 export const PreWrapperLocalStorage = () => {
   const [pres, setPres] = useState([]);
+  const API_HOST = process.env.REACT_APP_API_URL;
+  // ...還沒寫改資料庫
 
-  // ...
-
-  const addPre = pre => {
-    const newPres = [...pres, {id: uuidv4(), task: pre, completed: false, isEditing: false}];
-    setPres(newPres);
-    localStorage.setItem('pres', JSON.stringify(newPres));
-  };
+  
 
   // ...
 
