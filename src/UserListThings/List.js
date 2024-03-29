@@ -27,7 +27,7 @@ function get_all_info() {
   return ajax;
 }
 
-const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmount }) => {
+const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmount,setAllData }) => {
   const [showMoney, setShowMoney] = useState(false);
 
   const changeMoneyClick = () => {
@@ -55,7 +55,7 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmou
     }
 
     return (
-      <RightSide changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
+      <RightSide setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
       //     <div>
       //     <p><span>selectedTlid: {selectedTlid}</span>
       //   </p>
@@ -86,13 +86,13 @@ const List = () => {
   const update_info = () => {
     get_all_info().then((data) => {
       setAllData(data);
-      // console.log(data)
     });
   };
 
   useEffect(() => {
     get_all_info().then((data) => {
       setAllData(data);
+      console.log(data)
       setSelectedTlid(data[0].tlid);
       setSelectedjid(data[0].journeys[0].jid);
     });
@@ -121,7 +121,7 @@ const List = () => {
           <TwoAreaMiddle setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
         <Col sm={3}>
-          <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
+          <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
         </Col>
       </Row>
     </>

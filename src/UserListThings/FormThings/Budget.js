@@ -1,28 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
 
-function Budget({ budgetData, setJourneyData, handleUpdateClick }) {
-    const [jbname, setJbname] = useState(budgetData.jbname);
-    const [jbamount, setJbamount] = useState(budgetData.jbamount);
+function Budget({ budgetData, handleUpdateClick, handleJbnameChange,  handleJbamountChange}) {
 
-    useEffect(() => {
-        setJbname(budgetData.jbname);
-        setJbamount(budgetData.jbamount);
-    }, [
-        budgetData
-    ])
-
-    useEffect(() => {
-        setJourneyData((prevData) => {
-            const newJbudgets = prevData.jbudgets.map((item) => {
-                if (item.jbid === budgetData.jbid) {
-                    return { ...item, jbname, jbamount };
-                }
-                return item;
-            });
-            return { ...prevData, jbudgets: newJbudgets };
-        });
-    }, [jbname,jbamount,setJourneyData]);
 
     return (
         <Row className='m-4' style={{ alignItems: 'center' }}>
@@ -32,10 +12,10 @@ function Budget({ budgetData, setJourneyData, handleUpdateClick }) {
             <Col sm={1}></Col>
             <Col sm={1}></Col>
             <Col className='text-center' sm={5}>
-                <Form.Control type="text" placeholder='費用名稱' value={jbname} onChange={(e) => setJbname(e.target.value)} onBlur={handleUpdateClick} />
+                <Form.Control type="text" placeholder='費用名稱' value={budgetData.jbname} onChange={(e) => handleJbnameChange(e.target.value,budgetData.jbid)} onBlur={handleUpdateClick} />
             </Col>
             <Col className='text-center' sm={5}>
-                <Form.Control type="number" placeholder='費用金額' min='0' value={jbamount} onChange={(e) => setJbamount(e.target.value)} onBlur={handleUpdateClick} />
+                <Form.Control type="number" placeholder='費用金額' min='0' value={budgetData.jbamount} onChange={(e) => handleJbamountChange(e.target.value,budgetData.jbid)} onBlur={handleUpdateClick} />
             </Col>
             <Col sm={1}>
                 {/* <div onClick={() => onRemove(data.tlid)}> */}

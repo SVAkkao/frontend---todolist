@@ -14,7 +14,7 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 
 
-function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, selectedTlid }) {
+function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, selectedTlid, setAllData }) {
     // const [thinkvalue, setThinkValue] = useState('');
     // const [memoValue, setMemoValue] = useState('');
     const [journeyData, setJourneyData] = useState({});
@@ -46,7 +46,44 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
         });
     };
 
+    const handleJbnameChange = (event, budgetDatajbid) => {
+        console.log(event);
+        console.log(budgetDatajbid);
+        setJourneyData((journeyData) => {
+           return journeyData.jbudgets.map((item) => {
+                if (item.jbid === budgetDatajbid) {
+                    return {
+                        ...item,
+                        jbname: event
+                    };
+                }
+                return item;
+            })
+
+        }
+        );
+    };
+
+
+    const handleJbamountChange = (event, budgetDatajbid) => {
+        setJourneyData((journeyData) => {
+            return  journeyData.jbudgets.map((item) => {
+                if (item.jbid === budgetDatajbid) {
+                    return {
+                        ...item,
+                        jbudgets: event
+                    };
+                }
+                return item;
+            })
+
+        }
+        );
+    };
+
+
     const handleUpdateClick = async () => {
+
         const updateJourneyData = {
             jid: journeyData.jid,
             aname: aname.current.value,
@@ -68,32 +105,75 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 body: JSON.stringify(updateJourneyData),
             }
         )
-        .then(() => {
-            // 發送 HTTP 請求，將費用數據提交到服務器
-            journeyData.jbudgets.forEach((item) => {
-              fetch(API_HOST + "/api/POST/updatejbudget",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    jbid: item.jbid,
-                    jbname: item.jbname,
-                    jbamount: item.jbamount,
-                  }),
+            .then(() => {
+                // 發送 HTTP 請求，將費用數據提交到服務器
+                journeyData.jbudgets.forEach((item) => {
+                    fetch(API_HOST + "/api/POST/updatejbudget",
+                        {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                jbid: item.jbid,
+                                jbname: item.jbname,
+                                jbamount: item.jbamount,
+                            }),
+                        }
+                    );
+                });
+                // update_info();
+                setAllData(prevAlldata => {
+                    return prevAlldata.map(
+                        (touristList) => {
+                            if (touristList.tlid === selectedTlid) {
+                                return {
+                                    ...touristList,
+                                    journeys: touristList.journeys.map(
+                                        (journey) => {
+                                            if (journey.jid === journeyData.jid) {
+                                                return {
+                                                    ...journey,
+                                                    arrived_date: journeyData.arrived_date,
+                                                    arrived_time: journeyData.arrived_time,
+                                                    leaved_time: journeyData.leaved_time,
+                                                    jmemo: memo.current.value,
+                                                    jreview: think.current.value,
+                                                    jrate: journeyData.jrate,
+                                                    jchecked: journeyData.jchecked,
+                                                    attraction: {
+                                                        ...journey.attraction,
+                                                        aname: aname.current.value
+                                                    }
+                                                }
+
+                                            } else {
+                                                return journey
+                                            }
+                                        }
+
+                                    )
+
+                                }
+
+
+
+                            } else {
+                                return touristList
+                            }
+
+
+                        }
+                    )
                 }
-              );
-            });
-            update_info();
-          })
-          .then(() => {
-    
-          });
-      };    
-   
-   
-        
+                )
+
+                //
+            })
+    };
+
+
+
 
     const addBudgetClick = () => {
         fetch(API_HOST + "/api/POST/addjbudget",
@@ -194,11 +274,11 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             </Row>
 
             {journeyData.jbudgets &&
-            (
-                journeyData.jbudgets.map((item, index) => (
-                <Budget key={index} budgetData={item} setJourneyData={setJourneyData} handleUpdateClick={handleUpdateClick}/>
-            ))
-            )}
+                (
+                    journeyData.jbudgets.map((item, index) => (
+                        <Budget handleJbnameChange={handleJbnameChange} handleJbamountChange={handleJbamountChange} key={index} budgetData={item} handleUpdateClick={handleUpdateClick} />
+                    ))
+                )}
 
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
@@ -217,7 +297,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     </Row>
                     <Row>
                         <Col sm={12}>
-                            
+
                             <TextareaAutosize
                                 ref={think}
                                 value={journeyData.jreview || ""}
