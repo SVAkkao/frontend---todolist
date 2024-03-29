@@ -4,7 +4,6 @@ import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
 import { Row, Col, Form, Spinner } from 'react-bootstrap';
 import './color.css';
-import './likeStyle.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
 

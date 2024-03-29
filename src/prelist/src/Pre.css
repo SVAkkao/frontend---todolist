@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-* {
+/* * {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .App {
   text-align: center;
@@ -24,9 +24,7 @@ h1 {
 }
 
 .PreWrapper {
-  background: #80BCBD
-
-  ;
+  background: #80BCBD;
   margin-top: 5rem;
   padding: 2rem;
   border-radius: 5px;
