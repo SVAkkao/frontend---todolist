@@ -6,12 +6,14 @@ import Pages from '../Pages'
 import { Row, Col, Container } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import '../color.css';
+import { useUserStore } from "../../stores/user";
 
 function IndexMiddle() {
+    const {user} = useUserStore();
     return (<Container>
         <Row className='m-4'>
             <Col className='text-center'>
-                <p className='text2'>來趟盡興的旅行吧!</p>
+                <p className='text2'>{user.name}，來趟盡興的旅行吧!</p>
             </Col>
         </Row>
         <CarouselImg />
