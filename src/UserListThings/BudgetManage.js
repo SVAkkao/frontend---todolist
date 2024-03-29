@@ -34,7 +34,9 @@ function BudgetManage({ totalAmount }) {
 
 
     // 金額長條圖
+    const [m, setM] = useState([]);
     const mData = [40, 30, 20, 27, 18];
+    
     const xmLabels = [
         'Page A',
         'Page B',
