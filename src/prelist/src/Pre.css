@@ -6,7 +6,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+body {
+  background: #F9F7C9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .App {
   text-align: center;
