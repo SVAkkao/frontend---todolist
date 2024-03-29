@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-* {
+/* * {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .App {
   text-align: center;
@@ -24,9 +24,7 @@ h1 {
 }
 
 .PreWrapper {
-  background: #80BCBD
-
-  ;
+  background: #80bcbd;
   margin-top: 5rem;
   padding: 2rem;
   border-radius: 5px;
@@ -40,7 +38,7 @@ h1 {
 .pre-input {
   outline: none;
   background: rgb(184, 151, 151);
-  border: 1px solid #80BCBD;
+  border: 1px solid #80bcbd;
   padding: 0.5rem 1rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
@@ -53,7 +51,7 @@ h1 {
 }
 
 .pre-btn {
-  background: #D5F0C1;
+  background: #d5f0c1;
   color: #5b5555;
   border: none;
   padding: 0.55rem;
@@ -64,7 +62,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #D5F0C1;
+  background: #d5f0c1;
   color: #4a4747;
   padding: 0.75rem 1rem;
   border-radius: 5px;
@@ -92,7 +90,7 @@ h1 {
 }
 .TravelButton {
   margin-top: 1rem;
-  background: #D5F0C1;
+  background: #d5f0c1;
   color: #5b5555;
   border: none;
   padding: 0.55rem;
