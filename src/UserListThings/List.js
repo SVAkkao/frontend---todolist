@@ -74,10 +74,8 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmou
 
 const List = () => {
 
-  const [showJourney, setShowJourney] = useState(false);
-  const changeJourneyClick = () => {
-    setShowJourney(true);
-  };
+  const [showJourney, setShowJourney] = useState(true);
+
   // 原來的fetch
   const [alldata, setAllData] = useState([]);
   // 拿mylist給的tlid
@@ -88,6 +86,7 @@ const List = () => {
   const update_info = () => {
     get_all_info().then((data) => {
       setAllData(data);
+      // console.log(data)
     });
   };
 
@@ -119,7 +118,7 @@ const List = () => {
           />
         </Col>
         <Col sm={6} className="bg-color4">
-          <TwoAreaMiddle changeJourneyClick={changeJourneyClick} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
+          <TwoAreaMiddle setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
         <Col sm={3}>
           <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />

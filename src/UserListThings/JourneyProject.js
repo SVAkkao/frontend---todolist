@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyProject({ journeyProjectsdata }) {
+function JourneyProject({ journeyProjectsdata, setShowJourney }) {
 
     
 

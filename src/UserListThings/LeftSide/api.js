@@ -9,7 +9,7 @@ function generateRequestingHeaders() {
     };
 }
 
-export async function ajaxAddJourney(body = { tlid: 0, aname: "輸入您的第一個行程..." }) {
+export async function ajaxAddJourney(body = { tlid: 0, aname: "" }) {
     const response = await fetch(`${API_HOST}/api/POST/addjourney`, {
         method: "POST",
         headers: generateRequestingHeaders(),
@@ -31,7 +31,7 @@ export async function ajaxAddList() {
         console.log(tlidResult, tlidResult.result.tlid);
         return ajaxAddJourney({
             tlid: tlidResult.result.tlid,
-            aname: "輸入您的第一個行程..."
+            aname: ""
         });
     })
     .catch((error) => {

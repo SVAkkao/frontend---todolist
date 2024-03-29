@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Pic from './FormThings/Pic';
 import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
@@ -8,10 +8,19 @@ import './likeStyle.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
 
+const API_HOST = process.env.REACT_APP_API_URL;
+
+
+
+
+
 function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, selectedTlid }) {
-    const [think, setThink] = useState('');
-    const [memo, setMemo] = useState('');
+    // const [thinkvalue, setThinkValue] = useState('');
+    // const [memoValue, setMemoValue] = useState('');
     const [journeyData, setJourneyData] = useState({});
+    const think = useRef(null);
+    const memo = useRef(null);
+    const aname = useRef(null);
 
 
     useEffect(() => {
@@ -22,13 +31,72 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
         setJourneyData(filtereJourneydData[0]);
     }, [selectedTlid, alldata, selectedjid]);
 
-    const handleThinkChange = (event) => {
-        setThink(event.target.value);
-    };
-    const handleMemoChange = (event) => {
-        setMemo(event.target.value);
+    useEffect(() => {
+        console.log(journeyData.jreview)
+    },
+        [journeyData])
+
+    const handleAnameChange = (event) => {
+        setJourneyData({
+            ...journeyData,
+            attraction: {
+                ...journeyData.attraction,
+                aname: event.target.value,
+            },
+        });
     };
 
+    const handleUpdateClick = async () => {
+        const updateJourneyData = {
+            jid: journeyData.jid,
+            aname: aname.current.value,
+            arrived_date: journeyData.arrived_date,
+            arrived_time: journeyData.arrived_time,
+            leaved_time: journeyData.leaved_time,
+            jmemo: memo.current.value,
+            jreview: think.current.value,
+            jrate: journeyData.jrate,
+            jchecked: journeyData.jchecked,
+        };
+        // 發送 HTTP 請求，將表單數據提交到服務器
+        fetch(API_HOST + "/api/POST/updatejourney",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updateJourneyData),
+            }
+        )
+            .then((response) => {
+                console.log(response.json());
+                update_info();
+            })
+            .then(() => {
+
+            });
+    }
+
+    const addBudgetClick = (selectedjid) => {
+        fetch(API_HOST + "/api/POST/addjbudget",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(
+                    {
+                        jid: selectedjid,
+                        jbname: "",
+                        jbamount: 0
+                    }
+                ),
+            }
+        )
+            .then(() => {
+                update_info();
+            })
+    }
 
 
     if (!journeyData || !selectedTlid || !selectedjid || !alldata) {
@@ -47,9 +115,11 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 <Col className='text-center'>
                     {journeyData.attraction && (
                         <Form.Control
+                            ref={aname}
                             style={{ borderColor: 'transparent' }}
                             className='text1 p-2 m-4 text-center'
                             value={journeyData.attraction.aname}
+                            onChange={handleAnameChange}
                             type="text"
                             placeholder="請輸入標題"
                         />
@@ -102,7 +172,11 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-            <Budget></Budget>
+
+            {journeyData.jbudgets.map((item, index) => (
+                <Budget key={index} budgetData={item} setJourneyData={setJourneyData} />
+            ))}
+
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
                 <Col sm={10}>
@@ -121,8 +195,9 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     <Row>
                         <Col sm={12}>
                             <TextareaAutosize
-                                value={think}
-                                onChange={handleThinkChange}
+                                ref={think}
+                                value={journeyData.jreview || ""}
+                                onChange={(event) => setJourneyData({ ...journeyData, jreview: event.target.value })}
                                 placeholder="抒發感想"
                                 className='rounded'
                                 style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
@@ -133,7 +208,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 <Col sm={1}></Col>
             </Row>
             <Pic></Pic>
-            <Project></Project>
+            {/* <Project></Project> */}
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
                 <Col sm={10}><Form.Label className='text-left '>備註</Form.Label></Col>
@@ -141,8 +216,9 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 <Col sm={1}></Col>
                 <Col className='text-center' sm={10}>
                     <TextareaAutosize
-                        value={memo}
-                        onChange={handleMemoChange}
+                        ref={memo}
+                        value={journeyData.jmemo || ""}
+                        onChange={(event) => setJourneyData({ ...journeyData, jmemo: event.target.value })}
                         placeholder="新增備註"
                         className='rounded'
                         style={{ minRows: '50px', width: '100%', padding: '.375rem .75rem', border: 'var(--bs-border-width) solid var(--bs-border-color)' }}
@@ -152,20 +228,38 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
-                <Col sm={5}>
+                {/* <Col sm={5}>
                     <a>
                         <img className='text-left m-2' style={{ width: "32px", height: '32px' }} src="/UserListSource/add.png" alt="Icon" />
                         <Form.Label className='text-left '>新增項目</Form.Label>
                     </a>
-                </Col>
-                <Col sm={5}>
-                    <a>
+                </Col> */}
+                <Col sm={10}>
+                    <button
+                        type="button"
+                        onClick={addBudgetClick}
+                        style={{ border: "none", backgroundColor: "transparent" }}
+                    >
                         <img className='text-left m-2' style={{ width: "32px", height: '32px' }} src="/UserListSource/add.png" alt="Icon" />
                         <Form.Label className='text-left '>新增費用</Form.Label>
-                    </a>
+                    </button>
                 </Col>
                 <Col sm={1}>
-                    <a><img src='/UserListSource/send.png' style={{ width: "32px", height: '32px', paddingBottom: '0' }} /></a>
+                    <button
+                        type="button"
+                        onClick={handleUpdateClick}
+                        style={{ border: "none", backgroundColor: "transparent" }}
+                    >
+                        <img
+                            src="/UserListSource/send.png"
+                            style={{
+                                width: "48px",
+                                height: "48px",
+                                paddingBottom: "0",
+                            }}
+                            alt="A sent icon"
+                        />
+                    </button>
                 </Col>
                 <Col sm={1}></Col>
             </Row>
