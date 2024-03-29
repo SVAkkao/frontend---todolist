@@ -7,7 +7,7 @@ import TwoAreaMiddle from "./TwoAreaMiddle";
 import Money from "./Money";
 // import Fetch from "./Fetch";
 import "./color.css";
-import {ajaxAddList} from "./LeftSide/api"
+import { ajaxAddList } from "./LeftSide/api"
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -34,6 +34,7 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmou
     setShowMoney(true);
   };
 
+
   // return <div>
   //   <p><span>selectedTlid: {selectedTlid}</span>
   //   </p>
@@ -50,20 +51,20 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmou
     );
   } else {
     if (showMoney) {
-      return <Money totalAmount={totalAmount} setShowMoney={setShowMoney}/>;
+      return <Money totalAmount={totalAmount} setShowMoney={setShowMoney} />;
     }
 
-    return(
-    <RightSide changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
-  //     <div>
-  //     <p><span>selectedTlid: {selectedTlid}</span>
-  //   </p>
-  //   <p>
-  //     <span>selectedjid: {JSON.stringify(selectedjid)}</span>
-  //   </p>
-  // </div >
-  );
-  
+    return (
+      <RightSide changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
+      //     <div>
+      //     <p><span>selectedTlid: {selectedTlid}</span>
+      //   </p>
+      //   <p>
+      //     <span>selectedjid: {JSON.stringify(selectedjid)}</span>
+      //   </p>
+      // </div >
+    );
+
   }
 
 
@@ -72,6 +73,8 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmou
 
 
 const List = () => {
+
+  const [showJourney, setShowJourney] = useState(true);
 
   // 原來的fetch
   const [alldata, setAllData] = useState([]);
@@ -83,6 +86,7 @@ const List = () => {
   const update_info = () => {
     get_all_info().then((data) => {
       setAllData(data);
+      // console.log(data)
     });
   };
 
@@ -94,10 +98,10 @@ const List = () => {
     });
   }, []);
 
-  const setSelectedTlidAndOther =(data)=>{
+  const setSelectedTlidAndOther = (data) => {
     setSelectedTlid(data);
     const filtereListdData = alldata.filter((item) => item.tlid == data);
-    if(filtereListdData[0].journeys[0] != null){
+    if (filtereListdData[0].journeys[0] != null) {
       setSelectedjid(filtereListdData[0].journeys[0].jid);
     }
   }
@@ -114,10 +118,10 @@ const List = () => {
           />
         </Col>
         <Col sm={6} className="bg-color4">
-          <TwoAreaMiddle alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
+          <TwoAreaMiddle setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
         <Col sm={3}>
-          <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount}/>
+          <RightSpace selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
         </Col>
       </Row>
     </>
