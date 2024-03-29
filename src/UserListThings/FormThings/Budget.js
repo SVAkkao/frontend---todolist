@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
 
 function Budget({ budgetData, setJourneyData, handleUpdateClick }) {
-    const [jbname, setJbname] = useState("");
-    const [jbamount, setJbamount] = useState("0");
+    const [jbname, setJbname] = useState(budgetData.jbname);
+    const [jbamount, setJbamount] = useState(budgetData.jbamount);
 
     useEffect(() => {
         setJbname(budgetData.jbname);
@@ -22,7 +22,7 @@ function Budget({ budgetData, setJourneyData, handleUpdateClick }) {
             });
             return { ...prevData, jbudgets: newJbudgets };
         });
-    }, [setJourneyData]);
+    }, [jbname,jbamount,setJourneyData]);
 
     return (
         <Row className='m-4' style={{ alignItems: 'center' }}>

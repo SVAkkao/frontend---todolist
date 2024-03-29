@@ -24,7 +24,7 @@ function JourneyProjectList({ journeyProjects, setShowJourney }) {
 
 
 
-function Journey({ journeydata, update_info, onFocusJourney, setShowJourney }) {
+function Journey({ journeydata, update_info, onFocusJourney, setShowJourney, onRemoveJourney }) {
     const [journeyDataValue, setJourneyDataValue] = useState({});
     const [checkedValue, setCheckedValue] = useState(false);
 
@@ -66,21 +66,7 @@ function Journey({ journeydata, update_info, onFocusJourney, setShowJourney }) {
         });
     }
 
-    const onRemoveJourney = () => {
-        fetch(`${API_HOST}/api/POST/deletejourney`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                jid: journeyDataValue.jid,
-            })
-        })
-            .then(() => {
-                update_info();
-            })
-            ;
-    }
+ 
 
 
     function checked(event) {
@@ -103,7 +89,7 @@ function Journey({ journeydata, update_info, onFocusJourney, setShowJourney }) {
                 checked(event);
                 break;
             case "delete":
-                onRemoveJourney();
+                onRemoveJourney(journeydata.jid);
                 break;
             default:
                 if( event.target.classList.contains("parent-label") ) {

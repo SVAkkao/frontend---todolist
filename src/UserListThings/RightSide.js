@@ -217,6 +217,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     </Row>
                     <Row>
                         <Col sm={12}>
+                            
                             <TextareaAutosize
                                 ref={think}
                                 value={journeyData.jreview || ""}

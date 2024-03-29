@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ journeys, update_info, onFocusJourney, setShowJourney }) {
+function JourneyList({ journeys, update_info, onFocusJourney, setShowJourney, onRemoveJourney }) {
   if (!journeys) {
     return (
       <Spinner animation="border" role="status">
@@ -24,6 +24,7 @@ function JourneyList({ journeys, update_info, onFocusJourney, setShowJourney }) 
       update_info={update_info}
       onFocusJourney={onFocusJourney}
       setShowJourney={setShowJourney}
+      onRemoveJourney={onRemoveJourney}
     />
   ));
 }
@@ -78,50 +79,6 @@ function TotalCost({ costData, setTotalAmount }) {
 
   return <div>總共：{totalAmountForTwoAreaMiddle}元</div>;
 
-  //   if (!costData || !costData.journeys) {
-  //     return (
-  //       <Spinner animation="border" role="status">
-  //         <span className="visually-hidden">Loading...</span>
-  //       </Spinner>
-  //     );
-  //   }
-
-  //   console.log(costData);
-
-  //     const jTotalAmount = costData.journeys.reduce((acc, item) => {
-  //         if (item.jbudgets) {
-  //           return (
-  //             acc +
-  //             item.jbudgets.reduce((sum, budgetItem) => {
-  //             return sum + Number(budgetItem.jbamount);
-  //           }, 0)
-  //         );
-  //     }
-  //     return acc;
-  // }, 0);
-
-  //       const jpTotalAmount = costData.journeys.reduce((acc, journey) => {
-  //         if (journey.journey_projects) {
-  //           const projectTotal = journey.journey_projects.reduce((sum, project) => {
-  //             if (project.jpbudgets) {
-  //               return (
-  //                 sum +
-  //                 project.jpbudgets.reduce((total, budget) => {
-  //                 return total + Number(budget.jpbamount);
-  //               }, 0)
-  //               );
-  //             }
-  //             return sum;
-  //           }, 0);
-  //           return acc + projectTotal;
-  //         }
-  //         return acc;
-  //       }, 0);
-
-  //       const totalAmount = jTotalAmount + jpTotalAmount;
-  //       setTotalAmount(totalAmount);
-
-  //       return <div>總共：{totalAmount}元</div>;
 }
 
 
@@ -147,7 +104,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
   const handleSearchClick = async () => {
     const addjourneydata = {
       tlid: selectedTlid,
-      aname: searchvalue,
+      aname: searchvalue
     };
     // 發送 HTTP 請求，將表單數據提交到服務器
     fetch(API_HOST + "/api/POST/addjourney", {
@@ -196,23 +153,37 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
       title: event.target.value,
     });
   };
-  // const getDefaultTitle = (listdata) => {
-  //     if (listdata) {
-  //         return listdata.title;
-  //     }
-  //     return '';
-  // };
 
-  // if (!alldata) {
-  //     return <Spinner animation="border" role="status">
-  //         <span className="visually-hidden">Loading...</span>
-  //     </Spinner>;
-  // }
-  // if( alldata.length < 1 ) {
-  //     return <Spinner animation="border" role="status">
-  //         <span className="visually-hidden">Loading...</span>
-  //     </Spinner>;
-  // }
+
+  const onRemoveJourney = (selectedjid) => {
+    // 找到要刪除的 tlid 所在的索引
+    const index = listdata.journeys.findIndex((item) => item.jid === selectedjid);
+    // 使用 filter() 方法過濾出除了被刪除的 tlid 外的其他 tlid
+    const otherjids = listdata.journeys.filter((item, i) => i !== index).map((item) => item.jid);
+    // 調用 onSelect() 函式來切換到其他的 tlid 清單
+    if (otherjids.length > 0) {
+      onFocusJourney(otherjids[0]);
+    }
+
+    fetch(`${API_HOST}/api/POST/deletejourney`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        jid: selectedjid
+      })
+    })
+      .then(() => {
+        update_info();
+      })
+      ;
+  }
+
+
+
+
+
   if (!listdata || !selectedTlid) {
     return (
       <Spinner animation="border" role="status">
@@ -269,7 +240,9 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
           </NavLink>
         </Col>
         <Col sm={1}></Col>
-        <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney} />
+        <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney} 
+        onRemoveJourney={onRemoveJourney}
+        />
         {/* <Day></Day> */}
       </Row>
       <Row className="m-4">
