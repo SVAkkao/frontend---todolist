@@ -90,45 +90,57 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
     const deleteJbamount = (budgetDatajbid) => {
 
+        fetch(API_HOST + "/api/POST/deletejbudget",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    jbid: budgetDatajbid
+                }),
+            }
+        )
+            .then((r) => {
+                setAllData(prevAlldata => {
+                    return prevAlldata.map(
+                        (touristList) => {
+                            if (touristList.tlid === selectedTlid) {
+                                return {
+                                    ...touristList,
+                                    journeys: touristList.journeys.map(
+                                        (journey) => {
+                                            if (journey.jid === journeyData.jid) {
 
+                                                return {
+                                                    ...journey,
+                                                    jbudgets: journey.jbudgets.filter(
+                                                        (jbudget) => {
+                                                            return jbudget.jbid !== budgetDatajbid;
+                                                        }
+                                                    )
+                                                }
 
-        setAllData(prevAlldata => {
-            return prevAlldata.map(
-                (touristList) => {
-                    if (touristList.tlid === selectedTlid) {
-                        return {
-                            ...touristList,
-                            journeys: touristList.journeys.map(
-                                (journey) => {
-                                    if (journey.jid === journeyData.jid) {
-                                        
-                                            return {
-                                                ...journey,
-                                                jbudgets: journey.jbudgets.filter(
-                                                    (jbudget)=>{
-                                                        return jbudget.jbid !== budgetDatajbid;
-                                                    }
-                                                )
+                                            } else {
+                                                return journey
                                             }
+                                        }
 
-                                    } else {
-                                        return journey
-                                    }
+                                    )
+
                                 }
 
-                            )
+                            } else {
+                                return touristList
+                            }
+
 
                         }
-
-                    } else {
-                        return touristList
-                    }
-
-
+                    )
                 }
+                )
+            }
             )
-        }
-        )
     }
 
     const handleUpdateClick = async () => {
