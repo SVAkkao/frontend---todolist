@@ -209,7 +209,8 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
     return (
         <>
-            <Row className='sticky-top' style={{ backgroundColor: 'white' }}>
+            <Row className='sticky-top' style={{ backgroundColor: 'white', zIndex: 2 }}>
+                {/* <Row> */}
                 <Row className='m-4'>
                     <Col className='text-left'>
                         {journeyData.attraction && (
