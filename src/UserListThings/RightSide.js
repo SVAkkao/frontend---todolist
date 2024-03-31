@@ -48,23 +48,28 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
     const handleJbnameChange = (event, budgetDatajbid) => {
         console.log(event);
         console.log(budgetDatajbid);
-        setJourneyData((journeyData) => {
-           return journeyData.jbudgets.map((item) => {
+        setJourneyData((prevJourneyData) => {
+            const updatedJbudgets = prevJourneyData.jbudgets.map((item) => {
                 if (item.jbid === budgetDatajbid) {
                     return {
                         ...item,
-                        jbname: event
+                        jbname: event.target.value
                     };
                 }
                 return item;
-            })
-
+            });
+            return {
+                ...prevJourneyData,
+                jbudgets: updatedJbudgets
+            };
         }
         );
     };
 
 
     const handleJbamountChange = (event, budgetDatajbid) => {
+        console.log(event);
+        console.log(budgetDatajbid);
         setJourneyData((journeyData) => {
             return  journeyData.jbudgets.map((item) => {
                 if (item.jbid === budgetDatajbid) {
