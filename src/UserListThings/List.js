@@ -109,18 +109,18 @@ const List = () => {
   return (
     <>
       <Row className="h-100">
-        <LogoutBar style={{ zIndex: 1000 }} />
-        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '100vh', overflowX: 'hidden' }}>
+        <LogoutBar />
+        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '90vh', overflowX: 'hidden' }}>
           <LeftSide
             data={alldata}
             onSelect={setSelectedTlidAndOther}
             update_info={update_info}
           />
         </Col>
-        <Col sm={6} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '100vh', overflowX: 'hidden' }}>
+        <Col sm={6} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '90vh', overflowX: 'hidden', zIndex: 2 }}>
           <TwoAreaMiddle setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
-        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '100vh', overflowX: 'hidden' }}>
+        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '90vh', overflowX: 'hidden', zIndex: 2 }}>
           <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
         </Col>
       </Row>

@@ -136,7 +136,7 @@ export default function LeftSide({ data, onSelect, update_info }) {
   }
   return (
     <>
-      <Row className="sticky-top" style={{ backgroundColor: 'white', translateX: '-20' }}>
+      <Row className="sticky-top text-center" style={{ backgroundColor: 'white', translateX: '-20' }}>
         <UserInfo />
         <NavigationLinks
           handleBtnClick={handleBtnClick}
