@@ -30,10 +30,6 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
         setJourneyData(filtereJourneydData[0]);
     }, [selectedTlid, alldata, selectedjid]);
 
-    useEffect(() => {
-        console.log(journeyData.jreview)
-    },
-        [journeyData])
 
     const handleAnameChange = (event) => {
         setJourneyData({
@@ -46,8 +42,6 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
     };
 
     const handleJbnameChange = (event, budgetDatajbid) => {
-        console.log(event);
-        console.log(budgetDatajbid);
         setJourneyData((prevJourneyData) => {
             const updatedJbudgets = prevJourneyData.jbudgets.map((item) => {
                 if (item.jbid === budgetDatajbid) {
@@ -68,8 +62,6 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
 
     const handleJbamountChange = (event, budgetDatajbid) => {
-        console.log(event);
-        console.log(budgetDatajbid);
         setJourneyData((prevJourneyData) => {
             const updatedJbudgets = prevJourneyData.jbudgets.map((item) => {
                 if (item.jbid === budgetDatajbid) {
@@ -255,7 +247,6 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             }
         )
             .then((response) => {
-                console.log(response.json())
                 update_info();
             })
     }
@@ -416,7 +407,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                         <Form.Label className='text-left '>新增費用</Form.Label>
                     </button>
                 </Col>
-                <Col sm={1}>
+                {/* <Col sm={1}>
                     <button
                         type="button"
                         onClick={handleUpdateClick}
@@ -432,7 +423,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                             alt="A sent icon"
                         />
                     </button>
-                </Col>
+                </Col> */}
                 <Col sm={1}></Col>
             </Row>
         </>
