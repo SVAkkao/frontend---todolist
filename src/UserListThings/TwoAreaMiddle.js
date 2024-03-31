@@ -189,6 +189,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
       </Spinner>
     );
   }
+
   return (
     <>
       <Row className="sticky-top bg-color4">
@@ -259,39 +260,40 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
               right: 0,
             }}
           >
-            <Row className="align-items-center justify-content-center">
-              <Col sm={10}>
-                {/* rounded */}
-                <Form.Control
-                  value={searchvalue}
-                  onChange={(event) => setSearchValue(event.target.value)}
-                  className="p-3 w-100"
-                  type="text"
-                  placeholder="輸入景點"
-                />
-              </Col>
-              <Col sm={2}>
-                <button
-                  type="button"
-                  onClick={handleSearchClick}
-                  style={{ border: "none", backgroundColor: "transparent" }}
-                >
-                  <img
-                    src="/UserListSource/send.png"
-                    style={{
-                      width: "48px",
-                      height: "48px",
-                      paddingBottom: "0",
-                    }}
-                    alt="A sent icon"
+            <Row>
+              <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
+                <Col sm={10}>
+                  {/* rounded */}
+                  <Form.Control
+                    value={searchvalue}
+                    onChange={(event) => setSearchValue(event.target.value)}
+                    className="p-3"
+                    type="text"
+                    placeholder="輸入景點"
                   />
-                </button>
-              </Col>
+                </Col>
+                <Col sm={2}>
+                  <button
+                    type="button"
+                    onClick={handleSearchClick}
+                    style={{ border: "none", backgroundColor: "transparent" }}
+                  >
+                    <img
+                      src="/UserListSource/send.png"
+                      style={{
+                        width: "48px",
+                        height: "48px",
+                        paddingBottom: "0",
+                      }}
+                    />
+                  </button>
+                </Col>
+              </Row>
             </Row>
           </Form>
         </Col>
         <Col sm={1}></Col>
-      </Row>
+      </Row >
     </>
   );
 }
