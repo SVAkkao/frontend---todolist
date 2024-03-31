@@ -27,7 +27,7 @@ function get_all_info() {
   return ajax;
 }
 
-const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmount,setAllData }) => {
+const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmount, setAllData }) => {
   const [showMoney, setShowMoney] = useState(false);
 
   const changeMoneyClick = () => {
@@ -110,17 +110,17 @@ const List = () => {
     <>
       <Row className="h-100">
         <LogoutBar />
-        <Col sm={3}>
+        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '100vh', overflowX: 'hidden' }}>
           <LeftSide
             data={alldata}
             onSelect={setSelectedTlidAndOther}
             update_info={update_info}
           />
         </Col>
-        <Col sm={6} className="bg-color4">
+        <Col sm={6} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '100vh', overflowX: 'hidden' }}>
           <TwoAreaMiddle setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
-        <Col sm={3}>
+        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '100vh', overflowX: 'hidden' }}>
           <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
         </Col>
       </Row>

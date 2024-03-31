@@ -49,7 +49,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
         console.log(event);
         console.log(budgetDatajbid);
         setJourneyData((journeyData) => {
-           return journeyData.jbudgets.map((item) => {
+            return journeyData.jbudgets.map((item) => {
                 if (item.jbid === budgetDatajbid) {
                     return {
                         ...item,
@@ -66,7 +66,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
     const handleJbamountChange = (event, budgetDatajbid) => {
         setJourneyData((journeyData) => {
-            return  journeyData.jbudgets.map((item) => {
+            return journeyData.jbudgets.map((item) => {
                 if (item.jbid === budgetDatajbid) {
                     return {
                         ...item,
@@ -209,36 +209,38 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
     return (
         <>
-            <Row className='m-4'>
-                <Col className='text-center'>
-                    {journeyData.attraction && (
-                        <Form.Control
-                            ref={aname}
-                            style={{ borderColor: 'transparent' }}
-                            className='text1 p-2 m-4 text-center'
-                            value={journeyData.attraction.aname}
-                            onChange={handleAnameChange}
-                            type="text"
-                            placeholder="請輸入標題"
-                            onBlur={handleUpdateClick}
-                        />
-                    )}
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={3}></Col>
-                <Col sm={4}>
-                    <a onClick={changeMoneyClick}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
-                    {/* <NavLink to='/money'>
+            <Row className='sticky-top' style={{ backgroundColor: 'white' }}>
+                <Row className='m-4'>
+                    <Col className='text-left'>
+                        {journeyData.attraction && (
+                            <Form.Control
+                                ref={aname}
+                                style={{ borderColor: 'transparent' }}
+                                className='text1 p-2 m-4 text-left'
+                                value={journeyData.attraction.aname}
+                                onChange={handleAnameChange}
+                                type="text"
+                                placeholder="請輸入標題"
+                                onBlur={handleUpdateClick}
+                            />
+                        )}
+                    </Col>
+                </Row>
+                <Row className='text-left'>
+                    <Col sm={3}></Col>
+                    <Col sm={4}>
+                        <a onClick={changeMoneyClick}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                        {/* <NavLink to='/money'>
                         <a id='money' style={{color: '#939393'}}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
                     </NavLink> */}
-                </Col>
-                <Col className='text-right' sm={4}>
-                    <NavLink to='/ratings'>
-                        <a id='ratings'>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
-                    </NavLink>
-                </Col>
-                <Col sm={1}></Col>
+                    </Col>
+                    <Col className='text-right' sm={4}>
+                        <NavLink to='/ratings'>
+                            <a id='ratings'>留言區<img src='/UserListSource/comment.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                        </NavLink>
+                    </Col>
+                    <Col sm={1}></Col>
+                </Row>
             </Row>
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
