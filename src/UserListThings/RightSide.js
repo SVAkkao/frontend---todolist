@@ -70,21 +70,66 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
     const handleJbamountChange = (event, budgetDatajbid) => {
         console.log(event);
         console.log(budgetDatajbid);
-        setJourneyData((journeyData) => {
-            return journeyData.jbudgets.map((item) => {
+        setJourneyData((prevJourneyData) => {
+            const updatedJbudgets = prevJourneyData.jbudgets.map((item) => {
                 if (item.jbid === budgetDatajbid) {
                     return {
                         ...item,
-                        jbudgets: event
+                        jbamount: event.target.value
                     };
                 }
                 return item;
-            })
-
+            });
+            return {
+                ...prevJourneyData,
+                jbudgets: updatedJbudgets
+            };
         }
         );
     };
 
+    const deleteJbamount = (budgetDatajbid) => {
+
+
+
+        setAllData(prevAlldata => {
+            return prevAlldata.map(
+                (touristList) => {
+                    if (touristList.tlid === selectedTlid) {
+                        return {
+                            ...touristList,
+                            journeys: touristList.journeys.map(
+                                (journey) => {
+                                    if (journey.jid === journeyData.jid) {
+                                        
+                                            return {
+                                                ...journey,
+                                                jbudgets: journey.jbudgets.filter(
+                                                    (jbudget)=>{
+                                                        return jbudget.jbid !== budgetDatajbid;
+                                                    }
+                                                )
+                                            }
+
+                                    } else {
+                                        return journey
+                                    }
+                                }
+
+                            )
+
+                        }
+
+                    } else {
+                        return touristList
+                    }
+
+
+                }
+            )
+        }
+        )
+    }
 
     const handleUpdateClick = async () => {
 
@@ -126,7 +171,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                         }
                     );
                 });
-                // update_info();
+                // update journey_info();
                 setAllData(prevAlldata => {
                     return prevAlldata.map(
                         (touristList) => {
@@ -148,7 +193,9 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                                                     attraction: {
                                                         ...journey.attraction,
                                                         aname: aname.current.value
-                                                    }
+                                                    },
+                                                    jbudgets: journeyData.jbudgets
+
                                                 }
 
                                             } else {
@@ -214,9 +261,8 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
 
     return (
         <>
-            <Row
-             className='sticky-top' 
-            style={{ backgroundColor: 'white' }}>
+            <Row className='sticky-top' style={{ backgroundColor: 'white', zIndex: 2 }}>
+                {/* <Row> */}
                 <Row className='m-4'>
                     <Col className='text-left'>
                         {journeyData.attraction && (
@@ -284,7 +330,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             {journeyData.jbudgets &&
                 (
                     journeyData.jbudgets.map((item, index) => (
-                        <Budget handleJbnameChange={handleJbnameChange} handleJbamountChange={handleJbamountChange} key={index} budgetData={item} handleUpdateClick={handleUpdateClick} />
+                        <Budget deleteJbamount={deleteJbamount} handleJbnameChange={handleJbnameChange} handleJbamountChange={handleJbamountChange} key={index} budgetData={item} handleUpdateClick={handleUpdateClick} />
                     ))
                 )}
 

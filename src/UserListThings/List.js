@@ -109,7 +109,7 @@ const List = () => {
   return (
     <>
       <Row className="h-100">
-        <LogoutBar />
+        <LogoutBar style={{ zIndex: 1000 }} />
         <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '100vh', overflowX: 'hidden' }}>
           <LeftSide
             data={alldata}

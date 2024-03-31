@@ -72,9 +72,7 @@ function TotalCost({ costData, setTotalAmount }) {
 
 
   if (!costData || !costData.journeys || !totalAmountForTwoAreaMiddle) {
-    return (<Spinner animation="border" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </Spinner>);
+    return  <div>總共：0元</div>;
   }
 
   return <div>總共：{totalAmountForTwoAreaMiddle}元</div>;

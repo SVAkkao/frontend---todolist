@@ -12,10 +12,10 @@ function Budget({ budgetData, handleUpdateClick, handleJbnameChange,  handleJbam
             <Col sm={1}></Col>
             <Col sm={1}></Col>
             <Col className='text-center' sm={5}>
-                <Form.Control type="text" placeholder='費用名稱' value={budgetData.jbname} onChange={(e) => handleJbnameChange(e.target.value,budgetData.jbid)} onBlur={handleUpdateClick} />
+                <Form.Control type="text" placeholder='費用名稱' value={budgetData.jbname} onChange={(event) => handleJbnameChange(event,budgetData.jbid)} onBlur={handleUpdateClick} />
             </Col>
             <Col className='text-center' sm={5}>
-                <Form.Control type="number" placeholder='費用金額' min='0' value={budgetData.jbamount} onChange={(e) => handleJbamountChange(e.target.value,budgetData.jbid)} onBlur={handleUpdateClick} />
+                <Form.Control type="number" placeholder='費用金額' min='0' value={budgetData.jbamount} onChange={(event) => handleJbamountChange(event,budgetData.jbid)} onBlur={handleUpdateClick} />
             </Col>
             <Col sm={1}>
                 {/* <div onClick={() => onRemove(data.tlid)}> */}
