@@ -193,58 +193,61 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
   }
   return (
     <>
-      <Row className="m-4">
-        <Col className="text-center">
-          <Form.Control
-            ref={titleName}
-            value={listdata.title}
-            className="text1 p-2 m-4 bg-color4 text-center"
-            style={{ borderColor: "transparent" }}
-            placeholder="請輸入標題"
-            onChange={handleTitleChange}
-            onBlur={handleClickOutside}
-            type="text"
-          />
-        </Col>
+      <Row className="sticky-top bg-color4">
+        <Row className="m-4">
+          <Col className="text-center">
+            <Form.Control
+              ref={titleName}
+              value={listdata.title}
+              className="text1 p-2 m-4 bg-color4 text-center"
+              style={{ borderColor: "transparent" }}
+              placeholder="請輸入標題"
+              onChange={handleTitleChange}
+              onBlur={handleClickOutside}
+              type="text"
+            />
+          </Col>
+        </Row>
+        <Row className="m-4">
+          <Col className="text-center">
+            <TotalCost costData={listdata} setTotalAmount={setTotalAmount} />
+          </Col>
+        </Row>
+        <Row className="m-4" style={{ alignItems: "center" }}>
+          {/* <Col sm={1}></Col> */}
+          <Col className="text-center" sm={4}>
+            <Form.Control value={listdata.start_date} type="date" />
+          </Col>
+          <Col className="text-center" sm={1}>
+            <img
+              src="/UserListSource/to.png"
+              style={{ width: "24px", height: "24px", paddingBottom: "0" }}
+              alt="The next icon"
+            />
+          </Col>
+          <Col className="text-center" sm={4}>
+            <Form.Control value={listdata.end_date} type="date" />
+          </Col>
+          <Col className="text-center" sm={2}>
+            <NavLink to="/prelist">
+              <a id="prelist">
+                <img
+                  src="/UserListSource/bag.png"
+                  style={{ width: "20px", height: "20px", paddingBottom: "0" }}
+                  className="m-2"
+                />
+                行前準備
+              </a>
+            </NavLink>
+          </Col>
+          <Col sm={1}></Col>
+        </Row>
       </Row>
-      <Row className="m-4">
-        <Col className="text-center">
-          <TotalCost costData={listdata} setTotalAmount={setTotalAmount} />
-        </Col>
-      </Row>
-      <Row className="m-4" style={{ alignItems: "center" }}>
-        {/* <Col sm={1}></Col> */}
-        <Col className="text-center" sm={4}>
-          <Form.Control value={listdata.start_date} type="date" />
-        </Col>
-        <Col className="text-center" sm={1}>
-          <img
-            src="/UserListSource/to.png"
-            style={{ width: "24px", height: "24px", paddingBottom: "0" }}
-            alt="The next icon"
-          />
-        </Col>
-        <Col className="text-center" sm={4}>
-          <Form.Control value={listdata.end_date} type="date" />
-        </Col>
-        <Col className="text-center" sm={2}>
-          <NavLink to="/prelist">
-            <a id="prelist">
-              <img
-                src="/UserListSource/bag.png"
-                style={{ width: "20px", height: "20px", paddingBottom: "0" }}
-                className="m-2"
-              />
-              行前準備
-            </a>
-          </NavLink>
-        </Col>
-        <Col sm={1}></Col>
-        <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney} 
+      <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney}
         onRemoveJourney={onRemoveJourney}
-        />
-        {/* <Day></Day> */}
-      </Row>
+      />
+      {/* <Day></Day> */}
+
       <Row className="m-4">
         <Col sm={1}></Col>
         <Col sm={10} style={{ minHeight: "100vh", position: "relative" }}>

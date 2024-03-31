@@ -123,7 +123,7 @@ export default function LeftSide({ data, onSelect, update_info }) {
     if (otherTlids.length > 0) {
       onSelect(otherTlids[0]);
     }
-  
+
 
     ajaxRemoveList(tlid).then(() => {
       update_info();
@@ -136,11 +136,13 @@ export default function LeftSide({ data, onSelect, update_info }) {
   }
   return (
     <>
-      <UserInfo />
-      <NavigationLinks
-        handleBtnClick={handleBtnClick}
-        finishedSelected={finishedSelected}
-      />
+      <Row className="sticky-top" style={{ backgroundColor: 'white', translateX: '-20' }}>
+        <UserInfo />
+        <NavigationLinks
+          handleBtnClick={handleBtnClick}
+          finishedSelected={finishedSelected}
+        />
+      </Row>
       <TripLists
         list={data}
         onButtonClick={onSelect}
