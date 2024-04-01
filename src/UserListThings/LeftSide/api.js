@@ -40,7 +40,7 @@ export async function ajaxAddList() {
 };
 
 export async function ajaxRemoveList(tlid = 0) {
-    console.log(tlid);
+    // console.log(tlid);
     const response = await fetch(`${API_HOST}/api/POST/deletelist`, {
         method: "POST",
         headers: generateRequestingHeaders(),
