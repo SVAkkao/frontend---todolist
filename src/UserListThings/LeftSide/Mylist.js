@@ -26,8 +26,8 @@ function Mylist({ data, onButtonClick, onRemove }) {
                     <Card.Body className='click-icon'
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}
                     >
-                        <div style={{ flex: '1', textAlign: 'center' }} onClick={() => onButtonClick(data.tlid)}>
-                            <Card.Text className='text3 text-truncate' style={{ maxWidth: '80%' }}>
+                        <div style={{ flex: '1', textAlign: 'center' }} onClick={() => onButtonClick(data.tlid)} className='text-truncate text-center'>
+                            <Card.Text className='text3 text-truncate text-center' style={{ maxWidth: '80%' }}>
                                 {data.title}
                             </Card.Text>
                         </div>

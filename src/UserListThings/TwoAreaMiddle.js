@@ -72,7 +72,7 @@ function TotalCost({ costData, setTotalAmount }) {
 
 
   if (!costData || !costData.journeys || !totalAmountForTwoAreaMiddle) {
-    return  <div>總共：0元</div>;
+    return <div>總共：0元</div>;
   }
 
   return <div>總共：{totalAmountForTwoAreaMiddle}元</div>;
@@ -193,12 +193,13 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
   return (
     <>
       <Row className="sticky-top bg-color4">
-        <Row className="m-4">
-          <Col className="text-center">
+        <Row className="m-4 justify-content-end">
+          {/* <Col sm={1}></Col> */}
+          <Col sm={11} className="text-center">
             <Form.Control
               ref={titleName}
               value={listdata.title}
-              className="text1 p-2 m-4 bg-color4 text-center"
+              className="text1 p-2 m-4 bg-color4 text-center text-truncate"
               style={{ borderColor: "transparent" }}
               placeholder="請輸入標題"
               onChange={handleTitleChange}
@@ -206,6 +207,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
               type="text"
             />
           </Col>
+          <Col sm={1}></Col>
         </Row>
         <Row className="m-4">
           <Col className="text-center">
@@ -265,7 +267,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
                 <Col sm={10}>
                   {/* rounded */}
                   <Form.Control
-                   
+
                     value={searchvalue}
                     onChange={(event) => setSearchValue(event.target.value)}
                     className="p-3 text-center"
