@@ -371,7 +371,8 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-            <Pic></Pic>
+            <Pic ></Pic>
+
             {/* <Project></Project> */}
             <Row className='m-4' style={{ alignItems: 'center' }}>
                 <Col sm={1}></Col>
@@ -427,6 +428,12 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     </button>
                 </Col> */}
                 <Col sm={1}></Col>
+                {journeyData.jimages &&
+                (
+                    journeyData.jimages.map((item, index) => (
+                        <Pic key={index} jimageData={item} update_info={update_info}/>
+                    ))
+                )}
                 <Row>
                     <Col sm={1}></Col>
                     <Col sm={10}>
