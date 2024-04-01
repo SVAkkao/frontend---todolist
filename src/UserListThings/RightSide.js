@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Pic from './FormThings/Pic';
 import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
-import { Row, Col, Form, Spinner } from 'react-bootstrap';
+import { Row, Col, Form, Spinner, Carousel } from 'react-bootstrap';
 import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
