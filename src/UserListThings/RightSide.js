@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Pic from './FormThings/Pic';
 import Project from './FormThings/Project';
 import Budget from './FormThings/Budget';
-import { Row, Col, Form, Spinner } from 'react-bootstrap';
+import { Row, Col, Form, Spinner, Carousel } from 'react-bootstrap';
 import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
@@ -434,6 +434,23 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                         <Pic key={index} jimageData={item} update_info={update_info}/>
                     ))
                 )}
+                <Row>
+                    <Col sm={1}></Col>
+                    <Col sm={10}>
+                        <Carousel>
+                            <Carousel.Item>
+                                <img></img>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img></img>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img></img>
+                            </Carousel.Item>
+                        </Carousel>
+                    </Col>
+                    <Col sm={1}></Col>
+                </Row>
             </Row>
         </>
     )
