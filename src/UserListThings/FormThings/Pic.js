@@ -1,7 +1,11 @@
 import React from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 
-function Pic() {
+function Pic({update_info, jimageData }) {
+
+
+
+
     return (
         <>
             <Row className='m-4' style={{ alignItems: 'center' }}>
@@ -14,6 +18,11 @@ function Pic() {
                 </Col>
                 <Col sm={1}></Col>
             </Row>
+
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="jimg[]" accept="image/jpeg" multiple />
+                <button type="submit">Upload</button>
+            </form>
 
         </>
     )
