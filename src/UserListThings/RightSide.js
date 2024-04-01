@@ -371,7 +371,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-            <Pic ></Pic>
+            <Pic journeyDataJid={journeyData.jid}></Pic>
 
             {/* <Project></Project> */}
             <Row className='m-4' style={{ alignItems: 'center' }}>
