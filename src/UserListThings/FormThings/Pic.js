@@ -12,18 +12,20 @@ function Pic({ journeyDataJid }) {
     const imageArray = Array.from(selectedImages);
     setImages([...images, ...imageArray]);
 
-    const newInput = (
-      <Col className="text-center" sm={12}>
-        <input
-          key={inputs.length}
-          type="file"
-          accept="image/jpeg"
-          multiple
-          onChange={handleImageChange}
-        />
-      </Col>
-    );
-    setInputs([...inputs, newInput]);
+    setInputs(prevInputs => {
+      const newInput = (
+        <Col className="text-center" sm={12}>
+          <input
+            key={prevInputs.length}
+            type="file"
+            accept="image/jpeg"
+            multiple
+            onChange={handleImageChange}
+          />
+        </Col>
+      );
+      return [...prevInputs, newInput];
+    });
 
   };
 
@@ -60,7 +62,21 @@ function Pic({ journeyDataJid }) {
     })
       .then(response => response.json())
       .then(data => console.log(data))
-      .catch(error => console.error(error));
+      .catch(error => console.error(error))
+      .finally(() => {
+        setImages([]);
+        setInputs([
+          <Col className="text-center" sm={12}>
+            <input
+              key={0}
+              type="file"
+              accept="image/jpeg"
+              multiple
+              onChange={handleImageChange}
+            />
+          </Col>
+        ]);
+      });
   };
 
 
