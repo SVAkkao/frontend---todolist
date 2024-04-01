@@ -265,9 +265,10 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
                 <Col sm={10}>
                   {/* rounded */}
                   <Form.Control
+                   
                     value={searchvalue}
                     onChange={(event) => setSearchValue(event.target.value)}
-                    className="p-3"
+                    className="p-3 text-center"
                     type="text"
                     placeholder="輸入景點"
                   />
