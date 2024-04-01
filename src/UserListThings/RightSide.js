@@ -267,12 +267,13 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             <Row className='sticky-top' style={{ backgroundColor: 'white', zIndex: 2 }}>
                 {/* <Row> */}
                 <Row className='m-4'>
-                    <Col className='text-left'>
+                    {/* <Col sm={1}></Col> */}
+                    <Col className='text-center'>
                         {journeyData.attraction && (
                             <Form.Control
                                 ref={aname}
                                 style={{ borderColor: 'transparent' }}
-                                className='text1 p-2 m-4 text-left'
+                                className='text1 p-2 m-4 text-center text-truncate'
                                 value={journeyData.attraction.aname}
                                 onChange={handleAnameChange}
                                 type="text"
@@ -281,6 +282,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                             />
                         )}
                     </Col>
+                    <Col sm={2}></Col>
                 </Row>
                 <Row className='text-left'>
                     <Col sm={3}></Col>
