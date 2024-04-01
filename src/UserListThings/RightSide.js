@@ -427,6 +427,23 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     </button>
                 </Col> */}
                 <Col sm={1}></Col>
+                <Row>
+                    <Col sm={1}></Col>
+                    <Col sm={10}>
+                        <Carousel>
+                            <Carousel.Item>
+                                <img></img>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img></img>
+                            </Carousel.Item>
+                            <Carousel.Item>
+                                <img></img>
+                            </Carousel.Item>
+                        </Carousel>
+                    </Col>
+                    <Col sm={1}></Col>
+                </Row>
             </Row>
         </>
     )
