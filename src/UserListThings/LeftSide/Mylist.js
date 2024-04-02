@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Row, Col, Card, } from 'react-bootstrap';
 
 function DateInfo({ startDate, endDate }) {
@@ -18,6 +18,17 @@ function DateInfo({ startDate, endDate }) {
 
 function Mylist({ data, onButtonClick, onRemove }) {
     const [image, setImage] = useState(null);
+    // 
+    // 
+    // 
+    // 
+    // 
+    useEffect(()=>{})
+    // 
+    // 
+    // 
+    // 
+    // 
     const previewImg = image ? URL.createObjectURL(image) : "/UserListSource/Mylist.webp";
     return (
         <Row className='m-5'>
