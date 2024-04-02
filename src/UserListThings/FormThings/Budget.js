@@ -17,7 +17,7 @@ function Budget({deleteJbamount, budgetData, handleUpdateClick, handleJbnameChan
             <Col className='text-center' sm={5}>
                 <Form.Control type="number" placeholder='費用金額' min='0' value={budgetData.jbamount} onChange={(event) => handleJbamountChange(event, budgetData.jbid)} onBlur={handleUpdateClick} />
             </Col>
-            <Col sm={1}>
+            <Col sm={1} title='delete'>
                 <button
                     type="button"
                     onClick={()=>{deleteJbamount(budgetData.jbid)}}

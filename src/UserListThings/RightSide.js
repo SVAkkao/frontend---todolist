@@ -356,7 +356,6 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     </Row>
                     <Row>
                         <Col sm={12}>
-
                             <TextareaAutosize
                                 ref={think}
                                 value={journeyData.jreview || ""}
@@ -372,6 +371,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 <Col sm={1}></Col>
             </Row>
             <Pic journeyDataJid={journeyData.jid}></Pic>
+
 
             {/* <Project></Project> */}
             <Row className='m-4' style={{ alignItems: 'center' }}>
@@ -428,12 +428,18 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     </button>
                 </Col> */}
                 <Col sm={1}></Col>
-                {journeyData.jimages &&
-                (
-                    journeyData.jimages.map((item, index) => (
-                        <Pic key={index} jimageData={item} update_info={update_info}/>
-                    ))
-                )}
+                <Row className='m-4'>
+                    <Col sm={1}></Col>
+                    <Col sm={10}>
+                        {journeyData.jimages &&
+                            (
+                                journeyData.jimages.map((item, index) => (
+                                    <Pic key={index} jimageData={item} update_info={update_info} />
+                                ))
+                            )}
+                    </Col>
+                    <Col sm={1}></Col>
+                </Row>
                 <Row>
                     <Col sm={1}></Col>
                     <Col sm={10}>
