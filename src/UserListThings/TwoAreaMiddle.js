@@ -80,11 +80,13 @@ function TotalCost({ costData, setTotalAmount }) {
 }
 
 
-function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney }) {
+function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney }) {
   const [listdata, setListdata] = useState({
   });
   const [searchvalue, setSearchValue] = useState('');
   const titleName = useRef(null);
+  const startDate = useRef(null);
+  const endDate = useRef(null);
 
 
   // 過濾出 tlid 為特定值的資料
@@ -102,14 +104,71 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
       ...listdata,
       start_date: event.target.value,
     });
-};
+  };
 
-// const handleEndDateChange = (event) => {
-//   setListdata({
-//     ...listdata,
-//     start_date: event.target.value,
-//   });
-// };
+  const handleEndDateChange = (event) => {
+    setListdata({
+      ...listdata,
+      end_date: event.target.value,
+    });
+  };
+
+  const handleUpdateListClick = async () => {
+    const updateListData = {
+      tlid: selectedTlid,
+      title: titleName.current.value,
+      start_date: startDate.current.value,
+      end_date: endDate.current.value,
+      totalamount: listdata.totalamount,
+      tlphoto: listdata.tlphoto,
+    };
+
+    const token = localStorage.getItem("userToken");
+
+    fetch(API_HOST + "/api/POST/updatelist",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateListData),
+      }
+    )
+      .then((response) => {
+        console.log(response)
+        //update list_info();
+        setAllData(prevAlldata => {
+          return prevAlldata.map(
+            (touristList) => {
+              if (touristList.tlid === selectedTlid) {
+
+                return {
+                  ...touristList,
+                  title: titleName.current.value,
+                  start_date: startDate.current.value,
+                  end_date: endDate.current.value,
+                  totalamount: listdata.totalamount,
+                  tlphoto: listdata.tlphoto,
+                }
+
+
+              } else {
+                return touristList
+              }
+
+
+            }
+          )
+        }
+        )
+        //
+
+      })
+
+
+  };
+
 
   //
 
@@ -168,7 +227,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
     });
   };
 
-  
+
 
 
   const onRemoveJourney = (selectedjid) => {
@@ -221,7 +280,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
               style={{ borderColor: "transparent" }}
               placeholder="請輸入標題"
               onChange={handleTitleChange}
-              onBlur={handleClickOutside}
+              onBlur={handleUpdateListClick}
               type="text"
             />
           </Col>
@@ -252,7 +311,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
         <Row className="m-4" style={{ alignItems: "center" }}>
           {/* <Col sm={1}></Col> */}
           <Col className="text-center" sm={4} xs={5}>
-            <Form.Control value={listdata.start_date} type="date" onChange={handleStartDateChange}/>
+            <Form.Control ref={startDate} value={listdata.start_date} type="date" onChange={handleStartDateChange} onBlur={handleUpdateListClick} />
           </Col>
           <Col className="text-center" sm={1} xs={1}>
             <img
@@ -262,7 +321,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
             />
           </Col>
           <Col className="text-center" sm={4} xs={5}>
-            <Form.Control value={listdata.end_date} type="date" />
+            <Form.Control ref={endDate} value={listdata.end_date} onChange={handleEndDateChange} type="date" onBlur={handleUpdateListClick} />
           </Col>
           <Col className="text-center d-none d-sm-block" sm={2}>
             <NavLink to="/prelist">

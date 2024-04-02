@@ -118,7 +118,7 @@ const List = () => {
           />
         </Col>
         <Col sm={6} xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
-          <TwoAreaMiddle setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
+          <TwoAreaMiddle setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
         </Col>
         <Col sm={3} xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
           <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
