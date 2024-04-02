@@ -10,7 +10,8 @@ function Pic({ journeyDataJid }) {
   const handleImageChange = (event) => {
     const selectedImages = event.target.files;
     const imageArray = Array.from(selectedImages);
-    setImages([...images, ...imageArray]);
+    setImages([...images, ...imageArray
+    ]);
   }
 
 
