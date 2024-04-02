@@ -92,7 +92,7 @@ function Register() {
           }}
           className="desktop-img"
         >
-          <img src="https://media.discordapp.net/attachments/1134860695343738910/1219167827118788608/ariel_wu_A_man_is_traveling_in_a_city_minimalist_simple_soft_co_20f9f7a2-6238-44dc-bf69-1919c16a50d4.png?ex=660a5185&is=65f7dc85&hm=ff47e5d4aa292cf2040a1d0b733333e7bd9ca1eb129c1c9d9338a2250b6a5195&=&format=webp&quality=lossless&width=929&height=619"></img>
+          <img src="https://media.discordapp.net/attachments/1134860695343738910/1219167827118788608/ariel_wu_A_man_is_traveling_in_a_city_minimalist_simple_soft_co_20f9f7a2-6238-44dc-bf69-1919c16a50d4.png?ex=661cc685&is=660a5185&hm=7f26d754ed7ad93d177aa84793438b2d8465200c916a2aece80426c8da91d9b3&=&format=webp&quality=lossless&width=929&height=619"></img>
         </div>
         <div className="login-system">
           <div className="col-12 col-md-10 ">
