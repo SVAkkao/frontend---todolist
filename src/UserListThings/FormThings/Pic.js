@@ -53,24 +53,37 @@ function Pic({ journeyDataJid }) {
           <Form.Label className="text-left ">圖片</Form.Label>
         </Col>
         <Col sm={1}></Col>
-        <Col sm={1}></Col>    
-          <React.Fragment >
-            <Col className="text-center" sm={12}>
-              <Form.Control
-                key={0}
-                type="file"
-                accept="image/jpeg"
-                multiple
-                onChange={handleImageChange}
-              />
-            </Col>
-          </React.Fragment>
         <Col sm={1}></Col>
+        <React.Fragment >
+          <Col className="text-left" sm={10}>
+            <Form.Control
+              key={0}
+              type="file"
+              accept="image/jpeg"
+              multiple
+              onChange={handleImageChange}
+            />
+          </Col>
+          <Col sm={1}>
+            <Form onSubmit={handleSubmit} className='d-inline' title='submit'>
+              <button
+                type="submit"
+                style={{ border: "none", backgroundColor: "transparent" }}
+              >
+                <img
+                  src="/UserListSource/send.png"
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    paddingBottom: "0",
+                  }}
+                  alt="submit button"
+                />
+              </button>
+            </Form>
+          </Col>
+        </React.Fragment>
       </Row>
-
-      <form onSubmit={handleSubmit}>
-        <button type="submit">上傳</button>
-      </form>
     </>
   )
 }

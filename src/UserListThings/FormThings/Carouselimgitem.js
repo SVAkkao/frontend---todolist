@@ -1,26 +1,7 @@
 import React from 'react'
 import { Carousel } from "react-bootstrap";
 
-
-function GetCarouselItem(i = 0, itemsInGroup = ["/logo.svg"]) {
-  const renderImg = (image, index) => (<img
-    key={image}
-    src={image}
-    className="d-block"
-    style={{ width: '33.33%' }} // 设置每个图片的宽度
-    alt={`Slide ${index}`}
-  />);
-  return <Carousel.Item key={i}>
-    <div className="d-flex justify-content-between">
-      {itemsInGroup.map(renderImg)}
-    </div>
-  </Carousel.Item>;
-}
-
-
-
-
-
+const API_HOST_IMAGE = process.env.REACT_APP_IMAGE_URL
 
 function Carouselimgitem({ jimageData,key }) {
 
@@ -28,13 +9,13 @@ function Carouselimgitem({ jimageData,key }) {
 
 
 
-  return (<Carousel.Item>
+  return (<Carousel.Item key={jimageData.jiid}>
     <div className="d-flex justify-content-between">
       <img
-        src={jimageData.jimg}
+        src={API_HOST_IMAGE + jimageData.jimg}
         className="d-block"
-        style={{ width: '33.33%' }} // 设置每个图片的宽度
-        alt={`Slide ${key}`}
+        style={{ width: '100%' }} // 设置每个图片的宽度
+        alt={`Slide ${jimageData.jiid}`}
       />
       <button
         type="button"

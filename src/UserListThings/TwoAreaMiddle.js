@@ -246,7 +246,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
           <Col className="text-center" sm={4} xs={5}>
             <Form.Control value={listdata.end_date} type="date" />
           </Col>
-          <Col className="text-center d-xs-none" sm={2}>
+          <Col className="text-center d-none d-sm-block" sm={2}>
             <NavLink to="/prelist">
               <a id="prelist">
                 <img
