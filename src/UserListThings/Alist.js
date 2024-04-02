@@ -13,9 +13,6 @@ function Alist() {
     return (<main className="attraction-list">
             <LogoutBar />
             <Row>
-                {/* <Col sm={3}>
-                    <Fetch />
-                </Col> */}
                 <Col className="bg-color4">
                     <IndexMiddle />
                 </Col>

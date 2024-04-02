@@ -207,46 +207,29 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
               type="text"
             />
           </Col>
-          <Col sm={1} xs={2}></Col>
+          <Col sm={1}></Col>
         </Row>
-        <Row className="m-4 d-xs-none">
+        <Row className="m-4">
           <Col className="text-center">
             <TotalCost costData={listdata} setTotalAmount={setTotalAmount} />
-          </Col>
-        </Row>
-        <Row className="mt-4 d-sm-none">
-          <Col className="text-center">
-            <TotalCost costData={listdata} setTotalAmount={setTotalAmount} />
-          </Col>
-          <Col className="text-center" sm={2}>
-            <NavLink to="/prelist">
-              <a id="prelist">
-                <img
-                  src="/UserListSource/bag.png"
-                  style={{ width: "20px", height: "20px", paddingBottom: "0" }}
-                  className="m-2"
-                />
-                行前準備
-              </a>
-            </NavLink>
           </Col>
         </Row>
         <Row className="m-4" style={{ alignItems: "center" }}>
           {/* <Col sm={1}></Col> */}
-          <Col className="text-center" sm={4} xs={5}>
+          <Col className="text-center" sm={4}>
             <Form.Control value={listdata.start_date} type="date" />
           </Col>
-          <Col className="text-center" sm={1} xs={1}>
+          <Col className="text-center" sm={1}>
             <img
               src="/UserListSource/to.png"
               style={{ width: "24px", height: "24px", paddingBottom: "0" }}
               alt="The next icon"
             />
           </Col>
-          <Col className="text-center" sm={4} xs={5}>
+          <Col className="text-center" sm={4}>
             <Form.Control value={listdata.end_date} type="date" />
           </Col>
-          <Col className="text-center d-none d-sm-block" sm={2}>
+          <Col className="text-center" sm={2}>
             <NavLink to="/prelist">
               <a id="prelist">
                 <img
@@ -292,7 +275,7 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
                     placeholder="輸入景點"
                   />
                 </Col>
-                <Col sm={2}>
+                <Col sm={2} title='submit'>
                   <button
                     type="button"
                     onClick={handleSearchClick}
