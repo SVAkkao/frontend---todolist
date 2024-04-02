@@ -1,26 +1,33 @@
-import React, { useState } from 'react'
-import { Row, Col, Form } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Row, Col, Form } from "react-bootstrap";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 function Pic({ journeyDataJid,update_info }) {
 
   const [images, setImages] = useState([]);
-
+  // 用于展示的图片预览（Base64编码）
+  const [imagePreviews, setImagePreviews] = useState([]);
 
   const handleImageChange = (event) => {
     const selectedImages = event.target.files;
     const imageArray = Array.from(selectedImages);
-    setImages([...images, ...imageArray
-    ]);
-  }
+    setImages([...images, ...imageArray]);
 
+    // 为每个选中的图片创建FileReader进行读取
+    imageArray.forEach((file) => {
+      const reader = new FileReader();
 
+      reader.onload = (e) => {
+        // 读取完成后，将图片数据添加到状态中
+        setImagePreviews((prevPreviews) => [...prevPreviews, e.target.result]);
+      };
 
-
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
 
     const formData = new FormData();
     formData.append("jid", journeyDataJid);
@@ -46,8 +53,6 @@ function Pic({ journeyDataJid,update_info }) {
       .catch(error => console.error(error));
   };
 
-
-
   return (
     <>
       <Row className="m-4" style={{ alignItems: "center" }}>
@@ -57,18 +62,18 @@ function Pic({ journeyDataJid,update_info }) {
         </Col>
         <Col sm={1}></Col>
         <Col sm={1}></Col>
-        <React.Fragment >
+        <React.Fragment>
           <Col className="text-left" sm={10}>
             <Form.Control
               key={0}
               type="file"
-              accept="image/jpeg"
+              accept="image/*"
               multiple
               onChange={handleImageChange}
             />
           </Col>
           <Col sm={1}>
-            <Form onSubmit={handleSubmit} className='d-inline' title='submit'>
+            <Form onSubmit={handleSubmit} className="d-inline" title="submit">
               <button
                 type="submit"
                 style={{ border: "none", backgroundColor: "transparent" }}
@@ -85,10 +90,23 @@ function Pic({ journeyDataJid,update_info }) {
               </button>
             </Form>
           </Col>
+          <Col>
+            {imagePreviews.map((imageSrc, index) => (
+              <img
+                key={index}
+                src={imageSrc}
+                style={{
+                  maxWidth: "100px",
+                  maxHeight: "100px",
+                  margin: "10px",
+                }}
+              />
+            ))}
+          </Col>
         </React.Fragment>
       </Row>
     </>
-  )
+  );
 }
 
-export default Pic
+export default Pic;
