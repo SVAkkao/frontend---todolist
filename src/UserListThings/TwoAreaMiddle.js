@@ -234,13 +234,8 @@ function TwoAreaMiddle({ selectedTlid, alldata, update_info, onFocusJourney, set
         </Row>
         <Row className="m-4" style={{ alignItems: "center" }}>
           {/* <Col sm={1}></Col> */}
-<<<<<<< HEAD
           <Col className="text-center" sm={4}>
             <Form.Control value={listdata.start_date} type="date" />
-=======
-          <Col className="text-center" sm={4} xs={5}>
-            <Form.Control value={listdata.start_date} type="date" onChange={handleStartDateChange}/>
->>>>>>> 21c5f1f8767e8dcec624c74f909e0584cde72b23
           </Col>
           <Col className="text-center" sm={1}>
             <img
