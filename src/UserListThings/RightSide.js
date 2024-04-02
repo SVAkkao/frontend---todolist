@@ -6,6 +6,7 @@ import { Row, Col, Form, Spinner, Carousel } from 'react-bootstrap';
 import './color.css';
 import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
+import Carouselimgitem from './FormThings/Carouselimgitem';
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -134,6 +135,62 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
             }
             )
     }
+
+
+    // const deleteJimage = (imageDatajbid) => {
+
+    //     fetch(API_HOST + "/api/POST/deletejbudget",
+    //         {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //                 jbid: budgetDatajbid
+    //             }),
+    //         }
+    //     )
+    //         .then((r) => {
+    //             setAllData(prevAlldata => {
+    //                 return prevAlldata.map(
+    //                     (touristList) => {
+    //                         if (touristList.tlid === selectedTlid) {
+    //                             return {
+    //                                 ...touristList,
+    //                                 journeys: touristList.journeys.map(
+    //                                     (journey) => {
+    //                                         if (journey.jid === journeyData.jid) {
+
+    //                                             return {
+    //                                                 ...journey,
+    //                                                 jbudgets: journey.jbudgets.filter(
+    //                                                     (jbudget) => {
+    //                                                         return jbudget.jbid !== budgetDatajbid;
+    //                                                     }
+    //                                                 )
+    //                                             }
+
+    //                                         } else {
+    //                                             return journey
+    //                                         }
+    //                                     }
+
+    //                                 )
+
+    //                             }
+
+    //                         } else {
+    //                             return touristList
+    //                         }
+
+
+    //                     }
+    //                 )
+    //             }
+    //             )
+    //         }
+    //         )
+    // }
 
     const handleUpdateClick = async () => {
 
@@ -428,29 +485,14 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                     </button>
                 </Col> */}
                 <Col sm={1}></Col>
+                {/* <Carousel style={{backgroundColor:"red"}}>
                 {journeyData.jimages &&
                 (
                     journeyData.jimages.map((item, index) => (
-                        <Pic key={index} jimageData={item} update_info={update_info}/>
+                        <Carouselimgitem key={index} jimageData={item} />
                     ))
                 )}
-                <Row>
-                    <Col sm={1}></Col>
-                    <Col sm={10}>
-                        <Carousel>
-                            <Carousel.Item>
-                                <img></img>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img></img>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img></img>
-                            </Carousel.Item>
-                        </Carousel>
-                    </Col>
-                    <Col sm={1}></Col>
-                </Row>
+                </Carousel> */}
             </Row>
         </>
     )
