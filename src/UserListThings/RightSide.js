@@ -33,10 +33,7 @@ function RightSide({
   };
   const think = useRef(null);
   const memo = useRef(null);
-  const arrivedDate = useRef(null);
-  const arrivedTime = useRef(null);
-  const leavedTime = useRef(null);
-  const jrate = useRef(null);
+  const aname = useRef(null);
 
   useEffect(() => {
     const jid = selectedjid;
