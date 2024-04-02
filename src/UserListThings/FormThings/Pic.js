@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 
 const API_HOST = process.env.REACT_APP_API_URL;
-function Pic({ journeyDataJid }) {
-  // 用于上传的原始File对象
+function Pic({ journeyDataJid,update_info }) {
+
   const [images, setImages] = useState([]);
   // 用于展示的图片预览（Base64编码）
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -45,9 +45,12 @@ function Pic({ journeyDataJid }) {
       },
       body: formData,
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .then(()=>{
+        update_info();
+      })
+      .catch(error => console.error(error));
   };
 
   return (

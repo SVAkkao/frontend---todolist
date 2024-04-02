@@ -8,6 +8,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { NavLink } from 'react-router-dom';
 import Carouselimgitem from './FormThings/Carouselimgitem';
 
+
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
@@ -137,60 +138,60 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
     }
 
 
-    // const deleteJimage = (imageDatajbid) => {
+    const deleteJimage = (imageDatajiid) => {
 
-    //     fetch(API_HOST + "/api/POST/deletejbudget",
-    //         {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({
-    //                 jbid: budgetDatajbid
-    //             }),
-    //         }
-    //     )
-    //         .then((r) => {
-    //             setAllData(prevAlldata => {
-    //                 return prevAlldata.map(
-    //                     (touristList) => {
-    //                         if (touristList.tlid === selectedTlid) {
-    //                             return {
-    //                                 ...touristList,
-    //                                 journeys: touristList.journeys.map(
-    //                                     (journey) => {
-    //                                         if (journey.jid === journeyData.jid) {
+        fetch(API_HOST + "/api/POST/deletejimage",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    jiid: imageDatajiid
+                }),
+            }
+        )
+            .then((r) => {
+                setAllData(prevAlldata => {
+                    return prevAlldata.map(
+                        (touristList) => {
+                            if (touristList.tlid === selectedTlid) {
+                                return {
+                                    ...touristList,
+                                    journeys: touristList.journeys.map(
+                                        (journey) => {
+                                            if (journey.jid === journeyData.jid) {
 
-    //                                             return {
-    //                                                 ...journey,
-    //                                                 jbudgets: journey.jbudgets.filter(
-    //                                                     (jbudget) => {
-    //                                                         return jbudget.jbid !== budgetDatajbid;
-    //                                                     }
-    //                                                 )
-    //                                             }
+                                                return {
+                                                    ...journey,
+                                                    jimages: journey.jimages.filter(
+                                                        (jimages) => {
+                                                            return jimages.jiid !== imageDatajiid;
+                                                        }
+                                                    )
+                                                }
 
-    //                                         } else {
-    //                                             return journey
-    //                                         }
-    //                                     }
+                                            } else {
+                                                return journey
+                                            }
+                                        }
 
-    //                                 )
+                                    )
 
-    //                             }
+                                }
 
-    //                         } else {
-    //                             return touristList
-    //                         }
+                            } else {
+                                return touristList
+                            }
 
 
-    //                     }
-    //                 )
-    //             }
-    //             )
-    //         }
-    //         )
-    // }
+                        }
+                    )
+                }
+                )
+            }
+            )
+    }
 
     const handleUpdateClick = async () => {
 
@@ -366,6 +367,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 <Col className='text-center' sm={10}>
                     <Form.Control
                         value={journeyData.arrived_date}
+                        
                         type="date" />
                 </Col>
                 <Col sm={1}></Col>
@@ -427,7 +429,7 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 </Col>
                 <Col sm={1}></Col>
             </Row>
-            <Pic journeyDataJid={journeyData.jid}></Pic>
+            <Pic journeyDataJid={journeyData.jid} update_info={update_info}></Pic>
 
 
             {/* <Project></Project> */}
@@ -487,15 +489,18 @@ function RightSide({ changeMoneyClick, selectedjid, alldata, update_info, select
                 <Col sm={1}></Col>
                 <Row className='m-4'>
                     <Col sm={1}></Col>
-                    <Col sm={10}>
-                        <Carousel style={{ backgroundColor: "red" }}>
-                            {journeyData.jimages &&
-                                (
-                                    journeyData.jimages.map((item) => (
-                                        <Carouselimgitem key={item.jiid} jimageData={item} />
-                                    ))
-                                )}
-                        </Carousel>
+                    <Col sm={10} style={{
+                        width: '400px',
+                        height: '200px',
+                        border: '1px solid black',
+                        overflow: 'auto'
+                    }}>
+                        {journeyData.jimages &&
+                            (
+                                journeyData.jimages.map((item) => (
+                                    <Carouselimgitem key={item.jiid} jimageData={item} deleteJimage={deleteJimage}/>
+                                ))
+                            )}
                     </Col>
                     <Col sm={1}></Col>
                 </Row>
