@@ -6,7 +6,7 @@ import Mylist from "./Mylist";
 import { useUserStore } from "../../stores/user";
 import { ajaxAddList, ajaxRemoveList } from "./api";
 
-function TripLists({ list, finishedSelected, onButtonClick, onRemove }) {
+function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_info }) {
   const isEarlierThanToday = (input) => {
     // Today
     const today = new Date();
@@ -33,6 +33,7 @@ function TripLists({ list, finishedSelected, onButtonClick, onRemove }) {
       data={item}
       onButtonClick={onButtonClick}
       onRemove={onRemove}
+      update_info={update_info}
     />
   ))
 }
@@ -148,6 +149,7 @@ export default function LeftSide({ data, onSelect, update_info }) {
         onButtonClick={onSelect}
         onRemove={onRemove}
         finishedSelected={finishedSelected}
+        update_info={update_info}
       />
       <AddListBtn
         postAddList={postAddList}
