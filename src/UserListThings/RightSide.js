@@ -261,74 +261,83 @@ function RightSide({
 
   return (
     <>
-      <Row
-        className="sticky-top"
-        style={{ backgroundColor: "white", zIndex: 2 }}
-      >
-        {/* <Row> */}
-        <Row className="m-4">
-          {/* <Col sm={1}></Col> */}
-          <Col className="text-center">
-            {journeyData.attraction && (
-              <Form.Control
-                ref={aname}
-                style={{ borderColor: "transparent" }}
-                className="text1 p-2 m-4 text-center text-truncate"
-                value={journeyData.attraction.aname}
-                onChange={handleAnameChange}
-                type="text"
-                placeholder="請輸入標題"
-                onBlur={handleUpdateClick}
-              />
-            )}
-          </Col>
-          <Col sm={2}></Col>
-        </Row>
-        <Row className="text-left">
-          <Col sm={1}></Col>
-          <Col sm={4}>
-            <a onClick={changeMoneyClick}>
-              費用管理
-              <img
-                src="/UserListSource/money.png"
-                style={{ width: "20px", height: "20px", paddingBottom: "0" }}
-                className="m-2"
-              />
-            </a>
-            {/* <NavLink to='/money'>
-                        <a id='money' style={{color: '#939393'}}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
-                    </NavLink> */}
-          </Col>
-          <Col className="text-right" sm={4}>
-            <NavLink to="/ratings">
-              <a id="ratings">
-                留言區
-                <img
-                  src="/UserListSource/comment.png"
-                  style={{ width: "20px", height: "20px", paddingBottom: "0" }}
-                  className="m-2"
-                />
-              </a>
-            </NavLink>
-          </Col>
-          <Col sm={3}>
-            <a onClick={changePhotoClick}>
-              相簿
-              <FaImages
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  paddingBottom: "0",
-                  color: "gray",
-                }}
-                className="m-2"
-              />
-            </a>
-          </Col>
-        </Row>
-      </Row>
       {sidebarContent === "default" && (
         <div>
+          <Row
+            className="sticky-top"
+            style={{ backgroundColor: "white", zIndex: 2 }}
+          >
+            {/* <Row> */}
+            <Row className="m-4">
+              {/* <Col sm={1}></Col> */}
+              <Col className="text-center">
+                {journeyData.attraction && (
+                  <Form.Control
+                    ref={aname}
+                    style={{ borderColor: "transparent" }}
+                    className="text1 p-2 m-4 text-center text-truncate"
+                    value={journeyData.attraction.aname}
+                    onChange={handleAnameChange}
+                    type="text"
+                    placeholder="請輸入標題"
+                    onBlur={handleUpdateClick}
+                  />
+                )}
+              </Col>
+              <Col sm={2}></Col>
+            </Row>
+            <Row className="text-left">
+              <Col sm={1}></Col>
+              <Col sm={4}>
+                <a onClick={changeMoneyClick}>
+                  費用管理
+                  <img
+                    src="/UserListSource/money.png"
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      paddingBottom: "0",
+                    }}
+                    className="m-2"
+                  />
+                </a>
+                {/* <NavLink to='/money'>
+                        <a id='money' style={{color: '#939393'}}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    </NavLink> */}
+              </Col>
+              <Col className="text-right" sm={4}>
+                <NavLink to="/ratings">
+                  <a id="ratings">
+                    留言區
+                    <img
+                      src="/UserListSource/comment.png"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                        paddingBottom: "0",
+                      }}
+                      className="m-2"
+                    />
+                  </a>
+                </NavLink>
+              </Col>
+              <Col sm={3}>
+                <a onClick={changePhotoClick}>
+                  相簿
+                  <FaImages
+                    style={{
+                      width: "20px",
+                      height: "20px",
+                      paddingBottom: "0",
+                      color: "gray",
+                    }}
+                    className="m-2"
+                  />
+                </a>
+              </Col>
+            </Row>
+          </Row>
+
           <Row className="m-4" style={{ alignItems: "center" }}>
             <Col sm={1}></Col>
             <Col sm={10}>
@@ -535,20 +544,31 @@ function RightSide({
           <Row className="m-4" style={{ alignItems: "center" }}>
             <Row>
               <a onClick={resetSidebarContent}>
-                <BiArrowBack size={20} style={{ margin: "2px" }} />
-                返回上層
+                <img
+                  src="/UserListSource/list.png"
+                  style={{ width: "20px", height: "20px", paddingBottom: "0" }}
+                  className="m-2"
+                />
+                返回
               </a>
-              <Pic
-                journeyDataJid={journeyData.jid}
-                update_info={update_info}
-              ></Pic>
             </Row>
+
             <Row className="m-4">
+              <Col className="text-center">
+                <p className="text1">相簿</p>
+              </Col>
+            </Row>
+            <Pic
+              journeyDataJid={journeyData.jid}
+              update_info={update_info}
+            ></Pic>
+            <Row className="m-4">
+              <p>已上傳的圖片：</p>
               <Col sm={1}></Col>
               <Col
                 sm={10}
                 style={{
-                  width: "500px",
+                  width: "400px",
                   height: "400px",
                   border: "1px solid gray",
                   overflow: "auto",
