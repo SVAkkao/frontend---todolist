@@ -11,47 +11,24 @@ function Pic({ journeyDataJid }) {
     const selectedImages = event.target.files;
     const imageArray = Array.from(selectedImages);
     setImages([...images, ...imageArray]);
+  }
 
-    setInputs(prevInputs => {
-      const newInput = (
-        <Col className="text-center" sm={12}>
-          <input
-            key={prevInputs.length}
-            type="file"
-            accept="image/jpeg"
-            multiple
-            onChange={handleImageChange}
-          />
-        </Col>
-      );
-      return [...prevInputs, newInput];
-    });
 
-  };
 
-  const [inputs, setInputs] = useState([
-    <Col className="text-center" sm={12}>
-      <input
-        key={0}
-        type="file"
-        accept="image/jpeg"
-        multiple
-        onChange={handleImageChange}
-      />
-    </Col>
-  ]);
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log(journeyDataJid);
 
     const formData = new FormData();
     formData.append("jid", journeyDataJid);
+
     images.forEach((image) => {
       formData.append("jimg[]", image);
     });
+
+    console.log(formData);
 
     fetch(API_HOST + "/api/images/upload", {
       method: "POST",
@@ -62,21 +39,7 @@ function Pic({ journeyDataJid }) {
     })
       .then(response => response.json())
       .then(data => console.log(data))
-      .catch(error => console.error(error))
-      .finally(() => {
-        setImages([]);
-        setInputs([
-          <Col className="text-center" sm={12}>
-            <input
-              key={0}
-              type="file"
-              accept="image/jpeg"
-              multiple
-              onChange={handleImageChange}
-            />
-          </Col>
-        ]);
-      });
+      .catch(error => console.error(error));
   };
 
 
@@ -89,12 +52,18 @@ function Pic({ journeyDataJid }) {
           <Form.Label className="text-left ">圖片</Form.Label>
         </Col>
         <Col sm={1}></Col>
-        <Col sm={1}></Col>
-        {inputs.map((input, index) => (
-          <React.Fragment key={index}>
-            {input}
+        <Col sm={1}></Col>    
+          <React.Fragment >
+            <Col className="text-center" sm={12}>
+              <Form.Control
+                key={0}
+                type="file"
+                accept="image/jpeg"
+                multiple
+                onChange={handleImageChange}
+              />
+            </Col>
           </React.Fragment>
-        ))}
         <Col sm={1}></Col>
       </Row>
 
