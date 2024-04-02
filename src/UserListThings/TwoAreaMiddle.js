@@ -293,13 +293,8 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
         </Row>
         <Row className="m-4" style={{ alignItems: "center" }}>
           {/* <Col sm={1}></Col> */}
-<<<<<<< HEAD
           <Col className="text-center" sm={4}>
             <Form.Control value={listdata.start_date} type="date" />
-=======
-          <Col className="text-center" sm={4} xs={5}>
-            <Form.Control ref={startDate} value={listdata.start_date} type="date" onChange={handleStartDateChange} onBlur={handleUpdateListClick} />
->>>>>>> ea14a28cbc8c90f7da0283a2fc1d0a1e97951885
           </Col>
           <Col className="text-center" sm={1}>
             <img
@@ -308,13 +303,8 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
               alt="The next icon"
             />
           </Col>
-<<<<<<< HEAD
           <Col className="text-center" sm={4}>
             <Form.Control value={listdata.end_date} type="date" />
-=======
-          <Col className="text-center" sm={4} xs={5}>
-            <Form.Control ref={endDate} value={listdata.end_date} onChange={handleEndDateChange} type="date" onBlur={handleUpdateListClick} />
->>>>>>> ea14a28cbc8c90f7da0283a2fc1d0a1e97951885
           </Col>
           <Col className="text-center" sm={2}>
             <NavLink to="/prelist">
