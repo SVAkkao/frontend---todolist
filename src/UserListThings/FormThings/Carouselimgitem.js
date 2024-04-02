@@ -1,18 +1,20 @@
 import React from 'react'
 import { Carousel } from "react-bootstrap";
 
-const API_HOST_IMAGE = process.env.REACT_APP_IMAGE_URL
+const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 
-function Carouselimgitem({ jimageData,key }) {
-
-
+function Carouselimgitem({ jimageData,deleteJimage }) {
 
 
 
-  return (<Carousel.Item key={jimageData.jiid}>
+
+
+  return (
+  
+    
     <div className="d-flex justify-content-between">
       <img
-        src={API_HOST_IMAGE + jimageData.jimg}
+        src={`${API_IMAGE}${jimageData.jimg}`}
         className="d-block"
         style={{ width: '100%' }} // 设置每个图片的宽度
         alt={`Slide ${jimageData.jiid}`}
@@ -21,7 +23,7 @@ function Carouselimgitem({ jimageData,key }) {
         type="button"
         onClick={
           () => { 
-            // deleteJbamount(budgetData.jbid) 
+            deleteJimage(jimageData.jiid) 
           }
       }
         style={{ border: "none", backgroundColor: "transparent" }}
@@ -32,7 +34,7 @@ function Carouselimgitem({ jimageData,key }) {
       </button>
     </div>
 
-  </Carousel.Item>);
+  );
 }
 
 export default Carouselimgitem

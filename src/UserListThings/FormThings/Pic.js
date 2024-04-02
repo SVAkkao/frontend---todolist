@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Row, Col, Form } from 'react-bootstrap';
 
 const API_HOST = process.env.REACT_APP_API_URL;
-function Pic({ journeyDataJid }) {
+function Pic({ journeyDataJid,update_info }) {
 
   const [images, setImages] = useState([]);
 
@@ -40,6 +40,9 @@ function Pic({ journeyDataJid }) {
     })
       .then(response => response.json())
       .then(data => console.log(data))
+      .then(()=>{
+        update_info();
+      })
       .catch(error => console.error(error));
   };
 
