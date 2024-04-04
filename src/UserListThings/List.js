@@ -35,14 +35,6 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmou
   };
 
 
-  // return <div>
-  //   <p><span>selectedTlid: {selectedTlid}</span>
-  //   </p>
-  //   <p>
-  //     <span>selectedjid: {JSON.stringify(selectedjid)}</span>
-  //   </p>
-  // </div>
-
   if (!alldata || !selectedTlid || !selectedjid) {
     return (
       <Spinner animation="border" role="status">
