@@ -299,10 +299,16 @@ function RightSide({
                 className="sticky-top"
                 style={{ backgroundColor: "white", zIndex: 2 }}
             >
+                <Row className="m-1">
+                    <Col className="text-left">
+                        {/* <a onClick={changeMoneyClick}><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回</a> */}
+                        <a><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />查看清單</a>
+                    </Col>
+                </Row>
                 {/* <Row> */}
-                <Row className="m-4">
-                    {/* <Col sm={1}></Col> */}
-                    <Col className="text-center">
+                <Row className="m-1">
+                    {/* <Col xs={1}></Col> */}
+                    <Col xs={11} className="text-center">
                         {journeyData.attraction && (
                             <Form.Control
                                 ref={aname}
@@ -316,11 +322,11 @@ function RightSide({
                             />
                         )}
                     </Col>
-                    <Col sm={2}></Col>
+                    <Col xs={1}></Col>
                 </Row>
-                <Row className="text-left">
-                    <Col sm={1}></Col>
-                    <Col sm={4}>
+                <Row className="text-center">
+                    {/* <Col></Col> */}
+                    <Col xs={4}>
                         <a onClick={changeMoneyClick}>
                             費用管理
                             <img
@@ -329,11 +335,8 @@ function RightSide({
                                 className="m-2"
                             />
                         </a>
-                        {/* <NavLink to='/money'>
-                        <a id='money' style={{color: '#939393'}}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
-                    </NavLink> */}
                     </Col>
-                    <Col className="text-right" sm={4}>
+                    <Col className="text-right" xs={4}>
                         <NavLink to="/ratings">
                             <a id="ratings">
                                 留言區
@@ -345,7 +348,7 @@ function RightSide({
                             </a>
                         </NavLink>
                     </Col>
-                    <Col sm={3}>
+                    <Col xs={4}>
                         <a onClick={changePhotoClick}>
                             相簿
                             <FaImages
@@ -359,19 +362,20 @@ function RightSide({
                             />
                         </a>
                     </Col>
+                    {/* <Col></Col> */}
                 </Row>
             </Row>
             {sidebarContent === "default" && (
                 <div>
                     <Row className="m-4" style={{ alignItems: "center" }}>
-                        <Col sm={1}></Col>
-                        <Col sm={10}>
+                        <Col xs={1}></Col>
+                        <Col xs={10}>
                             <Form.Label className="text-left ">出發日期</Form.Label>
                         </Col>
-                        <Col sm={1}></Col>
+                        <Col xs={1}></Col>
 
-                        <Col sm={1}></Col>
-                        <Col className="text-center" sm={10}>
+                        <Col xs={1}></Col>
+                        <Col className="text-center" xs={10}>
                             <Form.Control
                                 ref={arrivedDate}
                                 value={journeyData.arrived_date}
@@ -379,17 +383,17 @@ function RightSide({
                                 onBlur={handleUpdateClick}
                                 type="date" />
                         </Col>
-                        <Col sm={1}></Col>
+                        <Col xs={1}></Col>
                     </Row>
                     <Row className="m-4" style={{ alignItems: "center" }}>
-                        <Col sm={1}></Col>
-                        <Col sm={10}>
+                        <Col xs={1}></Col>
+                        <Col xs={10}>
                             <Form.Label className="text-left ">時間</Form.Label>
                         </Col>
-                        <Col sm={1}></Col>
+                        <Col xs={1}></Col>
 
-                        <Col sm={1}></Col>
-                        <Col className="text-center" sm={5}>
+                        <Col xs={1}></Col>
+                        <Col className="text-center" xs={4}>
                             <Form.Control
                                 ref={arrivedTime}
                                 onChange={handleArrivedTimeChange}
@@ -402,7 +406,15 @@ function RightSide({
                                 type="time"
                             />
                         </Col>
-                        <Col className="text-center" sm={5}>
+                        <Col className="text-center m-1">
+                            <img
+                                src="/UserListSource/to.png"
+
+                                style={{ width: "24px", height: "24px", paddingBottom: "0" }}
+                                alt="The next icon"
+                            />
+                        </Col>
+                        <Col className="text-center" xs={4}>
                             <Form.Control
                                 ref={leavedTime}
                                 onChange={handleLeavedTimeChange}
@@ -415,7 +427,7 @@ function RightSide({
                                 type="time"
                             />
                         </Col>
-                        <Col sm={1}></Col>
+                        <Col xs={1}></Col>
                     </Row>
 
                     {journeyData.jbudgets &&
@@ -431,13 +443,13 @@ function RightSide({
                         ))}
 
                     <Row className="m-4" style={{ alignItems: "center" }}>
-                        <Col sm={1}></Col>
-                        <Col sm={10}>
+                        <Col xs={1}></Col>
+                        <Col xs={10}>
                             <Row className="text-right">
-                                <Col sm={5} className="d-flex align-items-center">
+                                <Col xs={5} className="d-flex align-items-center">
                                     <Form.Label className="text-left">感想</Form.Label>
                                 </Col>
-                                <Col sm={7} className="d-flex justify-content-end">
+                                <Col xs={7} className="d-flex justify-content-end">
 
                                     <RatingComponent
                                         handleUpdateClick={handleUpdateClick}
@@ -449,7 +461,7 @@ function RightSide({
                                 </Col>
                             </Row>
                             <Row>
-                                <Col sm={12}>
+                                <Col xs={12}>
                                     <TextareaAutosize
                                         ref={think}
                                         value={journeyData.jreview || ""}
@@ -473,18 +485,18 @@ function RightSide({
                                 </Col>
                             </Row>
                         </Col>
-                        <Col sm={1}></Col>
+                        <Col xs={1}></Col>
                     </Row>
 
                     {/* <Project></Project> */}
                     <Row className="m-4" style={{ alignItems: "center" }}>
-                        <Col sm={1}></Col>
-                        <Col sm={10}>
+                        <Col xs={1}></Col>
+                        <Col xs={10}>
                             <Form.Label className="text-left ">備註</Form.Label>
                         </Col>
-                        <Col sm={1}></Col>
-                        <Col sm={1}></Col>
-                        <Col className="text-center" sm={10}>
+                        <Col xs={1}></Col>
+                        <Col xs={1}></Col>
+                        <Col className="text-center" xs={10}>
                             <TextareaAutosize
                                 ref={memo}
                                 value={journeyData.jmemo || ""}
@@ -502,17 +514,17 @@ function RightSide({
                                 onBlur={handleUpdateClick}
                             />
                         </Col>
-                        <Col sm={1}></Col>
+                        <Col xs={1}></Col>
                     </Row>
                     <Row className="m-4" style={{ alignItems: "center" }}>
-                        <Col sm={1}></Col>
-                        {/* <Col sm={5}>
+                        <Col xs={1}></Col>
+                        {/* <Col xs={5}>
                     <a>
                         <img className='text-left m-2' style={{ width: "32px", height: '32px' }} src="/UserListSource/add.png" alt="Icon" />
                         <Form.Label className='text-left '>新增項目</Form.Label>
                     </a>
                 </Col> */}
-                        <Col sm={10}>
+                        <Col xs={10}>
                             <button
                                 type="button"
                                 onClick={addBudgetClick}
