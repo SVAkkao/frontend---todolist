@@ -29,6 +29,7 @@ function RightSideJP({
     // const [memoValue, setMemoValue] = useState('');
 
     const [journeyProjectData, setJourneyProjectData] = useState({});
+    const [journeyData, setJourneyData] = useState({});
     const [sidebarContent, setSidebarContent] = useState("default");
     const changePhotoClick = () => {
         setSidebarContent("addAlbum"); // 更改側邊欄為新增相簿的介面
@@ -57,6 +58,7 @@ function RightSideJP({
         const filteredJourneyData = filteredListdData[0].journeys.filter(
             (item) => item.jid == jid
         );
+        setJourneyData(filteredJourneyData[0])
         const filteredJourneyProjectData = filteredJourneyData[0].journey_projects.filter((item) => item.jpid == jpid);
         setJourneyProjectData(filteredJourneyProjectData[0]);
     }, [selectedTlid, alldata, selectedjid, selectedjpid]);
@@ -72,12 +74,12 @@ function RightSideJP({
         });
     };
 
-    const handleJpStartDateChange = (event) => {
-        setJourneyProjectData({
-            ...journeyProjectData,
-            jpstart_date: event.target.value,
-        });
-    };
+    // const handleJpStartDateChange = (event) => {
+    //     setJourneyProjectData({
+    //         ...journeyProjectData,
+    //         jpstart_date: event.target.value,
+    //     });
+    // };
 
     const handleJpStartTimeChange = (event) => {
         setJourneyProjectData({
@@ -232,7 +234,7 @@ function RightSideJP({
         const updateJourneyProjectData = {
             jpid: journeyProjectData.jpid,
             pname: pname.current.value,
-            jpstart_date: jpStartDate.current.value,
+            jpstart_date: journeyData.arrived_date,
             jpstart_time: jpStartTime.current.value,
             jpend_time: jpEndTime.current.value,
             jpmemo: memo.current.value,
@@ -276,7 +278,7 @@ function RightSideJP({
                                             if (journeyProject.jpid === journeyProjectData.jpid) {
                                                 return {
                                                     ...journeyProject,
-                                                    jpstart_date: journeyProjectData.jpstart_date,
+                                                    jpstart_date: journeyData.arrived_date,
                                                     jpstart_time: journeyProjectData.jpstart_time,
                                                     jpend_time: journeyProjectData.jpend_time,
                                                     jpmemo: memo.current.value,
@@ -318,8 +320,8 @@ function RightSideJP({
             },
             body: JSON.stringify({
                 jpid: journeyProjectData.jpid,
-                jbname: "未命名",
-                jbamount: "0",
+                jpbname: "未命名",
+                jpbamount: "0",
             }),
         }).then((response) => {
             update_info();
@@ -415,8 +417,8 @@ function RightSideJP({
                         <Col className="text-center" sm={10}>
                             <Form.Control
                                 ref={jpStartDate}
-                                value={journeyProjectData.jpStartDate}
-                                onChange={handleJpStartDateChange}
+                                value={journeyData.arrived_date}
+                                
                                 onBlur={handleUpdateClick}
                                 type="date" />
                         </Col>

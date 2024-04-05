@@ -38,7 +38,7 @@ const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTl
   };
 
 
-  if (!alldata || !selectedTlid || !selectedjid || !selectedjpid) {
+  if (!alldata || !selectedTlid || !selectedjid ) {
     return (
       <Spinner animation="border" role="status">
         <span >Loading...</span>
