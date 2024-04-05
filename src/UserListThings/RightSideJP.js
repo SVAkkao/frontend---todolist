@@ -24,6 +24,7 @@
 // }) {
 //     // const [thinkvalue, setThinkValue] = useState('');
 //     // const [memoValue, setMemoValue] = useState('');
+
 //     const [journeyProjectData, setJourneyProjectData] = useState({});
 //     const [sidebarContent, setSidebarContent] = useState("default");
 //     const changePhotoClick = () => {
@@ -35,48 +36,50 @@
 //     };
 //     const think = useRef(null);
 //     const memo = useRef(null);
-//     const aname = useRef(null);
-//     const arrivedDate = useRef(null);
-//     const arrivedTime = useRef(null);
-//     const leavedTime = useRef(null);
+//     const pname = useRef(null);
+//     const jpStartDate = useRef(null);
+//     const jpStartTime = useRef(null);
+//     const jpEndTime = useRef(null);
 
 
 //     useEffect(() => {
 //         const jid = selectedjid;
 //         const tlid = selectedTlid;
-//         const filtereListdData = alldata.filter((item) => item.tlid == tlid);
-//         const filtereJourneyProjectData = filtereListdData[0].journeys.filter(
+//         const jpid = selectedjpid
+//         const filteredListdData = alldata.filter((item) => item.tlid == tlid);
+//         const filteredJourneyData = filteredListdData[0].journeys.filter(
 //             (item) => item.jid == jid
 //         );
+//         const filteredJourneyProjectData = filteredJourneyData.filter((item) => item.jpid == jpid);
 //         setJourneyData(filtereJourneyProjectData[0]);
 //     }, [selectedTlid, alldata, selectedjid]);
 
 //     //handle畫面的各種改變
-//     const handleAnameChange = (event) => {
+//     const handlepnameChange = (event) => {
 //         setJourneyData({
 //             ...journeyData,
 //             attraction: {
 //                 ...journeyData.attraction,
-//                 aname: event.target.value,
+//                 pname: event.target.value,
 //             },
 //         });
 //     };
 
-//     const handleArrivedDateChange = (event) => {
+//     const handlejpStartDateChange = (event) => {
 //         setJourneyData({
 //             ...journeyData,
 //             arrived_date: event.target.value,
 //         });
 //     };
 
-//     const handleArrivedTimeChange = (event) => {
+//     const handlejpStartTimeChange = (event) => {
 //         setJourneyData({
 //             ...journeyData,
 //             arrived_time: event.target.value,
 //         });
 //     };
 
-//     const handleLeavedTimeChange = (event) => {
+//     const handlejpEndTimeChange = (event) => {
 //         setJourneyData({
 //             ...journeyData,
 //             leaved_time: event.target.value,
@@ -201,10 +204,10 @@
 //     const handleUpdateClick = async () => {
 //         const updateJourneyData = {
 //             jid: journeyData.jid,
-//             aname: aname.current.value,
-//             arrived_date: arrivedDate.current.value,
-//             arrived_time: arrivedTime.current.value,
-//             leaved_time: leavedTime.current.value,
+//             pname: pname.current.value,
+//             arrived_date: jpStartDate.current.value,
+//             arrived_time: jpStartTime.current.value,
+//             leaved_time: jpEndTime.current.value,
 //             jmemo: memo.current.value,
 //             jreview: think.current.value,
 //             jrate: journeyData.jrate,
@@ -251,7 +254,7 @@
 //                                         jchecked: journeyData.jchecked,
 //                                         attraction: {
 //                                             ...journey.attraction,
-//                                             aname: aname.current.value,
+//                                             pname: pname.current.value,
 //                                         },
 //                                         jbudgets: journeyData.jbudgets,
 //                                     };
@@ -306,11 +309,11 @@
 //                     <Col className="text-center">
 //                         {journeyData.attraction && (
 //                             <Form.Control
-//                                 ref={aname}
+//                                 ref={pname}
 //                                 style={{ borderColor: "transparent" }}
 //                                 className="text1 p-2 m-4 text-center text-truncate"
-//                                 value={journeyData.attraction.aname}
-//                                 onChange={handleAnameChange}
+//                                 value={journeyData.attraction.pname}
+//                                 onChange={handlepnameChange}
 //                                 type="text"
 //                                 placeholder="請輸入標題"
 //                                 onBlur={handleUpdateClick}
@@ -374,9 +377,9 @@
 //                         <Col sm={1}></Col>
 //                         <Col className="text-center" sm={10}>
 //                             <Form.Control
-//                                 ref={arrivedDate}
+//                                 ref={jpStartDate}
 //                                 value={journeyData.arrived_date}
-//                                 onChange={handleArrivedDateChange}
+//                                 onChange={handlejpStartDateChange}
 //                                 onBlur={handleUpdateClick}
 //                                 type="date" />
 //                         </Col>
@@ -392,8 +395,8 @@
 //                         <Col sm={1}></Col>
 //                         <Col className="text-center" sm={5}>
 //                             <Form.Control
-//                                 ref={arrivedTime}
-//                                 onChange={handleArrivedTimeChange}
+//                                 ref={jpStartTime}
+//                                 onChange={handlejpStartTimeChange}
 //                                 onBlur={handleUpdateClick}
 //                                 value={
 //                                     journeyData.arrived_time != null
@@ -405,8 +408,8 @@
 //                         </Col>
 //                         <Col className="text-center" sm={5}>
 //                             <Form.Control
-//                                 ref={leavedTime}
-//                                 onChange={handleLeavedTimeChange}
+//                                 ref={jpEndTime}
+//                                 onChange={handlejpEndTimeChange}
 //                                 onBlur={handleUpdateClick}
 //                                 value={
 //                                     journeyData.leaved_time != null

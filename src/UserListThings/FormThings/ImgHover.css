@@ -1,0 +1,12 @@
+.deleteIcon {
+    visibility: hidden;
+}
+
+.imgFrame:hover button .deleteIcon {
+    /* background-color: rgba(0, 0, 0, 50); */
+    visibility: visible;
+}
+
+.imgFrame:hover button .imgHover {
+    filter: blur(5px);
+}

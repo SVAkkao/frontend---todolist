@@ -7,9 +7,10 @@ import { Row, Col, Form, Spinner, Carousel } from "react-bootstrap";
 import "./color.css";
 import TextareaAutosize from "react-textarea-autosize";
 import { NavLink } from "react-router-dom";
-import Carouselimgitem from "./FormThings/Carouselimgitem";
+import Imgitem from "./FormThings/Imgitem";
 import { FaImages } from "react-icons/fa";
 import RatingComponent from "./RatingComponent";
+import { ImageListItem } from "@mui/material";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
@@ -353,7 +354,7 @@ function RightSide({
                                     width: "20px",
                                     height: "20px",
                                     paddingBottom: "0",
-                                    color: "gray",
+                                    color: "#939393",
                                 }}
                                 className="m-2"
                             />
@@ -438,11 +439,11 @@ function RightSide({
                                     <Form.Label className="text-left">感想</Form.Label>
                                 </Col>
                                 <Col sm={7} className="d-flex justify-content-end">
-                                    
+
                                     <RatingComponent
-                                    handleUpdateClick={handleUpdateClick}
-                                    handleJrateChange={handleJrateChange}
-                                    jRateData={journeyData.jrate}
+                                        handleUpdateClick={handleUpdateClick}
+                                        handleJrateChange={handleJrateChange}
+                                        jRateData={journeyData.jrate}
                                     />
 
 
@@ -562,26 +563,27 @@ function RightSide({
                             ></Pic>
                         </Row>
                         <Row className="m-4">
-                            <Col sm={1}></Col>
+                            {/* <Col sm={1}></Col> */}
                             <Col
-                                sm={10}
+                                // sm={10}
                                 style={{
-                                    width: "500px",
+                                    width: "100%",
                                     height: "400px",
-                                    border: "1px solid gray",
-                                    overflow: "auto",
+                                    // border: "1px solid gray",
+                                    overflowY: "auto",
+                                    overflowX: 'hidden'
                                 }}
                             >
                                 {journeyData.jimages &&
                                     journeyData.jimages.map((item) => (
-                                        <Carouselimgitem
+                                        <Imgitem
                                             key={item.jiid}
                                             jimageData={item}
                                             deleteJimage={deleteJimage}
                                         />
                                     ))}
                             </Col>
-                            <Col sm={1}></Col>
+                            {/* <Col sm={1}></Col> */}
                         </Row>
                     </Row>
                 </>

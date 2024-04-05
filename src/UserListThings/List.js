@@ -9,7 +9,6 @@ import Money from "./Money";
 // import Fetch from "./Fetch";
 import "./color.css";
 import { ajaxAddList } from "./LeftSide/api"
-
 const API_HOST = process.env.REACT_APP_API_URL;
 
 function get_all_info() {
@@ -35,14 +34,6 @@ const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTl
     setShowMoney(true);
   };
 
-
-  // return <div>
-  //   <p><span>selectedTlid: {selectedTlid}</span>
-  //   </p>
-  //   <p>
-  //     <span>selectedjid: {JSON.stringify(selectedjid)}</span>
-  //   </p>
-  // </div>
 
   if (!alldata || !selectedTlid || !selectedjid) {
     return (
@@ -113,7 +104,7 @@ const List = () => {
     <>
       <Row className="h-100">
         <LogoutBar />
-        <Col sm={3} xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden' }}>
+        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden' }}>
           <LeftSide
             data={alldata}
             onSelect={setSelectedTlidAndOther}

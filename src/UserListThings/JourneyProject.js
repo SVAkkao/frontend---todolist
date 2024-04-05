@@ -50,19 +50,19 @@ function JourneyProject({ journeyProjectsData, onRemoveJourneyProject, setShowJo
     }
 
 
-    const itemAction = (event) => {
+    const JpItemAction = (event) => {
         // console.log(ev, ev.currentTarget, ev.target.dataset.action);
         const action = event.target.dataset.action;
         switch (action) {
-            case "select":
+            case "Jpselect":
                 console.log(journeyProjectsDataValue.jpid);
                 onFocusJourneyProject(journeyProjectsDataValue.jpid);
-                setShowJourney(false);
+                // setShowJourney(false);
                 break;
-            case "check":
+            case "Jpcheck":
                 checked(event);
                 break;
-            case "delete":
+            case "Jpdelete":
                 onRemoveJourneyProject(journeyProjectsDataValue.jpid);
                 break;
             default:
@@ -89,24 +89,24 @@ function JourneyProject({ journeyProjectsData, onRemoveJourneyProject, setShowJo
         <Row className='mt-4'>
             <Col sm={2}></Col>
             <Col sm={9}>
-                <button onClick={itemAction} className='bg-color3 rounded p-2' style={{ borderColor: 'transparent', width: '100%' }} data-action="select">
+                <button onClick={JpItemAction} className='bg-color3 rounded p-2' style={{ borderColor: 'transparent', width: '100%' }} data-action="Jpselect">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div style={{ flex: '1', textAlign: 'center' }}
-                            data-action="select">
-                            <Form data-action="select">
+                            data-action="Jpselect">
+                            <Form data-action="Jpselect">
                                 <Form.Check
                                     type='checkbox'
                                     label={<div style={{ textAlign: 'center' }}>{journeyProjectsData.project.pname}</div>}
                                     className='text2'
                                     onChange={checked}
-                                    data-action="check"
+                                    data-action="Jpcheck"
                                     checked={checkedValue}
                                 />
                             </Form>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <img style={{ width: "24px", height: '24px', paddingBottom: '0' }} src="/UserListSource/delete.png" alt="Icon"
-                                data-action="delete"
+                                data-action="Jpdelete"
                             />
                         </div>
                     </div>

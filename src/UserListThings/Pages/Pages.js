@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Book from './Pages/Book';
-import Aboard from './Pages/Aboard';
-import History from './Pages/History';
-import Water from './Pages/Water';
-import Outdoor from './Pages/Outdoor';
+import Book from './Book';
+import Aboard from './Aboard';
+import History from './History';
+import Water from './Water';
+import Outdoor from './Outdoor';
 import { Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 export function Pages() {
@@ -62,17 +62,19 @@ export function Pages() {
                 <Col>
                     <NavLink to="/alist">
                         <span className='click-icon history' onClick={() => handleButtonClick(setHistoryActive)}>
-                            <img src={historyActive ? '/UserListSource/castle-a.png' : '/UserListSource/castle.png'} style={{ width: "48px", height: '48px', paddingBottom: '0' }}  alt='A castle icon' />
+                            <img src={historyActive ? '/UserListSource/castle-a.png' : '/UserListSource/castle.png'} style={{ width: "48px", height: '48px', paddingBottom: '0' }} alt='A castle icon' />
                         </span>
                         <p style={{ color: historyActive ? '#80BCBD' : '#939393' }} className='historyTitle'>文化</p>
                     </NavLink>
                 </Col>
             </Row>
+
             {bookActive && <Book />}
             {aboardActive && <Aboard />}
             {hikingActive && <Outdoor />}
             {shipActive && <Water />}
             {historyActive && <History />}
+
         </>
 
     )

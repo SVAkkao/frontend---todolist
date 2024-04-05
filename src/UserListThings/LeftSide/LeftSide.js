@@ -103,6 +103,7 @@ function AddListBtn({ postAddList }) {
 }
 
 export default function LeftSide({ data, onSelect, update_info }) {
+
   const [finishedSelected, setFinishedSelected] = useState(false);
   const handleBtnClick = (input = true) => {
     // console.log(input ? "已完成" : "未完成");
@@ -135,6 +136,7 @@ export default function LeftSide({ data, onSelect, update_info }) {
       <span className="visually-hidden">Loading...</span>
     </Spinner>;
   }
+
   return (
     <>
       <Row className="sticky-top text-center" style={{ backgroundColor: 'white', translateX: '-20' }}>
