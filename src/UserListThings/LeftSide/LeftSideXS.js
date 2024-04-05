@@ -2,9 +2,10 @@ import React, { useState, } from "react";
 import { Row, Col, Spinner } from "react-bootstrap";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import Mylist from "./Mylist";
+import MylistXS from "./MylistXS";
 import { useUserStore } from "../../stores/user";
 import { ajaxAddList, ajaxRemoveList } from "./api";
+import { useMediaQuery } from 'react-responsive'
 
 function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_info }) {
   const isEarlierThanToday = (input) => {
@@ -28,7 +29,7 @@ function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_inf
 
 
   return getList(list, finishedSelected).map((item, index) => (
-    <Mylist
+    <MylistXS
       key={item.tlid}
       data={item}
       onButtonClick={onButtonClick}
@@ -40,14 +41,15 @@ function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_inf
 function UserInfo() {
   const { user, getUserPhoto } = useUserStore();
   return <Row style={{ alignItems: 'center' }}>
-    <Col></Col>
-    <Col style={{ marginBottom: 2 }} className="text-right" sm={5} xs={4}>
+    <Col xs={1}></Col>
+    <Col style={{ marginBottom: 2 }} className="text-right" xs={4}>
       <Avatar
         src={getUserPhoto()}
-        style={{ height: '80%', margin: 20, width: '80%' }}
+        style={{ height: '80%', width: '80%' }}
+        className="m-4"
       />
     </Col>
-    <Col style={{ marginBottom: 2 }} className="text-left" sm={6} xs={6}>
+    <Col style={{ marginBottom: 2 }} className="text-left" xs={6}>
       <Typography variant="h3" sx={{ ml: 2 }}>
         {user.name}
       </Typography>
@@ -67,16 +69,16 @@ function NavigationLinks({ handleBtnClick, finishedSelected }) {
     backgroundColor: 'transparent',
     border: 'none'
   };
-  return <Row className="m-4 text2" style={{ justifyContent: 'space-between' }}>
-    <Col sm={6}>
-      <button type="button" className="supportColor text-left w-100" style={nonDefaultBtnStyle} onClick={() => handleBtnClick(false)}>
+  return <Row className="m-1 text2" style={{ justifyContent: 'space-between' }}>
+    <Col xs={6}>
+      <button type="button" className="supportColor text-center w-100" style={nonDefaultBtnStyle} onClick={() => handleBtnClick(false)}>
         <span style={unfinishedStyle}>
           未完成
         </span>
       </button>
     </Col>
-    <Col sm={6} xs={6}>
-      <button type="button" className="supportColor text-left w-100" style={nonDefaultBtnStyle} onClick={() => handleBtnClick(true)}>
+    <Col xs={6}>
+      <button type="button" className="supportColor text-center w-100" style={nonDefaultBtnStyle} onClick={() => handleBtnClick(true)}>
         <span style={finishedStyle}>
           已完成
         </span>
