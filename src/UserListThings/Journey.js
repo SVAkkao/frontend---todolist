@@ -6,7 +6,7 @@ import JourneyProject from './JourneyProject';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject }) {
+function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject, onFocusJourney }) {
     if (!journeyProjects) {
         return <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -14,7 +14,7 @@ function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJo
     }
     // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
     return journeyProjects.map((item, index) => (
-        <JourneyProject key={index} journeyProjectsData={item} onFocusJourneyProject={onFocusJourneyProject} setShowJourney={setShowJourney} onRemoveJourneyProject={onRemoveJourneyProject} />
+        <JourneyProject key={index} journeyProjectsData={item} onFocusJourneyProject={onFocusJourneyProject} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney} onRemoveJourneyProject={onRemoveJourneyProject} />
     ))
 
     {/* {journeyproject.map((item, index) => (
@@ -65,7 +65,7 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
                 leaved_time: journeyDataValue.leaved_time,
                 jmemo: journeyDataValue.jmemo,
                 jrate: journeyDataValue.jrate,
-                jreview:journeyDataValue.jreview,
+                jreview: journeyDataValue.jreview,
                 jchecked: checked,
             })
         });
@@ -75,23 +75,23 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
 
         setShowJourney(true)
         onFocusJourneyProject("")
-    
+
         fetch(`${API_HOST}/api/POST/deletejourneyproject`, {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            jpid: selectedjpid
-          })
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                jpid: selectedjpid
+            })
         })
-          .then(() => {
-            update_info();
-          })
-          ;
-      }
-    
- 
+            .then(() => {
+                update_info();
+            })
+            ;
+    }
+
+
 
 
     function checked(event) {
@@ -117,9 +117,11 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
                 onRemoveJourney(journeydata.jid);
                 break;
             default:
-                if( event.target.classList.contains("parent-label") ) {
-                console.log(journeydata.jid);
+                if (event.target.classList.contains("parent-label")) {
+                    console.log(journeydata.jid);
                     onFocusJourney(journeydata.jid);
+                    setShowJourney(true);
+
                     break;
                 }
                 // throw new Error("Action unknown:" + action);
@@ -130,13 +132,13 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
 
 
 
-    
+
     return (
         <Row className='mt-4'>
             <Col sm={1}></Col>
-            <Col sm={10} 
+            <Col sm={10}
             >
-                <button onClick={itemAction} className='bg-color2 rounded p-3' style={{ borderColor: 'transparent', width: '100%' }} data-action="select">
+                <div onClick={itemAction} className='bg-color2 rounded p-3' style={{ borderColor: 'transparent', width: '100%' }} data-action="select">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div
                             style={{ flex: '1', textAlign: 'center' }}
@@ -153,22 +155,24 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
                                 />
                             </Form>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <button className='bg-color2' style={{ display: 'flex', alignItems: 'center', borderColor: 'transparent' }} data-action="delete">
                             <img
                                 style={{ width: "24px", height: '24px', paddingBottom: '0' }}
                                 src="/UserListSource/delete.png" alt="Icon"
                                 data-action="delete"
                             />
-                        </div>
+                        </button>
                     </div>
-                </button>
+                </div>
             </Col>
             <Col sm={1}></Col>
             <JourneyProjectList
-            onRemoveJourneyProject={onRemoveJourneyProject}
-            onFocusJourneyProject={onFocusJourneyProject}
-            journeyProjects={journeydata.journey_projects
-            } />
+                onRemoveJourneyProject={onRemoveJourneyProject}
+                onFocusJourneyProject={onFocusJourneyProject}
+                journeyProjects={journeydata.journey_projects}
+                setShowJourney={setShowJourney}
+                onFocusJourney={onFocusJourney}
+            />
 
         </Row>
     )

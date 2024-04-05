@@ -4,7 +4,7 @@ const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 
 
 
-function Imgitem({ jimageData, deleteJimage }) {
+function ImgitemJp({ jpimageData, deleteJpimage }) {
 
 
 
@@ -27,17 +27,17 @@ function Imgitem({ jimageData, deleteJimage }) {
           }}
           onClick={
             () => {
-              deleteJimage(jimageData.jiid)
+              deleteJpimage(jpimageData.jpiid)
             }
           }
         >
 
           <img
             title='點擊圖片即可刪除'
-            src={`${API_IMAGE}${jimageData.jimg}`}
+            src={`${API_IMAGE}${jpimageData.jpimg}`}
             className="d-block imgHover"
             style={{ width: '100%', position: 'relative' }} // 设置每个图片的宽度
-            alt={`Slide ${jimageData.jiid}`}
+            alt={`Slide ${jpimageData.jpiid}`}
           />
 
           <img
@@ -66,4 +66,4 @@ function Imgitem({ jimageData, deleteJimage }) {
   );
 }
 
-export default Imgitem
+export default ImgitemJp

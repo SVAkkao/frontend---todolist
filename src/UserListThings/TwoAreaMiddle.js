@@ -13,8 +13,10 @@ function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJour
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if(event.target.tagName !== 'INPUT'){
-      if (journeyListRef.current && !journeyListRef.current.contains(event.target) ) {
+      if(event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' && 
+      event.target.tagName !== "IMG" 
+      ){
+      if (journeyListRef.current && !journeyListRef.current.contains(event.target)  ) {
         console.log('You clicked outside of journey list!');
         setOutOfTheJourney(true);
       }else{
@@ -107,10 +109,11 @@ function TotalCost({ costData, setTotalAmount }) {
 }
 
 
-function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney, onFocusJourneyProject }) {
+function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney, onFocusJourneyProject }) {
   const [listdata, setListdata] = useState({
   });
-  const [searchvalue, setSearchValue] = useState('');
+  const [searchJourneyValue, setSearchJourneyValue] = useState('');
+  const [searchJourneyProjectValue, setSearchJourneyProjectValue] = useState('');
   const [outOfTheJourney, setOutOfTheJourney] = useState(true);
   const titleName = useRef(null);
   const startDate = useRef(null);
@@ -204,10 +207,10 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
 
   //送出景點資料成為行程
 
-  const handleSearchClick = async () => {
+  const handleSearchJourneyClick = async () => {
     const addjourneydata = {
       tlid: selectedTlid,
-      aname: searchvalue
+      aname: searchJourneyValue
     };
     // 發送 HTTP 請求，將表單數據提交到服務器
     fetch(API_HOST + "/api/POST/addjourney", {
@@ -216,6 +219,29 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
         "Content-Type": "application/json",
       },
       body: JSON.stringify(addjourneydata),
+    }).then((response) => {
+      console.log(response.json());
+      update_info();
+    });
+  };
+
+  //送出項目資料成為行程項目
+
+  const handleSearchJourneyProjectClick = async () => {
+    console.log(selectedjid)
+    console.log(searchJourneyProjectValue)
+
+    const addjourneyProjectdata = {
+      jid: selectedjid,
+      pname: searchJourneyProjectValue
+    };
+    // 發送 HTTP 請求，將表單數據提交到服務器
+    fetch(API_HOST + "/api/POST/addjourneyproject", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(addjourneyProjectdata),
     }).then((response) => {
       console.log(response.json());
       update_info();
@@ -396,8 +422,8 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
                     {/* rounded */}
                     <Form.Control
 
-                      value={searchvalue}
-                      onChange={(event) => setSearchValue(event.target.value)}
+                      value={searchJourneyValue}
+                      onChange={(event) => setSearchJourneyValue(event.target.value)}
                       className="p-3 text-center"
                       type="text"
                       placeholder="輸入景點"
@@ -406,7 +432,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
                   <Col sm={2}>
                     <button
                       type="button"
-                      onClick={handleSearchClick}
+                      onClick={handleSearchJourneyClick}
                       style={{ border: "none", backgroundColor: "transparent" }}
                     >
                       <img
@@ -426,8 +452,8 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
                     {/* rounded */}
                     <Form.Control
 
-                      value={searchvalue}
-                      onChange={(event) => setSearchValue(event.target.value)}
+                      value={searchJourneyProjectValue}
+                      onChange={(event) => setSearchJourneyProjectValue(event.target.value)}
                       className="p-3 text-center"
                       type="text"
                       placeholder="輸入活動項目"
@@ -436,7 +462,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
                   <Col sm={2}>
                     <button
                       type="button"
-                      onClick={handleSearchClick}
+                      onClick={handleSearchJourneyProjectClick}
                       style={{ border: "none", backgroundColor: "transparent" }}
                     >
                       <img

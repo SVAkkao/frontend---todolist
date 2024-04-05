@@ -38,10 +38,10 @@ const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTl
   };
 
 
-  if (!alldata || !selectedTlid || !selectedjid) {
+  if (!alldata || !selectedTlid || !selectedjid || !selectedjpid) {
     return (
       <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
+        <span >Loading...</span>
       </Spinner>
     );
   } else {
@@ -123,7 +123,7 @@ const List = () => {
           />
         </Col>
         <Col sm={6} xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
-          <TwoAreaMiddle setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} onFocusJourneyProject={setSelectedjpid}/>
+          <TwoAreaMiddle setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedjid={selectedjid} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} onFocusJourneyProject={setSelectedjpid}/>
         </Col>
         <Col sm={3} xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
           <RightSpace showJourney={showJourney} setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} selectedjpid={selectedjpid}/>
@@ -143,7 +143,7 @@ const List = () => {
             />
           </Col> */}
           <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2 }}>
-            <TwoAreaMiddleXS setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
+            <TwoAreaMiddleXS setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} selectedjid={selectedjid}/>
           </Col>
           {/* <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: 'none' }}>
             <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />

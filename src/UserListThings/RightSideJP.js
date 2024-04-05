@@ -1,597 +1,635 @@
-// import React, { useState, useEffect, useRef } from "react";
-// import Pic from "./FormThings/Pic";
-// import Project from "./FormThings/Project";
-// import Budget from "./FormThings/Budget";
-// import { BiArrowBack } from "react-icons/bi";
-// import { Row, Col, Form, Spinner, Carousel } from "react-bootstrap";
-// import "./color.css";
-// import TextareaAutosize from "react-textarea-autosize";
-// import { NavLink } from "react-router-dom";
-// import Carouselimgitem from "./FormThings/Carouselimgitem";
-// import { FaImages } from "react-icons/fa";
-// import RatingComponent from "./RatingComponent";
-
-// const API_HOST = process.env.REACT_APP_API_URL;
-
-// function RightSideJP({
-//     changeMoneyClick,
-//     selectedjid,
-//     alldata,
-//     update_info,
-//     selectedTlid,
-//     setAllData,
-//     selectedjpid,
-// }) {
-//     // const [thinkvalue, setThinkValue] = useState('');
-//     // const [memoValue, setMemoValue] = useState('');
-
-//     const [journeyProjectData, setJourneyProjectData] = useState({});
-//     const [sidebarContent, setSidebarContent] = useState("default");
-//     const changePhotoClick = () => {
-//         setSidebarContent("addAlbum"); // 更改側邊欄為新增相簿的介面
-//     };
-//     // 重置側邊欄內容為默認的介面
-//     const resetSidebarContent = () => {
-//         setSidebarContent("default");
-//     };
-//     const think = useRef(null);
-//     const memo = useRef(null);
-//     const pname = useRef(null);
-//     const jpStartDate = useRef(null);
-//     const jpStartTime = useRef(null);
-//     const jpEndTime = useRef(null);
+import React, { useState, useEffect, useRef } from "react";
+import Pic from "./FormThings/Pic";
+import Project from "./FormThings/Project";
+import Budget from "./FormThings/Budget";
+import { BiArrowBack } from "react-icons/bi";
+import { Row, Col, Form, Spinner, Carousel } from "react-bootstrap";
+import "./color.css";
+import TextareaAutosize from "react-textarea-autosize";
+import { NavLink } from "react-router-dom";
+import { FaImages } from "react-icons/fa";
+import RatingComponent from "./RatingComponent";
+import BudgetJp from "./FormThings/BudgetJp";
+import PicJp from "./FormThings/PicJp";
+import ImgitemJp from "./FormThings/ImgitemJp";
 
 
-//     useEffect(() => {
-//         const jid = selectedjid;
-//         const tlid = selectedTlid;
-//         const jpid = selectedjpid
-//         const filteredListdData = alldata.filter((item) => item.tlid == tlid);
-//         const filteredJourneyData = filteredListdData[0].journeys.filter(
-//             (item) => item.jid == jid
-//         );
-//         const filteredJourneyProjectData = filteredJourneyData.filter((item) => item.jpid == jpid);
-//         setJourneyData(filtereJourneyProjectData[0]);
-//     }, [selectedTlid, alldata, selectedjid]);
+const API_HOST = process.env.REACT_APP_API_URL;
 
-//     //handle畫面的各種改變
-//     const handlepnameChange = (event) => {
-//         setJourneyData({
-//             ...journeyData,
-//             attraction: {
-//                 ...journeyData.attraction,
-//                 pname: event.target.value,
-//             },
-//         });
-//     };
+function RightSideJP({
+    changeMoneyClick,
+    selectedjid,
+    alldata,
+    update_info,
+    selectedTlid,
+    setAllData,
+    selectedjpid,
+}) {
+    // const [thinkvalue, setThinkValue] = useState('');
+    // const [memoValue, setMemoValue] = useState('');
 
-//     const handlejpStartDateChange = (event) => {
-//         setJourneyData({
-//             ...journeyData,
-//             arrived_date: event.target.value,
-//         });
-//     };
-
-//     const handlejpStartTimeChange = (event) => {
-//         setJourneyData({
-//             ...journeyData,
-//             arrived_time: event.target.value,
-//         });
-//     };
-
-//     const handlejpEndTimeChange = (event) => {
-//         setJourneyData({
-//             ...journeyData,
-//             leaved_time: event.target.value,
-//         });
-//     };
-
-//     const handleJrateChange = (newRating) => {
-//         setJourneyData({
-//             ...journeyData,
-//             jrate: newRating,
-//         });
-//     };
-
-//     const handleJbnameChange = (event, budgetDatajbid) => {
-//         setJourneyData((prevJourneyData) => {
-//             const updatedJbudgets = prevJourneyData.jbudgets.map((item) => {
-//                 if (item.jbid === budgetDatajbid) {
-//                     return {
-//                         ...item,
-//                         jbname: event.target.value,
-//                     };
-//                 }
-//                 return item;
-//             });
-//             return {
-//                 ...prevJourneyData,
-//                 jbudgets: updatedJbudgets,
-//             };
-//         });
-//     };
-
-//     const handleJbamountChange = (event, budgetDatajbid) => {
-//         setJourneyData((prevJourneyData) => {
-//             const updatedJbudgets = prevJourneyData.jbudgets.map((item) => {
-//                 if (item.jbid === budgetDatajbid) {
-//                     return {
-//                         ...item,
-//                         jbamount: event.target.value,
-//                     };
-//                 }
-//                 return item;
-//             });
-//             return {
-//                 ...prevJourneyData,
-//                 jbudgets: updatedJbudgets,
-//             };
-//         });
-//     };
-//     //
-//     const deleteJbamount = (budgetDatajbid) => {
-//         fetch(API_HOST + "/api/POST/deletejbudget", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 jbid: budgetDatajbid,
-//             }),
-//         }).then((r) => {
-//             setAllData((prevAlldata) => {
-//                 return prevAlldata.map((touristList) => {
-//                     if (touristList.tlid === selectedTlid) {
-//                         return {
-//                             ...touristList,
-//                             journeys: touristList.journeys.map((journey) => {
-//                                 if (journey.jid === journeyData.jid) {
-//                                     return {
-//                                         ...journey,
-//                                         jbudgets: journey.jbudgets.filter((jbudget) => {
-//                                             return jbudget.jbid !== budgetDatajbid;
-//                                         }),
-//                                     };
-//                                 } else {
-//                                     return journey;
-//                                 }
-//                             }),
-//                         };
-//                     } else {
-//                         return touristList;
-//                     }
-//                 });
-//             });
-//         });
-//     };
-
-//     const deleteJimage = (imageDatajiid) => {
-//         fetch(API_HOST + "/api/POST/deletejimage", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 jiid: imageDatajiid,
-//             }),
-//         }).then((r) => {
-//             setAllData((prevAlldata) => {
-//                 return prevAlldata.map((touristList) => {
-//                     if (touristList.tlid === selectedTlid) {
-//                         return {
-//                             ...touristList,
-//                             journeys: touristList.journeys.map((journey) => {
-//                                 if (journey.jid === journeyData.jid) {
-//                                     return {
-//                                         ...journey,
-//                                         jimages: journey.jimages.filter((jimages) => {
-//                                             return jimages.jiid !== imageDatajiid;
-//                                         }),
-//                                     };
-//                                 } else {
-//                                     return journey;
-//                                 }
-//                             }),
-//                         };
-//                     } else {
-//                         return touristList;
-//                     }
-//                 });
-//             });
-//         });
-//     };
-
-//     const handleUpdateClick = async () => {
-//         const updateJourneyData = {
-//             jid: journeyData.jid,
-//             pname: pname.current.value,
-//             arrived_date: jpStartDate.current.value,
-//             arrived_time: jpStartTime.current.value,
-//             leaved_time: jpEndTime.current.value,
-//             jmemo: memo.current.value,
-//             jreview: think.current.value,
-//             jrate: journeyData.jrate,
-//             jchecked: journeyData.jchecked,
-//         };
-//         // 發送 HTTP 請求，將表單數據提交到服務器
-//         fetch(API_HOST + "/api/POST/updatejourney", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(updateJourneyData),
-//         }).then(() => {
-//             // 發送 HTTP 請求，將費用數據提交到服務器
-//             journeyData.jbudgets.forEach((item) => {
-//                 fetch(API_HOST + "/api/POST/updatejbudget", {
-//                     method: "POST",
-//                     headers: {
-//                         "Content-Type": "application/json",
-//                     },
-//                     body: JSON.stringify({
-//                         jbid: item.jbid,
-//                         jbname: item.jbname,
-//                         jbamount: item.jbamount,
-//                     }),
-//                 });
-//             });
-//             // update journey_info();
-//             setAllData((prevAlldata) => {
-//                 return prevAlldata.map((touristList) => {
-//                     if (touristList.tlid === selectedTlid) {
-//                         return {
-//                             ...touristList,
-//                             journeys: touristList.journeys.map((journey) => {
-//                                 if (journey.jid === journeyData.jid) {
-//                                     return {
-//                                         ...journey,
-//                                         arrived_date: journeyData.arrived_date,
-//                                         arrived_time: journeyData.arrived_time,
-//                                         leaved_time: journeyData.leaved_time,
-//                                         jmemo: memo.current.value,
-//                                         jreview: think.current.value,
-//                                         jrate: journeyData.jrate,
-//                                         jchecked: journeyData.jchecked,
-//                                         attraction: {
-//                                             ...journey.attraction,
-//                                             pname: pname.current.value,
-//                                         },
-//                                         jbudgets: journeyData.jbudgets,
-//                                     };
-//                                 } else {
-//                                     return journey;
-//                                 }
-//                             }),
-//                         };
-//                     } else {
-//                         return touristList;
-//                     }
-//                 });
-//             });
-
-//             //
-//         });
-//     };
-
-//     const addBudgetClick = () => {
-//         fetch(API_HOST + "/api/POST/addjbudget", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({
-//                 jid: journeyData.jid,
-//                 jbname: "未命名",
-//                 jbamount: "0",
-//             }),
-//         }).then((response) => {
-//             update_info();
-//         });
-//     };
-
-//     if (!journeyData || !selectedTlid || !selectedjid || !alldata) {
-//         return (
-//             <Spinner animation="border" role="status">
-//                 <span className="visually-hidden">Loading...</span>
-//             </Spinner>
-//         );
-//     }
-
-//     return (
-//         <>
-//             <Row
-//                 className="sticky-top"
-//                 style={{ backgroundColor: "white", zIndex: 2 }}
-//             >
-//                 {/* <Row> */}
-//                 <Row className="m-4">
-//                     {/* <Col sm={1}></Col> */}
-//                     <Col className="text-center">
-//                         {journeyData.attraction && (
-//                             <Form.Control
-//                                 ref={pname}
-//                                 style={{ borderColor: "transparent" }}
-//                                 className="text1 p-2 m-4 text-center text-truncate"
-//                                 value={journeyData.attraction.pname}
-//                                 onChange={handlepnameChange}
-//                                 type="text"
-//                                 placeholder="請輸入標題"
-//                                 onBlur={handleUpdateClick}
-//                             />
-//                         )}
-//                     </Col>
-//                     <Col sm={2}></Col>
-//                 </Row>
-//                 <Row className="text-left">
-//                     <Col sm={1}></Col>
-//                     <Col sm={4}>
-//                         <a onClick={changeMoneyClick}>
-//                             費用管理
-//                             <img
-//                                 src="/UserListSource/money.png"
-//                                 style={{ width: "20px", height: "20px", paddingBottom: "0" }}
-//                                 className="m-2"
-//                             />
-//                         </a>
-//                         {/* <NavLink to='/money'>
-//                         <a id='money' style={{color: '#939393'}}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
-//                     </NavLink> */}
-//                     </Col>
-//                     <Col className="text-right" sm={4}>
-//                         <NavLink to="/ratings">
-//                             <a id="ratings">
-//                                 留言區
-//                                 <img
-//                                     src="/UserListSource/comment.png"
-//                                     style={{ width: "20px", height: "20px", paddingBottom: "0" }}
-//                                     className="m-2"
-//                                 />
-//                             </a>
-//                         </NavLink>
-//                     </Col>
-//                     <Col sm={3}>
-//                         <a onClick={changePhotoClick}>
-//                             相簿
-//                             <FaImages
-//                                 style={{
-//                                     width: "20px",
-//                                     height: "20px",
-//                                     paddingBottom: "0",
-//                                     color: "gray",
-//                                 }}
-//                                 className="m-2"
-//                             />
-//                         </a>
-//                     </Col>
-//                 </Row>
-//             </Row>
-//             {sidebarContent === "default" && (
-//                 <div>
-//                     <Row className="m-4" style={{ alignItems: "center" }}>
-//                         <Col sm={1}></Col>
-//                         <Col sm={10}>
-//                             <Form.Label className="text-left ">出發日期</Form.Label>
-//                         </Col>
-//                         <Col sm={1}></Col>
-
-//                         <Col sm={1}></Col>
-//                         <Col className="text-center" sm={10}>
-//                             <Form.Control
-//                                 ref={jpStartDate}
-//                                 value={journeyData.arrived_date}
-//                                 onChange={handlejpStartDateChange}
-//                                 onBlur={handleUpdateClick}
-//                                 type="date" />
-//                         </Col>
-//                         <Col sm={1}></Col>
-//                     </Row>
-//                     <Row className="m-4" style={{ alignItems: "center" }}>
-//                         <Col sm={1}></Col>
-//                         <Col sm={10}>
-//                             <Form.Label className="text-left ">時間</Form.Label>
-//                         </Col>
-//                         <Col sm={1}></Col>
-
-//                         <Col sm={1}></Col>
-//                         <Col className="text-center" sm={5}>
-//                             <Form.Control
-//                                 ref={jpStartTime}
-//                                 onChange={handlejpStartTimeChange}
-//                                 onBlur={handleUpdateClick}
-//                                 value={
-//                                     journeyData.arrived_time != null
-//                                         ? journeyData.arrived_time
-//                                         : "00:00:00"
-//                                 }
-//                                 type="time"
-//                             />
-//                         </Col>
-//                         <Col className="text-center" sm={5}>
-//                             <Form.Control
-//                                 ref={jpEndTime}
-//                                 onChange={handlejpEndTimeChange}
-//                                 onBlur={handleUpdateClick}
-//                                 value={
-//                                     journeyData.leaved_time != null
-//                                         ? journeyData.leaved_time
-//                                         : "00:00:00"
-//                                 }
-//                                 type="time"
-//                             />
-//                         </Col>
-//                         <Col sm={1}></Col>
-//                     </Row>
-
-//                     {journeyData.jbudgets &&
-//                         journeyData.jbudgets.map((item, index) => (
-//                             <Budget
-//                                 deleteJbamount={deleteJbamount}
-//                                 handleJbnameChange={handleJbnameChange}
-//                                 handleJbamountChange={handleJbamountChange}
-//                                 key={index}
-//                                 budgetData={item}
-//                                 handleUpdateClick={handleUpdateClick}
-//                             />
-//                         ))}
-
-//                     <Row className="m-4" style={{ alignItems: "center" }}>
-//                         <Col sm={1}></Col>
-//                         <Col sm={10}>
-//                             <Row className="text-right">
-//                                 <Col sm={5} className="d-flex align-items-center">
-//                                     <Form.Label className="text-left">感想</Form.Label>
-//                                 </Col>
-//                                 <Col sm={7} className="d-flex justify-content-end">
-                                    
-//                                     <RatingComponent
-//                                     handleUpdateClick={handleUpdateClick}
-//                                     handleJrateChange={handleJrateChange}
-//                                     jRateData={journeyData.jrate}
-//                                     />
+    const [journeyProjectData, setJourneyProjectData] = useState({});
+    const [sidebarContent, setSidebarContent] = useState("default");
+    const changePhotoClick = () => {
+        setSidebarContent("addAlbum"); // 更改側邊欄為新增相簿的介面
+    };
+    // 重置側邊欄內容為默認的介面
+    const resetSidebarContent = () => {
+        setSidebarContent("default");
+    };
+    const think = useRef(null);
+    const memo = useRef(null);
+    const pname = useRef(null);
+    const jpStartDate = useRef(null);
+    const jpStartTime = useRef(null);
+    const jpEndTime = useRef(null);
 
 
-//                                 </Col>
-//                             </Row>
-//                             <Row>
-//                                 <Col sm={12}>
-//                                     <TextareaAutosize
-//                                         ref={think}
-//                                         value={journeyData.jreview || ""}
-//                                         onChange={(event) =>
-//                                             setJourneyData({
-//                                                 ...journeyData,
-//                                                 jreview: event.target.value,
-//                                             })
-//                                         }
-//                                         placeholder="抒發感想"
-//                                         className="rounded"
-//                                         style={{
-//                                             minRows: "50px",
-//                                             width: "100%",
-//                                             padding: ".375rem .75rem",
-//                                             border:
-//                                                 "var(--bs-border-width) solid var(--bs-border-color)",
-//                                         }}
-//                                         onBlur={handleUpdateClick}
-//                                     />
-//                                 </Col>
-//                             </Row>
-//                         </Col>
-//                         <Col sm={1}></Col>
-//                     </Row>
+    useEffect(() => {
+        console.log(selectedjid)
+        console.log(selectedTlid)
+        console.log(selectedjpid)
 
-//                     {/* <Project></Project> */}
-//                     <Row className="m-4" style={{ alignItems: "center" }}>
-//                         <Col sm={1}></Col>
-//                         <Col sm={10}>
-//                             <Form.Label className="text-left ">備註</Form.Label>
-//                         </Col>
-//                         <Col sm={1}></Col>
-//                         <Col sm={1}></Col>
-//                         <Col className="text-center" sm={10}>
-//                             <TextareaAutosize
-//                                 ref={memo}
-//                                 value={journeyData.jmemo || ""}
-//                                 onChange={(event) =>
-//                                     setJourneyData({ ...journeyData, jmemo: event.target.value })
-//                                 }
-//                                 placeholder="新增備註"
-//                                 className="rounded"
-//                                 style={{
-//                                     minRows: "50px",
-//                                     width: "100%",
-//                                     padding: ".375rem .75rem",
-//                                     border: "var(--bs-border-width) solid var(--bs-border-color)",
-//                                 }}
-//                                 onBlur={handleUpdateClick}
-//                             />
-//                         </Col>
-//                         <Col sm={1}></Col>
-//                     </Row>
-//                     <Row className="m-4" style={{ alignItems: "center" }}>
-//                         <Col sm={1}></Col>
-//                         {/* <Col sm={5}>
-//                     <a>
-//                         <img className='text-left m-2' style={{ width: "32px", height: '32px' }} src="/UserListSource/add.png" alt="Icon" />
-//                         <Form.Label className='text-left '>新增項目</Form.Label>
-//                     </a>
-//                 </Col> */}
-//                         <Col sm={10}>
-//                             <button
-//                                 type="button"
-//                                 onClick={addBudgetClick}
-//                                 style={{ border: "none", backgroundColor: "transparent" }}
-//                             >
-//                                 <img
-//                                     className="text-left m-2"
-//                                     style={{ width: "32px", height: "32px" }}
-//                                     src="/UserListSource/add.png"
-//                                     alt="Icon"
-//                                 />
-//                                 <Form.Label className="text-left ">新增費用</Form.Label>
-//                             </button>
-//                         </Col>
-//                         {/* <Col sm={1}>
-//                     <button
-//                         type="button"
-//                         onClick={handleUpdateClick}
-//                         style={{ border: "none", backgroundColor: "transparent" }}
-//                     >
-//                         <img
-//                             src="/UserListSource/send.png"
-//                             style={{
-//                                 width: "48px",
-//                                 height: "48px",
-//                                 paddingBottom: "0",
-//                             }}
-//                             alt="A sent icon"
-//                         />
-//                     </button>
-//                 </Col> */}
-//                         <Col sm={1}></Col>
-//                     </Row>
-//                 </div>
-//             )}
-//             {sidebarContent === "addAlbum" && (
-//                 <>
-//                     <Row className="m-4" style={{ alignItems: "center" }}>
-//                         <Row>
-//                             <a onClick={resetSidebarContent}>
-//                                 <BiArrowBack size={20} style={{ margin: "2px" }} />
-//                                 返回上層
-//                             </a>
-//                             <Pic
-//                                 journeyDataJid={journeyData.jid}
-//                                 update_info={update_info}
-//                             ></Pic>
-//                         </Row>
-//                         <Row className="m-4">
-//                             <Col sm={1}></Col>
-//                             <Col
-//                                 sm={10}
-//                                 style={{
-//                                     width: "500px",
-//                                     height: "400px",
-//                                     border: "1px solid gray",
-//                                     overflow: "auto",
-//                                 }}
-//                             >
-//                                 {journeyData.jimages &&
-//                                     journeyData.jimages.map((item) => (
-//                                         <Carouselimgitem
-//                                             key={item.jiid}
-//                                             jimageData={item}
-//                                             deleteJimage={deleteJimage}
-//                                         />
-//                                     ))}
-//                             </Col>
-//                             <Col sm={1}></Col>
-//                         </Row>
-//                     </Row>
-//                 </>
-//             )}
-//         </>
-//     );
-// }
+        const jid = selectedjid;
+        const tlid = selectedTlid;
+        const jpid = selectedjpid
+        const filteredListdData = alldata.filter((item) => item.tlid == tlid);
+        const filteredJourneyData = filteredListdData[0].journeys.filter(
+            (item) => item.jid == jid
+        );
+        const filteredJourneyProjectData = filteredJourneyData[0].journey_projects.filter((item) => item.jpid == jpid);
+        setJourneyProjectData(filteredJourneyProjectData[0]);
+    }, [selectedTlid, alldata, selectedjid, selectedjpid]);
 
-// export default RightSideJP;
+    //handle畫面的各種改變
+    const handlePnameChange = (event) => {
+        setJourneyProjectData({
+            ...journeyProjectData,
+            project: {
+                ...journeyProjectData.project,
+                pname: event.target.value,
+            },
+        });
+    };
+
+    const handleJpStartDateChange = (event) => {
+        setJourneyProjectData({
+            ...journeyProjectData,
+            jpstart_date: event.target.value,
+        });
+    };
+
+    const handleJpStartTimeChange = (event) => {
+        setJourneyProjectData({
+            ...journeyProjectData,
+            jpstart_time: event.target.value,
+        });
+    };
+
+    const handleJpEndTimeChange = (event) => {
+        setJourneyProjectData({
+            ...journeyProjectData,
+            jpend_time: event.target.value,
+        });
+    };
+
+    const handleJprateChange = (newRating) => {
+        setJourneyProjectData({
+            ...journeyProjectData,
+            jprate: newRating,
+        });
+    };
+
+    const handleJpbnameChange = (event, budgetDatajpbid) => {
+        setJourneyProjectData((prevJourneyProjectData) => {
+            const updatedJpbudgets = prevJourneyProjectData.jpbudgets.map((item) => {
+                if (item.jpbid === budgetDatajpbid) {
+                    return {
+                        ...item,
+                        jpbname: event.target.value,
+                    };
+                }
+                return item;
+            });
+            return {
+                ...prevJourneyProjectData,
+                jpbudgets: updatedJpbudgets,
+            };
+        });
+    };
+
+    const handleJpbamountChange = (event, budgetDatajpbid) => {
+        setJourneyProjectData((prevJourneyProjectData) => {
+            const updatedJpbudgets = prevJourneyProjectData.jpbudgets.map((item) => {
+                if (item.jpbid === budgetDatajpbid) {
+                    return {
+                        ...item,
+                        jpbamount: event.target.value,
+                    };
+                }
+                return item;
+            });
+            return {
+                ...prevJourneyProjectData,
+                jpbudgets: updatedJpbudgets,
+            };
+        });
+    };
+    //
+    const deleteJpbamount = (budgetDatajpbid) => {
+        fetch(API_HOST + "/api/POST/deletejpbudget", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                jpbid: budgetDatajpbid,
+            }),
+        }).then((r) => {
+            setAllData((prevAlldata) => {
+                return prevAlldata.map((touristList) => {
+                    if (touristList.tlid === selectedTlid) {
+                        return {
+                            ...touristList,
+                            journeys: touristList.journeys.map((journey) => {
+                                if (journey.jid === selectedjid) {
+                                    return {
+                                        ...journey,
+                                        journey_projects: journey.journey_projects.map((journeyProject) => {
+                                            if (journeyProject.jpid === journeyProjectData.jpid) {
+                                                return {
+                                                    ...journeyProject,
+                                                    jpbudgets: journeyProject.jpbudgets.filter((jpbudget) => {
+                                                        return jpbudget.jpbid !== budgetDatajpbid;
+                                                    }),
+                                                };
+                                            } else {
+                                                return journeyProject;
+                                            }
+                                        }
+                                        )
+                                    };
+                                } else {
+                                    return journey;
+                                }
+                            }),
+                        };
+                    } else {
+                        return touristList;
+                    }
+                });
+            });
+        });
+    };
+
+    const deleteJpimage = (imageDatajpiid) => {
+        fetch(API_HOST + "/api/POST/deletejpimage", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                jpiid: imageDatajpiid,
+            }),
+        }).then((r) => {
+            setAllData((prevAlldata) => {
+                return prevAlldata.map((touristList) => {
+                    if (touristList.tlid === selectedTlid) {
+                        return {
+                            ...touristList,
+                            journeys: touristList.journeys.map((journey) => {
+                                if (journey.jid === selectedjid) {
+                                    return {
+                                        ...journey,
+                                        journey_projects: journey.journey_projects.map((journeyProject) => {
+                                            if (journeyProject.jpid === journeyProjectData.jpid) {
+                                                return {
+                                                    ...journeyProject,
+                                                    jpimages: journeyProject.jpimages.filter((jpimages) => {
+                                                        return jpimages.jpiid !== imageDatajpiid;
+                                                    }),
+                                                };
+                                            } else {
+                                                return journeyProject;
+                                            }
+                                        }
+                                        )
+                                    };
+                                } else {
+                                    return journey;
+                                }
+                            }),
+                        };
+                    } else {
+                        return touristList;
+                    }
+                });
+            });
+        });
+    };
+
+    const handleUpdateClick = async () => {
+        const updateJourneyProjectData = {
+            jpid: journeyProjectData.jpid,
+            pname: pname.current.value,
+            jpstart_date: jpStartDate.current.value,
+            jpstart_time: jpStartTime.current.value,
+            jpend_time: jpEndTime.current.value,
+            jpmemo: memo.current.value,
+            jpreview: think.current.value,
+            jprate: journeyProjectData.jprate,
+            jpchecked: journeyProjectData.jpchecked,
+        };
+        // 發送 HTTP 請求，將表單數據提交到服務器
+        fetch(API_HOST + "/api/POST/updatejourneyproject", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updateJourneyProjectData),
+        }).then(() => {
+            // 發送 HTTP 請求，將費用數據提交到服務器
+            journeyProjectData.jpbudgets.forEach((item) => {
+                fetch(API_HOST + "/api/POST/updatejpbudget", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        jpbid: item.jpbid,
+                        jpbname: item.jpbname,
+                        jpbamount: item.jpbamount,
+                    }),
+                });
+            });
+            // update journey_info();
+            setAllData((prevAlldata) => {
+                return prevAlldata.map((touristList) => {
+                    if (touristList.tlid === selectedTlid) {
+                        return {
+                            ...touristList,
+                            journeys: touristList.journeys.map((journey) => {
+                                if (journey.jid === selectedjid) {
+                                    return {
+                                        ...journey,
+                                        journey_projects: journey.journey_projects.map((journeyProject) => {
+                                            if (journeyProject.jpid === journeyProjectData.jpid) {
+                                                return {
+                                                    ...journeyProject,
+                                                    jpstart_date: journeyProjectData.jpstart_date,
+                                                    jpstart_time: journeyProjectData.jpstart_time,
+                                                    jpend_time: journeyProjectData.jpend_time,
+                                                    jpmemo: memo.current.value,
+                                                    jpreview: think.current.value,
+                                                    jprate: journeyProjectData.jprate,
+                                                    jpchecked: journeyProjectData.checked,
+                                                    jpbudgets: journeyProjectData.jpbudgets,
+                                                    project: {
+                                                        ...journeyProject.project,
+                                                        pname: pname.current.value,
+                                                    },
+                                                };
+                                            } else {
+                                                return journeyProject;
+                                            }
+                                        }
+                                        )
+                                    };
+                                } else {
+                                    return journey;
+                                }
+                            }),
+                        };
+                    } else {
+                        return touristList;
+                    }
+                });
+            });
+
+            //
+        });
+    };
+
+    const addBudgetClick = () => {
+        fetch(API_HOST + "/api/POST/addjpbudget", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                jpid: journeyProjectData.jpid,
+                jbname: "未命名",
+                jbamount: "0",
+            }),
+        }).then((response) => {
+            update_info();
+        });
+    };
+
+    if (!journeyProjectData || !selectedTlid || !selectedjid || !alldata || !selectedjpid) {
+        return (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+        );
+    }
+
+    return (
+        <>
+            <Row
+                className="sticky-top"
+                style={{ backgroundColor: "white", zIndex: 2 }}
+            >
+                {/* <Row> */}
+                <Row className="m-4">
+                    {/* <Col sm={1}></Col> */}
+                    <Col className="text-center">
+                        {journeyProjectData.project && (
+                            <Form.Control
+                                ref={pname}
+                                style={{ borderColor: "transparent" }}
+                                className="text1 p-2 m-4 text-center text-truncate"
+                                value={journeyProjectData.project.pname}
+                                onChange={handlePnameChange}
+                                type="text"
+                                placeholder="請輸入標題"
+                                onBlur={handleUpdateClick}
+                            />
+                        )}
+                    </Col>
+                    <Col sm={2}></Col>
+                </Row>
+                <Row className="text-left">
+                    <Col sm={1}></Col>
+                    <Col sm={4}>
+                        <a onClick={changeMoneyClick}>
+                            費用管理
+                            <img
+                                src="/UserListSource/money.png"
+                                style={{ width: "20px", height: "20px", paddingBottom: "0" }}
+                                className="m-2"
+                            />
+                        </a>
+                        {/* <NavLink to='/money'>
+                        <a id='money' style={{color: '#939393'}}>費用管理<img src='/UserListSource/money.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' /></a>
+                    </NavLink> */}
+                    </Col>
+                    <Col className="text-right" sm={4}>
+                        <NavLink to="/ratings">
+                            <a id="ratings">
+                                留言區
+                                <img
+                                    src="/UserListSource/comment.png"
+                                    style={{ width: "20px", height: "20px", paddingBottom: "0" }}
+                                    className="m-2"
+                                />
+                            </a>
+                        </NavLink>
+                    </Col>
+                    <Col sm={3}>
+                        <a onClick={changePhotoClick}>
+                            相簿
+                            <FaImages
+                                style={{
+                                    width: "20px",
+                                    height: "20px",
+                                    paddingBottom: "0",
+                                    color: "gray",
+                                }}
+                                className="m-2"
+                            />
+                        </a>
+                    </Col>
+                </Row>
+            </Row>
+            {sidebarContent === "default" && (
+                <div>
+                    <Row className="m-4" style={{ alignItems: "center" }}>
+                        <Col sm={1}></Col>
+                        <Col sm={10}>
+                            <Form.Label className="text-left ">出發日期</Form.Label>
+                        </Col>
+                        <Col sm={1}></Col>
+
+                        <Col sm={1}></Col>
+                        <Col className="text-center" sm={10}>
+                            <Form.Control
+                                ref={jpStartDate}
+                                value={journeyProjectData.jpStartDate}
+                                onChange={handleJpStartDateChange}
+                                onBlur={handleUpdateClick}
+                                type="date" />
+                        </Col>
+                        <Col sm={1}></Col>
+                    </Row>
+                    <Row className="m-4" style={{ alignItems: "center" }}>
+                        <Col sm={1}></Col>
+                        <Col sm={10}>
+                            <Form.Label className="text-left ">時間</Form.Label>
+                        </Col>
+                        <Col sm={1}></Col>
+
+                        <Col sm={1}></Col>
+                        <Col className="text-center" sm={5}>
+                            <Form.Control
+                                ref={jpStartTime}
+                                onChange={handleJpStartTimeChange}
+                                onBlur={handleUpdateClick}
+                                value={
+                                    journeyProjectData.jpstart_time != null
+                                        ? journeyProjectData.jpstart_time
+                                        : "00:00:00"
+                                }
+                                type="time"
+                            />
+                        </Col>
+                        <Col className="text-center" sm={5}>
+                            <Form.Control
+                                ref={jpEndTime}
+                                onChange={handleJpEndTimeChange}
+                                onBlur={handleUpdateClick}
+                                value={
+                                    journeyProjectData.jpstart_time != null
+                                        ? journeyProjectData.jpend_time
+                                        : "00:00:00"
+                                }
+                                type="time"
+                            />
+                        </Col>
+                        <Col sm={1}></Col>
+                    </Row>
+
+                    {journeyProjectData.jpbudgets &&
+                        journeyProjectData.jpbudgets.map((item, index) => (
+                            <BudgetJp
+                                deleteJpbamount={deleteJpbamount}
+                                handleJpbnameChange={handleJpbnameChange}
+                                handleJpbamountChange={handleJpbamountChange}
+                                key={index}
+                                budgetData={item}
+                                handleUpdateClick={handleUpdateClick}
+                            />
+                        ))}
+
+                    <Row className="m-4" style={{ alignItems: "center" }}>
+                        <Col sm={1}></Col>
+                        <Col sm={10}>
+                            <Row className="text-right">
+                                <Col sm={5} className="d-flex align-items-center">
+                                    <Form.Label className="text-left">感想</Form.Label>
+                                </Col>
+                                <Col sm={7} className="d-flex justify-content-end">
+
+                                    <RatingComponent
+                                        handleUpdateClick={handleUpdateClick}
+                                        handleJrateChange={handleJprateChange}
+                                        jRateData={journeyProjectData.jprate}
+                                    />
+
+
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col sm={12}>
+                                    <TextareaAutosize
+                                        ref={think}
+                                        value={journeyProjectData.jpreview || ""}
+                                        onChange={(event) =>
+                                            setJourneyProjectData({
+                                                ...journeyProjectData,
+                                                jpreview: event.target.value,
+                                            })
+                                        }
+                                        placeholder="抒發感想"
+                                        className="rounded"
+                                        style={{
+                                            minRows: "50px",
+                                            width: "100%",
+                                            padding: ".375rem .75rem",
+                                            border:
+                                                "var(--bs-border-width) solid var(--bs-border-color)",
+                                        }}
+                                        onBlur={handleUpdateClick}
+                                    />
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col sm={1}></Col>
+                    </Row>
+
+                    {/* <Project></Project> */}
+                    <Row className="m-4" style={{ alignItems: "center" }}>
+                        <Col sm={1}></Col>
+                        <Col sm={10}>
+                            <Form.Label className="text-left ">備註</Form.Label>
+                        </Col>
+                        <Col sm={1}></Col>
+                        <Col sm={1}></Col>
+                        <Col className="text-center" sm={10}>
+                            <TextareaAutosize
+                                ref={memo}
+                                value={journeyProjectData.jpmemo || ""}
+                                onChange={(event) =>
+                                    setJourneyProjectData({ ...journeyProjectData, jpmemo: event.target.value })
+                                }
+                                placeholder="新增備註"
+                                className="rounded"
+                                style={{
+                                    minRows: "50px",
+                                    width: "100%",
+                                    padding: ".375rem .75rem",
+                                    border: "var(--bs-border-width) solid var(--bs-border-color)",
+                                }}
+                                onBlur={handleUpdateClick}
+                            />
+                        </Col>
+                        <Col sm={1}></Col>
+                    </Row>
+                    <Row className="m-4" style={{ alignItems: "center" }}>
+                        <Col sm={1}></Col>
+                        {/* <Col sm={5}>
+                    <a>
+                        <img className='text-left m-2' style={{ width: "32px", height: '32px' }} src="/UserListSource/add.png" alt="Icon" />
+                        <Form.Label className='text-left '>新增項目</Form.Label>
+                    </a>
+                </Col> */}
+                        <Col sm={10}>
+                            <button
+                                type="button"
+                                onClick={addBudgetClick}
+                                style={{ border: "none", backgroundColor: "transparent" }}
+                            >
+                                <img
+                                    className="text-left m-2"
+                                    style={{ width: "32px", height: "32px" }}
+                                    src="/UserListSource/add.png"
+                                    alt="Icon"
+                                />
+                                <Form.Label className="text-left ">新增費用</Form.Label>
+                            </button>
+                        </Col>
+                        {/* <Col sm={1}>
+                    <button
+                        type="button"
+                        onClick={handleUpdateClick}
+                        style={{ border: "none", backgroundColor: "transparent" }}
+                    >
+                        <img
+                            src="/UserListSource/send.png"
+                            style={{
+                                width: "48px",
+                                height: "48px",
+                                paddingBottom: "0",
+                            }}
+                            alt="A sent icon"
+                        />
+                    </button>
+                </Col> */}
+                        <Col sm={1}></Col>
+                    </Row>
+                </div>
+            )}
+            {sidebarContent === "addAlbum" && (
+                <>
+                    <Row className="m-4" style={{ alignItems: "center" }}>
+                        <Row>
+                            <a onClick={resetSidebarContent}>
+                                <BiArrowBack size={20} style={{ margin: "2px" }} />
+                                返回上層
+                            </a>
+                            <PicJp
+                                journeyProjectDataJpid={journeyProjectData.jpid}
+                                update_info={update_info}
+                            ></PicJp>
+                        </Row>
+                        <Row className="m-4">
+                              {/* <Col sm={1}></Col> */}
+                              <Col
+                                // sm={10}
+                                style={{
+                                    width: "100%",
+                                    height: "400px",
+                                    // border: "1px solid gray",
+                                    overflowY: "auto",
+                                    overflowX: 'hidden'
+                                }}
+                            >
+                                {journeyProjectData.jpimages &&
+                                    journeyProjectData.jpimages.map((item) => (
+                                        <ImgitemJp
+                                            key={item.jpiid}
+                                            jpimageData={item}
+                                            deleteJpimage={deleteJpimage}
+                                        />
+                                    ))}
+                            </Col>
+                            {/* <Col sm={1}></Col> */}
+                        </Row>
+                    </Row>
+                </>
+            )}
+        </>
+    );
+}
+
+export default RightSideJP;
