@@ -125,19 +125,19 @@ const List = () => {
       <div className="d-sm-none w-100">
         <Row className="h-100">
           <LogoutBar />
-          <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', display: 'none' }}>
+          {/* <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', display: 'none' }}>
             <LeftSideXS
               data={alldata}
               onSelect={setSelectedTlidAndOther}
               update_info={update_info}
             />
-          </Col>
+          </Col> */}
           <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2 }}>
             <TwoAreaMiddleXS setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
           </Col>
-          <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: 'none' }}>
+          {/* <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: 'none' }}>
             <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
-          </Col>
+          </Col> */}
         </Row>
       </div>
     </>
