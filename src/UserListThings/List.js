@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import LogoutBar from "../MemberSystem/LogoutBar";
 import { Row, Col, Spinner } from "react-bootstrap";
 import RightSide from "./RightSide";
+import RightSideJP from "./RightSideJP";
 import LeftSide from "./LeftSide/LeftSide";
 import TwoAreaMiddle from "./TwoAreaMiddle";
 import Money from "./Money";
@@ -27,7 +28,7 @@ function get_all_info() {
   return ajax;
 }
 
-const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmount, setAllData }) => {
+const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTlid, totalAmount, setAllData, selectedjpid }) => {
   const [showMoney, setShowMoney] = useState(false);
 
   const changeMoneyClick = () => {
@@ -54,15 +55,16 @@ const RightSpace = ({ selectedjid, alldata, update_info, selectedTlid, totalAmou
       return <Money totalAmount={totalAmount} setShowMoney={setShowMoney} />;
     }
 
+    if (showJourney){
     return (
       <RightSide setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
-      //     <div>
-      //     <p><span>selectedTlid: {selectedTlid}</span>
-      //   </p>
-      //   <p>
-      //     <span>selectedjid: {JSON.stringify(selectedjid)}</span>
-      //   </p>
-      // </div >
+
+    );
+    }
+
+    return (
+      <RightSideJP setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} selectedjpid={selectedjpid}/>
+
     );
 
   }
@@ -81,6 +83,7 @@ const List = () => {
   // 拿mylist給的tlid
   const [listSelectedTlid, setSelectedTlid] = useState("");
   const [selectedjid, setSelectedjid] = useState("");
+  const [selectedjpid, setSelectedjpid] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
 
   const update_info = () => {
@@ -118,10 +121,10 @@ const List = () => {
           />
         </Col>
         <Col sm={6} xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
-          <TwoAreaMiddle setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} />
+          <TwoAreaMiddle setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} onFocusJourneyProject={setSelectedjpid}/>
         </Col>
         <Col sm={3} xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
-          <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
+          <RightSpace showJourney={showJourney} setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} selectedjpid={selectedjpid}/>
         </Col>
       </Row>
     </>

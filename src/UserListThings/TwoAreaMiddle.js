@@ -8,7 +8,29 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ journeys, update_info, onFocusJourney, setShowJourney, onRemoveJourney }) {
+function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney }) {
+  const journeyListRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if(event.target.tagName !== 'INPUT'){
+      if (journeyListRef.current && !journeyListRef.current.contains(event.target) ) {
+        console.log('You clicked outside of journey list!');
+        setOutOfTheJourney(true);
+      }else{
+        setOutOfTheJourney(false);
+      }
+    }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [journeyListRef]);
+
+
+
   if (!journeys) {
     return (
       <Spinner animation="border" role="status">
@@ -17,16 +39,21 @@ function JourneyList({ journeys, update_info, onFocusJourney, setShowJourney, on
     );
   }
   // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
-  return journeys.map((item, index) => (
-    <Journey
-      key={index}
-      journeydata={item}
-      update_info={update_info}
-      onFocusJourney={onFocusJourney}
-      setShowJourney={setShowJourney}
-      onRemoveJourney={onRemoveJourney}
-    />
-  ));
+  return (
+    <div ref={journeyListRef}>
+      {journeys.map((item, index) => (
+        <Journey
+          key={index}
+          journeydata={item}
+          update_info={update_info}
+          onFocusJourney={onFocusJourney}
+          setShowJourney={setShowJourney}
+          onRemoveJourney={onRemoveJourney}
+          onFocusJourneyProject={onFocusJourneyProject}
+        />
+      ))}
+    </div>
+  );
 }
 
 function TotalCost({ costData, setTotalAmount }) {
@@ -80,10 +107,11 @@ function TotalCost({ costData, setTotalAmount }) {
 }
 
 
-function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney }) {
+function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney, onFocusJourneyProject }) {
   const [listdata, setListdata] = useState({
   });
   const [searchvalue, setSearchValue] = useState('');
+  const [outOfTheJourney, setOutOfTheJourney] = useState(true);
   const titleName = useRef(null);
   const startDate = useRef(null);
   const endDate = useRef(null);
@@ -96,6 +124,8 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
     console.log(filteredData[0]);
     setListdata(filteredData[0]);
   }, [selectedTlid, alldata]);
+
+
 
   //清單時間日期相關
 
@@ -338,7 +368,10 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
           <Col sm={1}></Col>
         </Row>
       </Row>
-      <JourneyList journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney}
+      <JourneyList
+      onFocusJourneyProject={onFocusJourneyProject}
+      setOutOfTheJourney={setOutOfTheJourney}
+        journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney}
         onRemoveJourney={onRemoveJourney}
       />
       {/* <Day></Day> */}
@@ -357,35 +390,68 @@ function TwoAreaMiddle({ setAllData, selectedTlid, alldata, update_info, onFocus
             }}
           >
             <Row>
-              <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
-                <Col sm={10}>
-                  {/* rounded */}
-                  <Form.Control
+              {outOfTheJourney ?
+                <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
+                  <Col sm={10}>
+                    {/* rounded */}
+                    <Form.Control
 
-                    value={searchvalue}
-                    onChange={(event) => setSearchValue(event.target.value)}
-                    className="p-3 text-center"
-                    type="text"
-                    placeholder="輸入景點"
-                  />
-                </Col>
-                <Col sm={2}>
-                  <button
-                    type="button"
-                    onClick={handleSearchClick}
-                    style={{ border: "none", backgroundColor: "transparent" }}
-                  >
-                    <img
-                      src="/UserListSource/send.png"
-                      style={{
-                        width: "48px",
-                        height: "48px",
-                        paddingBottom: "0",
-                      }}
+                      value={searchvalue}
+                      onChange={(event) => setSearchValue(event.target.value)}
+                      className="p-3 text-center"
+                      type="text"
+                      placeholder="輸入景點"
                     />
-                  </button>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col sm={2}>
+                    <button
+                      type="button"
+                      onClick={handleSearchClick}
+                      style={{ border: "none", backgroundColor: "transparent" }}
+                    >
+                      <img
+                        src="/UserListSource/send.png"
+                        style={{
+                          width: "48px",
+                          height: "48px",
+                          paddingBottom: "0",
+                        }}
+                      />
+                    </button>
+                  </Col>
+                </Row>
+                :
+                <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
+                  <Col sm={10}>
+                    {/* rounded */}
+                    <Form.Control
+
+                      value={searchvalue}
+                      onChange={(event) => setSearchValue(event.target.value)}
+                      className="p-3 text-center"
+                      type="text"
+                      placeholder="輸入活動項目"
+                    />
+                  </Col>
+                  <Col sm={2}>
+                    <button
+                      type="button"
+                      onClick={handleSearchClick}
+                      style={{ border: "none", backgroundColor: "transparent" }}
+                    >
+                      <img
+                        src="/UserListSource/send.png"
+                        style={{
+                          width: "48px",
+                          height: "48px",
+                          paddingBottom: "0",
+                        }}
+                      />
+                    </button>
+                  </Col>
+                </Row>
+              }
+
             </Row>
           </Form>
         </Col>

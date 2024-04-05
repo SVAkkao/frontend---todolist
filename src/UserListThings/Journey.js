@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './color.css'
 import { Row, Col, Form, Spinner } from 'react-bootstrap';
 import JourneyProject from './JourneyProject';
@@ -6,7 +6,7 @@ import JourneyProject from './JourneyProject';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function JourneyProjectList({ journeyProjects, setShowJourney }) {
+function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject }) {
     if (!journeyProjects) {
         return <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -14,7 +14,7 @@ function JourneyProjectList({ journeyProjects, setShowJourney }) {
     }
     // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
     return journeyProjects.map((item, index) => (
-        <JourneyProject key={index} journeyProjectsdata={item} setShowJourney={setShowJourney} />
+        <JourneyProject key={index} journeyProjectsData={item} onFocusJourneyProject={onFocusJourneyProject} setShowJourney={setShowJourney} onRemoveJourneyProject={onRemoveJourneyProject} />
     ))
 
     {/* {journeyproject.map((item, index) => (
@@ -24,9 +24,10 @@ function JourneyProjectList({ journeyProjects, setShowJourney }) {
 
 
 
-function Journey({ journeydata, update_info, onFocusJourney, setShowJourney, onRemoveJourney }) {
+function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourney, setShowJourney, onRemoveJourney }) {
     const [journeyDataValue, setJourneyDataValue] = useState({});
     const [checkedValue, setCheckedValue] = useState(false);
+
 
     useEffect(() => {
         setJourneyDataValue(journeydata)
@@ -37,6 +38,9 @@ function Journey({ journeydata, update_info, onFocusJourney, setShowJourney, onR
         }
 
     }, [journeydata]);
+
+
+
 
     if (!journeyDataValue) {
         return (
@@ -61,11 +65,32 @@ function Journey({ journeydata, update_info, onFocusJourney, setShowJourney, onR
                 leaved_time: journeyDataValue.leaved_time,
                 jmemo: journeyDataValue.jmemo,
                 jrate: journeyDataValue.jrate,
+                jreview:journeyDataValue.jreview,
                 jchecked: checked,
             })
         });
     }
 
+    const onRemoveJourneyProject = (selectedjpid) => {
+
+        setShowJourney(true)
+        onFocusJourneyProject("")
+    
+        fetch(`${API_HOST}/api/POST/deletejourneyproject`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            jpid: selectedjpid
+          })
+        })
+          .then(() => {
+            update_info();
+          })
+          ;
+      }
+    
  
 
 
@@ -103,10 +128,14 @@ function Journey({ journeydata, update_info, onFocusJourney, setShowJourney, onR
         console.log();
     };
 
+
+
+    
     return (
         <Row className='mt-4'>
             <Col sm={1}></Col>
-            <Col sm={10}>
+            <Col sm={10} 
+            >
                 <button onClick={itemAction} className='bg-color2 rounded p-3' style={{ borderColor: 'transparent', width: '100%' }} data-action="select">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div
@@ -135,7 +164,10 @@ function Journey({ journeydata, update_info, onFocusJourney, setShowJourney, onR
                 </button>
             </Col>
             <Col sm={1}></Col>
-            <JourneyProjectList journeyProjects={journeydata.journey_projects
+            <JourneyProjectList
+            onRemoveJourneyProject={onRemoveJourneyProject}
+            onFocusJourneyProject={onFocusJourneyProject}
+            journeyProjects={journeydata.journey_projects
             } />
 
         </Row>
