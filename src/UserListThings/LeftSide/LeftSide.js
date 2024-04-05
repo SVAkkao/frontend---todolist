@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Mylist from "./Mylist";
 import { useUserStore } from "../../stores/user";
 import { ajaxAddList, ajaxRemoveList } from "./api";
+import { useMediaQuery } from 'react-responsive'
 
 function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_info }) {
   const isEarlierThanToday = (input) => {
@@ -103,6 +104,7 @@ function AddListBtn({ postAddList }) {
 }
 
 export default function LeftSide({ data, onSelect, update_info }) {
+
   const [finishedSelected, setFinishedSelected] = useState(false);
   const handleBtnClick = (input = true) => {
     // console.log(input ? "已完成" : "未完成");
@@ -135,6 +137,7 @@ export default function LeftSide({ data, onSelect, update_info }) {
       <span className="visually-hidden">Loading...</span>
     </Spinner>;
   }
+
   return (
     <>
       <Row className="sticky-top text-center" style={{ backgroundColor: 'white', translateX: '-20' }}>
