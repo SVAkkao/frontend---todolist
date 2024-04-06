@@ -31,13 +31,12 @@ function get_all_info() {
   return ajax;
 }
 
-const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTlid, totalAmount, setAllData, selectedjpid }) => {
+const RightSpace = ({ setrwdShow, showJourney, selectedjid, alldata, update_info, selectedTlid, totalAmount, setAllData, selectedjpid }) => {
   const [showMoney, setShowMoney] = useState(false);
 
   const changeMoneyClick = () => {
     setShowMoney(true);
   };
-
 
   if (!alldata || !selectedTlid || !selectedjid) {
     return (
@@ -57,7 +56,7 @@ const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTl
             <RightSide setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
           </div>
           <div className='d-sm-none'>
-            <RightSideXS setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
+            <RightSideXS setrwdShow={setrwdShow} setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
           </div>
         </>
 
@@ -70,18 +69,29 @@ const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTl
           <RightSideJP setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} selectedjpid={selectedjpid} />
         </div>
         <div className='d-sm-none'>
-          <RightSideJPXS setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} selectedjpid={selectedjpid} />
+          <RightSideJPXS setrwdShow={setrwdShow} setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} selectedjpid={selectedjpid} />
         </div>
       </>
-
     );
-
   }
-
-
 }
 
+const XSArea = ({ onSelect, setAllData, setShowJourney, alldata, selectedjid, selectedTlid, update_info, onFocusJourney, setTotalAmount, onFocusJourneyProject }) => {
 
+
+  return (
+
+    <LeftSideXS
+      data={alldata}
+      onSelect={onSelect}
+      update_info={update_info}
+    />
+
+    // <TwoAreaMiddleXS setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedjid={selectedjid} selectedTlid={selectedTlid} update_info={update_info} onFocusJourney={onFocusJourney} setTotalAmount={setTotalAmount} onFocusJourneyProject={onFocusJourneyProject} />
+
+  )
+
+}
 
 const List = () => {
 
@@ -94,6 +104,8 @@ const List = () => {
   const [selectedjid, setSelectedjid] = useState("");
   const [selectedjpid, setSelectedjpid] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
+  const [rwdShow, setrwdShow] = useState("TwoAreaMiddleXS");
+
 
   const update_info = () => {
     get_all_info().then((data) => {
@@ -150,11 +162,42 @@ const List = () => {
               update_info={update_info}
             />
           </Col> */}
-          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2 }}>
-            <TwoAreaMiddleXS setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} selectedjid={selectedjid} />
+          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: (rwdShow == "LeftSideXS") ? 'block' : 'none' }}>
+            <LeftSideXS
+              data={alldata}
+              onSelect={setSelectedTlidAndOther}
+              update_info={update_info}
+              setrwdShow={setrwdShow}
+            />
           </Col>
-          <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: 'none' }}>
-            <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
+          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: (rwdShow == "TwoAreaMiddleXS") ? 'block' : 'none' }}>
+            <TwoAreaMiddleXS 
+            onSelect={setSelectedTlidAndOther} 
+            setAllData={setAllData} 
+            setShowJourney={setShowJourney} 
+            alldata={alldata} 
+            selectedjid={selectedjid} 
+            selectedTlid={listSelectedTlid} 
+            update_info={update_info} 
+            onFocusJourney={setSelectedjid} 
+            setTotalAmount={setTotalAmount} 
+            onFocusJourneyProject={setSelectedjpid}
+            setrwdShow={setrwdShow}
+            />
+          </Col>
+          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: (rwdShow == "RightSpace") ? 'block' : 'none' }}>
+            <RightSpace 
+            showJourney={showJourney} 
+            setAllData={setAllData} 
+            selectedjid={selectedjid} 
+            alldata={alldata} 
+            update_info={update_info} 
+            selectedTlid={listSelectedTlid} 
+            totalAmount={totalAmount} 
+            selectedjpid={selectedjpid} 
+            setrwdShow={setrwdShow}
+            
+            />
           </Col>
         </Row>
       </div>

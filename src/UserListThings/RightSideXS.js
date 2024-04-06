@@ -20,6 +20,7 @@ function RightSide({
     update_info,
     selectedTlid,
     setAllData,
+    setrwdShow,
 }) {
     // const [thinkvalue, setThinkValue] = useState('');
     // const [memoValue, setMemoValue] = useState('');
@@ -302,7 +303,9 @@ function RightSide({
                 <Row className="m-1">
                     <Col className="text-left">
                         {/* <a onClick={changeMoneyClick}><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回</a> */}
-                        <a><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />查看清單</a>
+                        <a
+                        onClick={()=>{setrwdShow("TwoAreaMiddleXS")}}
+                        ><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回清單</a>
                     </Col>
                 </Row>
                 {/* <Row> */}

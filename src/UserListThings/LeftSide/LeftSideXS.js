@@ -7,7 +7,7 @@ import { useUserStore } from "../../stores/user";
 import { ajaxAddList, ajaxRemoveList } from "./api";
 import { useMediaQuery } from 'react-responsive'
 
-function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_info }) {
+function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_info, setrwdShow }) {
   const isEarlierThanToday = (input) => {
     // Today
     const today = new Date();
@@ -105,7 +105,7 @@ function AddListBtn({ postAddList }) {
   </Row>;
 }
 
-export default function LeftSide({ data, onSelect, update_info }) {
+export default function LeftSide({ data, onSelect, update_info, setrwdShow }) {
 
   const [finishedSelected, setFinishedSelected] = useState(false);
   const handleBtnClick = (input = true) => {
@@ -149,12 +149,21 @@ export default function LeftSide({ data, onSelect, update_info }) {
           finishedSelected={finishedSelected}
         />
       </Row>
+      <Row className="m-1">
+                    <Col className="text-left">
+                        {/* <a onClick={changeMoneyClick}><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回</a> */}
+                        <a
+                            onClick={() => { setrwdShow("TwoAreaMiddleXS") }}
+                        ><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回清單</a>
+                    </Col>
+                </Row>
       <TripLists
         list={data}
         onButtonClick={onSelect}
         onRemove={onRemove}
         finishedSelected={finishedSelected}
         update_info={update_info}
+        setrwdShow={setrwdShow}
       />
       <AddListBtn
         postAddList={postAddList}
