@@ -3,6 +3,7 @@ import LogoutBar from "../MemberSystem/LogoutBar";
 import { Row, Col, Spinner } from "react-bootstrap";
 import RightSide from "./RightSide";
 import RightSideJP from "./RightSideJP";
+import RightSideJPXS from "./RightSideJPXS";
 import RightSideXS from "./RightSideXS";
 import LeftSide from "./LeftSide/LeftSide";
 import LeftSideXS from "./LeftSide/LeftSideXS";
@@ -38,7 +39,7 @@ const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTl
   };
 
 
-  if (!alldata || !selectedTlid || !selectedjid ) {
+  if (!alldata || !selectedTlid || !selectedjid) {
     return (
       <Spinner animation="border" role="status">
         <span >Loading...</span>
@@ -49,22 +50,29 @@ const RightSpace = ({ showJourney, selectedjid, alldata, update_info, selectedTl
       return <Money totalAmount={totalAmount} setShowMoney={setShowMoney} />;
     }
 
-    if (showJourney){
-    return (
-      <>
-      <div className='d-sm-block d-none'>
-        <RightSide setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
-      </div>
-      <div className='d-sm-none'>
-        <RightSideXS setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
-      </div>
-    </>
+    if (showJourney) {
+      return (
+        <>
+          <div className='d-sm-block d-none'>
+            <RightSide setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
+          </div>
+          <div className='d-sm-none'>
+            <RightSideXS setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} />
+          </div>
+        </>
 
-    );
+      );
     }
 
     return (
-      <RightSideJP setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} selectedjpid={selectedjpid}/>
+      <>
+        <div className='d-sm-block d-none'>
+          <RightSideJP setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} selectedjpid={selectedjpid} />
+        </div>
+        <div className='d-sm-none'>
+          <RightSideJPXS setAllData={setAllData} changeMoneyClick={changeMoneyClick} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={selectedTlid} selectedjpid={selectedjpid} />
+        </div>
+      </>
 
     );
 
@@ -114,21 +122,21 @@ const List = () => {
     <>
       <div className="d-sm-block d-none">
         <Row className="h-100">
-        <LogoutBar />
-        <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden' }}>
-          <LeftSide
-            data={alldata}
-            onSelect={setSelectedTlidAndOther}
-            update_info={update_info}
-          />
-        </Col>
-        <Col sm={6} xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
-          <TwoAreaMiddle setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedjid={selectedjid} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} onFocusJourneyProject={setSelectedjpid}/>
-        </Col>
-        <Col sm={3} xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
-          <RightSpace showJourney={showJourney} setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} selectedjpid={selectedjpid}/>
-        </Col>
-      </Row>
+          <LogoutBar />
+          <Col sm={3} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden' }}>
+            <LeftSide
+              data={alldata}
+              onSelect={setSelectedTlidAndOther}
+              update_info={update_info}
+            />
+          </Col>
+          <Col sm={6} xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
+            <TwoAreaMiddle setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedjid={selectedjid} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} onFocusJourneyProject={setSelectedjpid} />
+          </Col>
+          <Col sm={3} xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'hidden', zIndex: 2 }}>
+            <RightSpace showJourney={showJourney} setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} selectedjpid={selectedjpid} />
+          </Col>
+        </Row>
       </div>
 
 
@@ -143,11 +151,11 @@ const List = () => {
             />
           </Col> */}
           <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2 }}>
-            <TwoAreaMiddleXS setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} selectedjid={selectedjid}/>
+            <TwoAreaMiddleXS setAllData={setAllData} setShowJourney={setShowJourney} alldata={alldata} selectedTlid={listSelectedTlid} update_info={update_info} onFocusJourney={setSelectedjid} setTotalAmount={setTotalAmount} selectedjid={selectedjid} />
           </Col>
-          {/* <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: 'none' }}>
+          <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: 'none' }}>
             <RightSpace setAllData={setAllData} selectedjid={selectedjid} alldata={alldata} update_info={update_info} selectedTlid={listSelectedTlid} totalAmount={totalAmount} />
-          </Col> */}
+          </Col>
         </Row>
       </div>
     </>
