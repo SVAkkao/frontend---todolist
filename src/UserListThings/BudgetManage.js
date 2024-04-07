@@ -36,7 +36,7 @@ function BudgetManage({ totalAmount }) {
     // 金額長條圖
     const [m, setM] = useState([]);
     const mData = [40, 30, 20, 27, 18];
-    
+
     const xmLabels = [
         'Page A',
         'Page B',
@@ -59,18 +59,18 @@ function BudgetManage({ totalAmount }) {
         <>
             <Row className='m-4'>
 
-                <Col sm={1}></Col>
-                <Col sm={10}><Form.Label className='text-left'>預算金額</Form.Label></Col>
-                <Col sm={1}></Col>
+                <Col sm={1} xs={0}></Col>
+                <Col sm={10} xs={10}><Form.Label className='text-left'>預算金額</Form.Label></Col>
+                <Col sm={1} xs={1}></Col>
 
-                <Col sm={1}></Col>
-                <Col className='text-left' sm={10}>
+                <Col sm={1} xs={1}></Col>
+                <Col className='text-left' sm={10} xs={10}>
                     <Form.Control className='w-100' type="number" placeholder='預算金額' ref={amount} onChange={inputAmount} />
                 </Col>
-                <Col sm={1}></Col>
+                <Col sm={1} xs={1}></Col>
 
-                <Col sm={1}></Col>
-                <Col sm={10} className='mt-4'>
+                <Col sm={1} xs={1}></Col>
+                <Col sm={10} xs={10} className='mt-4'>
                     <PieChart
                         style={{ width: '100%' }}
                         height='300'
@@ -90,15 +90,15 @@ function BudgetManage({ totalAmount }) {
                         {...pieParams}
                     />
                 </Col>
-                <Col sm={1}></Col>
-                <Col sm={12} className='mt-4'>
+                <Col sm={1} xs={1}></Col>
+                <Col sm={12} xs={12} className='mt-4'>
                     <BarChart
                         height={300}
                         colors={['#F9F7C9']}
                         series={[{
-                            data: mData, 
-                            id: 'uvId', 
-                            label: '金額', 
+                            data: mData,
+                            id: 'uvId',
+                            label: '金額',
                             type: 'bar',
                             cx: 100,
                             cy: 100,
@@ -107,14 +107,14 @@ function BudgetManage({ totalAmount }) {
                         xAxis={[{ scaleType: 'band', data: xmLabels }]}
                     />
                 </Col>
-                <Col sm={12} className='mt-4'>
+                <Col sm={12} xs={12} className='mt-4'>
                     <BarChart
                         height={300}
                         colors={['#80BCBD']}
                         series={[{
-                            data: rData, 
-                            id: 'uvId', 
-                            label: '頻率', 
+                            data: rData,
+                            id: 'uvId',
+                            label: '頻率',
                             type: 'bar',
                             cx: 100,
                             cy: 100,
