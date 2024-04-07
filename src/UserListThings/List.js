@@ -162,7 +162,7 @@ const List = () => {
               update_info={update_info}
             />
           </Col> */}
-          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: (rwdShow == "LeftSideXS") ? 'block' : 'none' }}>
+          <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '90vh', overflowX: 'hidden', zIndex: 2, display: (rwdShow == "LeftSideXS") ? 'block' : 'none' }}>
             <LeftSideXS
               data={alldata}
               onSelect={setSelectedTlidAndOther}
@@ -170,33 +170,32 @@ const List = () => {
               setrwdShow={setrwdShow}
             />
           </Col>
-          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: (rwdShow == "TwoAreaMiddleXS") ? 'block' : 'none' }}>
-            <TwoAreaMiddleXS 
-            onSelect={setSelectedTlidAndOther} 
-            setAllData={setAllData} 
-            setShowJourney={setShowJourney} 
-            alldata={alldata} 
-            selectedjid={selectedjid} 
-            selectedTlid={listSelectedTlid} 
-            update_info={update_info} 
-            onFocusJourney={setSelectedjid} 
-            setTotalAmount={setTotalAmount} 
-            onFocusJourneyProject={setSelectedjpid}
-            setrwdShow={setrwdShow}
+          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '90vh', overflowX: 'hidden', zIndex: 2, display: (rwdShow == "TwoAreaMiddleXS") ? 'block' : 'none' }}>
+            <TwoAreaMiddleXS
+              onSelect={setSelectedTlidAndOther}
+              setAllData={setAllData}
+              setShowJourney={setShowJourney}
+              alldata={alldata}
+              selectedjid={selectedjid}
+              selectedTlid={listSelectedTlid}
+              update_info={update_info}
+              onFocusJourney={setSelectedjid}
+              setTotalAmount={setTotalAmount}
+              onFocusJourneyProject={setSelectedjpid}
+              setrwdShow={setrwdShow}
             />
           </Col>
-          <Col xs={12} className="bg-color4" style={{ overflowY: 'auto', maxHeight: '89.5vh', overflowX: 'auto', zIndex: 2, display: (rwdShow == "RightSpace") ? 'block' : 'none' }}>
-            <RightSpace 
-            showJourney={showJourney} 
-            setAllData={setAllData} 
-            selectedjid={selectedjid} 
-            alldata={alldata} 
-            update_info={update_info} 
-            selectedTlid={listSelectedTlid} 
-            totalAmount={totalAmount} 
-            selectedjpid={selectedjpid} 
-            setrwdShow={setrwdShow}
-            
+          <Col xs={12} style={{ overflowY: 'scroll', maxHeight: '90vh', overflowX: 'hidden', zIndex: 2, display: (rwdShow == "RightSpace") ? 'block' : 'none' }}>
+            <RightSpace
+              showJourney={showJourney}
+              setAllData={setAllData}
+              selectedjid={selectedjid}
+              alldata={alldata}
+              update_info={update_info}
+              selectedTlid={listSelectedTlid}
+              totalAmount={totalAmount}
+              selectedjpid={selectedjpid}
+              setrwdShow={setrwdShow}
             />
           </Col>
         </Row>

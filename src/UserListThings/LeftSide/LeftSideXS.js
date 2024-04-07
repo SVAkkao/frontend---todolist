@@ -150,13 +150,13 @@ export default function LeftSide({ data, onSelect, update_info, setrwdShow }) {
         />
       </Row>
       <Row className="m-1">
-                    <Col className="text-left">
-                        {/* <a onClick={changeMoneyClick}><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回</a> */}
-                        <a
-                            onClick={() => { setrwdShow("TwoAreaMiddleXS") }}
-                        ><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回清單</a>
-                    </Col>
-                </Row>
+        <Col className="text-left">
+          {/* <a onClick={changeMoneyClick}><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回</a> */}
+          <a
+            onClick={() => { setrwdShow("TwoAreaMiddleXS") }}
+          ><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回行程</a>
+        </Col>
+      </Row>
       <TripLists
         list={data}
         onButtonClick={onSelect}
