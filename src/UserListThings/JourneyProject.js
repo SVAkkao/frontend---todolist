@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Row, Col, Form, Spinner } from 'react-bootstrap';
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyProject({ journeyProjectsData, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject, onFocusJourney }) {
+function JourneyProject({ journeyProjectsData, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject, onFocusJourney, setrwdShow }) {
     const [journeyProjectsDataValue, setJourneyProjectsDataValue] = useState({});
     const [checkedValue, setCheckedValue] = useState(false);
 
@@ -81,6 +81,40 @@ function JourneyProject({ journeyProjectsData, onRemoveJourneyProject, setShowJo
         console.log();
     };
 
+    const JpRwdItemAction = (event) => {
+        // console.log(ev, ev.currentTarget, ev.target.dataset.action);
+        const action = event.target.dataset.action;
+        switch (action) {
+            case "Jpselect":
+                console.log(journeyProjectsDataValue.jpid);
+                onFocusJourneyProject(journeyProjectsDataValue.jpid);
+                onFocusJourney(journeyProjectsDataValue.jid);
+                setShowJourney(false);
+                setrwdShow("RightSpace");
+                break;
+            case "Jpcheck":
+                checked(event);
+                break;
+            case "Jpdelete":
+                onRemoveJourneyProject(journeyProjectsDataValue.jpid);
+                break;
+            default:
+                if (event.target.classList.contains("parent-label")) {
+                    console.log(journeyProjectsDataValue.jpid);
+                    onFocusJourneyProject(journeyProjectsDataValue.jpid);
+                    onFocusJourney(journeyProjectsDataValue.jid);
+                    setShowJourney(false);
+                    setrwdShow("RightSpace");
+
+                    break;
+                }
+                // throw new Error("Action unknown:" + action);
+                break;
+        }
+        console.log();
+    };
+
+
     if (!journeyProjectsDataValue) {
         return (
             <Spinner animation="border" role="status">
@@ -92,7 +126,9 @@ function JourneyProject({ journeyProjectsData, onRemoveJourneyProject, setShowJo
     return (
         <Row className='mt-4'>
             <Col sm={2}></Col>
-            <Col sm={9} onClick={JpItemAction} data-action="Jpselect">
+            <Col sm={9} onClick={JpItemAction} 
+            onDoubleClick={JpRwdItemAction}
+            data-action="Jpselect">
                 <div className='bg-color3 rounded p-2' style={{ borderColor: 'transparent', width: '100%' }} data-action="Jpselect">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-action="Jpselect">
                         <div style={{ flex: '1', textAlign: 'center' }}

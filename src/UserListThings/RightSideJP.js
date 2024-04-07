@@ -284,7 +284,7 @@ function RightSideJP({
                                                     jpmemo: memo.current.value,
                                                     jpreview: think.current.value,
                                                     jprate: journeyProjectData.jprate,
-                                                    jpchecked: journeyProjectData.checked,
+                                                    jpchecked: journeyProjectData.jpchecked,
                                                     jpbudgets: journeyProjectData.jpbudgets,
                                                     project: {
                                                         ...journeyProject.project,

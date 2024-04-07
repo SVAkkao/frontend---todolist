@@ -9,8 +9,8 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
     const [listData, setListData] = useState({});
-    const [mData, setMData] = useState([0,0,0,0,0]);
-    const [xmLabels, setXmLabels] = useState([0,0,0,0,0]);
+    const [mData, setMData] = useState([0, 0, 0, 0, 0]);
+    const [xmLabels, setXmLabels] = useState([0, 0, 0, 0, 0]);
 
     const amount = useRef(0);
 
@@ -19,13 +19,17 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
         const tlid = selectedTlid;
         const filteredListdData = alldata.filter((item) => item.tlid == tlid);
         setListData(filteredListdData[0])
-        const topFiveCosts = getTopFiveCosts(filteredListdData[0]);
-        if(topFiveCosts){
-            setMData(topFiveCosts.map((cost) => cost.amount));
-            setXmLabels( topFiveCosts.map((cost) => cost.name));
+        if (filteredListdData[0].journeys[0].jbudgets[0] ||
+            filteredListdData[0].journeys[0].journey_projects[0]) {
+            const topFiveCosts = getTopFiveCosts(filteredListdData[0]);
+            if (topFiveCosts) {
+                setMData(topFiveCosts.map((cost) => cost.amount));
+                setXmLabels(topFiveCosts.map((cost) => cost.name));
+            }
         }
+
     }
-    ,[alldata, selectedTlid, totalAmount])
+        , [alldata, selectedTlid, totalAmount])
 
     // 圓餅圖
     const pieParams = { height: 200, margin: { right: 5 } };
@@ -46,44 +50,44 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
             end_date: listData.end_date,
             totalamount: listData.totalamount,
             tlphoto: listData.tlphoto,
-          };
-          const token = localStorage.getItem("userToken");
+        };
+        const token = localStorage.getItem("userToken");
 
-          fetch(API_HOST + "/api/POST/updatelist",
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(updateListData),
-          }
-        )
-          .then((response) => {
-            console.log(response)
-            //update list_info();
-            setAllData(prevAlldata => {
-              return prevAlldata.map(
-                (touristList) => {
-                  if (touristList.tlid === selectedTlid) {
-    
-                    return {
-                      ...touristList,
-                      title: listData.title,
-                      start_date: listData.start_date,
-                      end_date: listData.end_date,
-                      totalamount: listData.totalamount,
-                      tlphoto: listData.tlphoto,
-                    }
-                  } else {
-                    return touristList
-                  }
-                }
-              )
+        fetch(API_HOST + "/api/POST/updatelist",
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updateListData),
             }
-            )
-            //
-          })
+        )
+            .then((response) => {
+                console.log(response)
+                //update list_info();
+                setAllData(prevAlldata => {
+                    return prevAlldata.map(
+                        (touristList) => {
+                            if (touristList.tlid === selectedTlid) {
+
+                                return {
+                                    ...touristList,
+                                    title: listData.title,
+                                    start_date: listData.start_date,
+                                    end_date: listData.end_date,
+                                    totalamount: listData.totalamount,
+                                    tlphoto: listData.tlphoto,
+                                }
+                            } else {
+                                return touristList
+                            }
+                        }
+                    )
+                }
+                )
+                //
+            })
     }
 
 
@@ -122,53 +126,57 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
 
     function getTopFiveCosts(listData) {
         const costs = [];
-      
+
         // 將 journeys 中的 jbamount 與 jbname 加入 costs 陣列中
+        if(listData.journeys[0].jbudgets[0])
+        {
         listData.journeys.forEach((journey) => {
-          journey.jbudgets.forEach((budget) => {
-            const existingCost = costs.find((cost) => cost.name === budget.jbname);
-      
-            if (existingCost) {
-              existingCost.amount +=  Number(budget.jbamount);
-            } else {
-              costs.push({ name: budget.jbname, amount:  Number(budget.jbamount) });
-            }
-          });
-        });
-      
-        // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
-        listData.journeys.forEach((journey) => {
-          journey.journey_projects.forEach((project) => {
-            project.jpbudgets.forEach((budget) => {
-              const existingCost = costs.find((cost) => cost.name === budget.jpbname);
-      
-              if (existingCost) {
-                existingCost.amount += Number(budget.jpbamount);
-              } else {
-                costs.push({ name: budget.jpbname, amount: Number(budget.jpbamount) });
-              }
+            journey.jbudgets.forEach((budget) => {
+                const existingCost = costs.find((cost) => cost.name === budget.jbname);
+
+                if (existingCost) {
+                    existingCost.amount += Number(budget.jbamount);
+                } else {
+                    costs.push({ name: budget.jbname, amount: Number(budget.jbamount) });
+                }
             });
-          });
         });
-      
+    }
+        // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
+        if(listData.journeys[0].journey_projects[0] && listData.journeys[0].journey_projects[0].jpbudgets[0])
+        {
+        listData.journeys.forEach((journey) => {
+            journey.journey_projects.forEach((project) => {
+                project.jpbudgets.forEach((budget) => {
+                    const existingCost = costs.find((cost) => cost.name === budget.jpbname);
+
+                    if (existingCost) {
+                        existingCost.amount += Number(budget.jpbamount);
+                    } else {
+                        costs.push({ name: budget.jpbname, amount: Number(budget.jpbamount) });
+                    }
+                });
+            });
+        });
+    }
         // 對 costs 陣列中的費用金額進行排序
         costs.sort((a, b) => b.amount - a.amount);
-      
+
         // 返回前五大的費用名稱和金額
         return costs.slice(0, 5);
-      }
-      
-   
+    }
 
 
-/////
+
+
+    /////
     if (!listData || !selectedTlid) {
         return (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
         );
-      }
+    }
 
     return (
         <>
@@ -178,13 +186,13 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
                 <Col sm={10} xs={10}><Form.Label className='text-left'>預算金額</Form.Label></Col>
                 <Col sm={1} xs={1}></Col>
 
-                <Col sm={1}></Col>
-                <Col className='text-left' sm={10}>
-                    <Form.Control className='w-100' type="number" placeholder='預算金額' 
-                    value={listData.totalamount} 
-                    ref={amount} 
-                    onChange={inputAmount}
-                    onBlur={handleUpdateListClick}
+                <Col sm={1} xs={1}></Col>
+                <Col className='text-left' sm={10} xs={10}>
+                    <Form.Control className='w-100' type="number" placeholder='預算金額'
+                        value={listData.totalamount ? listData.totalamount : 0}
+                        ref={amount}
+                        onChange={inputAmount}
+                        onBlur={handleUpdateListClick}
                     />
                 </Col>
                 <Col sm={1} xs={1}></Col>
