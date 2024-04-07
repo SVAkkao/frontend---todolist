@@ -5,7 +5,7 @@ import Exchange from './Exchange';
 import BudgetManage from './BudgetManage';
 import { NavLink } from 'react-router-dom';
 
-function Money({ totalAmount, setShowMoney }) {
+function Money({ totalAmount, setShowMoney, alldata, selectedTlid, setAllData }) {
     const [budgetActive, setBudgetActive] = useState(true);
     const [splitActive, setSplitActive] = useState(false);
     const [exchangeActive, setExchangeActive] = useState(false);
@@ -50,8 +50,8 @@ function Money({ totalAmount, setShowMoney }) {
                     </Col> */}
                     {/* <Col sm={1}></Col> */}
                 </Row>
-                {budgetActive && <BudgetManage totalAmount={totalAmount} />}
-                {splitActive && <Split />}
+                {budgetActive && <BudgetManage totalAmount={totalAmount} alldata={alldata} selectedTlid={selectedTlid} setAllData={setAllData}/>}
+                {splitActive && <Split alldata={alldata} selectedTlid={selectedTlid} setAllData={setAllData}/>}
                 {/* {exchangeActive && <Exchange />} */}
             </Row>
 
