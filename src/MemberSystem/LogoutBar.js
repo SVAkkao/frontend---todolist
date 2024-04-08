@@ -14,7 +14,6 @@ import {
   FaSignOutAlt,
   // 評論與評價的圖示
   FaCommentAlt,
-  FaFileExport,
   FaUserFriends,
 } from "react-icons/fa";
 import "./DropdownMenu.css";
@@ -183,10 +182,6 @@ function LogoutBar() {
                 <Link to="/ratings" className="nav-link">
                   <FaCommentAlt style={{ marginRight: "8px" }} />
                   <span style={{ fontSize: "18px" }}>評論與評價</span>
-                </Link>
-                <Link to="#" className="nav-link">
-                  <FaFileExport style={{ marginRight: "8px" }} />
-                  <span style={{ fontSize: "18px" }}>匯出頁面</span>
                 </Link>
                 <Link onClick={handleLogout} className="nav-link">
                   <FaSignOutAlt style={{ marginRight: "8px" }} />
