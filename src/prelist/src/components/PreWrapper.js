@@ -10,72 +10,99 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 export const PreWrapper = () => {
   const [pres, setPres] = useState([]);
-  const [travelListGenerated, setTravelListGenerated] = useState(false)
+  const [travelListGenerated, setTravelListGenerated] = useState(false);
+
   useEffect(() => {
-    axios
-      .get(API_HOST + 'api/pres')
-      .then((response) => setPres(response.data))
-      .catch((error) => console.error(error));
+    fetchPres();
   }, []);
 
-  const addPre = (data) => {
-    axios
-      .post(API_HOST + 'api/pres', {
-        pretitle: data,
-        pretext: data.pretext || '',
-        type: data.type || '',
-        checked: data.checked || false,
-      })
-      .then((response) => {
-        setPres([...pres, response.data.data]);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const fetchPres = async () => {
+    try {
+      const response = await axios.get(`${API_HOST}/api/pres`);
+      setPres(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const toggleComplete = (id) => {
-    const newPres = pres.map((pre) =>
-      pre.id === id ? { ...pre, completed: !pre.completed } : pre
-    );
-    setPres(newPres);
-    localStorage.setItem('pres', JSON.stringify(newPres));
+  const addPre = async (data) => {
+    try {
+      // 確保資料包含 "pretitle" 字段
+      const response = await axios.post(`${API_HOST}/api/pres`, { pretitle: data, checked: false });
+      setPres([...pres, response.data.data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
+  const updatePre = async (id, data) => {
+    try {
+      const response = await axios.put(`${API_HOST}/api/pres/${id}`, data);
+      setPres(pres.map(pre => pre.preid === id ? response.data : pre));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const deletePre = (id) => {
-    const newPres = pres.filter((pre) => pre.id !== id);
-    setPres(newPres);
-    localStorage.setItem('pres', JSON.stringify(newPres));
+  const toggleComplete = async (id) => {
+    try {
+      const preToUpdate = pres.find(pre => pre.preid === id);
+      const updatedPre = { ...preToUpdate, checked: !preToUpdate.checked };
+      await updatePre(id, updatedPre);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deletePre = async (id) => {
+    try {
+      await axios.delete(`${API_HOST}/api/pres/${id}`);
+      setPres(pres.filter(pre => pre.preid !== id));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const editPre = (id) => {
     setPres(
-      pres.map((pre) =>
-        pre.id === id ? { ...pre, isEditing: !pre.isEditing } : pre
-      )
+      pres.map(pre => pre.preid === id ? { ...pre, isEditing: !pre.isEditing } : pre)
     );
   };
 
-  const editTask = (task, id) => {
-    const newPres = pres.map((pre) =>
-      pre.id === id ? { ...pre, task, isEditing: !pre.isEditing } : pre
-    );
-    setPres(newPres);
-    localStorage.setItem('pres', JSON.stringify(newPres));
+  const editTask = async (task, id) => {
+    try {
+      await updatePre(id, task);
+      setPres(
+        pres.map(pre => pre.preid === id ? { ...pre, ...task, isEditing: !pre.isEditing } : pre)
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const generateTravelList = () => {
+  const generateTravelList = async () => {
     if (!travelListGenerated) {
       const travelList = [
-        { id: uuidv4(), task: '護照', completed: false, isEditing: false },
-        { id: uuidv4(), task: '機票', completed: false, isEditing: false },
-        { id: uuidv4(), task: '旅遊保險', completed: false, isEditing: false },
-        { id: uuidv4(), task: '備用現金', completed: false, isEditing: false },
-        { id: uuidv4(), task: '換好外幣', completed: false, isEditing: false },
+        { pretitle: '護照', checked: false },
+        { pretitle: '機票', checked: false },
+        { pretitle: '旅遊保險', checked: false },
+        { pretitle: '備用現金', checked: false },
+        { pretitle: '換好外幣', checked: false },
       ];
-      setPres([...pres, ...travelList]);
-      setTravelListGenerated(true);
+
+      try {
+        const promises = travelList.map(async task => {
+          const response = await axios.post(`${API_HOST}/api/pres`, task);
+          return response.data.data;
+        });
+
+        const newPres = await Promise.all(promises);
+        setPres(prevPres => [...prevPres, ...newPres]);
+        setTravelListGenerated(true);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -88,7 +115,7 @@ export const PreWrapper = () => {
   const [, drop] = useDrop(() => ({
     accept: 'PRE',
     drop: (item, monitor) => {
-      // 處理拖放事件
+      // 实现拖放功能
     },
   }));
 
@@ -97,14 +124,14 @@ export const PreWrapper = () => {
       <h1>行前清單</h1>
       <PreForm addPre={addPre} />
       <TravelButton generateTravelList={generateTravelList} className="TravelButton" />
-      {/* display pres */}
-      {pres.map((pre) =>
-        pre.isEditing ? (
-          <EditPreForm editPre={editTask} task={pre} key={pre.id} />
-        ) : (
-          <DragPre key={pre.id} task={pre} deletePre={deletePre} editPre={editPre} toggleComplete={toggleComplete} />
-        )
-      )}
+      {pres.map(pre =>
+  pre.isEditing ? (
+    <EditPreForm editPre={editTask} task={pre} key={pre.preid} />
+  ) : (
+    <DragPre key={pre.preid} task={pre} deletePre={deletePre} editPre={editPre} toggleComplete={toggleComplete} />
+  )
+)}
+
     </div>
   );
 };
@@ -112,8 +139,8 @@ export const PreWrapper = () => {
 const DragPre = ({ task, deletePre, editPre, toggleComplete }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: 'PRE',
-    item: { id: task.id },
-    collect: (monitor) => ({
+    item: { id: task.preid },
+    collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
