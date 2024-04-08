@@ -428,7 +428,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
         <Col
           style={{
             width: "36px",
-            height: "108px",
+            height: "90vh",
           }}
           xs={12}></Col>
       </Row>

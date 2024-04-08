@@ -40,7 +40,7 @@ export function Pages() {
                         <span className='click-icon aboard' onClick={() => handleButtonClick(setAboardActive)}>
                             <img src={aboardActive ? '/UserListSource/aboard-a.png' : '/UserListSource/aboard.png'} style={{ width: "48px", height: '48px', paddingBottom: '0' }} alt='A flight icon' />
                         </span>
-                        <p style={{ color: aboardActive ? '#80BCBD' : '#939393' }} className='aboardTitle'>出國旅行</p>
+                        <p style={{ color: aboardActive ? '#80BCBD' : '#939393' }} className='aboardTitle'>出國</p>
                     </NavLink>
                 </Col>
                 <Col>

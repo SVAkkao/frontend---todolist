@@ -6,7 +6,7 @@ function Water() {
     return (
         <>
             <Row>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water1.avif" />
                         <Card.Body>
@@ -14,7 +14,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water2.avif" />
                         <Card.Body>
@@ -22,7 +22,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water3.avif" />
                         <Card.Body>
@@ -30,7 +30,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water4.avif" />
                         <Card.Body>
@@ -38,7 +38,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water5.avif" />
                         <Card.Body>
@@ -46,7 +46,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water6.avif" />
                         <Card.Body>
@@ -54,7 +54,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water7.avif" />
                         <Card.Body>
@@ -62,7 +62,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water8.avif" />
                         <Card.Body>
@@ -70,7 +70,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water9.avif" />
                         <Card.Body>
@@ -78,7 +78,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water10.avif" />
                         <Card.Body>
@@ -86,7 +86,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water11.avif" />
                         <Card.Body>
@@ -94,7 +94,7 @@ function Water() {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col xs={6} sm={4}>
+                <Col xs={12} sm={4}>
                     <Card className="mb-4 text-center">
                         <Card.Img variant="top" src="/UserListSource/water12.avif" />
                         <Card.Body>

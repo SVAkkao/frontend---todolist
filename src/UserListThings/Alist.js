@@ -5,18 +5,31 @@ import { Row, Col } from "react-bootstrap";
 import Fetch from "./Fetch";
 import LogoutBar from "../MemberSystem/LogoutBar";
 import IndexMiddle from "./Alist/IndexMiddle";
+import IndexMiddleXS from "./Alist/IndexMiddleXS";
 // Other
 import "./color.css";
 
 function Alist() {
 
     return (<main className="attraction-list">
-            <LogoutBar />
-            <Row>
-                <Col className="bg-color4">
-                    <IndexMiddle />
-                </Col>
-            </Row>
+        <LogoutBar />
+        <div className="d-sm-block d-none">
+        <Row>
+            <Col className="bg-color4">
+                <IndexMiddle />
+            </Col>
+        </Row>
+        </div>
+
+        <div className="d-sm-none d-block">
+
+        <Row>
+            <Col className="bg-color4">
+                <IndexMiddleXS />
+            </Col>
+        </Row>
+        </div>
+
     </main>)
 }
 

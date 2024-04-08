@@ -328,7 +328,7 @@ function RightSide({
                     <Col xs={1}></Col>
                 </Row>
                 <Row className="text-center">
-                    {/* <Col></Col> */}
+                    <Col xs={1}></Col>
                     <Col xs={4}>
                         <a onClick={changeMoneyClick}>
                             費用管理
@@ -351,7 +351,7 @@ function RightSide({
                             </a>
                         </NavLink>
                     </Col>
-                    <Col xs={4}>
+                    <Col xs={3}>
                         <a onClick={changePhotoClick}>
                             相簿
                             <FaImages
@@ -365,7 +365,7 @@ function RightSide({
                             />
                         </a>
                     </Col>
-                    {/* <Col></Col> */}
+                    {/* <Col xs={1}></Col> */}
                 </Row>
             </Row>
             {sidebarContent === "default" && (
