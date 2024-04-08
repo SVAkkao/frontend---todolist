@@ -92,15 +92,17 @@ const WeatherApp = () => {
           ],
         });
           console.log(completion.choices[0].message.content);
+          const response = completion.data.choices[0].message.content;
+             setRecommendations(response);
         
   
         // completion.data.choices 
-        if (completion && completion.data && Array.isArray(completion.data.choices)) {
-          const response = completion.data.choices[0].message.content;
-          setRecommendations(response);
-        } else {
-          setError('OpenAI返回的格式不符合預期');
-        }
+        // if (completion && completion.data && Array.isArray(completion.data.choices)) {
+        //   const response = completion.data.choices[0].message.content;
+        //   setRecommendations(response);
+        // } else {
+        //   setError('OpenAI返回的格式不符合預期');
+        // }
       } catch (error) {
         setError('向OpenAI發送消息時出錯');
         console.error('Error:', error);
