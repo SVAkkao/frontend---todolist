@@ -46,7 +46,7 @@ const RightSpace = ({ setrwdShow, showJourney, selectedjid, alldata, update_info
     );
   } else {
     if (showMoney) {
-      return <Money alldata={alldata} selectedTlid={selectedTlid}  totalAmount={totalAmount} setAllData={setAllData} setShowMoney={setShowMoney} />;
+      return <Money alldata={alldata} selectedTlid={selectedTlid} totalAmount={totalAmount} setAllData={setAllData} setShowMoney={setShowMoney} />;
     }
 
     if (showJourney) {
