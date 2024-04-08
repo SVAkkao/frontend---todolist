@@ -43,18 +43,36 @@ function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJour
   // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
   return (
     <div ref={journeyListRef}>
-      {journeys.map((item, index) => (
-        <Journey
-          key={index}
-          journeydata={item}
-          update_info={update_info}
-          onFocusJourney={onFocusJourney}
-          setShowJourney={setShowJourney}
-          onRemoveJourney={onRemoveJourney}
-          onFocusJourneyProject={onFocusJourneyProject}
-        />
-      ))}
-    </div>
+    {journeys.sort((a, b) => {
+      const dateA = new Date(a.arrived_date);
+      const dateB = new Date(b.arrived_date);
+      if (dateA < dateB) {
+        return -1;
+      } else if (dateA > dateB) {
+        return 1;
+      } else {
+        const timeA = a.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
+        const timeB = b.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
+        if (timeA < timeB) {
+          return -1;
+        } else if (timeA > timeB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    }).map((item, index) => (
+      <Journey
+        key={index}
+        journeydata={item}
+        update_info={update_info}
+        onFocusJourney={onFocusJourney}
+        setShowJourney={setShowJourney}
+        onRemoveJourney={onRemoveJourney}
+        onFocusJourneyProject={onFocusJourneyProject}
+      />
+    ))}
+  </div>
   );
 }
 

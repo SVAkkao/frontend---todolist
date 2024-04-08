@@ -39,9 +39,9 @@ function Money({ totalAmount, setShowMoney, alldata, selectedTlid, setAllData })
                         </NavLink>
                     </Col>
                     <Col>
-                        <NavLink to='/list' className="supportColor text-right">
+                        {/* <NavLink to='/list' className="supportColor text-right">
                             <a onClick={() => handleButtonClick(setSplitActive)} style={{ borderBottom: splitActive ? 'solid 3px #80BCBD' : '0px', color: splitActive ? 'black' : '#939393' }}>分帳計算</a>
-                        </NavLink>
+                        </NavLink> */}
                     </Col>
                     {/* <Col>
                         <NavLink to='/list' className="supportColor text-right">
