@@ -8,21 +8,26 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney, setrwdShow }) {
+function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney,setrwdShow }) {
   const journeyListRef = useRef(null);
+  const { start_date, end_date } = listdata;
+  const dateArray = getDatesArray(start_date, end_date);
+  const [hiddenJourneys, setHiddenJourneys] = useState({});
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' &&
-        event.target.tagName !== "IMG"
-      ) {
-        if (journeyListRef.current && !journeyListRef.current.contains(event.target)) {
-          console.log('You clicked outside of journey list!');
-          setOutOfTheJourney(true);
-        } else {
-          setOutOfTheJourney(false);
-        }
+      if(event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' && 
+      event.target.tagName !== "IMG" 
+      ){
+      if (journeyListRef.current && !journeyListRef.current.contains(event.target)  ) {
+        console.log('You clicked outside of journey list!');
+        setOutOfTheJourney(true);
+      }else{
+        setOutOfTheJourney(false);
       }
+    }
     };
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -30,6 +35,24 @@ function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJour
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [journeyListRef]);
+
+
+  function getDatesArray(startDate, endDate) {
+    const dates = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= new Date(endDate)) {
+      dates.push(new Date(currentDate).toISOString().split('T')[0]);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dates;
+  }
+
+  function toggleJourneys(date) {
+    setHiddenJourneys(prevHiddenJourneys => ({
+      ...prevHiddenJourneys,
+      [date]: !prevHiddenJourneys[date],
+    }));
+  }
 
 
 
@@ -41,37 +64,55 @@ function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJour
     );
   }
   // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
+  const journeysInDateRange = journeys.filter(journey => dateArray.includes(journey.arrived_date));
+  const journeysOutsideDateRange = journeys.filter(journey => !dateArray.includes(journey.arrived_date));
+
   return (
     <div ref={journeyListRef}>
-    {journeys.sort((a, b) => {
-      const dateA = new Date(a.arrived_date);
-      const dateB = new Date(b.arrived_date);
-      if (dateA < dateB) {
-        return -1;
-      } else if (dateA > dateB) {
-        return 1;
-      } else {
-        const timeA = a.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
-        const timeB = b.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
-        if (timeA < timeB) {
-          return -1;
-        } else if (timeA > timeB) {
-          return 1;
-        } else {
-          return 0;
-        }
-      }
-    }).map((item, index) => (
-      <Journey
-        key={index}
-        journeydata={item}
-        update_info={update_info}
-        onFocusJourney={onFocusJourney}
-        setShowJourney={setShowJourney}
-        onRemoveJourney={onRemoveJourney}
-        onFocusJourneyProject={onFocusJourneyProject}
-        setrwdShow={setrwdShow}
-      />
+    {dateArray.map((date, index) => (
+      <React.Fragment key={index}>
+        <Day date={date} toggleJourneys={toggleJourneys} hidden={hiddenJourneys[date]} listdata={listdata}/>
+        {!hiddenJourneys[date] && journeysInDateRange
+          .filter(journey => journey.arrived_date === date)
+          .sort((a, b) => {
+            const timeA = a.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
+            const timeB = b.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
+            if (timeA < timeB) {
+              return -1;
+            } else if (timeA > timeB) {
+              return 1;
+            } else {
+              return 0;
+            }
+          })
+          .map((item, index) => (
+            <Journey
+              key={index}
+              journeydata={item}
+              update_info={update_info}
+              onFocusJourney={onFocusJourney}
+              setShowJourney={setShowJourney}
+              onRemoveJourney={onRemoveJourney}
+              onFocusJourneyProject={onFocusJourneyProject}
+              setrwdShow={setrwdShow}
+            />
+          ))}
+      </React.Fragment>
+    ))}
+    {journeysOutsideDateRange.map((journey, index) => (
+      <React.Fragment key={index}>
+        <Day date={journey.arrived_date} hidden={hiddenJourneys[journey.arrived_date]} showDayIndex={false} listdata={listdata} />
+        <Journey
+          key={index}
+          journeydata={journey}
+          update_info={update_info}
+          onFocusJourney={onFocusJourney}
+          setShowJourney={setShowJourney}
+          onRemoveJourney={onRemoveJourney}
+          onFocusJourneyProject={onFocusJourneyProject}
+          setrwdShow={setrwdShow}
+        />
+      </React.Fragment>
     ))}
   </div>
   );
@@ -417,6 +458,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
         onFocusJourneyProject={onFocusJourneyProject}
         setOutOfTheJourney={setOutOfTheJourney}
         journeys={listdata.journeys}
+        listdata={listdata}
         update_info={update_info}
         onFocusJourney={onFocusJourney}
         setShowJourney={setShowJourney}
@@ -428,7 +470,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
         <Col
           style={{
             width: "36px",
-            height: "108px",
+            height: "90vh",
           }}
           xs={12}></Col>
       </Row>
