@@ -7,7 +7,7 @@ import { BarChart } from '@mui/x-charts';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
+function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_info }) {
     const [listData, setListData] = useState({});
     const [mData, setMData] = useState([0, 0, 0, 0, 0]);
     const [xmLabels, setXmLabels] = useState([0, 0, 0, 0, 0]);
