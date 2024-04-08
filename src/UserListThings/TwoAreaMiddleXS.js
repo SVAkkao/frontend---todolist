@@ -352,7 +352,8 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
               <img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />
               其他清單</a>
           </Col>
-          <Col className="text-left">
+          <Col xs={5}></Col>
+          <Col className="text-right">
             {/* <a onClick={changeMoneyClick}><img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />返回</a> */}
             <a onClick={() => (setrwdShow("RightSpace"))}>
               <img src='/UserListSource/list.png' style={{ width: "20px", height: '20px', paddingBottom: '0' }} className='m-2' />
