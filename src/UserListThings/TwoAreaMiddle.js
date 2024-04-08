@@ -8,21 +8,26 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney }) {
+function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney }) {
   const journeyListRef = useRef(null);
+  const { start_date, end_date } = listdata;
+  const dateArray = getDatesArray(start_date, end_date);
+  const [hiddenJourneys, setHiddenJourneys] = useState({});
+
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if(event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' && 
-      event.target.tagName !== "IMG" 
-      ){
-      if (journeyListRef.current && !journeyListRef.current.contains(event.target)  ) {
-        console.log('You clicked outside of journey list!');
-        setOutOfTheJourney(true);
-      }else{
-        setOutOfTheJourney(false);
+      if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' &&
+        event.target.tagName !== "IMG"
+      ) {
+        if (journeyListRef.current && !journeyListRef.current.contains(event.target)) {
+          console.log('You clicked outside of journey list!');
+          setOutOfTheJourney(true);
+        } else {
+          setOutOfTheJourney(false);
+        }
       }
-    }
     };
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -32,6 +37,26 @@ function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJour
   }, [journeyListRef]);
 
 
+  function getDatesArray(startDate, endDate) {
+    const dates = [];
+    let currentDate = new Date(startDate);
+    while (currentDate <= new Date(endDate)) {
+      dates.push(new Date(currentDate).toISOString().split('T')[0]);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return dates;
+  }
+
+  function toggleJourneys(date) {
+    setHiddenJourneys(prevHiddenJourneys => ({
+      ...prevHiddenJourneys,
+      [date]: !prevHiddenJourneys[date],
+    }));
+  }
+
+  function setrwdShow() {
+
+  }
 
   if (!journeys) {
     return (
@@ -41,38 +66,57 @@ function JourneyList({ journeys, onFocusJourneyProject, update_info, onFocusJour
     );
   }
   // return journeys.map((item, index) => <p key={index}>{JSON.stringify(item)}</p> )
+  const journeysInDateRange = journeys.filter(journey => dateArray.includes(journey.arrived_date));
+  const journeysOutsideDateRange = journeys.filter(journey => !dateArray.includes(journey.arrived_date));
+
   return (
     <div ref={journeyListRef}>
-    {journeys.sort((a, b) => {
-      const dateA = new Date(a.arrived_date);
-      const dateB = new Date(b.arrived_date);
-      if (dateA < dateB) {
-        return -1;
-      } else if (dateA > dateB) {
-        return 1;
-      } else {
-        const timeA = a.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
-        const timeB = b.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
-        if (timeA < timeB) {
-          return -1;
-        } else if (timeA > timeB) {
-          return 1;
-        } else {
-          return 0;
-        }
-      }
-    }).map((item, index) => (
-      <Journey
-        key={index}
-        journeydata={item}
-        update_info={update_info}
-        onFocusJourney={onFocusJourney}
-        setShowJourney={setShowJourney}
-        onRemoveJourney={onRemoveJourney}
-        onFocusJourneyProject={onFocusJourneyProject}
-      />
-    ))}
-  </div>
+      {dateArray.map((date, index) => (
+        <React.Fragment key={index}>
+          <Day date={date} toggleJourneys={toggleJourneys} hidden={hiddenJourneys[date]} listdata={listdata} />
+          {!hiddenJourneys[date] && journeysInDateRange
+            .filter(journey => journey.arrived_date === date)
+            .sort((a, b) => {
+              const timeA = a.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
+              const timeB = b.arrived_time.split(':').reduce((acc, cur) => acc * 60 + +cur, 0);
+              if (timeA < timeB) {
+                return -1;
+              } else if (timeA > timeB) {
+                return 1;
+              } else {
+                return 0;
+              }
+            })
+            .map((item, index) => (
+              <Journey
+                key={index}
+                journeydata={item}
+                update_info={update_info}
+                onFocusJourney={onFocusJourney}
+                setShowJourney={setShowJourney}
+                onRemoveJourney={onRemoveJourney}
+                onFocusJourneyProject={onFocusJourneyProject}
+                setrwdShow={setrwdShow}
+              />
+            ))}
+        </React.Fragment>
+      ))}
+      {journeysOutsideDateRange.map((journey, index) => (
+        <React.Fragment key={index}>
+          <Day date={journey.arrived_date} hidden={hiddenJourneys[journey.arrived_date]} showDayIndex={false} listdata={listdata} />
+          <Journey
+            key={index}
+            journeydata={journey}
+            update_info={update_info}
+            onFocusJourney={onFocusJourney}
+            setShowJourney={setShowJourney}
+            onRemoveJourney={onRemoveJourney}
+            onFocusJourneyProject={onFocusJourneyProject}
+            setrwdShow={setrwdShow}
+          />
+        </React.Fragment>
+      ))}
+    </div>
   );
 }
 
@@ -133,6 +177,8 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
   const [searchJourneyValue, setSearchJourneyValue] = useState('');
   const [searchJourneyProjectValue, setSearchJourneyProjectValue] = useState('');
   const [outOfTheJourney, setOutOfTheJourney] = useState(true);
+  const [searchAttractionsData, setSearchAttractionsData] = useState("");
+
   const titleName = useRef(null);
   const startDate = useRef(null);
   const endDate = useRef(null);
@@ -221,8 +267,24 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
   };
 
 
-  //
+  //輸入時查詢景點資料
+  const handleSearchAttraction = async (event) => {
+    setSearchJourneyValue(event.target.value)
 
+    fetch(API_HOST + "/api/POST/searchsimilarattraction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        aname: event.target.value
+      }),
+    }).then((response) => {
+      setSearchAttractionsData(response)
+      console.log(response.json());
+    });
+
+  }
   //送出景點資料成為行程
 
   const handleSearchJourneyClick = async () => {
@@ -413,9 +475,11 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
         </Row>
       </Row>
       <JourneyList
-      onFocusJourneyProject={onFocusJourneyProject}
-      setOutOfTheJourney={setOutOfTheJourney}
-        journeys={listdata.journeys} update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney}
+        onFocusJourneyProject={onFocusJourneyProject}
+        setOutOfTheJourney={setOutOfTheJourney}
+        journeys={listdata.journeys}
+        listdata={listdata}
+        update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney}
         onRemoveJourney={onRemoveJourney}
       />
       {/* <Day></Day> */}
@@ -435,35 +499,53 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
           >
             <Row>
               {outOfTheJourney ?
-                <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
-                  <Col sm={10}>
-                    {/* rounded */}
-                    <Form.Control
+                <div>
+                  <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 70, left: '25%', width: '55%', padding: '10px' }}>
+                    {/* <Col sm={10}>
+                      <Form.Control
 
-                      value={searchJourneyValue}
-                      onChange={(event) => setSearchJourneyValue(event.target.value)}
-                      className="p-3 text-center"
-                      type="text"
-                      placeholder="輸入景點"
-                    />
-                  </Col>
-                  <Col sm={2}>
-                    <button
-                      type="button"
-                      onClick={handleSearchJourneyClick}
-                      style={{ border: "none", backgroundColor: "transparent" }}
-                    >
-                      <img
-                        src="/UserListSource/send.png"
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          paddingBottom: "0",
-                        }}
+                        value={searchJourneyValue}
+                        onChange={(event) => handleSearchAttraction(event)}
+                        className="p-3 text-center"
+                        type="text"
+                        placeholder="輸入景點"
                       />
-                    </button>
-                  </Col>
-                </Row>
+                    </Col>
+
+                    <Col sm={2}>
+                    </Col> */}
+
+                  </Row>
+                  <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
+                    <Col sm={10}>
+                      {/* rounded */}
+                      <Form.Control
+
+                        value={searchJourneyValue}
+                        onChange={(event) => handleSearchAttraction(event)}
+                        className="p-3 text-center"
+                        type="text"
+                        placeholder="輸入景點"
+                      />
+                    </Col>
+                    <Col sm={2}>
+                      <button
+                        type="button"
+                        onClick={handleSearchJourneyClick}
+                        style={{ border: "none", backgroundColor: "transparent" }}
+                      >
+                        <img
+                          src="/UserListSource/send.png"
+                          style={{
+                            width: "48px",
+                            height: "48px",
+                            paddingBottom: "0",
+                          }}
+                        />
+                      </button>
+                    </Col>
+                  </Row>
+                </div>
                 :
                 <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
                   <Col sm={10}>

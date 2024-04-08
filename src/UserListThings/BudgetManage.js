@@ -19,13 +19,40 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
         const tlid = selectedTlid;
         const filteredListdData = alldata.filter((item) => item.tlid == tlid);
         setListData(filteredListdData[0])
-        if (filteredListdData[0].journeys[0].jbudgets[0] ||
-            filteredListdData[0].journeys[0].journey_projects[0]) {
+
+        let hasJBudget = false;
+        let hasJPProjectBudget = false;
+
+        // 檢查 filteredListdData[0] 的所有 journeys 的所有 jbudgets 是否存在
+        for (let i = 0; i < filteredListdData[0].journeys.length; i++) {
+            if (filteredListdData[0].journeys[i].jbudgets && filteredListdData[0].journeys[i].jbudgets.length > 0) {
+                hasJBudget = true;
+                break;
+            }
+        }
+
+        // 檢查 filteredListdData[0] 的所有 journeys 的所有 journey_projects 的所有 jpbudgets 是否存在
+        for (let i = 0; i < filteredListdData[0].journeys.length; i++) {
+            for (let j = 0; j < filteredListdData[0].journeys[i].journey_projects.length; j++) {
+                if (filteredListdData[0].journeys[i].journey_projects[j].jpbudgets && filteredListdData[0].journeys[i].journey_projects[j].jpbudgets.length > 0) {
+                    hasJPProjectBudget = true;
+                    break;
+                }
+            }
+            if (hasJPProjectBudget) {
+                break;
+            }
+        }
+
+        if (hasJBudget || hasJPProjectBudget) {
             const topFiveCosts = getTopFiveCosts(filteredListdData[0]);
             if (topFiveCosts) {
                 setMData(topFiveCosts.map((cost) => cost.amount));
                 setXmLabels(topFiveCosts.map((cost) => cost.name));
             }
+        } else {
+            setMData([0, 0, 0, 0, 0])
+            setXmLabels([0, 0, 0, 0, 0])
         }
 
     }
@@ -127,38 +154,41 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
     function getTopFiveCosts(listData) {
         const costs = [];
 
-        // 將 journeys 中的 jbamount 與 jbname 加入 costs 陣列中
-        if(listData.journeys[0].jbudgets[0])
-        {
-        listData.journeys.forEach((journey) => {
-            journey.jbudgets.forEach((budget) => {
-                const existingCost = costs.find((cost) => cost.name === budget.jbname);
 
-                if (existingCost) {
-                    existingCost.amount += Number(budget.jbamount);
-                } else {
-                    costs.push({ name: budget.jbname, amount: Number(budget.jbamount) });
-                }
-            });
-        });
-    }
-        // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
-        if(listData.journeys[0].journey_projects[0] && listData.journeys[0].journey_projects[0].jpbudgets[0])
-        {
-        listData.journeys.forEach((journey) => {
-            journey.journey_projects.forEach((project) => {
-                project.jpbudgets.forEach((budget) => {
-                    const existingCost = costs.find((cost) => cost.name === budget.jpbname);
+        // 將 journeys 中的 jbamount 與 jbname 加入 costs 陣列中
+
+            listData.journeys.forEach((journey) => {
+                journey.jbudgets.forEach((budget) => {
+                    const existingCost = costs.find((cost) => cost.name === budget.jbname);
 
                     if (existingCost) {
-                        existingCost.amount += Number(budget.jpbamount);
+                        existingCost.amount += Number(budget.jbamount);
                     } else {
-                        costs.push({ name: budget.jpbname, amount: Number(budget.jpbamount) });
+                        costs.push({ name: budget.jbname, amount: Number(budget.jbamount) });
                     }
                 });
             });
-        });
-    }
+        
+
+
+
+
+        // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
+
+            listData.journeys.forEach((journey) => {
+                journey.journey_projects.forEach((project) => {
+                    project.jpbudgets.forEach((budget) => {
+                        const existingCost = costs.find((cost) => cost.name === budget.jpbname);
+
+                        if (existingCost) {
+                            existingCost.amount += Number(budget.jpbamount);
+                        } else {
+                            costs.push({ name: budget.jpbname, amount: Number(budget.jpbamount) });
+                        }
+                    });
+                });
+            });
+        
         // 對 costs 陣列中的費用金額進行排序
         costs.sort((a, b) => b.amount - a.amount);
 
