@@ -20,7 +20,7 @@ const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 
 
-function MylistXS({ data, onButtonClick, onRemove, update_info }) {
+function MylistXS({ data, onButtonClick, onRemove, update_info, setrwdShow }) {
 
 
     const handleTlphotoUpdate = (event) => {
@@ -58,7 +58,9 @@ function MylistXS({ data, onButtonClick, onRemove, update_info }) {
                     <Card.Body className='click-icon'
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}
                     >
-                        <div style={{ flex: '1', textAlign: 'center' }} onClick={() => onButtonClick(data.tlid)} className='text-truncate text-center'>
+                        <div style={{ flex: '1', textAlign: 'center' }}
+                        onDoubleClick={()=>{setrwdShow("TwoAreaMiddleXS")}}
+                        onClick={() => onButtonClick(data.tlid)} className='text-truncate text-center'>
                             <Card.Text className='text3 text-truncate text-center' style={{ maxWidth: '80%' }}>
                                 {data.title}
                             </Card.Text>

@@ -35,6 +35,7 @@ function TripLists({ list, finishedSelected, onButtonClick, onRemove, update_inf
       onButtonClick={onButtonClick}
       onRemove={onRemove}
       update_info={update_info}
+      setrwdShow={setrwdShow}
     />
   ))
 }

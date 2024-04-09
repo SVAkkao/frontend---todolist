@@ -8,7 +8,7 @@ export const Pre = ({ task, deletePre, editPre, toggleComplete }) => {
         className={`${task.completed ? "completed" : "incompleted"}`}
         onClick={() => toggleComplete(task.id)}
       >
-        {task.task}
+        {task.pretitle} {/* 顯示 pretitle 屬性 */}
       </p>
       <div>
         <FaPenSquare className="edit-icon" onClick={() => editPre(task.id)} />
