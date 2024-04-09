@@ -123,6 +123,7 @@ const List = () => {
   }, []);
 
   const setSelectedTlidAndOther = (data) => {
+    console.log(data);
     setSelectedTlid(data);
     const filtereListdData = alldata.filter((item) => item.tlid == data);
     if (filtereListdData[0].journeys[0] != null) {

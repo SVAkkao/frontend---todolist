@@ -8,6 +8,7 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, update_info, deleteBudgetManage }) {
     const [singleBudgetManageData, setSingleBudgetManageData] = useState([]);
+    const [averageAmountData, setAverageAmountData] = useState("");
 
 
 
@@ -196,6 +197,13 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
         });
     }
 
+    const averageAmount = () => {
+       let pay = Number(singleBudgetManageData.bmamount)
+       let peopleCounts = singleBudgetManageData.partners.length
+       let Answer = Math.round(pay/peopleCounts*10) /10;
+       setAverageAmountData(Answer)
+    };
+
 
     if (!alldata) {
         return <Spinner animation="border" role="status">
@@ -263,14 +271,22 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                         <Form.Label className='text-left'>新增成員</Form.Label>
                     </a>
                 </Col>
-                <Col><button className='bg-color1 text-right p-2 rounded' style={{ border: 'transparent', color: 'white' }}>計算費用</button></Col>
+                <Col><button 
+                onClick={averageAmount}
+                className='bg-color1 text-right p-2 rounded' style={{ border: 'transparent', color: 'white' }}>計算平均費用</button></Col>
                 <Col sm={1} xs={1}>
                     <a
                         onClick={(event) => { deleteBudgetManage(singleBudgetManageData.bmid) }}
                     ><img src='/UserListSource/delete.png' style={{ width: "32px", height: '32px', paddingBottom: '0' }} /></a>
                 </Col>
                 <Col sm={1} xs={1}></Col>
+                <Col sm={12} xs={12}>
 
+                    {averageAmountData && (
+                        <p>每人應付{averageAmountData}元</p>
+                    )
+                    }
+                </Col>
             </Row>
 
 

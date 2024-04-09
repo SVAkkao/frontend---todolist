@@ -23,8 +23,8 @@ function SplitMember({ partnerData, handlePnnameChange, handlePnamountChange, up
                                 onChange={(event) => handlePncheckedChange(event, partnerData.pnid)}
                                 onBlur={updateBudgetManage}
                                 >
-                                    <option value='0' selected={partnerData.pnchecked === '0'}>付錢</option>
-                                    <option value='1' selected={partnerData.pnchecked === '1'}>分攤</option>
+                                    <option value='0' selected={partnerData.pnchecked === '0'}>付清</option>
+                                    <option value='1' selected={partnerData.pnchecked === '1'}>欠錢</option>
                                 </Form.Select>
                             </Form>
                         </Col>
