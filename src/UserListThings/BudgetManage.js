@@ -7,7 +7,7 @@ import { BarChart } from '@mui/x-charts';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
+function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_info }) {
     const [listData, setListData] = useState({});
     const [mData, setMData] = useState([0, 0, 0, 0, 0]);
     const [xmLabels, setXmLabels] = useState([0, 0, 0, 0, 0]);
@@ -154,9 +154,14 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
     function getTopFiveCosts(listData) {
         const costs = [];
 
+<<<<<<< HEAD
+        // 將 journeys 中的 jbamount 與 jbname 加入 costs 陣列中
+        if (listData.journeys[0].jbudgets[0]) {
+=======
 
         // 將 journeys 中的 jbamount 與 jbname 加入 costs 陣列中
 
+>>>>>>> d582616b6715950a94e9eedf53120b71c280acf4
             listData.journeys.forEach((journey) => {
                 journey.jbudgets.forEach((budget) => {
                     const existingCost = costs.find((cost) => cost.name === budget.jbname);
@@ -168,6 +173,11 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
                     }
                 });
             });
+<<<<<<< HEAD
+        }
+        // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
+        if (listData.journeys[0].journey_projects[0] && listData.journeys[0].journey_projects[0].jpbudgets[0]) {
+=======
         
 
 
@@ -175,6 +185,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
 
         // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
 
+>>>>>>> d582616b6715950a94e9eedf53120b71c280acf4
             listData.journeys.forEach((journey) => {
                 journey.journey_projects.forEach((project) => {
                     project.jpbudgets.forEach((budget) => {
@@ -188,7 +199,11 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
                     });
                 });
             });
+<<<<<<< HEAD
+        }
+=======
         
+>>>>>>> d582616b6715950a94e9eedf53120b71c280acf4
         // 對 costs 陣列中的費用金額進行排序
         costs.sort((a, b) => b.amount - a.amount);
 
@@ -227,8 +242,8 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
                 </Col>
                 <Col sm={1} xs={1}></Col>
 
-                <Col sm={1} xs={1}></Col>
-                <Col sm={10} xs={10} className='mt-4'>
+                <Col sm={1} xs={0}></Col>
+                <Col sm={10} xs={12} className='mt-4' style={{ display: listData.totalamount ? 'block' : 'none' }}>
                     <PieChart
                         style={{ width: '100%' }}
                         height='300'
@@ -258,7 +273,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
                             id: 'uvId',
                             label: '金額',
                             type: 'bar',
-                            cx: 100,
+                            cx: 150,
                             cy: 100,
                         }]}
                         style={{ width: '100%' }}
