@@ -1,18 +1,18 @@
-import React from "react";
-import { FaPenSquare, FaTrash } from "react-icons/fa";
+import React from 'react';
+import { FaPenSquare, FaTrash } from 'react-icons/fa';
 
 export const Pre = ({ task, deletePre, editPre, toggleComplete }) => {
   return (
     <div className="Pre">
       <p
-        className={`${task.completed ? "completed" : "incompleted"}`}
-        onClick={() => toggleComplete(task.id)}
+        className={`${task.checked ? 'completed' : 'incompleted'}`}
+        onClick={() => toggleComplete(task.preid)}
       >
-        {task.pretitle} {/* 顯示 pretitle 屬性 */}
+        {task.pretitle}
       </p>
       <div>
-        <FaPenSquare className="edit-icon" onClick={() => editPre(task.id)} />
-        <FaTrash className="delete-icon" onClick={() => deletePre(task.id)} />
+        <FaPenSquare className="edit-icon" onClick={() => editPre(task.preid)} />
+        <FaTrash className="delete-icon" onClick={() => deletePre(task.preid)} />
       </div>
     </div>
   );

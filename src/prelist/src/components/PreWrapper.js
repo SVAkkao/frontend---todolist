@@ -27,19 +27,17 @@ export const PreWrapper = () => {
 
   const addPre = async (data) => {
     try {
-      // 確保資料包含 "pretitle" 字段
-      const response = await axios.post(`${API_HOST}/api/pres`, { pretitle: data, checked: false });
+      const response = await axios.post(`${API_HOST}/api/pres`, data);
       setPres([...pres, response.data.data]);
     } catch (error) {
       console.error(error);
     }
   };
-  
 
   const updatePre = async (id, data) => {
     try {
       const response = await axios.put(`${API_HOST}/api/pres/${id}`, data);
-      setPres(pres.map(pre => pre.preid === id ? response.data : pre));
+      setPres(pres.map((pre) => (pre.preid === id ? response.data : pre)));
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +45,7 @@ export const PreWrapper = () => {
 
   const toggleComplete = async (id) => {
     try {
-      const preToUpdate = pres.find(pre => pre.preid === id);
+      const preToUpdate = pres.find((pre) => pre.preid === id);
       const updatedPre = { ...preToUpdate, checked: !preToUpdate.checked };
       await updatePre(id, updatedPre);
     } catch (error) {
@@ -58,7 +56,7 @@ export const PreWrapper = () => {
   const deletePre = async (id) => {
     try {
       await axios.delete(`${API_HOST}/api/pres/${id}`);
-      setPres(pres.filter(pre => pre.preid !== id));
+      setPres(pres.filter((pre) => pre.preid !== id));
     } catch (error) {
       console.error(error);
     }
@@ -66,7 +64,7 @@ export const PreWrapper = () => {
 
   const editPre = (id) => {
     setPres(
-      pres.map(pre => pre.preid === id ? { ...pre, isEditing: !pre.isEditing } : pre)
+      pres.map((pre) => (pre.preid === id ? { ...pre, isEditing: !pre.isEditing } : pre))
     );
   };
 
@@ -74,7 +72,9 @@ export const PreWrapper = () => {
     try {
       await updatePre(id, task);
       setPres(
-        pres.map(pre => pre.preid === id ? { ...pre, ...task, isEditing: !pre.isEditing } : pre)
+        pres.map((pre) =>
+          pre.preid === id ? { ...pre, ...task, isEditing: !pre.isEditing } : pre
+        )
       );
     } catch (error) {
       console.error(error);

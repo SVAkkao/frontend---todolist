@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Row, Col, Card, } from 'react-bootstrap';
 
 function DateInfo({ startDate, endDate }) {
@@ -22,32 +22,32 @@ const API_IMAGE = process.env.REACT_APP_IMAGE_URL
 
 function Mylist({ data, onButtonClick, onRemove, update_info }) {
 
-    
+
     const handleTlphotoUpdate = (event) => {
 
-        // event.preventDefault();
-    
+
+
         const formData = new FormData();
         formData.append("tlphoto", event.target.files[0]);
         formData.append("tlid", data.tlid);
-    
-    
+
+
         fetch(API_HOST + "/api/listimage/upload", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
-          body: formData,
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+            },
+            body: formData,
         })
-          .then(response => response.json())
-          .then(data => console.log(data))
-          .then(()=>{
-            update_info();
-          })
-          .catch(error => console.error(error));
-      };
-    
-    
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .then(() => {
+                update_info();
+            })
+            .catch(error => console.error(error));
+    };
+
+
     // 
     // const previewImg = image ? URL.createObjectURL(image) : "/UserListSource/Mylist.webp";
     return (
@@ -57,7 +57,9 @@ function Mylist({ data, onButtonClick, onRemove, update_info }) {
                     <Card.Body className='click-icon'
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#AAD9BB', textAlign: 'center' }}
                     >
-                        <div style={{ flex: '1', textAlign: 'center' }} onClick={() => onButtonClick(data.tlid)} className='text-truncate text-center'>
+                        <div style={{ flex: '1', textAlign: 'center' }}
+                            onClick={() => onButtonClick(data.tlid)}
+                            className='text-truncate text-center'>
                             <Card.Text className='text3 text-truncate text-center' style={{ maxWidth: '80%' }}>
                                 {data.title}
                             </Card.Text>
@@ -69,17 +71,18 @@ function Mylist({ data, onButtonClick, onRemove, update_info }) {
                     </Card.Body>
                     <div className="flex">
                         <div className="imgwrap"></div>
-                        <label className="uploadbtn text-center" htmlFor="upload">
-                            <img src={data.tlphoto ? `${API_IMAGE}${data.tlphoto}` : "/UserListSource/Mylist.webp"} style={{ width: '100%', maxHeight: '100%'}} alt='Trip list preview' />
+                        <label className="uploadbtn text-center">
+                            <input
+                                onChange={handleTlphotoUpdate}
+                                type="file"
+                                accept="image/jpeg"
+                                className='d-none'
+                                multiple
+                            // onChange={(event)=>{handleTlphotoUpdate(event,data.tlid)}}
+                            />
+                            <img src={data.tlphoto ? `${API_IMAGE}${data.tlphoto}` : "/UserListSource/Mylist.webp"} style={{ width: '100%', maxHeight: '100%' }} alt='Trip list preview' />
                         </label>
-                        <input
-                            type="file"
-                            accept="image/jpeg"
-                            id="upload"
-                            className='d-none'
-                            multiple
-                            onChange={handleTlphotoUpdate}
-                        />
+
                     </div>
                     {/* <input id="upload" type="file" /> */}
                     {/* <label type="button" for="upload" class="uploadImg" style={{ border: 'grey', width: '100%', height: '200px' }}></label> */}
