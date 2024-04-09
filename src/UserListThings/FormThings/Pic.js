@@ -56,14 +56,14 @@ function Pic({ journeyDataJid,update_info }) {
   return (
     <>
       <Row className="m-4" style={{ alignItems: "center" }}>
-        <Col sm={1}></Col>
-        <Col sm={10}>
+        <Col sm={1} xs={0}></Col>
+        <Col sm={10} xs={12}>
           <Form.Label className="text-left ">圖片</Form.Label>
         </Col>
-        <Col sm={1}></Col>
-        <Col sm={1}></Col>
+        <Col sm={1} xs={0}></Col>
+        <Col sm={1} xs={0}></Col>
         <React.Fragment>
-          <Col className="text-left" sm={10}>
+          <Col className="text-left" sm={10} xs={11}>
             <Form.Control
               key={0}
               type="file"
@@ -72,7 +72,7 @@ function Pic({ journeyDataJid,update_info }) {
               onChange={handleImageChange}
             />
           </Col>
-          <Col sm={1}>
+          <Col sm={1} xs={1}>
             <Form onSubmit={handleSubmit} className="d-inline" title="submit">
               <button
                 type="submit"
