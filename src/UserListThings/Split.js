@@ -66,23 +66,23 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
     };
 
     const handlePncheckedChange = (event, partnerDatapnid) => {
-        setSingleBudgetManageData((prevSingleBudgetManageData) => {
-            const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
-                if (item.pnid === partnerDatapnid) {
-                    return {
-                        ...item,
-                        pnchecked: event.target.value,
-                    };
-                }
-                return item;
+            setSingleBudgetManageData((prevSingleBudgetManageData) => {
+                const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
+                    if (item.pnid === partnerDatapnid) {
+                        return {
+                            ...item,
+                            pnchecked: event.target.value,
+                        };
+                    }
+                    return item;
+                });
+                return {
+                    ...prevSingleBudgetManageData,
+                    partners: updatedePartners,
+                };
             });
-            const updatedSingleBudgetManageData = {
-                ...prevSingleBudgetManageData,
-                partners: updatedePartners,
-            };
-            setSingleBudgetManageData(updatedSingleBudgetManageData);
-            updateBudgetManage(singleBudgetManageData); // 在這裡直接調用 updateBudgetManage
-        });
+            // updateBudgetManage();
+       
 
     };
 

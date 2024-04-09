@@ -52,13 +52,16 @@ function RightSide({
 
     //handle畫面的各種改變
     const handleAnameChange = (event) => {
-        setJourneyData({
-            ...journeyData,
-            attraction: {
-                ...journeyData.attraction,
-                aname: event.target.value,
-            },
-        });
+        
+            setJourneyData({
+                ...journeyData,
+                attraction: {
+                    ...journeyData.attraction,
+                    aname: event.target.value,
+                },
+            });
+        
+
     };
 
     const handleArrivedDateChange = (event) => {
