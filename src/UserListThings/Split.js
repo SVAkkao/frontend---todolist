@@ -67,23 +67,23 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
     };
 
     const handlePncheckedChange = (event, partnerDatapnid) => {
-            setSingleBudgetManageData((prevSingleBudgetManageData) => {
-                const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
-                    if (item.pnid === partnerDatapnid) {
-                        return {
-                            ...item,
-                            pnchecked: event.target.value,
-                        };
-                    }
-                    return item;
-                });
-                return {
-                    ...prevSingleBudgetManageData,
-                    partners: updatedePartners,
-                };
+        setSingleBudgetManageData((prevSingleBudgetManageData) => {
+            const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
+                if (item.pnid === partnerDatapnid) {
+                    return {
+                        ...item,
+                        pnchecked: event.target.value,
+                    };
+                }
+                return item;
             });
-            // updateBudgetManage();
-       
+            return {
+                ...prevSingleBudgetManageData,
+                partners: updatedePartners,
+            };
+        });
+        // updateBudgetManage();
+
 
     };
 
@@ -198,10 +198,10 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
     }
 
     const averageAmount = () => {
-       let pay = Number(singleBudgetManageData.bmamount)
-       let peopleCounts = singleBudgetManageData.partners.length
-       let Answer = Math.round(pay/peopleCounts*10) /10;
-       setAverageAmountData(Answer)
+        let pay = Number(singleBudgetManageData.bmamount)
+        let peopleCounts = singleBudgetManageData.partners.length
+        let Answer = Math.round(pay / peopleCounts * 10) / 10;
+        setAverageAmountData(Answer)
     };
 
 
@@ -214,13 +214,13 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
     return (
         <>
             <Row style={{ alignItems: 'center' }} className='m-4'>
-                <Col sm={1} xs={0}></Col>
+                {/* <Col sm={1} xs={0}></Col> */}
                 <Col sm={5} xs={5}><Form.Label className='text-left'>費用名稱</Form.Label></Col>
                 <Col sm={5} xs={5}><Form.Label className='text-left'>費用金額</Form.Label></Col>
-                <Col sm={1} xs={1}></Col>
+                <Col sm={0} xs={1}></Col>
 
-                <Col sm={1} xs={1}></Col>
-                <Col className='text-center' sm={5} xs={5}>
+                {/* <Col sm={0} xs={1}></Col> */}
+                <Col className='text-left' sm={5} xs={5}>
                     <Form.Control type="text"
                         placeholder='費用名稱'
                         onChange={handleBmnameChange}
@@ -228,7 +228,7 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                         onBlur={updateBudgetManage}
                     />
                 </Col>
-                <Col className='text-center' sm={5} xs={5}>
+                <Col className='text-left' sm={5} xs={5}>
                     <Form.Control type="number"
                         placeholder='費用金額'
                         onChange={handleBmamountChange}
@@ -239,7 +239,7 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                 <Col sm={1} xs={1}></Col>
             </Row>
             <Row className='mt-4 ms-4'>
-                <Col sm={1} xs={0}></Col>
+                {/* <Col sm={0} xs={0}></Col> */}
                 <Col className="d-flex align-items-center">
                     <Form.Label className='text-left'>同行人員</Form.Label>
                 </Col>
@@ -262,8 +262,8 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
             })}
 
             <Row style={{ alignItems: 'center' }} className='m-4'>
-                <Col sm={1} xs={0}></Col>
-                <Col sm={5} xs={5}>
+                {/* <Col sm={0} xs={0}></Col> */}
+                <Col sm={6} xs={5}>
                     <a
                         onClick={addPartner}
                     >
@@ -271,9 +271,9 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                         <Form.Label className='text-left'>新增成員</Form.Label>
                     </a>
                 </Col>
-                <Col><button 
-                onClick={averageAmount}
-                className='bg-color1 text-right p-2 rounded' style={{ border: 'transparent', color: 'white' }}>計算平均費用</button></Col>
+                <Col><button
+                    onClick={averageAmount}
+                    className='bg-color1 text-right p-2 rounded' style={{ border: 'transparent', color: 'white' }}>平均費用</button></Col>
                 <Col sm={1} xs={1}>
                     <a
                         onClick={(event) => { deleteBudgetManage(singleBudgetManageData.bmid) }}
@@ -283,9 +283,10 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                 <Col sm={12} xs={12}>
 
                     {averageAmountData && (
-                        <p>每人應付{averageAmountData}元</p>
+                        <p className='m-2'>每人應付{averageAmountData}元</p>
                     )
                     }
+                    <hr />
                 </Col>
             </Row>
 
