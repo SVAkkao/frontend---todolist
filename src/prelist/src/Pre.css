@@ -99,3 +99,9 @@ h1 {
   padding: 0.55rem;
   cursor: pointer;
 }
+.WeatherApp {
+  background-color: white;
+  margin: 0 auto;
+  max-width: 600px; /* 設定最大寬度,例如 600px */
+  padding: 20px; /* 加入一些內邊距 */
+}

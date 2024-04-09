@@ -1,19 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { useLoadScript, GoogleMap, Autocomplete } from '@react-google-maps/api';
-import  OpenAI  from "openai";
-
-
-
-
-
+import { useLoadScript } from '@react-google-maps/api';
+import OpenAI from "openai";
 
 const WeatherApp = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [chatInputValue, setChatInputValue] = useState('');
   const [recommendations, setRecommendations] = useState([]);
 
   const { isLoaded } = useLoadScript({
@@ -73,7 +67,7 @@ const WeatherApp = () => {
   
       const openai = new OpenAI({
         apiKey: 'sk-ql9dO6EwBd4N3o2IDQyOp7qdmMtvkIt8yAJKPmzQAQB82kco',
-        baseURL: 'https:///api.chatanywhere.cn/v1',
+        baseURL: 'http://localhost:3040/v1',
         dangerouslyAllowBrowser: true,
       });
   
@@ -87,22 +81,13 @@ const WeatherApp = () => {
             },
             {
               role: 'user',
-              content: `根據提供的地點以及天氣,提供一份表列的行前建議以及景點推薦:${userMessage}`,
+              content: `根據提供的地點以及天氣,提供一份表列的行前建議以及景點推薦:${userMessage},請用純JSON字串回答`
             },
           ],
         });
-          console.log(completion.choices[0].message.content);
-          const response = completion.data.choices[0].message.content;
-             setRecommendations(response);
-        
-  
-        // completion.data.choices 
-        // if (completion && completion.data && Array.isArray(completion.data.choices)) {
-        //   const response = completion.data.choices[0].message.content;
-        //   setRecommendations(response);
-        // } else {
-        //   setError('OpenAI返回的格式不符合預期');
-        // }
+        console.log(completion.choices[0].message.content);
+        const response = completion.data.choices[0].message.content;
+        setRecommendations(response);
       } catch (error) {
         setError('向OpenAI發送消息時出錯');
         console.error('Error:', error);
@@ -110,21 +95,24 @@ const WeatherApp = () => {
     }
   };
 
-
   return (
     <div>
       <h1>當地目前天氣</h1>
-      <GooglePlacesAutocomplete
-        selectProps={{
-          value: selectedCity,
-          onChange: handleSelectCity,
-        }}
-        apiKey="AIzaSyBM_EnYgXOayxugwu67DpS9gYprEoFV8fg"
-        autocompletionRequest={{
-          types: ['(regions)'],
-        }}
-        language="zh-TW"
-      />
+      {isLoaded ? (
+        <GooglePlacesAutocomplete
+          selectProps={{
+            value: selectedCity,
+            onChange: handleSelectCity,
+          }}
+          apiKey="AIzaSyBM_EnYgXOayxugwu67DpS9gYprEoFV8fg"
+          autocompletionRequest={{
+            types: ['(regions)'],
+          }}
+          language="zh-TW"
+        />
+      ) : (
+        <p>正在載入 Google Maps API...</p>
+      )}
       {loading && <p>正在獲取天氣數據...</p>}
       {error && <p>{error}</p>}
       {weatherData && (
@@ -141,16 +129,14 @@ const WeatherApp = () => {
           <p>當地日出時間：{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>
           <p>當地日落時間：{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>
           <button onClick={handleSubmitToChat}>發送到 OpenAI</button>
-          (
-            <div>
-              <h3>建議和景點推薦：</h3>
-              <ul>
-                {recommendations.map((recommendation, index) => (
-                  <li key={index}>{recommendation}</li>
-                ))}
-              </ul>
-            </div>
-          )
+          <div>
+            <h3>建議和景點推薦：</h3>
+            <ul>
+              {recommendations.map((recommendation, index) => (
+                <li key={index}>{recommendation}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>
