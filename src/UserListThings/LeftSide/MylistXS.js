@@ -72,17 +72,17 @@ function MylistXS({ data, onButtonClick, onRemove, update_info, setrwdShow }) {
                     </Card.Body>
                     <div className="flex">
                         <div className="imgwrap"></div>
-                        <label className="uploadbtn" htmlFor="upload">
-                            <img className='text-center' src={data.tlphoto ? `${API_IMAGE}${data.tlphoto}` : "/UserListSource/Mylist.webp"} style={{ width: '100%', maxHeight: '100%' }} alt='Trip list preview' />
+                        <label className="uploadbtn text-center">
+                            <input
+                                onChange={handleTlphotoUpdate}
+                                type="file"
+                                accept="image/jpeg"
+                                className='d-none'
+                                multiple
+                            // onChange={(event)=>{handleTlphotoUpdate(event,data.tlid)}}
+                            />
+                            <img src={data.tlphoto ? `${API_IMAGE}${data.tlphoto}` : "/UserListSource/Mylist.webp"} style={{ width: '100%', maxHeight: '100%' }} alt='Trip list preview' />
                         </label>
-                        <input
-                            type="file"
-                            accept="image/jpeg"
-                            id="upload"
-                            className='d-none'
-                            multiple
-                            onChange={handleTlphotoUpdate}
-                        />
                     </div>
                 </Card>
             </Col>
