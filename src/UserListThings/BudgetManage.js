@@ -128,37 +128,35 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
         const costs = [];
 
         // 將 journeys 中的 jbamount 與 jbname 加入 costs 陣列中
-        if(listData.journeys[0].jbudgets[0])
-        {
-        listData.journeys.forEach((journey) => {
-            journey.jbudgets.forEach((budget) => {
-                const existingCost = costs.find((cost) => cost.name === budget.jbname);
-
-                if (existingCost) {
-                    existingCost.amount += Number(budget.jbamount);
-                } else {
-                    costs.push({ name: budget.jbname, amount: Number(budget.jbamount) });
-                }
-            });
-        });
-    }
-        // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
-        if(listData.journeys[0].journey_projects[0] && listData.journeys[0].journey_projects[0].jpbudgets[0])
-        {
-        listData.journeys.forEach((journey) => {
-            journey.journey_projects.forEach((project) => {
-                project.jpbudgets.forEach((budget) => {
-                    const existingCost = costs.find((cost) => cost.name === budget.jpbname);
+        if (listData.journeys[0].jbudgets[0]) {
+            listData.journeys.forEach((journey) => {
+                journey.jbudgets.forEach((budget) => {
+                    const existingCost = costs.find((cost) => cost.name === budget.jbname);
 
                     if (existingCost) {
-                        existingCost.amount += Number(budget.jpbamount);
+                        existingCost.amount += Number(budget.jbamount);
                     } else {
-                        costs.push({ name: budget.jpbname, amount: Number(budget.jpbamount) });
+                        costs.push({ name: budget.jbname, amount: Number(budget.jbamount) });
                     }
                 });
             });
-        });
-    }
+        }
+        // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
+        if (listData.journeys[0].journey_projects[0] && listData.journeys[0].journey_projects[0].jpbudgets[0]) {
+            listData.journeys.forEach((journey) => {
+                journey.journey_projects.forEach((project) => {
+                    project.jpbudgets.forEach((budget) => {
+                        const existingCost = costs.find((cost) => cost.name === budget.jpbname);
+
+                        if (existingCost) {
+                            existingCost.amount += Number(budget.jpbamount);
+                        } else {
+                            costs.push({ name: budget.jpbname, amount: Number(budget.jpbamount) });
+                        }
+                    });
+                });
+            });
+        }
         // 對 costs 陣列中的費用金額進行排序
         costs.sort((a, b) => b.amount - a.amount);
 
@@ -197,8 +195,8 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
                 </Col>
                 <Col sm={1} xs={1}></Col>
 
-                <Col sm={1} xs={1}></Col>
-                <Col sm={10} xs={10} className='mt-4'>
+                <Col sm={1} xs={0}></Col>
+                <Col sm={10} xs={12} className='mt-4' style={{ display: listData.totalamount ? 'block' : 'none' }}>
                     <PieChart
                         style={{ width: '100%' }}
                         height='300'
@@ -228,7 +226,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData }) {
                             id: 'uvId',
                             label: '金額',
                             type: 'bar',
-                            cx: 100,
+                            cx: 150,
                             cy: 100,
                         }]}
                         style={{ width: '100%' }}

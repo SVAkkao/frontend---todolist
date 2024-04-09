@@ -70,7 +70,7 @@ function Mylist({ data, onButtonClick, onRemove, update_info }) {
                     <div className="flex">
                         <div className="imgwrap"></div>
                         <label className="uploadbtn text-center" htmlFor="upload">
-                            <img src={data.tlphoto ? `${API_IMAGE}${data.tlphoto}` : "/UserListSource/Mylist.webp"} style={{ width: '100%', maxHeight: '200px'}} alt='Trip list preview' />
+                            <img src={data.tlphoto ? `${API_IMAGE}${data.tlphoto}` : "/UserListSource/Mylist.webp"} style={{ width: '100%', maxHeight: '100%'}} alt='Trip list preview' />
                         </label>
                         <input
                             type="file"
