@@ -4,6 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./LoginSystem.css";
 
+const API_ASSETS = process.env.REACT_APP_ASSETS_URL;
+
 function NavList() {
   return (
     <div className="navbar-nav ms-auto" id="NavList">
@@ -86,7 +88,7 @@ const HomePage = () => {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <img
           className="desktop-img"
-          src="https://media.discordapp.net/attachments/1134860695343738910/1219124252658237471/ariel_wu_A_man_is_arranging_travel_itinerary_with_his_mobile_ph_586179d3-311e-4691-8aa6-d00d36114390.png?ex=660a28f0&is=65f7b3f0&hm=7abac5f5acad6b7f3a105d08416eaf8c05517d18d60f25056d91fd728c62e525&=&format=webp&quality=lossless&width=929&height=619"
+          src="\UserListSource\homepage.png"
           style={{
             margin: "25px",
             width: "45%",
@@ -95,13 +97,15 @@ const HomePage = () => {
         ></img>
         <img
           className="desktop-img"
-          src="https://uizard.io/static/8fada368b591ba3b3c70e72408cb6dee/a8e47/2b300cc852aafa482f574d13f7a80ec60666f9d9-1440x835.png"
+          src="\UserListSource\sample.png"
+          alt="Sample"
           style={{
             margin: "25px",
-            width: "45%",
-            height: "550px",
+            width: "48%",
+            height: "auto",
           }}
-        ></img>
+        />
+
         <img
           className="mobile-img"
           src="https://media.discordapp.net/attachments/1134860695343738910/1220608588800593930/ariel_wu_A_man_is_arranging_travel_itinerary_with_his_mobile_ph_af61d54e-3359-4776-8efe-89bc3efb9425.png?ex=660f8f55&is=65fd1a55&hm=f3767ed5842e78d12459395c81138c9ef1e186c7af987da3437e07f880c4b0d7&=&format=webp&quality=lossless&width=412&height=619"
