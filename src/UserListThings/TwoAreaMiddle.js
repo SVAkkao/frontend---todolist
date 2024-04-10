@@ -170,6 +170,22 @@ function TotalCost({ costData, setTotalAmount }) {
 
 }
 
+function Attraction({ costData, setTotalAmount }) {
+
+  return (
+    <>
+      <Col sm={10}
+        className='searchThings rounded p-3 text-center' style={{ borderColor: 'transparent' }}
+      >
+        <div>
+          5555
+        </div>
+      </Col>
+      <Col sm={2}></Col>
+    </>
+  )
+}
+
 
 function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney, onFocusJourneyProject }) {
   const [listdata, setListdata] = useState({
@@ -177,7 +193,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
   const [searchJourneyValue, setSearchJourneyValue] = useState('');
   const [searchJourneyProjectValue, setSearchJourneyProjectValue] = useState('');
   const [outOfTheJourney, setOutOfTheJourney] = useState(true);
-  const [searchAttractionsData, setSearchAttractionsData] = useState("");
+  const [searchAttractionsData, setSearchAttractionsData] = useState([]);
 
   const titleName = useRef(null);
   const startDate = useRef(null);
@@ -280,11 +296,20 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
         aname: event.target.value
       }),
     }).then((response) => {
-      setSearchAttractionsData(response)
-      console.log(response.json());
+      return response.json(); 
+    }).then((data) => {
+      if (data.message == "") {
+        console.log(data);
+      } else {
+        setSearchAttractionsData(data);
+        console.log(data);
+      }
+    }).catch((error) => {
+      console.error("Error:", error);
     });
 
   }
+
   //送出景點資料成為行程
 
   const handleSearchJourneyClick = async () => {
@@ -500,20 +525,18 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
             <Row>
               {outOfTheJourney ?
                 <div>
-                  <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 70, left: '25%', width: '55%', padding: '10px' }}>
-                    {/* <Col sm={10}>
-                      <Form.Control
+                  <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 68, left: '25.8%', width: '53%', padding: '10px' }}>
+                    {searchAttractionsData ? searchAttractionsData.map((item, index) => {
+                      <Attraction
+                        key={index}
+                        attractionData={item}
 
-                        value={searchJourneyValue}
-                        onChange={(event) => handleSearchAttraction(event)}
-                        className="p-3 text-center"
-                        type="text"
-                        placeholder="輸入景點"
                       />
-                    </Col>
-
-                    <Col sm={2}>
-                    </Col> */}
+                    }
+                    )
+                    :
+                    <div></div>
+                    }
 
                   </Row>
                   <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>

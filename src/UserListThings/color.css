@@ -58,3 +58,10 @@ a{
     height: 200px;
     width: 100%;
 }
+
+.searchThings{
+    background-color: white;
+}
+.searchThings:hover{
+    background-color: #F8F8F8;
+}
