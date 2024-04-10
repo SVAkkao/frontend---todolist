@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJourneyData, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney,setrwdShow }) {
+function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJourneyData, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney, setrwdShow, setIsSearchAttractionProjectsDataChosen}) {
   const journeyListRef = useRef(null);
   const { start_date, end_date } = listdata;
   const dateArray = getDatesArray(start_date, end_date);
@@ -96,6 +96,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJou
               onFocusJourneyProject={onFocusJourneyProject}
               setrwdShow={setrwdShow}
               setSelectedJourneyData={setSelectedJourneyData}
+              setIsSearchAttractionProjectsDataChosen={setIsSearchAttractionProjectsDataChosen}
             />
           ))}
       </React.Fragment>
@@ -113,6 +114,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJou
           onFocusJourneyProject={onFocusJourneyProject}
           setrwdShow={setrwdShow}
           setSelectedJourneyData={setSelectedJourneyData}
+          setIsSearchAttractionProjectsDataChosen={setIsSearchAttractionProjectsDataChosen}
         />
       </React.Fragment>
     ))}
@@ -479,6 +481,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
         onRemoveJourney={onRemoveJourney}
         setrwdShow={setrwdShow}
         setSelectedJourneyData={setSelectedJourneyData}
+        setIsSearchAttractionProjectsDataChosen={setIsSearchAttractionProjectsDataChosen}
       />
       {/* <Day></Day> */}
       <Row>
