@@ -77,7 +77,12 @@ function Login() {
           }}
           className="desktop-img"
         >
-          <img src="https://media.discordapp.net/attachments/1134860695343738910/1219168723005472778/ariel_wu_A_woman_is_walking_on_the_street_minimalist_simple_sof_4103bebb-e539-4c75-9f76-920bcb4da5f8.png?ex=660a525a&is=65f7dd5a&hm=0492a8d1a5c9111e1e94b5c58efb802b42ef755de2f43af7a1ac3e0414054feb&=&format=webp&quality=lossless&width=929&height=619"></img>
+          <img
+            src="\UserListSource\login.png"
+            style={{
+              height: "600px",
+            }}
+          ></img>
         </div>
         <div className="login-system">
           <div className="col-12 col-md-10">
