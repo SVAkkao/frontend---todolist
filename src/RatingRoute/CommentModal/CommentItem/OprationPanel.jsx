@@ -18,6 +18,7 @@ import {
   delete_comment_api,
   get_comment_changelog_api,
 } from "../api";
+import { useUserStore } from "../../../stores/user";
 import { useEffect, useState } from "react";
 
 // Components
@@ -223,6 +224,7 @@ export function ModalOprationPanel({
   onEdit,
   preloadDatas,
 }) {
+  const { user } = useUserStore();
   const { show, close_modal, show_modal } = modal_modules();
   const modalmode = modal_mode_modules();
   // Removing actions
@@ -258,10 +260,13 @@ export function ModalOprationPanel({
         return "不明";
     }
   };
+  const is_user = preloadDatas.uid === user.id;
+  const delete_option = is_user ? <FaTrashCan className="click-icon" onClick={open_removing} /> : <span></span>;
+  const edit_option = is_user ? <FaPen className="click-icon" onClick={open_editing} /> : <span></span>;
   return (
-    <div className="item-panel">
-      <FaTrashCan className="click-icon" onClick={open_removing} />
-      <FaPen className="click-icon" onClick={open_editing} />
+    <div className="item-panel" data-uid={user.id}>
+      {delete_option}
+      {edit_option}
       <FaClockRotateLeft className="click-icon" onClick={open_changelog} />
       <div className="modals">
         <Modal
