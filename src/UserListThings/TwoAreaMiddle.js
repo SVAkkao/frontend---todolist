@@ -296,7 +296,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
         aname: event.target.value
       }),
     }).then((response) => {
-      return response.json(); // 將響應體解析為 JSON 並返回
+      return response.json(); 
     }).then((data) => {
       if (data.message == "") {
         console.log(data);
@@ -307,8 +307,6 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
     }).catch((error) => {
       console.error("Error:", error);
     });
-
-
 
   }
 
@@ -528,7 +526,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
               {outOfTheJourney ?
                 <div>
                   <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 68, left: '25.8%', width: '53%', padding: '10px' }}>
-                    {searchAttractionsData && searchAttractionsData.map((item, index) => {
+                    {searchAttractionsData ? searchAttractionsData.map((item, index) => {
                       <Attraction
                         key={index}
                         attractionData={item}
@@ -536,6 +534,8 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
                       />
                     }
                     )
+                    :
+                    <div></div>
                     }
 
                   </Row>
