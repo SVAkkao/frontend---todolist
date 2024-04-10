@@ -144,7 +144,19 @@ export const PreWrapper = () => {
   const [, drop] = useDrop(() => ({
     accept: 'PRE',
     drop: (item, monitor) => {
-      // 实现拖放功能
+      const draggedPreId = item.id;
+      const targetPreId = monitor.getItem().id;
+  
+      if (draggedPreId !== targetPreId) {
+        const draggedPreIndex = pres.findIndex(pre => pre.preid === draggedPreId);
+        const targetPreIndex = pres.findIndex(pre => pre.preid === targetPreId);
+  
+        const newPres = [...pres];
+        const [draggedPre] = newPres.splice(draggedPreIndex, 1);
+        newPres.splice(targetPreIndex, 0, draggedPre);
+  
+        setPres(newPres);
+      }
     },
   }));
 
@@ -155,6 +167,7 @@ export const PreWrapper = () => {
       <div>
         <label>
           <input
+            className='checkbox'
             type="checkbox"
             value="3C用品"
             onChange={handleParentItemChange}
@@ -163,6 +176,7 @@ export const PreWrapper = () => {
         </label>
         <label>
           <input
+            className='checkbox'
             type="checkbox"
             value="出國清單"
             onChange={handleParentItemChange}

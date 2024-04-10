@@ -1,18 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-/* * {
-/* * {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  background: #F9F7C9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
+
 
 .App {
   text-align: center;
@@ -82,7 +70,7 @@ h1 {
 }
 
 .completed {
-  color: #c5aeff;
+  color: #2d1668;
   text-decoration: line-through;
   cursor: pointer;
 }
@@ -93,15 +81,25 @@ h1 {
 }
 .TravelButton {
   margin-top: 1rem;
-  background: #d5f0c1;
+  background: #9ab482;
   color: #5b5555;
   border: none;
   padding: 0.55rem;
   cursor: pointer;
+  border-radius: 5px;
 }
 .WeatherApp {
   background-color: white;
   margin: 0 auto;
   max-width: 600px; /* 設定最大寬度,例如 600px */
   padding: 20px; /* 加入一些內邊距 */
+}
+.checkbox {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+
 }

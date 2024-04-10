@@ -8,7 +8,8 @@ const WeatherApp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [recommendations, setRecommendations] = useState([]);
+  const [recommendations, setRecommendations] = useState({});
+  const [choices, setChoices] = useState([]);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: 'AIzaSyBM_EnYgXOayxugwu67DpS9gYprEoFV8fg',
@@ -49,6 +50,7 @@ const WeatherApp = () => {
   };
 
   const handleSubmitToChat = async () => {
+    
     if (weatherData && selectedCity) {
       const { name, sys, main, weather, pop, visibility, sys: { sunrise, sunset } } = weatherData;
       const { value: { description: selectedCityName } } = selectedCity;
@@ -74,6 +76,7 @@ const WeatherApp = () => {
       try {
         const completion = await openai.chat.completions.create({
           model: 'gpt-3.5-turbo',
+          response_format: { type: "json_object" },
           messages: [
             {
               role: 'system',
@@ -81,13 +84,15 @@ const WeatherApp = () => {
             },
             {
               role: 'user',
-              content: `根據提供的地點以及天氣,提供一份表列的行前建議以及景點推薦:${userMessage},請用純JSON字串回答`
+              content: `根據提供的地點以及天氣,提供一份表列的行前建議以及景點推薦:${userMessage},請用純JSON字串回答不要有多餘符號`
             },
           ],
         });
-        console.log(completion.choices[0].message.content);
-        const response = completion.data.choices[0].message.content;
-        setRecommendations(response);
+        console.log(completion);
+        const responseString = completion.choices[0].message.content;
+        const cleanedString = responseString.split('```json').join('').split('```').join('');
+        const recommendations = JSON.parse(cleanedString);
+        setRecommendations(recommendations);
       } catch (error) {
         setError('向OpenAI發送消息時出錯');
         console.error('Error:', error);
@@ -129,16 +134,23 @@ const WeatherApp = () => {
           <p>當地日出時間：{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>
           <p>當地日落時間：{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>
           <button onClick={handleSubmitToChat}>發送到 OpenAI</button>
-          <div>
-            <h3>建議和景點推薦：</h3>
-            <ul>
-              {recommendations.map((recommendation, index) => (
-                <li key={index}>{recommendation}</li>
-              ))}
-            </ul>
-          </div>
         </div>
       )}
+      <div>
+        <h3>行前建議</h3>
+        <ul>
+          {recommendations['行前建議']?.map((suggestion, index) => (
+            <li key={index}>{suggestion}</li>
+          )) || <p>暫無行前建議</p>}
+        </ul>
+        <h3>景點推薦</h3>
+        {recommendations['景點推薦']?.map((item, index) => (
+          <div key={index}>
+            <h4>{item.名稱}</h4>
+            <p>{item.描述}</p>
+          </div>
+        )) || <p>暫無景點推薦</p>}
+      </div>
     </div>
   );
 };
