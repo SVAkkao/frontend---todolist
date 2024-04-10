@@ -6,7 +6,7 @@ import JourneyProject from './JourneyProject';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject, onFocusJourney, setrwdShow}) {
+function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject, onFocusJourney, setrwdShow }) {
     if (!journeyProjects) {
         return <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -17,22 +17,22 @@ function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJo
         const timeA = convertTimeToMinutes(a.jpstart_time);
         const timeB = convertTimeToMinutes(b.jpstart_time);
         return timeA - timeB;
-      }).map((item, index) => (
+    }).map((item, index) => (
         <JourneyProject
-          key={index}
-          setrwdShow={setrwdShow}
-          journeyProjectsData={item}
-          onFocusJourneyProject={onFocusJourneyProject}
-          onFocusJourney={onFocusJourney}
-          setShowJourney={setShowJourney}
-          onRemoveJourneyProject={onRemoveJourneyProject}
+            key={index}
+            setrwdShow={setrwdShow}
+            journeyProjectsData={item}
+            onFocusJourneyProject={onFocusJourneyProject}
+            onFocusJourney={onFocusJourney}
+            setShowJourney={setShowJourney}
+            onRemoveJourneyProject={onRemoveJourneyProject}
         />
-      ));
+    ));
 
-      function convertTimeToMinutes(time) {
+    function convertTimeToMinutes(time) {
         const [hours, minutes] = time.split(':').map(Number);
         return hours * 60 + minutes;
-      }
+    }
     {/* {journeyproject.map((item, index) => (
         <JourneyProject key={index} journeyprojectdata={item} projects={projects} />
       ))} */}
@@ -40,7 +40,7 @@ function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJo
 
 
 
-function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourney, setShowJourney, onRemoveJourney, setrwdShow }) {
+function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJourneyProject, onFocusJourney, setShowJourney, onRemoveJourney, setrwdShow }) {
     const [journeyDataValue, setJourneyDataValue] = useState({});
     const [checkedValue, setCheckedValue] = useState(false);
 
@@ -124,6 +124,7 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
             case "select":
                 console.log(journeydata.jid);
                 onFocusJourney(journeydata.jid);
+                setSelectedJourneyData(journeydata);
                 setShowJourney(true);
                 break;
             case "check":
@@ -136,6 +137,8 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
                 if (event.target.classList.contains("parent-label")) {
                     console.log(journeydata.jid);
                     onFocusJourney(journeydata.jid);
+                    setSelectedJourneyData(journeydata);
+
                     setShowJourney(true);
 
                     break;
@@ -154,6 +157,8 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
             case "select":
                 console.log(journeydata.jid);
                 onFocusJourney(journeydata.jid);
+                setSelectedJourneyData(journeydata);
+
                 setShowJourney(true);
                 setrwdShow("RightSpace")
                 break;
@@ -167,6 +172,8 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
                 if (event.target.classList.contains("parent-label")) {
                     console.log(journeydata.jid);
                     onFocusJourney(journeydata.jid);
+                    setSelectedJourneyData(journeydata);
+
                     setShowJourney(true);
                     setrwdShow("RightSpace")
                     break;
@@ -183,8 +190,8 @@ function Journey({ journeydata, update_info, onFocusJourneyProject, onFocusJourn
             <Col sm={10}
             >
                 <div onClick={itemAction}
-                onDoubleClick={itemRwdAction}
-                className='bg-color2 rounded p-3' style={{ borderColor: 'transparent', width: '100%' }} data-action="select">
+                    onDoubleClick={itemRwdAction}
+                    className='bg-color2 rounded p-3' style={{ borderColor: 'transparent', width: '100%' }} data-action="select">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div
                             style={{ flex: '1', textAlign: 'center' }}

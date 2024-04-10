@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney }) {
+function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJourneyData, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney }) {
   const journeyListRef = useRef(null);
   const { start_date, end_date } = listdata;
   const dateArray = getDatesArray(start_date, end_date);
@@ -19,7 +19,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, o
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'BUTTON' &&
-        event.target.tagName !== "IMG"
+        event.target.tagName !== "IMG" && !event.target.classList.contains('isjourney')
       ) {
         if (journeyListRef.current && !journeyListRef.current.contains(event.target)) {
           console.log('You clicked outside of journey list!');
@@ -96,6 +96,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, o
                 setShowJourney={setShowJourney}
                 onRemoveJourney={onRemoveJourney}
                 onFocusJourneyProject={onFocusJourneyProject}
+                setSelectedJourneyData={setSelectedJourneyData}
                 setrwdShow={setrwdShow}
               />
             ))}
@@ -112,6 +113,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, o
             setShowJourney={setShowJourney}
             onRemoveJourney={onRemoveJourney}
             onFocusJourneyProject={onFocusJourneyProject}
+            setSelectedJourneyData={setSelectedJourneyData}
             setrwdShow={setrwdShow}
           />
         </React.Fragment>
@@ -170,15 +172,19 @@ function TotalCost({ costData, setTotalAmount }) {
 
 }
 
-function Attraction({ costData, setTotalAmount }) {
+
+//顯示搜尋結果元件//
+function Attraction({ attractionData, setSearchAttractionsDataValue }) {
 
   return (
     <>
       <Col sm={10}
+        onClick={() => { setSearchAttractionsDataValue(attractionData.aname) }}
         className='searchThings rounded p-3 text-center' style={{ borderColor: 'transparent' }}
       >
-        <div>
-          5555
+        <div
+        >
+          {attractionData.aname}
         </div>
       </Col>
       <Col sm={2}></Col>
@@ -186,6 +192,28 @@ function Attraction({ costData, setTotalAmount }) {
   )
 }
 
+function Project({ projectData, setSearchAttractionProjectDataValue, }) {
+
+  return (
+    <div
+    className="isjourney"
+    >
+      <Col sm={10}
+      onClick={() => { setSearchAttractionProjectDataValue(projectData.pname) }}
+        name="project"
+        className='searchThings rounded p-3 text-center isjourney' style={{ borderColor: 'transparent' }}
+      >
+        <div
+            className="isjourney"
+        >
+          {projectData.pname}
+        </div>
+      </Col>
+      <Col sm={2}></Col>
+    </div>
+  )
+}
+/////
 
 function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_info, onFocusJourney, setTotalAmount, setShowJourney, onFocusJourneyProject }) {
   const [listdata, setListdata] = useState({
@@ -193,7 +221,16 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
   const [searchJourneyValue, setSearchJourneyValue] = useState('');
   const [searchJourneyProjectValue, setSearchJourneyProjectValue] = useState('');
   const [outOfTheJourney, setOutOfTheJourney] = useState(true);
+
+  const [selectedJourneyData, setSelectedJourneyData] = useState({});
+
+
   const [searchAttractionsData, setSearchAttractionsData] = useState([]);
+  const [searchAttractionProjectsData, setSearchAttractionProjectsData] = useState([]);
+
+  const [isSearchAttractionsDataChosen, setIsSearchAttractionsDataChosen] = useState(false);
+  const [isSearchAttractionProjectsDataChosen, setIsSearchAttractionProjectsDataChosen] = useState(false);
+
 
   const titleName = useRef(null);
   const startDate = useRef(null);
@@ -286,6 +323,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
   //輸入時查詢景點資料
   const handleSearchAttraction = async (event) => {
     setSearchJourneyValue(event.target.value)
+    setIsSearchAttractionsDataChosen(false)
 
     fetch(API_HOST + "/api/POST/searchsimilarattraction", {
       method: "POST",
@@ -296,19 +334,56 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
         aname: event.target.value
       }),
     }).then((response) => {
-      return response.json(); 
+      return response.json();
     }).then((data) => {
-      if (data.message == "") {
-        console.log(data);
-      } else {
-        setSearchAttractionsData(data);
-        console.log(data);
-      }
+
+      setSearchAttractionsData(data);
+      console.log(data);
+
     }).catch((error) => {
       console.error("Error:", error);
     });
 
   }
+  //點擊選擇後讓搜尋結果消失
+  const setSearchAttractionsDataValue = async (attractionDataAname) => {
+    setSearchJourneyValue(attractionDataAname)
+    setIsSearchAttractionsDataChosen(true)
+  }
+
+  //輸入時查詢項目資料
+  const handleSearchAttractionProject = async (event) => {
+    // setSearchJourneyProjectValue(event.target.value)
+    console.log(selectedJourneyData);
+    setIsSearchAttractionProjectsDataChosen(false)
+
+    fetch(API_HOST + "/api/POST/searchproject", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        aid: selectedJourneyData.attraction.aid
+      }),
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+
+      setSearchAttractionProjectsData(data);
+      console.log(data);
+
+    }).catch((error) => {
+      console.error("Error:", error);
+    });
+
+  }
+  //點擊選擇後讓項目搜尋結果消失
+  const setSearchAttractionProjectDataValue = async (projectDataPname) => {
+    setSearchJourneyProjectValue(projectDataPname)
+    setIsSearchAttractionProjectsDataChosen(true)
+  }
+
+
 
   //送出景點資料成為行程
 
@@ -464,7 +539,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
                   style={{ width: "20px", height: "20px", paddingBottom: "0" }}
                   className="m-2"
                 />
-                行前準備
+                行前清單
               </a>
             </NavLink>
           </Col>
@@ -506,6 +581,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
         listdata={listdata}
         update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney}
         onRemoveJourney={onRemoveJourney}
+        setSelectedJourneyData={setSelectedJourneyData}
       />
       {/* <Day></Day> */}
 
@@ -526,17 +602,17 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
               {outOfTheJourney ?
                 <div>
                   <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 68, left: '25.8%', width: '53%', padding: '10px' }}>
-                    {searchAttractionsData ? searchAttractionsData.map((item, index) => {
-                      <Attraction
-                        key={index}
-                        attractionData={item}
-
-                      />
-                    }
-                    )
-                    :
-                    <div></div>
-                    }
+                    {searchAttractionsData.length > 0 && isSearchAttractionsDataChosen === false ? (
+                      searchAttractionsData.map((item, index) => {
+                        return <Attraction
+                          key={index}
+                          attractionData={item}
+                          setSearchAttractionsDataValue={setSearchAttractionsDataValue}
+                        />;
+                      })
+                    ) : (
+                      <div></div>
+                    )}
 
                   </Row>
                   <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
@@ -570,35 +646,52 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
                   </Row>
                 </div>
                 :
-                <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
-                  <Col sm={10}>
-                    {/* rounded */}
-                    <Form.Control
+                <div className="isjourney">
+                  <Row className="align-items-center justify-content-center p-3 isjourney" style={{ position: 'fixed', bottom: 68, left: '25.8%', width: '53%', padding: '10px' }}>
+                    {searchAttractionProjectsData.length > 0 && isSearchAttractionProjectsDataChosen === false ? (
+                      searchAttractionProjectsData.map((item, index) => {
+                        return <Project
+                          key={index}
+                          projectData={item}
+                          setSearchAttractionProjectDataValue={setSearchAttractionProjectDataValue}
+                        />;
+                      })
+                    ) : (
+                      <div></div>
+                    )}
 
-                      value={searchJourneyProjectValue}
-                      onChange={(event) => setSearchJourneyProjectValue(event.target.value)}
-                      className="p-3 text-center"
-                      type="text"
-                      placeholder="輸入活動項目"
-                    />
-                  </Col>
-                  <Col sm={2}>
-                    <button
-                      type="button"
-                      onClick={handleSearchJourneyProjectClick}
-                      style={{ border: "none", backgroundColor: "transparent" }}
-                    >
-                      <img
-                        src="/UserListSource/send.png"
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          paddingBottom: "0",
-                        }}
+                  </Row>
+                  <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 10, left: '25%', width: '55%', padding: '10px' }}>
+                    <Col sm={10}>
+                      {/* rounded */}
+                      <Form.Control
+
+                        value={searchJourneyProjectValue}
+                        onChange={(event) => setSearchJourneyProjectValue(event.target.value)}
+                        onFocus={(event) => handleSearchAttractionProject(event)}
+                        className="p-3 text-center"
+                        type="text"
+                        placeholder="輸入活動項目"
                       />
-                    </button>
-                  </Col>
-                </Row>
+                    </Col>
+                    <Col sm={2}>
+                      <button
+                        type="button"
+                        onClick={handleSearchJourneyProjectClick}
+                        style={{ border: "none", backgroundColor: "transparent" }}
+                      >
+                        <img
+                          src="/UserListSource/send.png"
+                          style={{
+                            width: "48px",
+                            height: "48px",
+                            paddingBottom: "0",
+                          }}
+                        />
+                      </button>
+                    </Col>
+                  </Row>
+                </div>
               }
 
             </Row>

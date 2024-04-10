@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney,setrwdShow }) {
+function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJourneyData, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney,setrwdShow }) {
   const journeyListRef = useRef(null);
   const { start_date, end_date } = listdata;
   const dateArray = getDatesArray(start_date, end_date);
@@ -95,6 +95,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, o
               onRemoveJourney={onRemoveJourney}
               onFocusJourneyProject={onFocusJourneyProject}
               setrwdShow={setrwdShow}
+              setSelectedJourneyData={setSelectedJourneyData}
             />
           ))}
       </React.Fragment>
@@ -111,6 +112,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, update_info, o
           onRemoveJourney={onRemoveJourney}
           onFocusJourneyProject={onFocusJourneyProject}
           setrwdShow={setrwdShow}
+          setSelectedJourneyData={setSelectedJourneyData}
         />
       </React.Fragment>
     ))}
@@ -175,6 +177,17 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
   const [searchJourneyValue, setSearchJourneyValue] = useState('');
   const [searchJourneyProjectValue, setSearchJourneyProjectValue] = useState('');
   const [outOfTheJourney, setOutOfTheJourney] = useState(true);
+
+  const [selectedJourneyData, setSelectedJourneyData] = useState({});
+
+
+  const [searchAttractionsData, setSearchAttractionsData] = useState([]);
+  const [searchAttractionProjectsData, setSearchAttractionProjectsData] = useState([]);
+
+  const [isSearchAttractionsDataChosen, setIsSearchAttractionsDataChosen] = useState(false);
+  const [isSearchAttractionProjectsDataChosen, setIsSearchAttractionProjectsDataChosen] = useState(false);
+
+
   const titleName = useRef(null);
   const startDate = useRef(null);
   const endDate = useRef(null);
@@ -429,7 +442,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
                   style={{ width: "20px", height: "20px", paddingBottom: "0" }}
                   className="m-2"
                 />
-                行前準備
+                行前清單
               </a>
             </NavLink>
           </Col>
@@ -465,6 +478,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
         setShowJourney={setShowJourney}
         onRemoveJourney={onRemoveJourney}
         setrwdShow={setrwdShow}
+        setSelectedJourneyData={setSelectedJourneyData}
       />
       {/* <Day></Day> */}
       <Row>

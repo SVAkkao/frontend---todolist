@@ -379,7 +379,7 @@ function RightSideJP({
                     <Col className="text-right" sm={4}>
                         <NavLink to="/ratings">
                             <a id="ratings">
-                                留言區
+                            評價與評論
                                 <img
                                     src="/UserListSource/comment.png"
                                     style={{ width: "20px", height: "20px", paddingBottom: "0" }}
