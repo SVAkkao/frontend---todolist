@@ -10,7 +10,7 @@ const API_HOST = process.env.REACT_APP_API_URL;
 
 export const PreWrapper = () => {
   const [pres, setPres] = useState([]);
-  const [travelListGenerated, setTravelListGenerated] = useState(false);
+  const [selectedParentItems, setSelectedParentItems] = useState([]);
 
   useEffect(() => {
     fetchPres();
@@ -82,33 +82,62 @@ export const PreWrapper = () => {
   };
 
   const generateTravelList = async () => {
-    if (!travelListGenerated) {
-      const travelList = [
-        { pretitle: '護照', checked: false },
-        { pretitle: '機票', checked: false },
-        { pretitle: '旅遊保險', checked: false },
-        { pretitle: '備用現金', checked: false },
-        { pretitle: '換好外幣', checked: false },
-      ];
-
+    if (selectedParentItems.length > 0) {
       try {
-        const promises = travelList.map(async task => {
-          const response = await axios.post(`${API_HOST}/api/pres`, task);
-          return response.data.data;
+        const promises = selectedParentItems.map(async parentItem => {
+          const childItems = getChildItems(parentItem);
+          const responses = await Promise.all(
+            childItems.map(async childItem => {
+              const response = await axios.post(`${API_HOST}/api/pres`, childItem);
+              return response.data.data;
+            })
+          );
+          return responses;
         });
 
         const newPres = await Promise.all(promises);
-        setPres(prevPres => [...prevPres, ...newPres]);
-        setTravelListGenerated(true);
+        const flattenedPres = newPres.flat();
+        setPres(prevPres => [...prevPres, ...flattenedPres]);
+        setSelectedParentItems([]);
       } catch (error) {
         console.error(error);
       }
     }
   };
 
+  const getChildItems = parentItem => {
+    switch (parentItem) {
+      case '3C用品':
+        return [
+          { pretitle: '手機', checked:false },
+          { pretitle: '充電器', checked: false },
+          { pretitle: '電池', checked: false },
+        ];
+      case '出國清單':
+        return [
+          { pretitle: '護照', checked: false },
+          { pretitle: '機票', checked: false },
+          { pretitle: '旅遊保險', checked: false },
+          { pretitle: '備用現金', checked: false },
+          { pretitle: '換好外幣', checked: false },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const handleParentItemChange = event => {
+    const selectedItem = event.target.value;
+    if (event.target.checked) {
+      setSelectedParentItems(prevItems => [...prevItems, selectedItem]);
+    } else {
+      setSelectedParentItems(prevItems => prevItems.filter(item => item !== selectedItem));
+    }
+  };
+
   const TravelButton = ({ generateTravelList, className }) => (
     <button onClick={generateTravelList} className={className}>
-      生成出國所需清單
+      生成所選項目
     </button>
   );
 
@@ -123,15 +152,32 @@ export const PreWrapper = () => {
     <div className="PreWrapper" ref={drop}>
       <h1>行前清單</h1>
       <PreForm addPre={addPre} />
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            value="3C用品"
+            onChange={handleParentItemChange}
+          />
+          3C用品
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="出國清單"
+            onChange={handleParentItemChange}
+          />
+          出國清單
+        </label>
+      </div>
       <TravelButton generateTravelList={generateTravelList} className="TravelButton" />
       {pres.map(pre =>
-  pre.isEditing ? (
-    <EditPreForm editPre={editTask} task={pre} key={pre.preid} />
-  ) : (
-    <DragPre key={pre.preid} task={pre} deletePre={deletePre} editPre={editPre} toggleComplete={toggleComplete} />
-  )
-)}
-
+        pre.isEditing ? (
+          <EditPreForm editPre={editTask} task={pre} key={pre.preid} />
+        ) : (
+          <DragPre key={pre.preid} task={pre} deletePre={deletePre} editPre={editPre} toggleComplete={toggleComplete} />
+        )
+      )}
     </div>
   );
 };
