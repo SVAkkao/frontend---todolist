@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { useUserStore } from "../../stores/user";
+// 
 // import "./MemberCentre.css";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 function ChangeAvatar() {
-  const [avatar, setAvatar] = useState(null);
+  // User modules
+  const userStore = useUserStore();
   const [previewUrl, setPreviewUrl] = useState();
-  const [users, setUsers] = useState([]);
-
+  const getUserAtStart = (token) => {
+    fetch(`${API_HOST}/api/user`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`, // 使用Bearer token進行認證
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // setUsers(data); // 假設API響應中包含一個名為users的數組
+        setPreviewUrl(`${API_IMAGE}${data.photo}`); // 设置初始图片预览URL
+      })
+      .catch((error) => console.error("Fetching data error: ", error));
+  }
   useEffect(() => {
     const token = localStorage.getItem("userToken");
-
     if (token) {
-      fetch(`${API_HOST}/api/user`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`, // 使用Bearer token進行認證
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setUsers(data); // 假設API響應中包含一個名為users的數組
-          setPreviewUrl(`${API_IMAGE}${data.photo}`); // 设置初始图片预览URL
-        })
-        .catch((error) => console.error("Fetching data error: ", error));
+      getUserAtStart(token);
     } else {
       console.log("Token not found");
     }
   }, []);
 
+  // Avatar modules
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -38,6 +42,27 @@ function ChangeAvatar() {
       const fileUrl = URL.createObjectURL(file);
       setPreviewUrl(fileUrl);
     }
+  };
+
+
+  const uploadAvatar = (token, formData) => {
+    fetch(`${API_HOST}/api/update-avatar`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        alert("上傳成功！");
+        userStore.getUser();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   const handleSubmit = (event) => {
@@ -50,42 +75,9 @@ function ChangeAvatar() {
     if (file) {
       const formData = new FormData();
       formData.append("avatar", file);
-
       const token = localStorage.getItem("userToken");
-
       if (token) {
-        fetch(`${API_HOST}/api/update-avatar`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
-          },
-          body: formData,
-        })
-          .then((response) =>
-            //{
-            //   if (!response.ok) {
-            //     throw new Error(
-            //       `Server responded with a status of ${response.status}`
-            //     );
-            //   }
-
-            //   const contentType = response.headers.get("content-type");
-            //   if (contentType && contentType.indexOf("application/json") !== -1) {
-            //     return response.json();
-            //   } else {
-            //     throw new Error("Received non-JSON response from server.");
-            //   }
-            // })
-            response.json()
-          )
-          .then((data) => {
-            console.log("Success:", data);
-            alert("上傳成功！");
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+        uploadAvatar(token, formData);
       } else {
         console.log("Token not found");
       }
@@ -110,6 +102,7 @@ function ChangeAvatar() {
         <img
           src={previewUrl}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          alt="Avatar preview"
         />
       </div>
       <form onSubmit={handleSubmit}>
