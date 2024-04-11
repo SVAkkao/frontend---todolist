@@ -72,26 +72,25 @@ function ProjectComponents() {
 
     // PID modules
     const [pid, set_pid] = useState(1);
-    const change_pid = useCallback((id) => {
+    const handle_pid_change = useCallback((id) => {
         set_pid(id);
         show_modal();
     }, [set_pid, show_modal]);
 
     // Pname modules
     const [pname, set_pname] = useState("");
-    const change_action = (params = { pid: 0, aid: 0, pname: "" }) => {
-        change_pid(params.pid);
-        set_pname(params.pname);
-    };
+    const change_action = useCallback( ({ pid = 0, aid = 0, pname = "" }) => {
+        handle_pid_change(pid);
+        set_pname(pname);
+    }, [handle_pid_change, set_pname]);
 
     // Router params modules
     const params = useParams();
     useEffect( () => {
         if( params.pid ) {
-            change_pid(params.pid);
-            set_pname(params.pname);
+            change_action(params);
         }
-    }, [change_pid, params.pid, params.pname] );
+    }, [change_action, params] );
     return (
         <article className="project-comment" data-pid={pid}>
             <h2 className="mb-4">各景點活動的意見</h2>

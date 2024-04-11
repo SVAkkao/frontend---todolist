@@ -20,6 +20,8 @@ export default function CommentModal({ show, handleClose, pid, pname }) {
             alert(response.message);
         });
     };
+    const render_title = (pname = "") => pname ? `${pname}的評論` : "評論";
+    const is_empty = (array = []) => array.length < 1;
     return (<Modal
         id="comment-modal" size="lg"
         show={show} data-pid={pid}
@@ -27,17 +29,29 @@ export default function CommentModal({ show, handleClose, pid, pname }) {
         centered
     >
         <Modal.Header closeButton>
-            <Modal.Title>{ pname ? `${pname}的評論` : "評論"}</Modal.Title>
+            <Modal.Title>{ render_title(pname)}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <p className="as">{ the_list.length < 1 ? "NO DATA" : "" }</p>
+            <p className={ is_empty(the_list) ? "text-center" : ""}>
+                { is_empty(the_list) ? "沒有評論" : "" }
+            </p>
             <ListGroup>
-                {the_list.map( (item) => <ModalCommentItem key={item.cid} item={item} onEdit={ajax_list} onDelete={ajax_list} /> )}
+                {the_list.map( (item) => <ModalCommentItem
+                    key={item.cid}
+                    item={item}
+                    onEdit={ajax_list}
+                    onDelete={ajax_list}
+                /> )}
             </ListGroup>
             <hr />
             <div>
-                <CommentForm submitAction={submit_action} pid={pid} method="POST" />
+                <CommentForm
+                    submitAction={submit_action}
+                    pid={pid}
+                    method="POST"
+                />
             </div>
         </Modal.Body>
     </Modal>);
 }
+
