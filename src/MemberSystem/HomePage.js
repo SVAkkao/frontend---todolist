@@ -102,7 +102,7 @@ const HomePage = () => {
           style={{
             margin: "25px",
             width: "48%",
-            height: "auto",
+            height: "520px",
           }}
         />
 
