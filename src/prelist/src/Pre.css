@@ -81,12 +81,13 @@ h1 {
 }
 .TravelButton {
   margin-top: 1rem;
-  background: #9ab482;
+  background: #9398a8;
   color: #5b5555;
   border: none;
   padding: 0.55rem;
   cursor: pointer;
   border-radius: 5px;
+  margin-bottom: 1rem;
 }
 .WeatherApp {
   background-color: white;
