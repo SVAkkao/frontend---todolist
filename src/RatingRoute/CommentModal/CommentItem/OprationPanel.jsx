@@ -52,7 +52,7 @@ const ChangelogList = ({ cid, closeChangelog }) => {
       return (
         <tr>
           <td colSpan={3} className="text-center">
-            No changes
+            意見發表後從未修改過
           </td>
         </tr>
       );
@@ -69,12 +69,12 @@ const ChangelogList = ({ cid, closeChangelog }) => {
   }
   return (
     <div className="changelog-list">
-      <Table striped bordered hover>
+      <Table striped bordered hover className="text-center">
         <thead>
           <tr>
-            <th>Changed date</th>
-            <th>Before</th>
-            <th>After</th>
+            <th>修改日期</th>
+            <th>修改前意見</th>
+            <th>修改後意見</th>
           </tr>
         </thead>
         <tbody>
