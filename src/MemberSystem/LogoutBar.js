@@ -177,7 +177,7 @@ function LogoutBar() {
                 </Link>
                 <Link to="/attribution" className="nav-link">
                   <FaUserFriends style={{ marginRight: "8px" }} />
-                  <span style={{ fontSize: "18px" }}>你的貢獻</span>
+                  <span style={{ fontSize: "18px" }}>您的貢獻</span>
                 </Link>
                 <Link to="/ratings" className="nav-link">
                   <FaCommentAlt style={{ marginRight: "8px" }} />
