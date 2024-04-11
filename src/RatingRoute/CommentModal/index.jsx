@@ -8,7 +8,7 @@ import { list_modules } from "./utils";
 import { create_comment_api } from "./api";
 import "./style.css";
 
-export default function CommentModal({ show, handleClose, pid }) {
+export default function CommentModal({ show, handleClose, pid, pname }) {
     const requesting_api = `${process.env.REACT_APP_API_URL}/api/project/${pid}/comments`;
     const { the_list, ajax_list } = list_modules(requesting_api);
     const submit_action = (form_dom) => {
@@ -27,7 +27,7 @@ export default function CommentModal({ show, handleClose, pid }) {
         centered
     >
         <Modal.Header closeButton>
-            <Modal.Title>評論</Modal.Title>
+            <Modal.Title>{ pname ? `${pname}的評論` : "評論"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
             <p className="as">{ the_list.length < 1 ? "NO DATA" : "" }</p>

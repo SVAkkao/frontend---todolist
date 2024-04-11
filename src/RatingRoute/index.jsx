@@ -43,7 +43,7 @@ function PidSelector({ change_action }) {
         className="m-2"
         data-pid={its.pid}
         data-aid={its.aid}
-        onClick={() => change_action(its.pid)}
+        onClick={() => change_action(its)}
     >
         {its.pname}
     </Button>)
@@ -67,24 +67,37 @@ function PidSelector({ change_action }) {
 }
 
 function ProjectComponents() {
-    const params = useParams();
-    const [pid, set_pid] = useState(1);
+    // Modal modules
     const { show, show_modal, close_modal } = modal_modules();
+
+    // PID modules
+    const [pid, set_pid] = useState(1);
     const change_pid = useCallback((id) => {
         set_pid(id);
         show_modal();
     }, [set_pid, show_modal]);
+
+    // Pname modules
+    const [pname, set_pname] = useState("");
+    const change_action = (params = { pid: 0, aid: 0, pname: "" }) => {
+        change_pid(params.pid);
+        set_pname(params.pname);
+    };
+
+    // Router params modules
+    const params = useParams();
     useEffect( () => {
         if( params.pid ) {
             change_pid(params.pid);
+            set_pname(params.pname);
         }
-    }, [change_pid, params.pid] );
+    }, [change_pid, params.pid, params.pname] );
     return (
         <article className="project-comment" data-pid={pid}>
             <h2 className="mb-4">各景點活動的意見</h2>
-            <PidSelector change_action={change_pid} />
+            <PidSelector change_action={change_action} />
             <div className="modal">
-                <CommentModal show={show} handleClose={close_modal} pid={pid} />
+                <CommentModal show={show} handleClose={close_modal} pid={pid} pname={pname} />
             </div>
         </article>
     );
