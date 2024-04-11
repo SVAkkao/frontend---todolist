@@ -1,11 +1,15 @@
-// react-bootstrap
+// Packages
 import { Container, Button, Form } from "react-bootstrap";
+import { useState, useEffect, useCallback } from "react";
+import { useParams } from "react-router";
+// APIs
+import { get_user_comments_api } from "./CommentModal/api";
+// CommentModal modules
 import CommentModal from "./CommentModal";
 import { modal_modules } from "./CommentModal/utils";
 import { UsersCommentItem } from "./CommentModal/CommentItem/index";
+// Other components
 import LogoutBar from "../MemberSystem/LogoutBar";
-import { useState, useEffect } from "react";
-import { get_user_comments_api } from "./CommentModal/api";
 
 async function get_project_api() {
     const r = await fetch(`${process.env.REACT_APP_API_URL}/api/project`, {
@@ -39,7 +43,7 @@ function PidSelector({ change_action }) {
         className="m-2"
         data-pid={its.pid}
         data-aid={its.aid}
-        onClick={() => change_action(its.pid)}
+        onClick={() => change_action(its)}
     >
         {its.pname}
     </Button>)
@@ -63,18 +67,36 @@ function PidSelector({ change_action }) {
 }
 
 function ProjectComponents() {
-    const [pid, set_pid] = useState(1);
+    // Modal modules
     const { show, show_modal, close_modal } = modal_modules();
-    const change_pid = (id) => {
+
+    // PID modules
+    const [pid, set_pid] = useState(1);
+    const handle_pid_change = useCallback((id) => {
         set_pid(id);
         show_modal();
-    };
+    }, [set_pid, show_modal]);
+
+    // Pname modules
+    const [pname, set_pname] = useState("");
+    const change_action = useCallback( ({ pid = 0, aid = 0, pname = "" }) => {
+        handle_pid_change(pid);
+        set_pname(pname);
+    }, [handle_pid_change, set_pname]);
+
+    // Router params modules
+    const params = useParams();
+    useEffect( () => {
+        if( params.pid ) {
+            change_action(params);
+        }
+    }, [change_action, params] );
     return (
         <article className="project-comment" data-pid={pid}>
             <h2 className="mb-4">各景點活動的意見</h2>
-            <PidSelector change_action={change_pid} />
+            <PidSelector change_action={change_action} />
             <div className="modal">
-                <CommentModal show={show} handleClose={close_modal} pid={pid} />
+                <CommentModal show={show} handleClose={close_modal} pid={pid} pname={pname} />
             </div>
         </article>
     );

@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Modal from "react-modal";
 import { MdGrade } from "react-icons/md";
 import { FaMedal } from "react-icons/fa";
-import { FaQuestionCircle } from "react-icons/fa";
+// import { FaQuestionCircle } from "react-icons/fa";
 import { getUserScore } from "./api";
 
 function ScoreExplanation() {
@@ -60,6 +60,9 @@ function ScoreExplanation() {
 }
 
 function Announce() {
+  // http://reactcommunity.org/react-modal/accessibility/
+  Modal.setAppElement("#root");
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [score, setScore] = useState(null); // 狀態用於儲存分數
 
@@ -100,6 +103,22 @@ function Announce() {
     }
   }
 
+  const customStyles = {
+    content: {
+      padding: "40px",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "500px", // 自定义宽度
+      height: "600px", // 自定义高度
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.75)",
+    },
+  };
   return (
     <article className="announce">
       <section className="score">
@@ -110,7 +129,7 @@ function Announce() {
           <MdGrade style={{ margin: "10px", color: "#FFD700" }} />
           積分：{score}
         </span>
-        <br></br>
+        <br />
         <span
           style={{ fontSize: "20px", cursor: "pointer" }}
           onClick={() => setModalIsOpen(true)}
@@ -118,7 +137,7 @@ function Announce() {
           <FaMedal style={{ margin: "10px", color: "#C0C0C0" }} />
           等級：{getUserAchievement(score)}
         </span>
-        <br></br>
+        <br />
         <span
           style={{
             fontSize: "16px",
@@ -135,22 +154,7 @@ function Announce() {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        style={{
-          content: {
-            padding: "40px",
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            width: "500px", // 自定义宽度
-            height: "600px", // 自定义高度
-          },
-          overlay: {
-            backgroundColor: "rgba(0, 0, 0, 0.75)", // 可以调整遮罩层样式
-          },
-        }}
+        style={customStyles}
       >
         <Button
           style={{

@@ -8,7 +8,8 @@ import { NavLink } from "react-router-dom";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJourneyData, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney }) {
+
+function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJourneyData, update_info, onFocusJourney, setShowJourney, onRemoveJourney, setOutOfTheJourney, setIsSearchAttractionProjectsDataChosen }) {
   const journeyListRef = useRef(null);
   const { start_date, end_date } = listdata;
   const dateArray = getDatesArray(start_date, end_date);
@@ -98,6 +99,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJou
                 onFocusJourneyProject={onFocusJourneyProject}
                 setSelectedJourneyData={setSelectedJourneyData}
                 setrwdShow={setrwdShow}
+                setIsSearchAttractionProjectsDataChosen={setIsSearchAttractionProjectsDataChosen}
               />
             ))}
         </React.Fragment>
@@ -115,6 +117,7 @@ function JourneyList({ listdata, journeys, onFocusJourneyProject, setSelectedJou
             onFocusJourneyProject={onFocusJourneyProject}
             setSelectedJourneyData={setSelectedJourneyData}
             setrwdShow={setrwdShow}
+            setIsSearchAttractionProjectsDataChosen={setIsSearchAttractionProjectsDataChosen}
           />
         </React.Fragment>
       ))}
@@ -196,15 +199,15 @@ function Project({ projectData, setSearchAttractionProjectDataValue, }) {
 
   return (
     <div
-    className="isjourney"
+      className="isjourney"
     >
       <Col sm={10}
-      onClick={() => { setSearchAttractionProjectDataValue(projectData.pname) }}
+        onClick={() => { setSearchAttractionProjectDataValue(projectData.pname) }}
         name="project"
         className='searchThings rounded p-3 text-center isjourney' style={{ borderColor: 'transparent' }}
       >
         <div
-            className="isjourney"
+          className="isjourney"
         >
           {projectData.pname}
         </div>
@@ -582,6 +585,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
         update_info={update_info} onFocusJourney={onFocusJourney} setShowJourney={setShowJourney}
         onRemoveJourney={onRemoveJourney}
         setSelectedJourneyData={setSelectedJourneyData}
+        setIsSearchAttractionProjectsDataChosen={setIsSearchAttractionProjectsDataChosen}
       />
       {/* <Day></Day> */}
 
