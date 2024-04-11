@@ -8,7 +8,7 @@ import {
   ButtonGroup,
 } from "react-bootstrap";
 // Fontawesome
-import { BsThreeDotsVertical } from "react-icons/bs";
+// import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaTrashCan, FaPen, FaClockRotateLeft } from "react-icons/fa6";
 // Local
 import CommentForm from "../CommentForm";
