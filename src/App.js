@@ -63,12 +63,13 @@ const router = createBrowserRouter([
   { path: "/alist", element: <Alist /> },
   { path: "/fetch", element: <Fetch /> },
   { path: "/money", element: <SplitCost /> },
-  //
 
   //prelist
   { path: '/prelist', element: <PreTest/> },
-  //評價系統
+
+  // 評價系統
   { path: "/ratings", element: <RatingRoute /> },
+  { path: "/ratings/:pid", element: <RatingRoute /> },
   { path: "/ratingroute", element: <Navigate to="/ratings" /> },
   { path: "/RatingRoute", element: <Navigate to="/ratings" /> },
 ]);

@@ -1,11 +1,15 @@
-// react-bootstrap
+// Packages
 import { Container, Button, Form } from "react-bootstrap";
+import { useState, useEffect, useCallback } from "react";
+import { useParams } from "react-router";
+// APIs
+import { get_user_comments_api } from "./CommentModal/api";
+// CommentModal modules
 import CommentModal from "./CommentModal";
 import { modal_modules } from "./CommentModal/utils";
 import { UsersCommentItem } from "./CommentModal/CommentItem/index";
+// Other components
 import LogoutBar from "../MemberSystem/LogoutBar";
-import { useState, useEffect } from "react";
-import { get_user_comments_api } from "./CommentModal/api";
 
 async function get_project_api() {
     const r = await fetch(`${process.env.REACT_APP_API_URL}/api/project`, {
@@ -63,12 +67,18 @@ function PidSelector({ change_action }) {
 }
 
 function ProjectComponents() {
+    const params = useParams();
     const [pid, set_pid] = useState(1);
     const { show, show_modal, close_modal } = modal_modules();
-    const change_pid = (id) => {
+    const change_pid = useCallback((id) => {
         set_pid(id);
         show_modal();
-    };
+    }, [set_pid, show_modal]);
+    useEffect( () => {
+        if( params.pid ) {
+            change_pid(params.pid);
+        }
+    }, [change_pid, params.pid] );
     return (
         <article className="project-comment" data-pid={pid}>
             <h2 className="mb-4">各景點活動的意見</h2>
