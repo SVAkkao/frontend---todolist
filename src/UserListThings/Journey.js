@@ -6,7 +6,7 @@ import JourneyProject from './JourneyProject';
 const API_HOST = process.env.REACT_APP_API_URL;
 
 
-function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject, onFocusJourney, setrwdShow }) {
+function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJourney, onFocusJourneyProject, onFocusJourney, setrwdShow, setIsSearchAttractionProjectsDataChosen }) {
     if (!journeyProjects) {
         return <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -40,7 +40,7 @@ function JourneyProjectList({ journeyProjects, onRemoveJourneyProject, setShowJo
 
 
 
-function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJourneyProject, onFocusJourney, setShowJourney, onRemoveJourney, setrwdShow }) {
+function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJourneyProject, onFocusJourney, setShowJourney, onRemoveJourney, setrwdShow, setIsSearchAttractionProjectsDataChosen }) {
     const [journeyDataValue, setJourneyDataValue] = useState({});
     const [checkedValue, setCheckedValue] = useState(false);
 
@@ -126,6 +126,7 @@ function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJour
                 onFocusJourney(journeydata.jid);
                 setSelectedJourneyData(journeydata);
                 setShowJourney(true);
+                setIsSearchAttractionProjectsDataChosen(true);
                 break;
             case "check":
                 checked(event);
@@ -138,8 +139,8 @@ function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJour
                     console.log(journeydata.jid);
                     onFocusJourney(journeydata.jid);
                     setSelectedJourneyData(journeydata);
-
                     setShowJourney(true);
+                    setIsSearchAttractionProjectsDataChosen(true);
 
                     break;
                 }
@@ -158,8 +159,8 @@ function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJour
                 console.log(journeydata.jid);
                 onFocusJourney(journeydata.jid);
                 setSelectedJourneyData(journeydata);
-
                 setShowJourney(true);
+                setIsSearchAttractionProjectsDataChosen(true);
                 setrwdShow("RightSpace")
                 break;
             case "check":
@@ -173,8 +174,8 @@ function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJour
                     console.log(journeydata.jid);
                     onFocusJourney(journeydata.jid);
                     setSelectedJourneyData(journeydata);
-
                     setShowJourney(true);
+                    setIsSearchAttractionProjectsDataChosen(true);
                     setrwdShow("RightSpace")
                     break;
                 }
