@@ -12,13 +12,13 @@ function Day({ date, toggleJourneys, listdata, showDayIndex = true, hidden}) {
         return dayDifference;
     }
 
-
+    const formattedDate = date.split('-').join('/'); // 將日期字串從 "YYYY-MM-DD" 轉換為 "YYYY/MM/DD"
 
     const icon = hidden ?  <FaAngleUp /> :<FaAngleDown />;
 
     return (
         <>
-            <p onClick={() => toggleJourneys(date)} className='supportColor mt-2' style={{ color: (showDayIndex ? "" : "#FF5546") }}>{date} {dayIndex} {icon}</p>
+            <p onClick={() => toggleJourneys(date)} className='supportColor mt-2' style={{ color: (showDayIndex ? "" : "#FF5546") }}>{formattedDate} {dayIndex} {icon}</p>
             <hr onClick={() => toggleJourneys(date)} className='supportColor mb-2' style={{ color: (showDayIndex ? "" : "#FF5546") }} />
         </>
     );

@@ -31,7 +31,7 @@ function SplitMember({ partnerData, handlePnnameChange, handlePnamountChange, up
                         <Col sm={4} xs={4}>
                             <Form.Control
                                 type='number'
-                                placeholder='金額'
+                                placeholder='金額(元)'
                                 min='0'
                                 onChange={(event) => handlePnamountChange(event, partnerData.pnid)}
                                 value={partnerData.pnamount}
