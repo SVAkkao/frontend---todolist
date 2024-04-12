@@ -1,15 +1,21 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { useLoadScript } from '@react-google-maps/api';
 import OpenAI from "openai";
+import loading148px from "./loading148px.gif"
 
-const WeatherApp = () => {
+const WeatherApp = ({ setRecommendations }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [recommendations, setRecommendations] = useState({});
-  const [choices, setChoices] = useState([]);
+  const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
+  const [gifSrc, setGifSrc] = useState(null);
+  useEffect(() => {
+    // 在組件加載時加載 GIF 圖片資源
+    setGifSrc(loading148px);
+  }, []);
+
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: 'AIzaSyBM_EnYgXOayxugwu67DpS9gYprEoFV8fg',
@@ -50,22 +56,22 @@ const WeatherApp = () => {
   };
 
   const handleSubmitToChat = async () => {
-    
     if (weatherData && selectedCity) {
+      setIsLoadingRecommendations(true); // 顯示加載指示器
       const { name, sys, main, weather, pop, visibility, sys: { sunrise, sunset } } = weatherData;
       const { value: { description: selectedCityName } } = selectedCity;
   
       const userMessage = `
-  地點: ${name}, ${sys.country}
-  城市: ${selectedCityName}
-  溫度: ${main.temp}°C
-  濕度: ${main.humidity}%
-  體感溫度: ${main.feels_like}°C
-  最低溫度: ${main.temp_min}°C
-  最高溫度: ${main.temp_max}°C
-  天氣: ${weather[0].description}
-  降雨機率: ${(pop * 100) || 0}%
-      `;
+         地點: ${name}, ${sys.country}
+         城市: ${selectedCityName}
+         溫度: ${main.temp}°C
+         濕度: ${main.humidity}%
+         體感溫度: ${main.feels_like}°C
+         最低溫度: ${main.temp_min}°C
+         最高溫度: ${main.temp_max}°C
+         天氣: ${weather[0].description}
+         降雨機率: ${(pop * 100) || 0}%
+          `;
   
       const openai = new OpenAI({
         apiKey: 'sk-ql9dO6EwBd4N3o2IDQyOp7qdmMtvkIt8yAJKPmzQAQB82kco',
@@ -92,10 +98,12 @@ const WeatherApp = () => {
         const responseString = completion.choices[0].message.content;
         const cleanedString = responseString.split('```json').join('').split('```').join('');
         const recommendations = JSON.parse(cleanedString);
-        setRecommendations(recommendations);
+        setRecommendations(recommendations); // 將建議提供給 PreTest 組件
       } catch (error) {
         setError('向OpenAI發送消息時出錯');
         console.error('Error:', error);
+      } finally {
+        setIsLoadingRecommendations(false); // 隱藏加載指示器
       }
     }
   };
@@ -122,35 +130,31 @@ const WeatherApp = () => {
       {error && <p>{error}</p>}
       {weatherData && (
         <div>
+          <div className="card">
           <h2>{weatherData.name}, {weatherData.sys.country}</h2>
-          <p>溫度：{weatherData.main.temp}°C</p>
-          <p>濕度：{weatherData.main.humidity}%</p>
-          <p>體感溫度：{weatherData.main.feels_like}°C</p>
-          <p>最低溫度：{weatherData.main.temp_min}°C</p>
-          <p>最高溫度：{weatherData.main.temp_max}°C</p>
-          <p>天氣：{weatherData.weather[0].description}</p>
-          <p>降雨機率：{weatherData.pop * 100 || 0}%</p>
-          <p>能見度：{weatherData.visibility / 1000} km</p>
-          <p>當地日出時間：{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</p>
-          <p>當地日落時間：{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</p>
-          <button onClick={handleSubmitToChat}>發送到 OpenAI</button>
+          <ul className="list-group list-group-flush">
+  <li className="list-group-item">溫度：{weatherData.main.temp}°C</li>
+  <li className="list-group-item">濕度：{weatherData.main.humidity}%</li>
+  <li className="list-group-item">體感溫度：{weatherData.main.feels_like}°C</li>
+  <li className="list-group-item">最低溫度：{weatherData.main.temp_min}°C</li>
+  <li className="list-group-item">最高溫度：{weatherData.main.temp_max}°C</li>
+  <li className="list-group-item">天氣：{weatherData.weather[0].description}</li>
+  <li className="list-group-item">降雨機率：{weatherData.pop * 100 || 0}%</li>
+  <li className="list-group-item">能見度：{weatherData.visibility / 1000} km</li>
+  <li className="list-group-item">當地日出時間：{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</li>
+  <li className="list-group-item">當地日落時間：{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</li>
+</ul>
+
+          </div>
+          <button className="btn btn-secondary btn-lg" onClick={handleSubmitToChat}>發送到 OpenAI</button><br/>
+          {isLoadingRecommendations && gifSrc && (
+            <img  loop
+            src={gifSrc} 
+            alt="Loading..." 
+            />
+          )}
         </div>
       )}
-      <div>
-        <h3>行前建議</h3>
-        <ul>
-          {recommendations['行前建議']?.map((suggestion, index) => (
-            <li key={index}>{suggestion}</li>
-          )) || <p>暫無行前建議</p>}
-        </ul>
-        <h3>景點推薦</h3>
-        {recommendations['景點推薦']?.map((item, index) => (
-          <div key={index}>
-            <h4>{item.名稱}</h4>
-            <p>{item.描述}</p>
-          </div>
-        )) || <p>暫無景點推薦</p>}
-      </div>
     </div>
   );
 };

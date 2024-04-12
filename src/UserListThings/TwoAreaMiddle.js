@@ -161,7 +161,7 @@ function TotalCost({ costData, setTotalAmount }) {
 
     const totalAmount = jTotalAmount + jpTotalAmount;
     setTotalAmount(totalAmount);
-    setTotalAmountForTwoAreaMiddle(totalAmount)
+    setTotalAmountForTwoAreaMiddle(totalAmount.toLocaleString())
 
   }
     , [costData])

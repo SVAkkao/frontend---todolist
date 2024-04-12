@@ -3,18 +3,26 @@ import { Row, Col, Card, } from 'react-bootstrap';
 
 function DateInfo({ startDate, endDate }) {
     const renderDate = (date) => {
-        return new Date(date).toLocaleDateString();
+      const dateObj = new Date(date);
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      return `${year}/${month}/${day}`;
     }
-    return <Row className='mt-3' style={{ alignItems: 'center' }}>
+  
+    return (
+      <Row className='mt-3' style={{ alignItems: 'center' }}>
         <Col xs={1}></Col>
-        <Col><p className='text4 supportColor text-center'>{renderDate(startDate)}</p></Col>
-        <Col className='text-center'>
-            <img style={{ width: "24px", height: '24px', marginBottom: '12px', paddingBottom: '0' }} src="/UserListSource/to.png" alt="Icon" />
+        <Col className=' text-center'><p className='text4 supportColor'>{renderDate(startDate)}</p></Col>
+        <Col className=' text-center'>
+          <img style={{ width: "24px", height: '24px', marginBottom: '12px', paddingBottom: '0' }} src="/UserListSource/to.png" alt="Icon" />
         </Col>
-        <Col><p className='text4 supportColor text-center'>{renderDate(endDate)}</p></Col>
+        <Col className=' text-center'><p className='text4 supportColor'>{renderDate(endDate)}</p></Col>
         <Col xs={1}></Col>
-    </Row>;
-}
+      </Row>
+    );
+  }
+
 
 const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL

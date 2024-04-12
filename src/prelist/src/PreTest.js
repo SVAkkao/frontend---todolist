@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Pre.css';
 import WeatherApp from './components/WeatherApp';
 import { PreWrapper } from './components/PreWrapper';
@@ -10,6 +10,8 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import RecommendationsList from './components/RecommendationsList';
 
 export default function PreTest() {
+  const [recommendations, setRecommendations] = useState({});
+
   return (
     <div className='vh-100'>
       <LogoutBar />
@@ -17,25 +19,21 @@ export default function PreTest() {
         <Col md={4} className="h-100">
           <Card className="h-100">
             <Card.Body>
-              <WeatherApp />
+              <WeatherApp setRecommendations={setRecommendations} />
             </Card.Body>
           </Card>
         </Col>
-        <Col md={4} className="h-100" data-bs-spy="scroll"> 
-          
-         
-              <DndProvider backend={HTML5Backend}>
-                <PreWrapper />
-              </DndProvider>
-           
-          
+        <Col md={4} className="h-100 overflow-y-auto" data-bs-spy="scroll">
+          <DndProvider backend={HTML5Backend}>
+            <PreWrapper />
+          </DndProvider>
         </Col>
         <Col md={4} className="h-100">
           <Card className="h-100">
             <Card.Body>
-              <h3>行前建議</h3>
-              <p>這裡是一些行前建議的內容...</p>
-              <RecommendationsList />
+              <h3>規畫行程建議</h3>
+              <p>以下依據所選的位置以及當前天氣提供一些行前建議以及景點推薦</p>
+              <RecommendationsList recommendations={recommendations} />
             </Card.Body>
           </Card>
         </Col>

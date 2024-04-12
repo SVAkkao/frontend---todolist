@@ -5,11 +5,6 @@ import axios from 'axios';
 export const PreWrapperLocalStorage = () => {
   const [pres, setPres] = useState([]);
   const API_HOST = process.env.REACT_APP_API_URL;
-  // ...還沒寫改資料庫
-
-  
-
-  // ...
 
   const renderPreList = () => {
     return (
