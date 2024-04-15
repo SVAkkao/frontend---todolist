@@ -81,7 +81,7 @@ export function ModalCommentItem({ item = DEFAULT_ITEM, onEdit, onDelete }) {
         onDelete={onDelete}
         preloadDatas={item}
       />
-      <div className="item-panel">
+      <div className="item-panel" style={{ flex: 2 }}>
         <UserAvatar imgsize={48} {...item} />
         <p>{item.comment}</p>
       </div>

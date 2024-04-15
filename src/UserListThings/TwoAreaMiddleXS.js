@@ -158,7 +158,7 @@ function TotalCost({ costData, setTotalAmount }) {
 
     const totalAmount = jTotalAmount + jpTotalAmount;
     setTotalAmount(totalAmount);
-    setTotalAmountForTwoAreaMiddle(totalAmount)
+    setTotalAmountForTwoAreaMiddle(totalAmount.toLocaleString())
 
   }
     , [costData])
@@ -614,7 +614,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
             <Row>
               {outOfTheJourney ?
                 <div>
-                  <Row className="align-items-center justify-content-center p-3" style={{ position: 'fixed', bottom: 68, left: '25.8%', width: '53%', padding: '10px' }}>
+                  <Row className="align-items-center justify-content-center p-3 isjourney" style={{ position: 'fixed', bottom: 84, left: '6%', width: '77.5%', padding: '10px' }}>
                     {searchAttractionsData.length > 0 && isSearchAttractionsDataChosen === false ? (
                       searchAttractionsData.map((item, index) => {
                         return <Attraction
@@ -631,7 +631,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
 
 
                   <Row className="align-items-center justify-content-center p-3"
-                    style={{ position: 'fixed', bottom: 10 }}
+                    style={{ position: 'fixed', width: '90%', bottom: 10 }}
                   >
                     <Col xs={11}>
                       {/* rounded */}
@@ -664,7 +664,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
                 </div>
                 :
                 <div>
-                  <Row className="align-items-center justify-content-center p-3 isjourney" style={{ position: 'fixed', bottom: 82, left: '3.5%', width: '70%', padding: '10px' }}>
+                  <Row className="align-items-center justify-content-center p-3 isjourney" style={{ position: 'fixed', bottom: 82, left: '3.5%', width: '82.5%', padding: '10px' }}>
                     {searchAttractionProjectsData.length > 0 && isSearchAttractionProjectsDataChosen === false ? (
                       searchAttractionProjectsData.map((item, index) => {
                         return <Project
@@ -679,7 +679,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
 
                   </Row>
                   <Row className="align-items-center justify-content-center p-3"
-                    style={{ position: 'fixed', width: '76%', bottom: 10 }}
+                    style={{ position: 'fixed', width: '90%', bottom: 10 }}
                   >
                     <Col xs={11}>
                       {/* rounded */}

@@ -8,7 +8,7 @@ function BudgetJp({ deleteJpbamount, budgetData, handleUpdateClick, handleJpbnam
         <Row className='m-4' style={{ alignItems: 'center' }}>
             <Col sm={1} xs={1}></Col>
             <Col sm={5} xs={5}><Form.Label className='text-left '>費用名稱</Form.Label></Col>
-            <Col sm={5} xs={5}><Form.Label className='text-left '>費用金額</Form.Label></Col>
+            <Col sm={5} xs={5}><Form.Label className='text-left '>費用金額(元)</Form.Label></Col>
             <Col sm={1} xs={1}></Col>
             <Col sm={1} xs={1}></Col>
             <Col className='text-center' sm={5} xs={5}>
