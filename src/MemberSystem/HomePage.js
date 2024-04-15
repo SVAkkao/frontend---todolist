@@ -108,8 +108,12 @@ const HomePage = () => {
 
         <img
           className="mobile-img"
-          src="https://media.discordapp.net/attachments/1134860695343738910/1220608588800593930/ariel_wu_A_man_is_arranging_travel_itinerary_with_his_mobile_ph_af61d54e-3359-4776-8efe-89bc3efb9425.png?ex=660f8f55&is=65fd1a55&hm=f3767ed5842e78d12459395c81138c9ef1e186c7af987da3437e07f880c4b0d7&=&format=webp&quality=lossless&width=412&height=619"
+          src="\UserListSource\homepage2.png"
           alt="Mobile version"
+          style={{
+            width: "100%",
+            height: "450px",
+          }}
         />
       </div>
     </div>
