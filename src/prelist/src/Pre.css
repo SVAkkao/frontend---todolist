@@ -16,7 +16,7 @@ h1 {
   background: #80BCBD
 
   ;
-  margin-top: 5rem;
+  margin-top: 3rem;
   padding: 2rem;
   border-radius: 5px;
 }
@@ -35,6 +35,8 @@ h1 {
   margin-bottom: 2rem;
   width: 300px;
   color: #262525;
+  font-size: 1.2rem
+
 }
 
 .pre-input::placeholder {
@@ -65,12 +67,12 @@ h1 {
 }
 
 .incompleted {
-  color: #877d7d;
+  color: #161616e4;
   cursor: pointer;
 }
 
 .completed {
-  color: #2d1668;
+  color: #908d9891;
   text-decoration: line-through;
   cursor: pointer;
 }
@@ -82,7 +84,7 @@ h1 {
 .TravelButton {
   margin-top: 1rem;
   background: #9398a8;
-  color: #5b5555;
+  color: #070707;
   border: none;
   padding: 0.55rem;
   cursor: pointer;
@@ -103,4 +105,7 @@ h1 {
     border-radius: 3px;
     margin-right: 10px;
 
+}
+.checkboxqq {
+  font-size: larger;
 }
