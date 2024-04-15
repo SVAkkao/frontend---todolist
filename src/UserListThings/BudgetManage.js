@@ -213,7 +213,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
             <Row className='m-4'>
 
                 <Col sm={1} xs={0}></Col>
-                <Col sm={10} xs={10}><Form.Label className='text-left'>預算金額</Form.Label></Col>
+                <Col sm={10} xs={10}><Form.Label className='text-left'>預算金額(元)</Form.Label></Col>
                 <Col sm={1} xs={1}></Col>
 
                 <Col sm={1} xs={1}></Col>
@@ -235,7 +235,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
                         colors={['#939393', '#80BCBD', '#D2302B']}
                         series={[
                             {
-                                arcLabel: (item) => `${item.label} (${item.value})`,
+                                arcLabel: (item) => `${item.label}: ${item.value.toLocaleString()}元`,
                                 arcLabelMinAngle: 45,
                                 data,
                                 cx: 150,
@@ -256,7 +256,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
                         series={[{
                             data: mData,
                             id: 'uvId',
-                            label: '金額',
+                            label: '金額(元)',
                             type: 'bar',
                             cx: 150,
                             cy: 100,

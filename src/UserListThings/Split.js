@@ -216,7 +216,7 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
             <Row style={{ alignItems: 'center' }} className='m-4'>
                 {/* <Col sm={1} xs={0}></Col> */}
                 <Col sm={5} xs={5}><Form.Label className='text-left'>費用名稱</Form.Label></Col>
-                <Col sm={5} xs={5}><Form.Label className='text-left'>費用金額</Form.Label></Col>
+                <Col sm={5} xs={5}><Form.Label className='text-left'>費用金額(元)</Form.Label></Col>
                 <Col sm={0} xs={1}></Col>
 
                 {/* <Col sm={0} xs={1}></Col> */}
