@@ -19,7 +19,6 @@ const RecommendationsList = ({ recommendations }) => {
           )}
         </ListGroup>
       </Card>
-
       <Card className="mt-3">
         <Card.Header>
           <FaMapMarkerAlt /> 景點推薦
@@ -28,7 +27,13 @@ const RecommendationsList = ({ recommendations }) => {
           recommendations['景點推薦'].map((item, index) => (
             <Card.Body key={index}>
               <Card.Title>
-                {item.名稱}{' '}
+                <a
+                  href={`https://www.google.com/search?q=${encodeURIComponent(item.名稱)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {item.名稱}
+                </a>{' '}
                 <Badge pill variant="primary">
                   {item.類型}
                 </Badge>
