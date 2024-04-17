@@ -1,21 +1,48 @@
 import React from 'react';
+import { Card, ListGroup, Badge, Image } from 'react-bootstrap';
+import { FaMapMarkerAlt, FaClipboardList } from 'react-icons/fa';
 
 const RecommendationsList = ({ recommendations }) => {
   return (
     <div>
-      <h3>行前建議</h3>
-      <ul>
-        {recommendations['行前建議']?.map((suggestion, index) => (
-          <li key={index}>{suggestion}</li>
-        )) || <p>暫無行前建議</p>}
-      </ul>
-      <h3>景點推薦</h3>
-      {recommendations['景點推薦']?.map((item, index) => (
-        <div key={index}>
-          <h4>{item.名稱}</h4>
-          <p>{item.描述}</p>
-        </div>
-      )) || <p>暫無景點推薦</p>}
+      <Card>
+        <Card.Header>
+          <FaClipboardList /> 行前建議
+        </Card.Header>
+        <ListGroup variant="flush">
+          {recommendations['行前建議']?.length > 0 ? (
+            recommendations['行前建議'].map((suggestion, index) => (
+              <ListGroup.Item key={index}>{suggestion}</ListGroup.Item>
+            ))
+          ) : (
+            <ListGroup.Item>暫無行前建議</ListGroup.Item>
+          )}
+        </ListGroup>
+      </Card>
+
+      <Card className="mt-3">
+        <Card.Header>
+          <FaMapMarkerAlt /> 景點推薦
+        </Card.Header>
+        {recommendations['景點推薦']?.length > 0 ? (
+          recommendations['景點推薦'].map((item, index) => (
+            <Card.Body key={index}>
+              <Card.Title>
+                {item.名稱}{' '}
+                <Badge pill variant="primary">
+                  {item.類型}
+                </Badge>
+              </Card.Title>
+              <Card.Text>{item.描述}</Card.Text>
+              {item.圖片 && <Image src={item.圖片} fluid />}
+            </Card.Body>
+          ))
+        ) : (
+          <Card.Body>
+            <Card.Text>暫無景點推薦</Card.Text>
+          </Card.Body>
+        )}
+      </Card>
     </div>
   );
 };

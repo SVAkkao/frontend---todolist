@@ -58,7 +58,7 @@ const WeatherApp = ({ setRecommendations }) => {
   const handleSubmitToChat = async () => {
     if (weatherData && selectedCity) {
       setIsLoadingRecommendations(true); // 顯示加載指示器
-      const { name, sys, main, weather, pop, visibility, sys: { sunrise, sunset } } = weatherData;
+      const { name, sys, main, weather, pop, } = weatherData;
       const { value: { description: selectedCityName } } = selectedCity;
   
       const userMessage = `
@@ -133,17 +133,17 @@ const WeatherApp = ({ setRecommendations }) => {
           <div className="card">
           <h2>{weatherData.name}, {weatherData.sys.country}</h2>
           <ul className="list-group list-group-flush">
-  <li className="list-group-item">溫度：{weatherData.main.temp}°C</li>
-  <li className="list-group-item">濕度：{weatherData.main.humidity}%</li>
-  <li className="list-group-item">體感溫度：{weatherData.main.feels_like}°C</li>
-  <li className="list-group-item">最低溫度：{weatherData.main.temp_min}°C</li>
-  <li className="list-group-item">最高溫度：{weatherData.main.temp_max}°C</li>
-  <li className="list-group-item">天氣：{weatherData.weather[0].description}</li>
-  <li className="list-group-item">降雨機率：{weatherData.pop * 100 || 0}%</li>
-  <li className="list-group-item">能見度：{weatherData.visibility / 1000} km</li>
-  <li className="list-group-item">當地日出時間：{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</li>
-  <li className="list-group-item">當地日落時間：{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</li>
-</ul>
+           <li className="list-group-item">溫度：{weatherData.main.temp}°C</li>
+           <li className="list-group-item">濕度：{weatherData.main.humidity}%</li>
+           <li className="list-group-item">體感溫度：{weatherData.main.feels_like}°C</li>
+           <li className="list-group-item">最低溫度：{weatherData.main.temp_min}°C</li>
+           <li className="list-group-item">最高溫度：{weatherData.main.temp_max}°C</li>
+           <li className="list-group-item">天氣：{weatherData.weather[0].description}</li>
+          <li className="list-group-item">降雨機率：{weatherData.pop * 100 || 0}%</li>
+          <li className="list-group-item">能見度：{weatherData.visibility / 1000} km</li>
+          <li className="list-group-item">當地日出時間：{new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString()}</li>
+          <li className="list-group-item">當地日落時間：{new Date(weatherData.sys.sunset * 1000).toLocaleTimeString()}</li>
+        </ul>
 
           </div>
           <button className="btn btn-secondary btn-lg" onClick={handleSubmitToChat}>發送到 OpenAI</button><br/>
