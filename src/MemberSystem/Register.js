@@ -170,7 +170,8 @@ function Register() {
             </form>
             <br></br>
             <div>
-              <Link to="/login"> 已有帳號？會員登入 </Link>
+              <Link to="/login"> 已有帳號？會員登入 </Link>|
+              <Link to="/forgotpassword"> 忘記密碼 </Link>
             </div>
           </div>
         </div>

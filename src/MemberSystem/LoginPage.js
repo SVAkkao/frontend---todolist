@@ -125,7 +125,8 @@ function Login() {
               </form>
               <br></br>
               <div>
-                <Link to="/register"> 還沒有帳號？註冊會員 </Link>
+                <Link to="/register"> 還沒有帳號？註冊會員 </Link>|
+                <Link to="/forgotpassword"> 忘記密碼 </Link>
               </div>
             </div>
           </div>
