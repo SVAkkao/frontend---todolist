@@ -403,6 +403,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
       },
       body: JSON.stringify(addjourneydata),
     }).then((response) => {
+      setSearchJourneyValue("");
       console.log(response.json());
       update_info();
     });
@@ -426,6 +427,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
       },
       body: JSON.stringify(addjourneyProjectdata),
     }).then((response) => {
+      setSearchJourneyProjectValue("")
       console.log(response.json());
       update_info();
     });
