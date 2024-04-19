@@ -7,6 +7,32 @@ import "./LoginSystem.css";
 const API_HOST = process.env.REACT_APP_API_URL;
 
 function ForgotPassword() {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // 防止表單自動提交
+
+    try {
+      const response = await fetch(`${API_HOST}/api/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Success:", data);
+      alert("請檢查您的郵件以重置密碼！");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("發送失敗，請稍後再試！");
+    }
+  };
   return (
     <>
       <nav
@@ -24,7 +50,7 @@ function ForgotPassword() {
             </div>
           </Link>
 
-          <spam className="ms-auto"></spam>
+          <span className="ms-auto"></span>
         </div>
       </nav>
       <div
@@ -47,12 +73,19 @@ function ForgotPassword() {
             <h2>忘記密碼</h2>
             <br></br>
             <div>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
                     電子信箱
                   </label>
-                  <input className="form-control" type="email" name="email" />
+                  <input
+                    className="form-control"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </div>
                 <br></br>
                 <button
