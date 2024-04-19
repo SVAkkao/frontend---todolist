@@ -144,6 +144,7 @@ function JourneyProject({ journeyProjectsData, onRemoveJourneyProject, setShowJo
                                 />
                             </Form>
                         </div>
+                        <span className='text3'>{journeyProjectsData.jpstart_time.slice(0, 5)}</span>
                         <button className='bg-color3' style={{ display: 'flex', alignItems: 'center', borderColor: 'transparent' }} data-action="Jpselect">
                             <img style={{ width: "24px", height: '24px', paddingBottom: '0' }} src="/UserListSource/delete.png" alt="Icon"
                                 data-action="Jpdelete"

@@ -400,6 +400,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
       },
       body: JSON.stringify(addjourneydata),
     }).then((response) => {
+      setSearchJourneyValue("");
       console.log(response.json());
       update_info();
     });
@@ -423,6 +424,7 @@ function TwoAreaMiddleXS({ setAllData, selectedTlid, selectedjid, alldata, setrw
       },
       body: JSON.stringify(addjourneyProjectdata),
     }).then((response) => {
+      setSearchJourneyProjectValue("")
       console.log(response.json());
       update_info();
     });
