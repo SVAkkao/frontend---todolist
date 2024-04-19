@@ -200,8 +200,26 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
     const averageAmount = () => {
         let pay = Number(singleBudgetManageData.bmamount)
         let peopleCounts = singleBudgetManageData.partners.length
-        let Answer = Math.round(pay / peopleCounts * 10) / 10;
-        setAverageAmountData(Answer)
+        let answer = Math.round(pay / peopleCounts * 10) / 10;
+        setAverageAmountData(answer)
+
+        setSingleBudgetManageData((prevSingleBudgetManageData) => {
+            const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
+                if (item.pnid) {
+                    return {
+                        ...item,
+                        pnamount:answer,
+                    };
+                }
+                return item;
+            });
+            return {
+                ...prevSingleBudgetManageData,
+                partners: updatedePartners,
+            };
+        });
+
+
     };
 
 
