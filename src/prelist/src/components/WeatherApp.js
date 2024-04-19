@@ -75,7 +75,7 @@ const WeatherApp = ({ setRecommendations }) => {
   
       const openai = new OpenAI({
         apiKey: 'sk-ql9dO6EwBd4N3o2IDQyOp7qdmMtvkIt8yAJKPmzQAQB82kco',
-        baseURL: 'http://localhost:3040/v1',
+        baseURL: 'https://pushy-rebel-snickerdoodle.glitch.me/v1',
         dangerouslyAllowBrowser: true,
       });
   
@@ -90,7 +90,7 @@ const WeatherApp = ({ setRecommendations }) => {
             },
             {
               role: 'user',
-              content: `根據提供的地點以及天氣,提供一份表列的行前建議以及景點推薦:${userMessage},請用純JSON字串回答不要有多餘符號`
+              content: `根據提供的地點以及天氣,提供一份表列的行前建議以及景點推薦:${userMessage},景點需有類型及描述請用純JSON字串回答不要有多餘符號`
             },
           ],
         });
@@ -146,7 +146,11 @@ const WeatherApp = ({ setRecommendations }) => {
         </ul>
 
           </div>
-          <button className="btn btn-secondary btn-lg" onClick={handleSubmitToChat}>發送到 OpenAI</button><br/>
+          <button className="btn btn-secondary btn-lg" 
+                  onClick={handleSubmitToChat}
+                  id='chatgpt'
+                  
+                  >發送到 OpenAI</button><br/>
           {isLoadingRecommendations && gifSrc && (
             <img  loop
             src={gifSrc} 

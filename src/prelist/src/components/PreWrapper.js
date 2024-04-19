@@ -8,13 +8,13 @@ import { useDrag, useDrop } from 'react-dnd';
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
-export const PreWrapper = () => {
+export const PreWrapper = ({fatherPres}) => {
   const [pres, setPres] = useState([]);
   const [selectedParentItems, setSelectedParentItems] = useState([]);
 
   useEffect(() => {
-    fetchPres();
-  }, []);
+    setPres(fatherPres)
+  }, [fatherPres]);
 
   const fetchPres = async () => {
     try {
@@ -28,12 +28,12 @@ export const PreWrapper = () => {
   const addPre = async (data) => {
     try {
       const response = await axios.post(`${API_HOST}/api/pres`, data);
-      setPres([...pres, response.data.data]);
+      setPres(prevPres => [...prevPres, response.data.data]);
     } catch (error) {
       console.error(error);
     }
   };
-
+  
   const updatePre = async (id, data) => {
     try {
       const response = await axios.put(`${API_HOST}/api/pres/${id}`, data);
@@ -150,12 +150,16 @@ export const PreWrapper = () => {
       if (draggedPreId !== targetPreId) {
         const draggedPreIndex = pres.findIndex(pre => pre.preid === draggedPreId);
         const targetPreIndex = pres.findIndex(pre => pre.preid === targetPreId);
+        const draggedPre = pres[draggedPreIndex];
   
-        const newPres = [...pres];
-        const [draggedPre] = newPres.splice(draggedPreIndex, 1);
-        newPres.splice(targetPreIndex, 0, draggedPre);
+        const newPres = [
+          ...pres.slice(0, targetPreIndex),
+          draggedPre,
+          ...pres.slice(targetPreIndex, draggedPreIndex),
+          ...pres.slice(draggedPreIndex + 1),
+        ];
   
-        setPres(newPres);
+        setPres(newPres); // 更新 pres 狀態
       }
     },
   }));
@@ -196,18 +200,18 @@ export const PreWrapper = () => {
   );
 };
 
-const DragPre = ({ task, deletePre, editPre, toggleComplete }) => {
+const DragPre= ({ task, deletePre, editPre, toggleComplete }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: 'PRE',
-    item: { id: task.preid },
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
+  type: 'PRE',
+  item: { id: task.preid },
+  collect: monitor => ({
+  isDragging: !!monitor.isDragging(),
+  }),
   }));
-
+  
   return (
-    <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <Pre task={task} deletePre={deletePre} editPre={editPre} toggleComplete={toggleComplete} />
-    </div>
+  <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
+  <Pre task={task} deletePre={deletePre} editPre={editPre} toggleComplete={toggleComplete} />
+  </div>
   );
-};
+  };

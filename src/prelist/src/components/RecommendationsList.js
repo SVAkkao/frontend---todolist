@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, ListGroup, Badge, Image } from 'react-bootstrap';
+import { Card, ListGroup, Badge, Image, Button } from 'react-bootstrap';
 import { FaMapMarkerAlt, FaClipboardList } from 'react-icons/fa';
 
-const RecommendationsList = ({ recommendations }) => {
+const RecommendationsList = ({ recommendations, addPre }) => {
   return (
     <div>
       <Card>
@@ -12,7 +12,17 @@ const RecommendationsList = ({ recommendations }) => {
         <ListGroup variant="flush">
           {recommendations['行前建議']?.length > 0 ? (
             recommendations['行前建議'].map((suggestion, index) => (
-              <ListGroup.Item key={index}>{suggestion}</ListGroup.Item>
+              <ListGroup.Item key={index}>
+                {suggestion}
+                <Button
+                  variant="outline-dark"
+                  size="sm"
+                  style={{ float: 'left' }}
+                  onClick={() => addPre({ pretitle: suggestion, checked: false })}
+                >
+                  新增到清單
+                </Button>
+              </ListGroup.Item>
             ))
           ) : (
             <ListGroup.Item>暫無行前建議</ListGroup.Item>
@@ -31,6 +41,8 @@ const RecommendationsList = ({ recommendations }) => {
                   href={`https://www.google.com/search?q=${encodeURIComponent(item.名稱)}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="btn btn-success"
+                  id="dd"
                 >
                   {item.名稱}
                 </a>{' '}
