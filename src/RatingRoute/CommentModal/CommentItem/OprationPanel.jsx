@@ -98,6 +98,23 @@ const ModalTitle = ({ modalmode }) => {
   }
 };
 
+const RemoveIcon = ({ onClick }) => {
+  const dev = false;
+  if( dev ) {
+    return <FaTrashCan onClick={onClick} />;
+  }
+  return <img
+    className="click-icon"
+    width={16}
+    height={16}
+    src="/UserListSource/delete.png"
+    alt="Delete icon"
+    onClick={onClick}
+  />;
+};
+
+// Modules
+
 /**
  * Changelog actions
  * @param {*} modalmode
@@ -261,13 +278,28 @@ export function ModalOprationPanel({
     }
   };
   const is_user = preloadDatas.uid === user.id;
-  const delete_option = is_user ? <FaTrashCan className="click-icon" onClick={open_removing} /> : <span></span>;
-  const edit_option = is_user ? <FaPen className="click-icon" onClick={open_editing} /> : <span></span>;
+  const delete_option = is_user ?
+    <RemoveIcon onClick={open_removing} /> :
+    <span></span>
+  ;
+  const edit_option = is_user ?
+    <FaPen
+      className="click-icon"
+      onClick={open_editing}
+      style={{ color: '#999999' }}
+    /> :
+    <span></span>
+  ;
+  const changelog_option = <FaClockRotateLeft
+    className="click-icon"
+    onClick={open_changelog}
+    style={{ color: '#999999' }}
+  />;
   return (
     <div className="item-panel" data-uid={user.id}>
       {delete_option}
       {edit_option}
-      <FaClockRotateLeft className="click-icon" onClick={open_changelog} />
+      {changelog_option}
       <div className="modals">
         <Modal
           id="edit-form-modal"
@@ -342,7 +374,7 @@ export function UserOprationPanel({
     <div className="opration-panel">
       <DropdownButton title="" variant="flat">
         <Dropdown.Item onClick={open_editing} style={{ padding: "10px 15px" }}>
-          <FaPen />
+          <FaPen style={{ color: '#999999' }} />
           <span style={{ marginLeft: "8px" }}>編輯</span>
         </Dropdown.Item>
 
@@ -350,12 +382,12 @@ export function UserOprationPanel({
           onClick={open_changelog}
           style={{ padding: "10px 15px" }}
         >
-          <FaClockRotateLeft />
+          <FaClockRotateLeft style={{ color: '#999999' }} />
           <span style={{ marginLeft: "8px" }}>編輯記錄</span>
         </Dropdown.Item>
 
         <Dropdown.Item onClick={open_removing} style={{ padding: "10px 15px" }}>
-          <FaTrashCan />
+          <RemoveIcon />
           <span style={{ marginLeft: "8px" }}>刪除</span>
         </Dropdown.Item>
       </DropdownButton>

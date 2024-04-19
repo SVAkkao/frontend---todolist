@@ -7,6 +7,15 @@ import { MdGrade } from "react-icons/md";
 import { FaMedal } from "react-icons/fa";
 // import { FaQuestionCircle } from "react-icons/fa";
 import { getUserScore } from "./api";
+import Spinner from "react-bootstrap/Spinner";
+
+const LoadingComp = () => (
+  <section className="text-center m-3">
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
+  </section>
+);
 
 function ScoreExplanation() {
   const grade = [
@@ -65,8 +74,10 @@ function Announce() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [score, setScore] = useState(null); // 狀態用於儲存分數
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     getUserScore()
       .then((data) => {
         // 假設API響應中有一個score字段
@@ -74,6 +85,9 @@ function Announce() {
       })
       .catch((error) => {
         console.error("Error fetching score:", error);
+      })
+      .finally( () => {
+        setLoading(false);
       });
   }, []);
 
@@ -119,6 +133,11 @@ function Announce() {
       backgroundColor: "rgba(0, 0, 0, 0.75)",
     },
   };
+
+  if (loading) {
+    return <LoadingComp />;
+  }
+
   return (
     <article className="announce">
       <section className="score">
