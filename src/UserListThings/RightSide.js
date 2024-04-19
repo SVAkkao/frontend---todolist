@@ -72,9 +72,12 @@ function RightSide({
     };
 
     const handleArrivedTimeChange = (event) => {
+        let value = event.target.value;
+        // 添加秒數
+        value += ":00";
         setJourneyData({
             ...journeyData,
-            arrived_time: event.target.value,
+            arrived_time: value,
         });
     };
 
@@ -339,7 +342,7 @@ function RightSide({
                     <Col className="text-right" sm={4}>
                         <NavLink to="/ratings">
                             <a id="ratings">
-                                評價與評論
+                                評論與評價
                                 <img
                                     src="/UserListSource/comment.png"
                                     style={{ width: "20px", height: "20px", paddingBottom: "0" }}

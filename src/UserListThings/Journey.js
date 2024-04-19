@@ -198,17 +198,23 @@ function Journey({ journeydata, update_info, setSelectedJourneyData, onFocusJour
                             style={{ flex: '1', textAlign: 'center' }}
                             data-action="select"
                         >
+
                             <Form data-action="select">
                                 <Form.Check
                                     type='checkbox'
-                                    label={<div className='the-label' style={{ textAlign: 'center' }} data-action="select">{journeydata.attraction.aname}</div>}
+                                    label={
+                                        <div className='the-label' style={{ textAlign: 'center' }} data-action="select">{journeydata.attraction.aname}</div>
+                                    }
                                     className='text2 parent-label'
                                     onChange={checked}
                                     checked={checkedValue}
                                     data-action="check"
-                                />
+                                >
+                                </Form.Check>
                             </Form>
+
                         </div>
+                        <span className='text3'>{journeydata.arrived_time.slice(0, 5)}</span>
                         <button className='bg-color2' style={{ display: 'flex', alignItems: 'center', borderColor: 'transparent' }} data-action="delete">
                             <img
                                 style={{ width: "24px", height: '24px', paddingBottom: '0' }}

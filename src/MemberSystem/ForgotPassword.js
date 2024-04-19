@@ -2,10 +2,37 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
+import "./LoginSystem.css";
 
 const API_HOST = process.env.REACT_APP_API_URL;
 
 function ForgotPassword() {
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); // 防止表單自動提交
+
+    try {
+      const response = await fetch(`${API_HOST}/api/forgot-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Success:", data);
+      alert("請檢查您的郵件以重置密碼！");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("發送失敗，請稍後再試！");
+    }
+  };
   return (
     <>
       <nav
@@ -23,7 +50,7 @@ function ForgotPassword() {
             </div>
           </Link>
 
-          <spam className="ms-auto"></spam>
+          <span className="ms-auto"></span>
         </div>
       </nav>
       <div
@@ -37,26 +64,28 @@ function ForgotPassword() {
             width: "48%",
             margin: "50px",
           }}
+          className="desktop-img"
         >
-          <img src="https://media.discordapp.net/attachments/1134860695343738910/1219185255269929011/ariel_wu_Forgot_password_confuse_question_mark_simple_soft_colo_febf9640-aa51-44ba-b1cb-674dadb98b4a.png?ex=660a61c0&is=65f7ecc0&hm=b0e6424dab71e25ee1f8936476e756dc55742c5ee6a91571b2c3ab9c9615f25a&=&format=webp&quality=lossless&width=929&height=619"></img>
+          <img src="\UserListSource\forgetpassword.png"></img>
         </div>
-        <div
-          style={{
-            width: "40%",
-            margin: "100px 50px",
-            padding: "70px",
-          }}
-        >
-          <div className="col-md-10">
+        <div className="login-system">
+          <div className="col-12 col-md-10">
             <h2>忘記密碼</h2>
             <br></br>
             <div>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
                     電子信箱
                   </label>
-                  <input className="form-control" type="email" name="email" />
+                  <input
+                    className="form-control"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </div>
                 <br></br>
                 <button

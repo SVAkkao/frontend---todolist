@@ -403,6 +403,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
       },
       body: JSON.stringify(addjourneydata),
     }).then((response) => {
+      setSearchJourneyValue("");
       console.log(response.json());
       update_info();
     });
@@ -426,6 +427,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
       },
       body: JSON.stringify(addjourneyProjectdata),
     }).then((response) => {
+      setSearchJourneyProjectValue("")
       console.log(response.json());
       update_info();
     });
@@ -570,7 +572,7 @@ function TwoAreaMiddle({ setAllData, selectedTlid, selectedjid, alldata, update_
                   style={{ width: "20px", height: "20px", paddingBottom: "0" }}
                   className="m-2"
                 />
-                行前準備
+                行前清單
               </a>
             </NavLink>
           </Col>
