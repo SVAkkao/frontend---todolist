@@ -98,6 +98,23 @@ const ModalTitle = ({ modalmode }) => {
   }
 };
 
+const RemoveIcon = ({ onClick }) => {
+  const dev = false;
+  if( dev ) {
+    return <FaTrashCan onClick={onClick} />;
+  }
+  return <img
+    className="click-icon"
+    width={24}
+    height={24}
+    src="/UserListSource/delete.png"
+    alt="Delete icon"
+    onClick={onClick}
+  />;
+};
+
+// Modules
+
 /**
  * Changelog actions
  * @param {*} modalmode
@@ -261,7 +278,10 @@ export function ModalOprationPanel({
     }
   };
   const is_user = preloadDatas.uid === user.id;
-  const delete_option = is_user ? <FaTrashCan className="click-icon" onClick={open_removing} /> : <span></span>;
+  const delete_option = is_user ?
+    <RemoveIcon onClick={open_removing} /> :
+    <span></span>
+  ;
   const edit_option = is_user ? <FaPen className="click-icon" onClick={open_editing} /> : <span></span>;
   return (
     <div className="item-panel" data-uid={user.id}>
@@ -355,7 +375,7 @@ export function UserOprationPanel({
         </Dropdown.Item>
 
         <Dropdown.Item onClick={open_removing} style={{ padding: "10px 15px" }}>
-          <FaTrashCan />
+          <RemoveIcon />
           <span style={{ marginLeft: "8px" }}>刪除</span>
         </Dropdown.Item>
       </DropdownButton>
