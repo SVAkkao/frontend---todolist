@@ -1,10 +1,10 @@
-/* 容器样式 */
+
 .dropdown {
   position: relative;
   display: inline-block;
 }
 
-/* 下拉菜单初始为不可见 */
+
 .dropdown-content {
   position: fixed;
   right: 10px;
@@ -27,12 +27,12 @@
   background-color: white;
 }
 
-/* 当鼠标悬停时显示下拉菜单 */
+
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-/* 下拉菜单项样式 */
+
 .dropdown-content a {
   color: black;
   padding: 10px;

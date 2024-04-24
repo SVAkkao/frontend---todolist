@@ -25,7 +25,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 檢查密碼和確認密碼是否匹配
+
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
@@ -42,7 +42,7 @@ function Register() {
           username: formData.name,
           email: formData.email,
           password: formData.password,
-          // confirmPassword 不需要發送到後端，除非後端明確要求
+
         }),
       });
 

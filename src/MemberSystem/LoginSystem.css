@@ -37,6 +37,6 @@
 
 @media (max-width: 768px) {
   .mobile-img {
-    display: block; /* 显示移动图片 */
+    display: block; 
   }
 }

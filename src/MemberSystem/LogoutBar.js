@@ -24,7 +24,6 @@ import { useUserStore } from "../stores/user";
 const API_HOST = process.env.REACT_APP_API_URL;
 async function userLogout() {
   const token = localStorage.getItem("userToken");
-  // 在请求头中添加token
   const response = await axios.post(
     `${API_HOST}/api/logout`,
     {},

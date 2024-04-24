@@ -9,10 +9,9 @@ function EditProfile() {
   const [cellphone, setCellphone] = useState("");
   const { user } = useUserStore();
   useEffect(() => {
-    // Set initial state from the Zustand user state
     setName(user.name);
     setCellphone(user.cellphone);
-  }, [user]); // Re-run effect when user state changes
+  }, [user]); 
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -24,7 +23,7 @@ function EditProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("userToken"); // 从localStorage中获取token
+    const token = localStorage.getItem("userToken"); 
 
     if (!token) {
       alert("請先登入！");

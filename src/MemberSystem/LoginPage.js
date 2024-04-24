@@ -34,10 +34,7 @@ function Login() {
       }
       const data = await response.json();
       console.log("Success");
-      // 登錄成功後的處理，例如保存 token，導航到另一頁等
-      // 保存 token 到 localStorage 或 sessionStorage
       localStorage.setItem("userToken", data.token);
-      // 根據需要導航，例如導航到首頁
       navigate("/alist", { state: { email: data.user.email } });
     } catch (error) {
       console.error("Failed to login:", error);

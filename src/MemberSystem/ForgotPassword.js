@@ -10,7 +10,7 @@ function ForgotPassword() {
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // 防止表單自動提交
+    event.preventDefault(); 
 
     try {
       const response = await fetch(`${API_HOST}/api/forgot-password`, {

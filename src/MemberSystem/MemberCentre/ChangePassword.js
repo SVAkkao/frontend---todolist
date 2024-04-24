@@ -51,7 +51,6 @@ function ChangePassword() {
 
       if (response.status === 200) {
         alert("更新成功！");
-        // 清除输入字段
         setCurrentPassword("");
         setNewPassword("");
         setNewPasswordConfirmation("");

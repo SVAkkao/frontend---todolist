@@ -139,11 +139,11 @@ const UserIntroduction = () => {
 };
 
 const AchievementsPage = () => {
-  // 新的状态变量，用于筛选显示
+
   const [filter, setFilter] = useState("list");
   const [loading, setLoading] = useState(false);
 
-  // AJAX lists
+
   const [listTitles, setListTitles] = useState([]);
   const [photoList, setPhotoList] = useState([]);
   const [userComments, setUserComments] = useState([]);
@@ -158,7 +158,7 @@ const AchievementsPage = () => {
     ]);
     api_requestss
       .then(([lists, photos, comments]) => {
-        // 直接使用response.data來獲取服務器響應的數據
+
         const titles = lists.data.map((item) => item.tourListTitle);
         setListTitles(titles);
         setPhotoList(photos.data.result);

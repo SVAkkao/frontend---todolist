@@ -73,14 +73,14 @@ function Announce() {
   Modal.setAppElement("#root");
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [score, setScore] = useState(null); // 狀態用於儲存分數
+  const [score, setScore] = useState(null); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     getUserScore()
       .then((data) => {
-        // 假設API響應中有一個score字段
+
         setScore(data.totalScore);
       })
       .catch((error) => {
@@ -126,8 +126,8 @@ function Announce() {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      width: "500px", // 自定义宽度
-      height: "600px", // 自定义高度
+      width: "500px", 
+      height: "600px", 
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -180,7 +180,7 @@ function Announce() {
             position: "absolute",
             top: "10px",
             right: "10px",
-            minWidth: "auto", // 最小宽度调整为auto，防止按钮过宽
+            minWidth: "auto", 
           }}
           onClick={() => setModalIsOpen(false)}
         >

@@ -7,21 +7,20 @@ const API_HOST = process.env.REACT_APP_API_URL;
 const API_IMAGE = process.env.REACT_APP_IMAGE_URL;
 
 function ChangeAvatar() {
-  // User modules
+
   const userStore = useUserStore();
   const [previewUrl, setPreviewUrl] = useState();
   const getUserAtStart = (token) => {
     fetch(`${API_HOST}/api/user`, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`, // 使用Bearer token進行認證
+        Authorization: `Bearer ${token}`, 
         "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        // setUsers(data); // 假設API響應中包含一個名為users的數組
-        setPreviewUrl(`${API_IMAGE}${data.photo}`); // 设置初始图片预览URL
+        setPreviewUrl(`${API_IMAGE}${data.photo}`); 
       })
       .catch((error) => console.error("Fetching data error: ", error));
   }
@@ -68,7 +67,6 @@ function ChangeAvatar() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // 獲取input type=file的DOM節點
     const fileInput = document.querySelector('input[type="file"]');
     const file = fileInput.files[0];
 
