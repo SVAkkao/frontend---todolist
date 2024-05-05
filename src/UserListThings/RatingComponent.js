@@ -33,7 +33,7 @@ console.log(jRateData)
       </Col>
       <Col sm={7} className="d-flex justify-content-end">
         {[...Array(5)].map((_, index) => {
-          // 判断当前心形图标是否应该被填充
+          // 判斷評價icon是否被填充
           const fill =
             index < jRateData / 2 || (index + 1 === jRateData / 2 && jRateData / 2 % 1 !== 0);
           return (
