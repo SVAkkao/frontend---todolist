@@ -11,18 +11,19 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
     const [averageAmountData, setAverageAmountData] = useState("");
 
 
-
+//獲取分帳資料
     useEffect(() => {
         setSingleBudgetManageData(budgetManage);
     }, [selectedTlid, alldata, budgetManage]);
 
-
+//改變該分帳花費名稱時，改變本區域的JSON資料(未完全改完成)
     const handleBmnameChange = (event) => {
         setSingleBudgetManageData({
             ...singleBudgetManageData,
             bmname: event.target.value
         });
     };
+//改變該分帳花費金額時，改變本區域的JSON資料(未完全改完成)
     const handleBmamountChange = (event) => {
         setSingleBudgetManageData({
             ...singleBudgetManageData,
@@ -30,8 +31,11 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
         });
     };
 
+
+    //改變該分帳夥伴名稱時，改變本區域的JSON資料(未完全改完成)
     const handlePnnameChange = (event, partnerDatapnid) => {
         setSingleBudgetManageData((prevSingleBudgetManageData) => {
+             //修改夥伴名稱資料成為更新後的夥伴資料
             const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
                 if (item.pnid === partnerDatapnid) {
                     return {
@@ -41,15 +45,17 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                 }
                 return item;
             });
+             //將更新後的夥伴資料放入本區域的JSON資料
             return {
                 ...prevSingleBudgetManageData,
                 partners: updatedePartners,
             };
         });
     };
-
+//改變該夥伴花費金額時，改變本區域的JSON資料(未完全改完成)
     const handlePnamountChange = (event, partnerDatapnid) => {
         setSingleBudgetManageData((prevSingleBudgetManageData) => {
+            //修改夥伴金額資料成為更新後的夥伴資料
             const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
                 if (item.pnid === partnerDatapnid) {
                     return {
@@ -59,15 +65,18 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                 }
                 return item;
             });
+            //將更新後的夥伴資料放入本區域的JSON資料
             return {
                 ...prevSingleBudgetManageData,
                 partners: updatedePartners,
             };
         });
     };
-
+    
+//改變該夥伴欠錢與否時，改變本區域的JSON資料(未完全改完成)
     const handlePncheckedChange = (event, partnerDatapnid) => {
         setSingleBudgetManageData((prevSingleBudgetManageData) => {
+            //修改夥伴欠錢與否資料成為更新後的夥伴資料
             const updatedePartners = prevSingleBudgetManageData.partners.map((item) => {
                 if (item.pnid === partnerDatapnid) {
                     return {
@@ -77,6 +86,7 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                 }
                 return item;
             });
+            //將更新後的夥伴資料放入本區域的JSON資料
             return {
                 ...prevSingleBudgetManageData,
                 partners: updatedePartners,
@@ -86,8 +96,9 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
 
 
     };
-
+//改變完成時，將改變完成的資料使用API更新資料庫資料，並改變總資料的資料
     const updateBudgetManage = () => {
+        //對分帳資料做更新
         fetch(API_HOST + "/api/POST/updatebudgetmanage", {
             method: "POST",
             headers: {
@@ -99,7 +110,7 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
                 bmamount: singleBudgetManageData.bmamount
             }),
         }).then(() => {
-
+            //對每個夥伴資料做更新
             singleBudgetManageData.partners.forEach((item) => {
                 fetch(API_HOST + "/api/POST/updatepartner", {
                     method: "POST",
@@ -143,7 +154,7 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
         });
     }
 
-
+//刪除資料庫夥伴資料與總資料夥伴資料
     const deletePartner = (partnerpnid) => {
         fetch(API_HOST + "/api/POST/deletepartner", {
             method: "POST",
@@ -180,7 +191,7 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
         });
     };
 
-
+    //新增資料庫夥伴資料並進行總資料更新
     const addPartner = () => {
         fetch(API_HOST + "/api/POST/addpartner", {
             method: "POST",
@@ -196,7 +207,8 @@ function BudgetManageList({ alldata, budgetManage, selectedTlid, setAllData, upd
             update_info();
         });
     }
-
+    
+//計算平均金額，並將該金額填入夥伴金額框(本區域資料)
     const averageAmount = () => {
         let pay = Number(singleBudgetManageData.bmamount)
         let peopleCounts = singleBudgetManageData.partners.length
@@ -324,7 +336,7 @@ function Split({ alldata, selectedTlid, setAllData, update_info }) {
     // const [xmLabels, setXmLabels] = useState([0, 0, 0, 0, 0]);
 
 
-
+  獲取所有分帳資料
     useEffect(() => {
         const tlid = selectedTlid;
         const filteredListdData = alldata.filter((item) => item.tlid == tlid);
@@ -332,6 +344,7 @@ function Split({ alldata, selectedTlid, setAllData, update_info }) {
     }
         , [alldata, selectedTlid])
 
+    新增分帳資料
     const addBudgetManage = () => {
         fetch(API_HOST + "/api/POST/addbudgetmanage", {
             method: "POST",
@@ -348,7 +361,7 @@ function Split({ alldata, selectedTlid, setAllData, update_info }) {
         });
     }
 
-
+    刪除分帳資料
     const deleteBudgetManage = (budgetManagebmid) => {
         fetch(API_HOST + "/api/POST/deletebudgetmanage", {
             method: "POST",
@@ -384,6 +397,7 @@ function Split({ alldata, selectedTlid, setAllData, update_info }) {
     }
     return (
         <>
+        //將所有分帳資料印出
             {budgetManageData.map((data, index) => {
                 return (
                     <BudgetManageList
