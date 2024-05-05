@@ -6,7 +6,7 @@ function GetCarouselItem(i = 0, itemsInGroup = ["/logo.svg"]) {
         key={image}
         src={image}
         className="d-block"
-        style={{ width: '33.33%' }} // 设置每个图片的宽度
+        style={{ width: '33.33%' }} // 設置每個圖片的寬度
         alt={`Slide ${index}`}
     />);
     return <Carousel.Item key={i}>
@@ -17,11 +17,11 @@ function GetCarouselItem(i = 0, itemsInGroup = ["/logo.svg"]) {
 }
 
 function getCarouselList(images = []) {
-    // 计算轮播图子项的数量
+    // 計算輪播圖的數量
     const radix = 3;
     const itemCount = Math.ceil(images.length / radix);
 
-    // 生成每组轮播图子项
+    // 產生每組輪播圖
     const result = [];
 
     for (let i = 0; i < itemCount; i++) {
@@ -35,7 +35,7 @@ function getCarouselList(images = []) {
 }
 
 function CarouselImg() {
-    // 假设这里有一个图片数组，包含所有要在轮播图中显示的图片
+    // 設置輪播圖要顯示的圖片
     const images = [
         'https://img.freepik.com/free-photo/gyeongbokgung-palace-autumn-south-korea_335224-1366.jpg?t=st=1710997273~exp=1711000873~hmac=9c9e053521d6b6d25c5a42850d2a3d2c08cfea9e0d7b354b4dba36c10bfb76af&w=1380',
         'https://img.freepik.com/free-photo/tung-bua-tong-mexican-sunflower-field-sunset-mae-hong-son-province-thailand_335224-819.jpg?t=st=1710997208~exp=1711000808~hmac=742627edc116e276d6ee5a22318b06665aee9b4500a7638fb6312260a54a8c73&w=1380',
