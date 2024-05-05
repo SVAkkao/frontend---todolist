@@ -10,7 +10,7 @@ function Money({ totalAmount, setShowMoney, alldata, selectedTlid, setAllData, u
     const [splitActive, setSplitActive] = useState(false);
     const [exchangeActive, setExchangeActive] = useState(false);
     const handleButtonClick = (activeSetter) => {
-        // 将所有按钮的状态设置为非活动状态
+        // 將所有按鈕初始化觸發狀態
         setBudgetActive(false);
         setSplitActive(false);
         setExchangeActive(false);
