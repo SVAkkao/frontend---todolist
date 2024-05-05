@@ -8,12 +8,11 @@ import { NavLink } from 'react-router-dom';
 function Money({ totalAmount, setShowMoney, alldata, selectedTlid, setAllData, update_info }) {
     const [budgetActive, setBudgetActive] = useState(true);
     const [splitActive, setSplitActive] = useState(false);
-    const [exchangeActive, setExchangeActive] = useState(false);
     const handleButtonClick = (activeSetter) => {
         // 將所有按鈕初始化觸發狀態
         setBudgetActive(false);
         setSplitActive(false);
-        setExchangeActive(false);
+        // 將按鈕選擇的函式設為true
         activeSetter(true);
     }
     const changeMoneyClick = () => {
@@ -43,16 +42,9 @@ function Money({ totalAmount, setShowMoney, alldata, selectedTlid, setAllData, u
                             <a onClick={() => handleButtonClick(setSplitActive)} style={{ borderBottom: splitActive ? 'solid 3px #80BCBD' : '0px', color: splitActive ? 'black' : '#939393' }}>分帳計算</a>
                         </NavLink>
                     </Col>
-                    {/* <Col>
-                        <NavLink to='/list' className="supportColor text-right">
-                            <a onClick={() => handleButtonClick(setExchangeActive)} style={{ borderBottom: exchangeActive ? 'solid 3px #80BCBD' : '0px', color: exchangeActive ? 'black' : '#939393' }}>匯率計算</a>
-                        </NavLink>
-                    </Col> */}
-                    {/* <Col sm={1}></Col> */}
                 </Row>
                 {budgetActive && <BudgetManage totalAmount={totalAmount} alldata={alldata} selectedTlid={selectedTlid} setAllData={setAllData}/>}
                 {splitActive && <Split alldata={alldata} selectedTlid={selectedTlid} setAllData={setAllData} update_info={update_info}/>}
-                {/* {exchangeActive && <Exchange />} */}
             </Row>
 
 
