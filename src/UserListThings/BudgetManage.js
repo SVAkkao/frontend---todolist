@@ -18,12 +18,14 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
     useEffect(() => {
         const tlid = selectedTlid;
         const filteredListdData = alldata.filter((item) => item.tlid == tlid);
+        //獲取清單資料
         setListData(filteredListdData[0])
 
+        //檢查JBudget與JPProjectBudget是否存在
         let hasJBudget = false;
         let hasJPProjectBudget = false;
 
-        // 檢查 filteredListdData[0] 的所有 journeys 的所有 jbudgets 是否存在
+        // 檢查 filteredListdData[0] 清單資料 的所有 journeys 的所有 jbudgets 是否存在
         for (let i = 0; i < filteredListdData[0].journeys.length; i++) {
             if (filteredListdData[0].journeys[i].jbudgets && filteredListdData[0].journeys[i].jbudgets.length > 0) {
                 hasJBudget = true;
@@ -31,7 +33,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
             }
         }
 
-        // 檢查 filteredListdData[0] 的所有 journeys 的所有 journey_projects 的所有 jpbudgets 是否存在
+        // 檢查 filteredListdData[0]  清單資料 的所有 journeys 的所有 journey_projects 的所有 jpbudgets 是否存在
         for (let i = 0; i < filteredListdData[0].journeys.length; i++) {
             for (let j = 0; j < filteredListdData[0].journeys[i].journey_projects.length; j++) {
                 if (filteredListdData[0].journeys[i].journey_projects[j].jpbudgets && filteredListdData[0].journeys[i].journey_projects[j].jpbudgets.length > 0) {
@@ -43,25 +45,30 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
                 break;
             }
         }
-
+        
+        // 如果JBudget或JPProjectBudget存在，進行前五名金額的設置，並將前五名的數據放到MUI長條圖中
         if (hasJBudget || hasJPProjectBudget) {
+            //藉由getTopFiveCosts函式獲取前五大金額
             const topFiveCosts = getTopFiveCosts(filteredListdData[0]);
             if (topFiveCosts) {
+                //如果前五大金額存在，設置數據到長條圖
                 setMData(topFiveCosts.map((cost) => cost.amount));
                 setXmLabels(topFiveCosts.map((cost) => cost.name));
             }
         } else {
+            如果前五大金額不存在，將長條圖數據設置為0
             setMData([0, 0, 0, 0, 0])
             setXmLabels([0, 0, 0, 0, 0])
         }
 
     }
+              //如果總資料、選擇清單、總消費額(表示有新的BUDGET新增了)、有變動，也進行變動
         , [alldata, selectedTlid, totalAmount])
 
-    // 圓餅圖
+    // 圓餅圖樣式設置
     const pieParams = { height: 200, margin: { right: 5 } };
 
-
+    // 改變本區塊總預算的函式
     const inputAmount = (event) => {
         setListData({
             ...listData,
@@ -69,7 +76,9 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
         });
     }
 
+    // 更新清單總預算的函式
     const handleUpdateListClick = async () => {
+        // 要給更新API的資料
         const updateListData = {
             tlid: selectedTlid,
             title: listData.title,
@@ -78,8 +87,10 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
             totalamount: listData.totalamount,
             tlphoto: listData.tlphoto,
         };
+        //更新清單資料的API所需的USER TOKEN
         const token = localStorage.getItem("userToken");
 
+        //用FETCH更新資料庫資料，並且更新總JSON資料
         fetch(API_HOST + "/api/POST/updatelist",
             {
                 method: "POST",
@@ -119,15 +130,19 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
 
 
 
-
+    //算出剩餘預算 = 總預算 - 總消費額
     let retainEarning = listData.totalamount - totalAmount;
     let neg = 0;
     let cost = 0;
+    //如果剩餘預算為正
     if (retainEarning >= 0) {
+        //沒有超出預算neg
         neg = 0;
+        //設置剩餘預算與已用預算
         retainEarning = listData.totalamount - totalAmount;
         cost = totalAmount;
     } else {
+        //剩餘預算為負，設置已用預算與超出預算，並設置剩餘預算為0
         cost = listData.totalamount;
         neg = totalAmount - listData.totalamount;
         retainEarning = 0;
@@ -138,19 +153,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
         { value: neg, label: '超出預算' }
     ];
 
-
-    // 金額長條圖
-
-    // 頻率長條圖
-    // const rData = [40, 30, 20, 27, 18];
-    // const xrLabels = [
-    //     'Page A',
-    //     'Page B',
-    //     'Page C',
-    //     'Page D',
-    //     'Page E',
-    // ];
-
+// 獲取前五金額的函式
     function getTopFiveCosts(listData) {
         const costs = [];
 
@@ -168,10 +171,6 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
                     }
                 });
             });
-        
-
-
-
 
         // 將 journey_projects 中的 jpbamount 與 jpbname 加入 costs 陣列中
 
@@ -199,7 +198,7 @@ function BudgetManage({ totalAmount, alldata, selectedTlid, setAllData, update_i
 
 
 
-    /////
+    //當缺少清單資料或是選擇的清單ID時，進行loading
     if (!listData || !selectedTlid) {
         return (
             <Spinner animation="border" role="status">
